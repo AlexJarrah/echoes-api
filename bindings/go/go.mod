@@ -7,6 +7,7 @@ require (
 	github.com/bdragon300/go-asyncapi/run v0.0.0-20260128180735-e3ffc35cfc19
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.2.0
+	github.com/gobwas/ws v1.4.0
 	github.com/google/uuid v1.6.0
 	github.com/ogen-go/ogen v1.20.1
 	go.opentelemetry.io/otel v1.42.0
@@ -46,6 +47,8 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect
 	github.com/go-sprout/sprout v1.0.3 // indirect
+	github.com/gobwas/httphead v0.1.0 // indirect
+	github.com/gobwas/pool v0.2.1 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/google/pprof v0.0.0-20260106004452-d7df1bf2cac7 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
