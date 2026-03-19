@@ -158,11 +158,44 @@ export type LibraryMetadataResponse = {
     tracks?: Array<LibraryMetadataTrack>;
 };
 
-export type LibraryAddEntity = {
+export type LibraryAddTrack = {
+    track: Track;
     /**
-     * The entity to add (Track, Artist, Album, or Listen)
+     * Client-provided reference ID for correlation in responses.
      */
-    entity: Track | Artist | Album | Listen;
+    reference_id?: number;
+    /**
+     * If true, skip deduplication and always create a new entity.
+     */
+    force_add?: boolean;
+};
+
+export type LibraryAddArtist = {
+    artist: Artist;
+    /**
+     * Client-provided reference ID for correlation in responses.
+     */
+    reference_id?: number;
+    /**
+     * If true, skip deduplication and always create a new entity.
+     */
+    force_add?: boolean;
+};
+
+export type LibraryAddAlbum = {
+    album: Album;
+    /**
+     * Client-provided reference ID for correlation in responses.
+     */
+    reference_id?: number;
+    /**
+     * If true, skip deduplication and always create a new entity.
+     */
+    force_add?: boolean;
+};
+
+export type LibraryAddListen = {
+    listen: Listen;
     /**
      * Client-provided reference ID for correlation in responses.
      */
@@ -201,10 +234,10 @@ export type AlbumArtist = {
 };
 
 export type LibraryAddRequest = {
-    tracks?: Array<LibraryAddEntity>;
-    artists?: Array<LibraryAddEntity>;
-    albums?: Array<LibraryAddEntity>;
-    listens?: Array<LibraryAddEntity>;
+    tracks?: Array<LibraryAddTrack>;
+    artists?: Array<LibraryAddArtist>;
+    albums?: Array<LibraryAddAlbum>;
+    listens?: Array<LibraryAddListen>;
     track_artists?: Array<LibraryAddKv>;
     album_artists?: Array<LibraryAddKv>;
     listen_tracks?: Array<LibraryAddKv>;

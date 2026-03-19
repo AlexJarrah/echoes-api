@@ -3,7 +3,31 @@
 package openapi
 
 // setDefaults set default value of fields.
-func (s *LibraryAddEntity) setDefaults() {
+func (s *LibraryAddAlbum) setDefaults() {
+	{
+		val := bool(false)
+		s.ForceAdd.SetTo(val)
+	}
+}
+
+// setDefaults set default value of fields.
+func (s *LibraryAddArtist) setDefaults() {
+	{
+		val := bool(false)
+		s.ForceAdd.SetTo(val)
+	}
+}
+
+// setDefaults set default value of fields.
+func (s *LibraryAddListen) setDefaults() {
+	{
+		val := bool(false)
+		s.ForceAdd.SetTo(val)
+	}
+}
+
+// setDefaults set default value of fields.
+func (s *LibraryAddTrack) setDefaults() {
 	{
 		val := bool(false)
 		s.ForceAdd.SetTo(val)

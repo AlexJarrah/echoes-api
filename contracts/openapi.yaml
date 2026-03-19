@@ -403,18 +403,61 @@ components:
           items:
             $ref: "#/components/schemas/LibraryMetadataTrack"
 
-    LibraryAddEntity:
+    LibraryAddTrack:
       type: object
       required:
-        - entity
+        - track
       properties:
-        entity:
-          description: The entity to add (Track, Artist, Album, or Listen)
-          oneOf:
-            - $ref: "#/components/schemas/Track"
-            - $ref: "#/components/schemas/Artist"
-            - $ref: "#/components/schemas/Album"
-            - $ref: "#/components/schemas/Listen"
+        track:
+          $ref: "#/components/schemas/Track"
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+
+    LibraryAddArtist:
+      type: object
+      required:
+        - artist
+      properties:
+        artist:
+          $ref: "#/components/schemas/Artist"
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+
+    LibraryAddAlbum:
+      type: object
+      required:
+        - album
+      properties:
+        album:
+          $ref: "#/components/schemas/Album"
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+
+    LibraryAddListen:
+      type: object
+      required:
+        - listen
+      properties:
+        listen:
+          $ref: "#/components/schemas/Listen"
         reference_id:
           type: integer
           format: int64
@@ -499,19 +542,19 @@ components:
         tracks:
           type: array
           items:
-            $ref: "#/components/schemas/LibraryAddEntity"
+            $ref: "#/components/schemas/LibraryAddTrack"
         artists:
           type: array
           items:
-            $ref: "#/components/schemas/LibraryAddEntity"
+            $ref: "#/components/schemas/LibraryAddArtist"
         albums:
           type: array
           items:
-            $ref: "#/components/schemas/LibraryAddEntity"
+            $ref: "#/components/schemas/LibraryAddAlbum"
         listens:
           type: array
           items:
-            $ref: "#/components/schemas/LibraryAddEntity"
+            $ref: "#/components/schemas/LibraryAddListen"
         track_artists:
           type: array
           items:

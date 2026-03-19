@@ -785,6 +785,45 @@ func (s *JoinFreeBetaNoContent) SetHxLocation(val OptString) {
 
 func (*JoinFreeBetaNoContent) joinFreeBetaRes() {}
 
+// Ref: #/components/schemas/LibraryAddAlbum
+type LibraryAddAlbum struct {
+	Album Album `json:"album"`
+	// Client-provided reference ID for correlation in responses.
+	ReferenceID OptInt64 `json:"reference_id"`
+	// If true, skip deduplication and always create a new entity.
+	ForceAdd OptBool `json:"force_add"`
+}
+
+// GetAlbum returns the value of Album.
+func (s *LibraryAddAlbum) GetAlbum() Album {
+	return s.Album
+}
+
+// GetReferenceID returns the value of ReferenceID.
+func (s *LibraryAddAlbum) GetReferenceID() OptInt64 {
+	return s.ReferenceID
+}
+
+// GetForceAdd returns the value of ForceAdd.
+func (s *LibraryAddAlbum) GetForceAdd() OptBool {
+	return s.ForceAdd
+}
+
+// SetAlbum sets the value of Album.
+func (s *LibraryAddAlbum) SetAlbum(val Album) {
+	s.Album = val
+}
+
+// SetReferenceID sets the value of ReferenceID.
+func (s *LibraryAddAlbum) SetReferenceID(val OptInt64) {
+	s.ReferenceID = val
+}
+
+// SetForceAdd sets the value of ForceAdd.
+func (s *LibraryAddAlbum) SetForceAdd(val OptBool) {
+	s.ForceAdd = val
+}
+
 // Merged schema.
 // Ref: #/components/schemas/LibraryAddAlbumTrack
 type LibraryAddAlbumTrack struct {
@@ -856,161 +895,43 @@ func (s *LibraryAddAlbumTrack) SetTrackReferenceID(val int64) {
 	s.TrackReferenceID = val
 }
 
-// Ref: #/components/schemas/LibraryAddEntity
-type LibraryAddEntity struct {
-	// The entity to add (Track, Artist, Album, or Listen).
-	Entity LibraryAddEntityEntity `json:"entity"`
+// Ref: #/components/schemas/LibraryAddArtist
+type LibraryAddArtist struct {
+	Artist Artist `json:"artist"`
 	// Client-provided reference ID for correlation in responses.
 	ReferenceID OptInt64 `json:"reference_id"`
 	// If true, skip deduplication and always create a new entity.
 	ForceAdd OptBool `json:"force_add"`
 }
 
-// GetEntity returns the value of Entity.
-func (s *LibraryAddEntity) GetEntity() LibraryAddEntityEntity {
-	return s.Entity
+// GetArtist returns the value of Artist.
+func (s *LibraryAddArtist) GetArtist() Artist {
+	return s.Artist
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddEntity) GetReferenceID() OptInt64 {
+func (s *LibraryAddArtist) GetReferenceID() OptInt64 {
 	return s.ReferenceID
 }
 
 // GetForceAdd returns the value of ForceAdd.
-func (s *LibraryAddEntity) GetForceAdd() OptBool {
+func (s *LibraryAddArtist) GetForceAdd() OptBool {
 	return s.ForceAdd
 }
 
-// SetEntity sets the value of Entity.
-func (s *LibraryAddEntity) SetEntity(val LibraryAddEntityEntity) {
-	s.Entity = val
+// SetArtist sets the value of Artist.
+func (s *LibraryAddArtist) SetArtist(val Artist) {
+	s.Artist = val
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddEntity) SetReferenceID(val OptInt64) {
+func (s *LibraryAddArtist) SetReferenceID(val OptInt64) {
 	s.ReferenceID = val
 }
 
 // SetForceAdd sets the value of ForceAdd.
-func (s *LibraryAddEntity) SetForceAdd(val OptBool) {
+func (s *LibraryAddArtist) SetForceAdd(val OptBool) {
 	s.ForceAdd = val
-}
-
-// The entity to add (Track, Artist, Album, or Listen).
-// LibraryAddEntityEntity represents sum type.
-type LibraryAddEntityEntity struct {
-	Type   LibraryAddEntityEntityType // switch on this field
-	Track  Track
-	Artist Artist
-	Album  Album
-	Listen Listen
-}
-
-// LibraryAddEntityEntityType is oneOf type of LibraryAddEntityEntity.
-type LibraryAddEntityEntityType string
-
-// Possible values for LibraryAddEntityEntityType.
-const (
-	TrackLibraryAddEntityEntity  LibraryAddEntityEntityType = "Track"
-	ArtistLibraryAddEntityEntity LibraryAddEntityEntityType = "Artist"
-	AlbumLibraryAddEntityEntity  LibraryAddEntityEntityType = "Album"
-	ListenLibraryAddEntityEntity LibraryAddEntityEntityType = "Listen"
-)
-
-// IsTrack reports whether LibraryAddEntityEntity is Track.
-func (s LibraryAddEntityEntity) IsTrack() bool { return s.Type == TrackLibraryAddEntityEntity }
-
-// IsArtist reports whether LibraryAddEntityEntity is Artist.
-func (s LibraryAddEntityEntity) IsArtist() bool { return s.Type == ArtistLibraryAddEntityEntity }
-
-// IsAlbum reports whether LibraryAddEntityEntity is Album.
-func (s LibraryAddEntityEntity) IsAlbum() bool { return s.Type == AlbumLibraryAddEntityEntity }
-
-// IsListen reports whether LibraryAddEntityEntity is Listen.
-func (s LibraryAddEntityEntity) IsListen() bool { return s.Type == ListenLibraryAddEntityEntity }
-
-// SetTrack sets LibraryAddEntityEntity to Track.
-func (s *LibraryAddEntityEntity) SetTrack(v Track) {
-	s.Type = TrackLibraryAddEntityEntity
-	s.Track = v
-}
-
-// GetTrack returns Track and true boolean if LibraryAddEntityEntity is Track.
-func (s LibraryAddEntityEntity) GetTrack() (v Track, ok bool) {
-	if !s.IsTrack() {
-		return v, false
-	}
-	return s.Track, true
-}
-
-// NewTrackLibraryAddEntityEntity returns new LibraryAddEntityEntity from Track.
-func NewTrackLibraryAddEntityEntity(v Track) LibraryAddEntityEntity {
-	var s LibraryAddEntityEntity
-	s.SetTrack(v)
-	return s
-}
-
-// SetArtist sets LibraryAddEntityEntity to Artist.
-func (s *LibraryAddEntityEntity) SetArtist(v Artist) {
-	s.Type = ArtistLibraryAddEntityEntity
-	s.Artist = v
-}
-
-// GetArtist returns Artist and true boolean if LibraryAddEntityEntity is Artist.
-func (s LibraryAddEntityEntity) GetArtist() (v Artist, ok bool) {
-	if !s.IsArtist() {
-		return v, false
-	}
-	return s.Artist, true
-}
-
-// NewArtistLibraryAddEntityEntity returns new LibraryAddEntityEntity from Artist.
-func NewArtistLibraryAddEntityEntity(v Artist) LibraryAddEntityEntity {
-	var s LibraryAddEntityEntity
-	s.SetArtist(v)
-	return s
-}
-
-// SetAlbum sets LibraryAddEntityEntity to Album.
-func (s *LibraryAddEntityEntity) SetAlbum(v Album) {
-	s.Type = AlbumLibraryAddEntityEntity
-	s.Album = v
-}
-
-// GetAlbum returns Album and true boolean if LibraryAddEntityEntity is Album.
-func (s LibraryAddEntityEntity) GetAlbum() (v Album, ok bool) {
-	if !s.IsAlbum() {
-		return v, false
-	}
-	return s.Album, true
-}
-
-// NewAlbumLibraryAddEntityEntity returns new LibraryAddEntityEntity from Album.
-func NewAlbumLibraryAddEntityEntity(v Album) LibraryAddEntityEntity {
-	var s LibraryAddEntityEntity
-	s.SetAlbum(v)
-	return s
-}
-
-// SetListen sets LibraryAddEntityEntity to Listen.
-func (s *LibraryAddEntityEntity) SetListen(v Listen) {
-	s.Type = ListenLibraryAddEntityEntity
-	s.Listen = v
-}
-
-// GetListen returns Listen and true boolean if LibraryAddEntityEntity is Listen.
-func (s LibraryAddEntityEntity) GetListen() (v Listen, ok bool) {
-	if !s.IsListen() {
-		return v, false
-	}
-	return s.Listen, true
-}
-
-// NewListenLibraryAddEntityEntity returns new LibraryAddEntityEntity from Listen.
-func NewListenLibraryAddEntityEntity(v Listen) LibraryAddEntityEntity {
-	var s LibraryAddEntityEntity
-	s.SetListen(v)
-	return s
 }
 
 // Ref: #/components/schemas/LibraryAddID
@@ -1065,12 +986,51 @@ func (s *LibraryAddKV) SetValue(val LibraryAddID) {
 	s.Value = val
 }
 
+// Ref: #/components/schemas/LibraryAddListen
+type LibraryAddListen struct {
+	Listen Listen `json:"listen"`
+	// Client-provided reference ID for correlation in responses.
+	ReferenceID OptInt64 `json:"reference_id"`
+	// If true, skip deduplication and always create a new entity.
+	ForceAdd OptBool `json:"force_add"`
+}
+
+// GetListen returns the value of Listen.
+func (s *LibraryAddListen) GetListen() Listen {
+	return s.Listen
+}
+
+// GetReferenceID returns the value of ReferenceID.
+func (s *LibraryAddListen) GetReferenceID() OptInt64 {
+	return s.ReferenceID
+}
+
+// GetForceAdd returns the value of ForceAdd.
+func (s *LibraryAddListen) GetForceAdd() OptBool {
+	return s.ForceAdd
+}
+
+// SetListen sets the value of Listen.
+func (s *LibraryAddListen) SetListen(val Listen) {
+	s.Listen = val
+}
+
+// SetReferenceID sets the value of ReferenceID.
+func (s *LibraryAddListen) SetReferenceID(val OptInt64) {
+	s.ReferenceID = val
+}
+
+// SetForceAdd sets the value of ForceAdd.
+func (s *LibraryAddListen) SetForceAdd(val OptBool) {
+	s.ForceAdd = val
+}
+
 // Ref: #/components/schemas/LibraryAddRequest
 type LibraryAddRequest struct {
-	Tracks       []LibraryAddEntity     `json:"tracks"`
-	Artists      []LibraryAddEntity     `json:"artists"`
-	Albums       []LibraryAddEntity     `json:"albums"`
-	Listens      []LibraryAddEntity     `json:"listens"`
+	Tracks       []LibraryAddTrack      `json:"tracks"`
+	Artists      []LibraryAddArtist     `json:"artists"`
+	Albums       []LibraryAddAlbum      `json:"albums"`
+	Listens      []LibraryAddListen     `json:"listens"`
 	TrackArtists []LibraryAddKV         `json:"track_artists"`
 	AlbumArtists []LibraryAddKV         `json:"album_artists"`
 	ListenTracks []LibraryAddKV         `json:"listen_tracks"`
@@ -1078,22 +1038,22 @@ type LibraryAddRequest struct {
 }
 
 // GetTracks returns the value of Tracks.
-func (s *LibraryAddRequest) GetTracks() []LibraryAddEntity {
+func (s *LibraryAddRequest) GetTracks() []LibraryAddTrack {
 	return s.Tracks
 }
 
 // GetArtists returns the value of Artists.
-func (s *LibraryAddRequest) GetArtists() []LibraryAddEntity {
+func (s *LibraryAddRequest) GetArtists() []LibraryAddArtist {
 	return s.Artists
 }
 
 // GetAlbums returns the value of Albums.
-func (s *LibraryAddRequest) GetAlbums() []LibraryAddEntity {
+func (s *LibraryAddRequest) GetAlbums() []LibraryAddAlbum {
 	return s.Albums
 }
 
 // GetListens returns the value of Listens.
-func (s *LibraryAddRequest) GetListens() []LibraryAddEntity {
+func (s *LibraryAddRequest) GetListens() []LibraryAddListen {
 	return s.Listens
 }
 
@@ -1118,22 +1078,22 @@ func (s *LibraryAddRequest) GetAlbumTracks() []LibraryAddAlbumTrack {
 }
 
 // SetTracks sets the value of Tracks.
-func (s *LibraryAddRequest) SetTracks(val []LibraryAddEntity) {
+func (s *LibraryAddRequest) SetTracks(val []LibraryAddTrack) {
 	s.Tracks = val
 }
 
 // SetArtists sets the value of Artists.
-func (s *LibraryAddRequest) SetArtists(val []LibraryAddEntity) {
+func (s *LibraryAddRequest) SetArtists(val []LibraryAddArtist) {
 	s.Artists = val
 }
 
 // SetAlbums sets the value of Albums.
-func (s *LibraryAddRequest) SetAlbums(val []LibraryAddEntity) {
+func (s *LibraryAddRequest) SetAlbums(val []LibraryAddAlbum) {
 	s.Albums = val
 }
 
 // SetListens sets the value of Listens.
-func (s *LibraryAddRequest) SetListens(val []LibraryAddEntity) {
+func (s *LibraryAddRequest) SetListens(val []LibraryAddListen) {
 	s.Listens = val
 }
 
@@ -1256,6 +1216,45 @@ func (s *LibraryAddResult) SetReferenceID(val OptInt64) {
 // SetCreated sets the value of Created.
 func (s *LibraryAddResult) SetCreated(val bool) {
 	s.Created = val
+}
+
+// Ref: #/components/schemas/LibraryAddTrack
+type LibraryAddTrack struct {
+	Track Track `json:"track"`
+	// Client-provided reference ID for correlation in responses.
+	ReferenceID OptInt64 `json:"reference_id"`
+	// If true, skip deduplication and always create a new entity.
+	ForceAdd OptBool `json:"force_add"`
+}
+
+// GetTrack returns the value of Track.
+func (s *LibraryAddTrack) GetTrack() Track {
+	return s.Track
+}
+
+// GetReferenceID returns the value of ReferenceID.
+func (s *LibraryAddTrack) GetReferenceID() OptInt64 {
+	return s.ReferenceID
+}
+
+// GetForceAdd returns the value of ForceAdd.
+func (s *LibraryAddTrack) GetForceAdd() OptBool {
+	return s.ForceAdd
+}
+
+// SetTrack sets the value of Track.
+func (s *LibraryAddTrack) SetTrack(val Track) {
+	s.Track = val
+}
+
+// SetReferenceID sets the value of ReferenceID.
+func (s *LibraryAddTrack) SetReferenceID(val OptInt64) {
+	s.ReferenceID = val
+}
+
+// SetForceAdd sets the value of ForceAdd.
+func (s *LibraryAddTrack) SetForceAdd(val OptBool) {
+	s.ForceAdd = val
 }
 
 // Ref: #/components/schemas/LibraryMetadataAlbum

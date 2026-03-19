@@ -2718,6 +2718,135 @@ func (s *JoinFreeBetaApplicationJSONUnauthorized) UnmarshalJSON(data []byte) err
 }
 
 // Encode implements json.Marshaler.
+func (s *LibraryAddAlbum) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *LibraryAddAlbum) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("album")
+		s.Album.Encode(e)
+	}
+	{
+		if s.ReferenceID.Set {
+			e.FieldStart("reference_id")
+			s.ReferenceID.Encode(e)
+		}
+	}
+	{
+		if s.ForceAdd.Set {
+			e.FieldStart("force_add")
+			s.ForceAdd.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfLibraryAddAlbum = [3]string{
+	0: "album",
+	1: "reference_id",
+	2: "force_add",
+}
+
+// Decode decodes LibraryAddAlbum from json.
+func (s *LibraryAddAlbum) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode LibraryAddAlbum to nil")
+	}
+	var requiredBitSet [1]uint8
+	s.setDefaults()
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "album":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Album.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album\"")
+			}
+		case "reference_id":
+			if err := func() error {
+				s.ReferenceID.Reset()
+				if err := s.ReferenceID.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"reference_id\"")
+			}
+		case "force_add":
+			if err := func() error {
+				s.ForceAdd.Reset()
+				if err := s.ForceAdd.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"force_add\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode LibraryAddAlbum")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfLibraryAddAlbum) {
+					name = jsonFieldsNameOfLibraryAddAlbum[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *LibraryAddAlbum) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *LibraryAddAlbum) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
 func (s *LibraryAddAlbumTrack) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -2899,17 +3028,17 @@ func (s *LibraryAddAlbumTrack) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *LibraryAddEntity) Encode(e *jx.Encoder) {
+func (s *LibraryAddArtist) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *LibraryAddEntity) encodeFields(e *jx.Encoder) {
+func (s *LibraryAddArtist) encodeFields(e *jx.Encoder) {
 	{
-		e.FieldStart("entity")
-		s.Entity.Encode(e)
+		e.FieldStart("artist")
+		s.Artist.Encode(e)
 	}
 	{
 		if s.ReferenceID.Set {
@@ -2925,31 +3054,31 @@ func (s *LibraryAddEntity) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfLibraryAddEntity = [3]string{
-	0: "entity",
+var jsonFieldsNameOfLibraryAddArtist = [3]string{
+	0: "artist",
 	1: "reference_id",
 	2: "force_add",
 }
 
-// Decode decodes LibraryAddEntity from json.
-func (s *LibraryAddEntity) Decode(d *jx.Decoder) error {
+// Decode decodes LibraryAddArtist from json.
+func (s *LibraryAddArtist) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode LibraryAddEntity to nil")
+		return errors.New("invalid: unable to decode LibraryAddArtist to nil")
 	}
 	var requiredBitSet [1]uint8
 	s.setDefaults()
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
-		case "entity":
+		case "artist":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				if err := s.Entity.Decode(d); err != nil {
+				if err := s.Artist.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"entity\"")
+				return errors.Wrap(err, "decode field \"artist\"")
 			}
 		case "reference_id":
 			if err := func() error {
@@ -2976,7 +3105,7 @@ func (s *LibraryAddEntity) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode LibraryAddEntity")
+		return errors.Wrap(err, "decode LibraryAddArtist")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -2993,8 +3122,8 @@ func (s *LibraryAddEntity) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfLibraryAddEntity) {
-					name = jsonFieldsNameOfLibraryAddEntity[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfLibraryAddArtist) {
+					name = jsonFieldsNameOfLibraryAddArtist[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -3015,200 +3144,14 @@ func (s *LibraryAddEntity) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *LibraryAddEntity) MarshalJSON() ([]byte, error) {
+func (s *LibraryAddArtist) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *LibraryAddEntity) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes LibraryAddEntityEntity as json.
-func (s LibraryAddEntityEntity) Encode(e *jx.Encoder) {
-	switch s.Type {
-	case TrackLibraryAddEntityEntity:
-		s.Track.Encode(e)
-	case ArtistLibraryAddEntityEntity:
-		s.Artist.Encode(e)
-	case AlbumLibraryAddEntityEntity:
-		s.Album.Encode(e)
-	case ListenLibraryAddEntityEntity:
-		s.Listen.Encode(e)
-	}
-}
-
-func (s LibraryAddEntityEntity) encodeFields(e *jx.Encoder) {
-	switch s.Type {
-	case TrackLibraryAddEntityEntity:
-		s.Track.encodeFields(e)
-	case ArtistLibraryAddEntityEntity:
-		s.Artist.encodeFields(e)
-	case AlbumLibraryAddEntityEntity:
-		s.Album.encodeFields(e)
-	case ListenLibraryAddEntityEntity:
-		s.Listen.encodeFields(e)
-	}
-}
-
-// Decode decodes LibraryAddEntityEntity from json.
-func (s *LibraryAddEntityEntity) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode LibraryAddEntityEntity to nil")
-	}
-	// Sum type fields.
-	if typ := d.Next(); typ != jx.Object {
-		return errors.Errorf("unexpected json type %q", typ)
-	}
-
-	var found bool
-	if err := d.Capture(func(d *jx.Decoder) error {
-		return d.ObjBytes(func(d *jx.Decoder, key []byte) error {
-			switch string(key) {
-			case "album_id":
-				match := AlbumLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "artist_id":
-				match := ArtistLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "base_album_id":
-				match := AlbumLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "bio":
-				// Type-based discrimination: check if field has expected JSON type (nullable)
-				typ := d.Next()
-				if typ != jx.String && typ != jx.Null {
-					// Field exists but has wrong type, not a match for this variant
-					return d.Skip()
-				}
-				match := ArtistLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "explicit":
-				// Type-based discrimination: check if field has expected JSON type (nullable)
-				typ := d.Next()
-				if typ != jx.Bool && typ != jx.Null {
-					// Field exists but has wrong type, not a match for this variant
-					return d.Skip()
-				}
-				match := TrackLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "listen_id":
-				// Type-based discrimination: check if field has expected JSON type
-				if typ := d.Next(); typ != jx.Number {
-					// Field exists but has wrong type, not a match for this variant
-					return d.Skip()
-				}
-				match := ListenLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "lyrics":
-				// Type-based discrimination: check if field has expected JSON type (nullable)
-				typ := d.Next()
-				if typ != jx.String && typ != jx.Null {
-					// Field exists but has wrong type, not a match for this variant
-					return d.Skip()
-				}
-				match := TrackLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "method":
-				// Type-based discrimination: check if field has expected JSON type
-				if typ := d.Next(); typ != jx.String {
-					// Field exists but has wrong type, not a match for this variant
-					return d.Skip()
-				}
-				match := ListenLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			case "release_date":
-				match := AlbumLibraryAddEntityEntity
-				if found && s.Type != match {
-					s.Type = ""
-					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
-				}
-				found = true
-				s.Type = match
-			}
-			return d.Skip()
-		})
-	}); err != nil {
-		return errors.Wrap(err, "capture")
-	}
-	if !found {
-		return errors.New("unable to detect sum type variant")
-	}
-	switch s.Type {
-	case TrackLibraryAddEntityEntity:
-		if err := s.Track.Decode(d); err != nil {
-			return err
-		}
-	case ArtistLibraryAddEntityEntity:
-		if err := s.Artist.Decode(d); err != nil {
-			return err
-		}
-	case AlbumLibraryAddEntityEntity:
-		if err := s.Album.Decode(d); err != nil {
-			return err
-		}
-	case ListenLibraryAddEntityEntity:
-		if err := s.Listen.Decode(d); err != nil {
-			return err
-		}
-	default:
-		return errors.Errorf("inferred invalid type: %s", s.Type)
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s LibraryAddEntityEntity) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *LibraryAddEntityEntity) UnmarshalJSON(data []byte) error {
+func (s *LibraryAddArtist) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -3403,6 +3346,135 @@ func (s *LibraryAddKV) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
+func (s *LibraryAddListen) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *LibraryAddListen) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("listen")
+		s.Listen.Encode(e)
+	}
+	{
+		if s.ReferenceID.Set {
+			e.FieldStart("reference_id")
+			s.ReferenceID.Encode(e)
+		}
+	}
+	{
+		if s.ForceAdd.Set {
+			e.FieldStart("force_add")
+			s.ForceAdd.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfLibraryAddListen = [3]string{
+	0: "listen",
+	1: "reference_id",
+	2: "force_add",
+}
+
+// Decode decodes LibraryAddListen from json.
+func (s *LibraryAddListen) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode LibraryAddListen to nil")
+	}
+	var requiredBitSet [1]uint8
+	s.setDefaults()
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "listen":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Listen.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"listen\"")
+			}
+		case "reference_id":
+			if err := func() error {
+				s.ReferenceID.Reset()
+				if err := s.ReferenceID.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"reference_id\"")
+			}
+		case "force_add":
+			if err := func() error {
+				s.ForceAdd.Reset()
+				if err := s.ForceAdd.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"force_add\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode LibraryAddListen")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfLibraryAddListen) {
+					name = jsonFieldsNameOfLibraryAddListen[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *LibraryAddListen) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *LibraryAddListen) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
 func (s *LibraryAddRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -3516,9 +3588,9 @@ func (s *LibraryAddRequest) Decode(d *jx.Decoder) error {
 		switch string(k) {
 		case "tracks":
 			if err := func() error {
-				s.Tracks = make([]LibraryAddEntity, 0)
+				s.Tracks = make([]LibraryAddTrack, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem LibraryAddEntity
+					var elem LibraryAddTrack
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -3533,9 +3605,9 @@ func (s *LibraryAddRequest) Decode(d *jx.Decoder) error {
 			}
 		case "artists":
 			if err := func() error {
-				s.Artists = make([]LibraryAddEntity, 0)
+				s.Artists = make([]LibraryAddArtist, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem LibraryAddEntity
+					var elem LibraryAddArtist
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -3550,9 +3622,9 @@ func (s *LibraryAddRequest) Decode(d *jx.Decoder) error {
 			}
 		case "albums":
 			if err := func() error {
-				s.Albums = make([]LibraryAddEntity, 0)
+				s.Albums = make([]LibraryAddAlbum, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem LibraryAddEntity
+					var elem LibraryAddAlbum
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -3567,9 +3639,9 @@ func (s *LibraryAddRequest) Decode(d *jx.Decoder) error {
 			}
 		case "listens":
 			if err := func() error {
-				s.Listens = make([]LibraryAddEntity, 0)
+				s.Listens = make([]LibraryAddListen, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem LibraryAddEntity
+					var elem LibraryAddListen
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -3997,6 +4069,135 @@ func (s *LibraryAddResult) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *LibraryAddResult) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *LibraryAddTrack) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *LibraryAddTrack) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("track")
+		s.Track.Encode(e)
+	}
+	{
+		if s.ReferenceID.Set {
+			e.FieldStart("reference_id")
+			s.ReferenceID.Encode(e)
+		}
+	}
+	{
+		if s.ForceAdd.Set {
+			e.FieldStart("force_add")
+			s.ForceAdd.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfLibraryAddTrack = [3]string{
+	0: "track",
+	1: "reference_id",
+	2: "force_add",
+}
+
+// Decode decodes LibraryAddTrack from json.
+func (s *LibraryAddTrack) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode LibraryAddTrack to nil")
+	}
+	var requiredBitSet [1]uint8
+	s.setDefaults()
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "track":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Track.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track\"")
+			}
+		case "reference_id":
+			if err := func() error {
+				s.ReferenceID.Reset()
+				if err := s.ReferenceID.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"reference_id\"")
+			}
+		case "force_add":
+			if err := func() error {
+				s.ForceAdd.Reset()
+				if err := s.ForceAdd.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"force_add\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode LibraryAddTrack")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfLibraryAddTrack) {
+					name = jsonFieldsNameOfLibraryAddTrack[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *LibraryAddTrack) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *LibraryAddTrack) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

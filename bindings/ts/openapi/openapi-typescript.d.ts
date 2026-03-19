@@ -578,9 +578,47 @@ export interface components {
             albums?: components["schemas"]["LibraryMetadataAlbum"][];
             tracks?: components["schemas"]["LibraryMetadataTrack"][];
         };
-        LibraryAddEntity: {
-            /** @description The entity to add (Track, Artist, Album, or Listen) */
-            entity: components["schemas"]["Track"] | components["schemas"]["Artist"] | components["schemas"]["Album"] | components["schemas"]["Listen"];
+        LibraryAddTrack: {
+            track: components["schemas"]["Track"];
+            /**
+             * Format: int64
+             * @description Client-provided reference ID for correlation in responses.
+             */
+            reference_id?: number;
+            /**
+             * @description If true, skip deduplication and always create a new entity.
+             * @default false
+             */
+            force_add: boolean;
+        };
+        LibraryAddArtist: {
+            artist: components["schemas"]["Artist"];
+            /**
+             * Format: int64
+             * @description Client-provided reference ID for correlation in responses.
+             */
+            reference_id?: number;
+            /**
+             * @description If true, skip deduplication and always create a new entity.
+             * @default false
+             */
+            force_add: boolean;
+        };
+        LibraryAddAlbum: {
+            album: components["schemas"]["Album"];
+            /**
+             * Format: int64
+             * @description Client-provided reference ID for correlation in responses.
+             */
+            reference_id?: number;
+            /**
+             * @description If true, skip deduplication and always create a new entity.
+             * @default false
+             */
+            force_add: boolean;
+        };
+        LibraryAddListen: {
+            listen: components["schemas"]["Listen"];
             /**
              * Format: int64
              * @description Client-provided reference ID for correlation in responses.
@@ -625,10 +663,10 @@ export interface components {
             artist_id: string;
         };
         LibraryAddRequest: {
-            tracks?: components["schemas"]["LibraryAddEntity"][];
-            artists?: components["schemas"]["LibraryAddEntity"][];
-            albums?: components["schemas"]["LibraryAddEntity"][];
-            listens?: components["schemas"]["LibraryAddEntity"][];
+            tracks?: components["schemas"]["LibraryAddTrack"][];
+            artists?: components["schemas"]["LibraryAddArtist"][];
+            albums?: components["schemas"]["LibraryAddAlbum"][];
+            listens?: components["schemas"]["LibraryAddListen"][];
             track_artists?: components["schemas"]["LibraryAddKV"][];
             album_artists?: components["schemas"]["LibraryAddKV"][];
             listen_tracks?: components["schemas"]["LibraryAddKV"][];

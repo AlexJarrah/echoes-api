@@ -34,20 +34,20 @@ func (s GetRelationsOKApplicationJSON) Validate() error {
 	return nil
 }
 
-func (s *LibraryAddEntity) Validate() error {
+func (s *LibraryAddListen) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
 
 	var failures []validate.FieldError
 	if err := func() error {
-		if err := s.Entity.Validate(); err != nil {
+		if err := s.Listen.Validate(); err != nil {
 			return err
 		}
 		return nil
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
-			Name:  "entity",
+			Name:  "listen",
 			Error: err,
 		})
 	}
@@ -57,105 +57,12 @@ func (s *LibraryAddEntity) Validate() error {
 	return nil
 }
 
-func (s LibraryAddEntityEntity) Validate() error {
-	switch s.Type {
-	case TrackLibraryAddEntityEntity:
-		return nil // no validation needed
-	case ArtistLibraryAddEntityEntity:
-		return nil // no validation needed
-	case AlbumLibraryAddEntityEntity:
-		return nil // no validation needed
-	case ListenLibraryAddEntityEntity:
-		if err := s.Listen.Validate(); err != nil {
-			return err
-		}
-		return nil
-	default:
-		return errors.Errorf("invalid type %q", s.Type)
-	}
-}
-
 func (s *LibraryAddRequest) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
 
 	var failures []validate.FieldError
-	if err := func() error {
-		var failures []validate.FieldError
-		for i, elem := range s.Tracks {
-			if err := func() error {
-				if err := elem.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				failures = append(failures, validate.FieldError{
-					Name:  fmt.Sprintf("[%d]", i),
-					Error: err,
-				})
-			}
-		}
-		if len(failures) > 0 {
-			return &validate.Error{Fields: failures}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "tracks",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		var failures []validate.FieldError
-		for i, elem := range s.Artists {
-			if err := func() error {
-				if err := elem.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				failures = append(failures, validate.FieldError{
-					Name:  fmt.Sprintf("[%d]", i),
-					Error: err,
-				})
-			}
-		}
-		if len(failures) > 0 {
-			return &validate.Error{Fields: failures}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "artists",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		var failures []validate.FieldError
-		for i, elem := range s.Albums {
-			if err := func() error {
-				if err := elem.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				failures = append(failures, validate.FieldError{
-					Name:  fmt.Sprintf("[%d]", i),
-					Error: err,
-				})
-			}
-		}
-		if len(failures) > 0 {
-			return &validate.Error{Fields: failures}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "albums",
-			Error: err,
-		})
-	}
 	if err := func() error {
 		var failures []validate.FieldError
 		for i, elem := range s.Listens {
