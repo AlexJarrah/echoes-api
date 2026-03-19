@@ -1,0 +1,14 @@
+{
+  "name": "@echoes/generation-ts",
+  "version": "1.0.0",
+  "description": "TypeScript code generation for Echoes API",
+  "type": "module",
+  "devDependencies": {
+    "@asyncapi/cli": "^3.0.0",
+    "@asyncapi/modelina": "^4.0.0",
+    "@hey-api/openapi-ts": "^0.94.0",
+    "@scalar/api-reference": "^1.0.0",
+    "openapi-typescript": "^7.13.0",
+    "typescript": "^5.9.3"
+  }
+}

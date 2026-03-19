@@ -1,0 +1,249 @@
+asyncapi: 3.0.0
+
+info:
+  title: Echoes
+  description: Real-time WebSocket API.
+  version: 0.1.0
+
+servers:
+  production:
+    host: getechoes.com
+    protocol: ws
+    description: Production WebSocket server.
+
+defaultContentType: application/json
+
+channels:
+  events:
+    address: /api/events
+    description: |
+      Primary WebSocket channel for authenticated real-time events.
+
+      Requires a valid `auth_token` session cookie.
+    messages:
+      subscribe:
+        $ref: "#/components/messages/ClientMessage"
+      activity:
+        $ref: "#/components/messages/ServerMessage"
+
+  auth:
+    address: /api/auth-events
+    description: WebSocket channel for unauthenticated events.
+    messages:
+      request:
+        $ref: "#/components/messages/ClientMessage"
+      response:
+        $ref: "#/components/messages/ServerMessage"
+
+operations:
+  subscribeActivity:
+    action: send
+    channel:
+      $ref: "#/channels/events"
+    summary: Subscribe to user activity updates
+    security:
+      - $ref: "#/components/securitySchemes/CookieAuth"
+    messages:
+      - $ref: "#/channels/events/messages/subscribe"
+
+  receiveActivity:
+    action: receive
+    channel:
+      $ref: "#/channels/events"
+    summary: Receive activity updates
+    security:
+      - $ref: "#/components/securitySchemes/CookieAuth"
+    messages:
+      - $ref: "#/channels/events/messages/activity"
+
+  requestAuthentication:
+    action: send
+    channel:
+      $ref: "#/channels/auth"
+    summary: Request device authentication URL
+    messages:
+      - $ref: "#/channels/auth/messages/request"
+
+  receiveAuthResponse:
+    action: receive
+    channel:
+      $ref: "#/channels/auth"
+    summary: Receive authentication URL and token
+    messages:
+      - $ref: "#/channels/auth/messages/response"
+
+components:
+  securitySchemes:
+    CookieAuth:
+      type: httpApiKey
+      in: cookie
+      name: auth_token
+      description: JWT token
+
+  messages:
+    ClientMessage:
+      name: ClientMessage
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ClientMessageStruct"
+
+    ServerMessage:
+      name: ServerMessage
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ServerMessageStruct"
+
+  schemas:
+    ClientEventType:
+      type: integer
+      enum: [0, 1]
+      description: |
+        0 - AuthenticationRequest: initiate device authentication
+        1 - ActivitySubscription: set user activity subscription
+
+    ServerEventType:
+      type: integer
+      enum: [0, 1, 2]
+      description: |
+        0 - ActivityData: user activity snapshot
+        1 - AuthenticationURL: one-time authentication URL
+        2 - Authentication: session token
+
+    ClientMessageStruct:
+      type: object
+      required: [id, type]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique correlation ID. Echoed in server responses.
+        type:
+          $ref: "#/components/schemas/ClientEventType"
+        data:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/Subscription"
+          description: Payload varies by type.
+
+    ServerMessageStruct:
+      type: object
+      required: [id, type, data]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Correlation ID from the originating request.
+        type:
+          $ref: "#/components/schemas/ServerEventType"
+        data:
+          oneOf:
+            - $ref: "#/components/schemas/ActivityData"
+            - $ref: "#/components/schemas/AuthURL"
+            - $ref: "#/components/schemas/AuthToken"
+          description: Payload varies by type.
+
+    Subscription:
+      type: object
+      required: [users]
+      properties:
+        users:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: User UUIDs to subscribe to.
+
+    ActivityData:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: "#/components/schemas/Activity"
+      description: Map of user UUID to their activities.
+
+    AuthURL:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: One-time URL for the user to authorize the device.
+
+    AuthToken:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+          description: JWT authentication token.
+
+    Activity:
+      type: object
+      required:
+        [
+          session_id,
+          track_id,
+          track_name,
+          artists,
+          active,
+          position,
+          start_timestamp,
+          end_timestamp,
+          updated_at,
+        ]
+      properties:
+        session_id:
+          type: string
+          description: Unique identifier for this listening session.
+        track_id:
+          type: string
+          format: uuid
+          description: Track ID.
+        track_name:
+          type: string
+          description: Track title.
+        artists:
+          type: array
+          items:
+            $ref: "#/components/schemas/Artist"
+          description: Credited track artists.
+        album_name:
+          type: string
+          nullable: true
+          description: Album name.
+        album_image_url:
+          type: string
+          nullable: true
+          description: Album cover URL.
+        active:
+          type: boolean
+          description: Whether the user is currently playing this track (true) or has stopped/paused (false)..
+        position:
+          type: integer
+          format: int64
+          description: Current playback position in seconds.
+        start_timestamp:
+          type: string
+          format: date-time
+          description: When the track was played.
+        end_timestamp:
+          type: string
+          format: date-time
+          description: Projected end time based on track duration.
+        updated_at:
+          type: string
+          format: date-time
+          description: When this activity was last updated.
+
+    Artist:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Artist ID.
+        name:
+          type: string
+          description: Artist name.

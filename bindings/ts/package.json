@@ -1,0 +1,6 @@
+{
+  "name": "@echoes/bindings-ts",
+  "version": "1.0.0",
+  "description": "TypeScript bindings for Echoes API",
+  "type": "module"
+}

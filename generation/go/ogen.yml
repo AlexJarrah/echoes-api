@@ -1,0 +1,15 @@
+generator:
+  ignore_not_implemented: ["array defaults"]
+  features:
+    enable:
+      - "paths/client"
+      - "paths/server"
+      - "webhooks/client"
+      - "webhooks/server"
+      - "client/security/reentrant"
+      - "client/request/options"
+      - "client/request/validation"
+      - "client/editors"
+      - "server/response/validation"
+      - "ogen/otel"
+      - "ogen/unimplemented"
