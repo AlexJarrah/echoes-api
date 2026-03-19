@@ -501,7 +501,8 @@ func (s ConflictTextPlain) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*ConflictTextPlain) registerRes() {}
+func (*ConflictTextPlain) registerRes()   {}
+func (*ConflictTextPlain) updateUserRes() {}
 
 type CookieAuth struct {
 	APIKey string
@@ -3634,6 +3635,10 @@ func (*UpdateLibraryApplicationJSONUnauthorized) updateLibraryRes() {}
 type UpdateUserApplicationJSONBadRequest ErrorResponse
 
 func (*UpdateUserApplicationJSONBadRequest) updateUserRes() {}
+
+type UpdateUserApplicationJSONConflict ErrorResponse
+
+func (*UpdateUserApplicationJSONConflict) updateUserRes() {}
 
 type UpdateUserApplicationJSONInternalServerError ErrorResponse
 

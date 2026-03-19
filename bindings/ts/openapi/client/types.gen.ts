@@ -1048,6 +1048,10 @@ export type UpdateUserErrors = {
      */
     401: ErrorResponse;
     /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
      * Internal server error
      */
     500: ErrorResponse;
