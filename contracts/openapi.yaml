@@ -1463,6 +1463,10 @@ paths:
               schema:
                 type: string
               description: Redirect location
+            Set-Cookie:
+              schema:
+                type: string
+              description: Authentication cookie
         "400":
           $ref: "#/components/responses/BadRequest"
         "409":
@@ -1490,6 +1494,10 @@ paths:
               schema:
                 type: string
               description: Redirect location
+            Set-Cookie:
+              schema:
+                type: string
+              description: Authentication cookie
         "400":
           $ref: "#/components/responses/BadRequest"
         "500":

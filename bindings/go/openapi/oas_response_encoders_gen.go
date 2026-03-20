@@ -1376,7 +1376,7 @@ func encodeJoinFreeBetaResponse(response JoinFreeBetaRes, w http.ResponseWriter,
 func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *RegisterCreated:
-		w.Header().Set("Access-Control-Expose-Headers", "Hx-Location")
+		w.Header().Set("Access-Control-Expose-Headers", "Hx-Location,Set-Cookie")
 		// Encoding response headers.
 		{
 			h := uri.NewHeaderEncoder(w.Header())
@@ -1393,6 +1393,21 @@ func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span tr
 					return nil
 				}); err != nil {
 					return errors.Wrap(err, "encode Hx-Location header")
+				}
+			}
+			// Encode "Set-Cookie" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "Set-Cookie",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.SetCookie.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode Set-Cookie header")
 				}
 			}
 		}
@@ -2146,7 +2161,7 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *SignInOK:
-		w.Header().Set("Access-Control-Expose-Headers", "Hx-Location")
+		w.Header().Set("Access-Control-Expose-Headers", "Hx-Location,Set-Cookie")
 		// Encoding response headers.
 		{
 			h := uri.NewHeaderEncoder(w.Header())
@@ -2163,6 +2178,21 @@ func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.
 					return nil
 				}); err != nil {
 					return errors.Wrap(err, "encode Hx-Location header")
+				}
+			}
+			// Encode "Set-Cookie" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "Set-Cookie",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.SetCookie.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode Set-Cookie header")
 				}
 			}
 		}

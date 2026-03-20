@@ -2517,6 +2517,7 @@ func (*RegisterApplicationJSONInternalServerError) registerRes() {}
 // RegisterCreated is response for Register operation.
 type RegisterCreated struct {
 	HxLocation OptString
+	SetCookie  OptString
 }
 
 // GetHxLocation returns the value of HxLocation.
@@ -2524,9 +2525,19 @@ func (s *RegisterCreated) GetHxLocation() OptString {
 	return s.HxLocation
 }
 
+// GetSetCookie returns the value of SetCookie.
+func (s *RegisterCreated) GetSetCookie() OptString {
+	return s.SetCookie
+}
+
 // SetHxLocation sets the value of HxLocation.
 func (s *RegisterCreated) SetHxLocation(val OptString) {
 	s.HxLocation = val
+}
+
+// SetSetCookie sets the value of SetCookie.
+func (s *RegisterCreated) SetSetCookie(val OptString) {
+	s.SetCookie = val
 }
 
 func (*RegisterCreated) registerRes() {}
@@ -3370,6 +3381,7 @@ func (*SignInApplicationJSONInternalServerError) signInRes() {}
 // SignInOK is response for SignIn operation.
 type SignInOK struct {
 	HxLocation OptString
+	SetCookie  OptString
 }
 
 // GetHxLocation returns the value of HxLocation.
@@ -3377,9 +3389,19 @@ func (s *SignInOK) GetHxLocation() OptString {
 	return s.HxLocation
 }
 
+// GetSetCookie returns the value of SetCookie.
+func (s *SignInOK) GetSetCookie() OptString {
+	return s.SetCookie
+}
+
 // SetHxLocation sets the value of HxLocation.
 func (s *SignInOK) SetHxLocation(val OptString) {
 	s.HxLocation = val
+}
+
+// SetSetCookie sets the value of SetCookie.
+func (s *SignInOK) SetSetCookie(val OptString) {
+	s.SetCookie = val
 }
 
 func (*SignInOK) signInRes() {}

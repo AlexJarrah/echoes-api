@@ -1340,6 +1340,8 @@ export interface operations {
                 headers: {
                     /** @description Redirect location */
                     "Hx-Location"?: string;
+                    /** @description Authentication cookie */
+                    "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
@@ -1367,6 +1369,8 @@ export interface operations {
                 headers: {
                     /** @description Redirect location */
                     "Hx-Location"?: string;
+                    /** @description Authentication cookie */
+                    "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
