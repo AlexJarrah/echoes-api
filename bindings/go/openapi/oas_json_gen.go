@@ -7499,6 +7499,44 @@ func (s *SearchTracksViaDetailsApplicationJSONBadRequest) UnmarshalJSON(data []b
 	return s.Decode(d)
 }
 
+// Encode encodes SearchTracksViaDetailsApplicationJSONInternalServerError as json.
+func (s *SearchTracksViaDetailsApplicationJSONInternalServerError) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes SearchTracksViaDetailsApplicationJSONInternalServerError from json.
+func (s *SearchTracksViaDetailsApplicationJSONInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode SearchTracksViaDetailsApplicationJSONInternalServerError to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = SearchTracksViaDetailsApplicationJSONInternalServerError(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *SearchTracksViaDetailsApplicationJSONInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *SearchTracksViaDetailsApplicationJSONInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes SearchTracksViaDetailsApplicationJSONUnauthorized as json.
 func (s *SearchTracksViaDetailsApplicationJSONUnauthorized) Encode(e *jx.Encoder) {
 	unwrapped := (*ErrorResponse)(s)

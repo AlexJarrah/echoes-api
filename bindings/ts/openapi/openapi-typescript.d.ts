@@ -406,8 +406,8 @@ export interface components {
          * Format: uint8
          * @description 0=Public: visible to everyone
          *     1=Friends: visible to the user's friends
-         *     1=BestFriends: visible to the user's best friends
-         *     1=Private: visible to only the user
+         *     2=BestFriends: visible to the user's best friends
+         *     3=Private: visible to only the user
          * @enum {integer}
          */
         UserVisibility: 0 | 1 | 2 | 3;
@@ -1276,6 +1276,7 @@ export interface operations {
             };
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     getCalendarListens: {

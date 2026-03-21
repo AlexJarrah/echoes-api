@@ -741,25 +741,26 @@ func (s InternalServerErrorTextPlain) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*InternalServerErrorTextPlain) addFriendRes()             {}
-func (*InternalServerErrorTextPlain) addToLibraryRes()          {}
-func (*InternalServerErrorTextPlain) getAlbumRes()              {}
-func (*InternalServerErrorTextPlain) getArtistRes()             {}
-func (*InternalServerErrorTextPlain) getLibraryMetadataRes()    {}
-func (*InternalServerErrorTextPlain) getListenSessionsRes()     {}
-func (*InternalServerErrorTextPlain) getRelationsRes()          {}
-func (*InternalServerErrorTextPlain) getTrackRes()              {}
-func (*InternalServerErrorTextPlain) getUserListenSessionsRes() {}
-func (*InternalServerErrorTextPlain) joinFreeBetaRes()          {}
-func (*InternalServerErrorTextPlain) registerRes()              {}
-func (*InternalServerErrorTextPlain) removeFriendRes()          {}
-func (*InternalServerErrorTextPlain) removeFromLibraryRes()     {}
-func (*InternalServerErrorTextPlain) setActivityRes()           {}
-func (*InternalServerErrorTextPlain) setBestFriendRes()         {}
-func (*InternalServerErrorTextPlain) setBlockedRes()            {}
-func (*InternalServerErrorTextPlain) signInRes()                {}
-func (*InternalServerErrorTextPlain) updateLibraryRes()         {}
-func (*InternalServerErrorTextPlain) updateUserRes()            {}
+func (*InternalServerErrorTextPlain) addFriendRes()              {}
+func (*InternalServerErrorTextPlain) addToLibraryRes()           {}
+func (*InternalServerErrorTextPlain) getAlbumRes()               {}
+func (*InternalServerErrorTextPlain) getArtistRes()              {}
+func (*InternalServerErrorTextPlain) getLibraryMetadataRes()     {}
+func (*InternalServerErrorTextPlain) getListenSessionsRes()      {}
+func (*InternalServerErrorTextPlain) getRelationsRes()           {}
+func (*InternalServerErrorTextPlain) getTrackRes()               {}
+func (*InternalServerErrorTextPlain) getUserListenSessionsRes()  {}
+func (*InternalServerErrorTextPlain) joinFreeBetaRes()           {}
+func (*InternalServerErrorTextPlain) registerRes()               {}
+func (*InternalServerErrorTextPlain) removeFriendRes()           {}
+func (*InternalServerErrorTextPlain) removeFromLibraryRes()      {}
+func (*InternalServerErrorTextPlain) searchTracksViaDetailsRes() {}
+func (*InternalServerErrorTextPlain) setActivityRes()            {}
+func (*InternalServerErrorTextPlain) setBestFriendRes()          {}
+func (*InternalServerErrorTextPlain) setBlockedRes()             {}
+func (*InternalServerErrorTextPlain) signInRes()                 {}
+func (*InternalServerErrorTextPlain) updateLibraryRes()          {}
+func (*InternalServerErrorTextPlain) updateUserRes()             {}
 
 type JoinFreeBetaApplicationJSONInternalServerError ErrorResponse
 
@@ -2885,6 +2886,10 @@ type SearchTracksViaDetailsApplicationJSONBadRequest ErrorResponse
 
 func (*SearchTracksViaDetailsApplicationJSONBadRequest) searchTracksViaDetailsRes() {}
 
+type SearchTracksViaDetailsApplicationJSONInternalServerError ErrorResponse
+
+func (*SearchTracksViaDetailsApplicationJSONInternalServerError) searchTracksViaDetailsRes() {}
+
 type SearchTracksViaDetailsApplicationJSONUnauthorized ErrorResponse
 
 func (*SearchTracksViaDetailsApplicationJSONUnauthorized) searchTracksViaDetailsRes() {}
@@ -3855,8 +3860,8 @@ func (UserRelation) AllValues() []UserRelation {
 
 // 0=Public: visible to everyone
 // 1=Friends: visible to the user's friends
-// 1=BestFriends: visible to the user's best friends
-// 1=Private: visible to only the user.
+// 2=BestFriends: visible to the user's best friends
+// 3=Private: visible to only the user.
 // Ref: #/components/schemas/UserVisibility
 type UserVisibility uint8
 

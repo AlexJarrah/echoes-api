@@ -7,8 +7,8 @@ export type ClientOptions = {
 /**
  * 0=Public: visible to everyone
  * 1=Friends: visible to the user's friends
- * 1=BestFriends: visible to the user's best friends
- * 1=Private: visible to only the user
+ * 2=BestFriends: visible to the user's best friends
+ * 3=Private: visible to only the user
  *
  */
 export type UserVisibility = 0 | 1 | 2 | 3;
@@ -888,6 +888,10 @@ export type SearchTracksViaDetailsErrors = {
      * Unauthorized
      */
     401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
 };
 
 export type SearchTracksViaDetailsError = SearchTracksViaDetailsErrors[keyof SearchTracksViaDetailsErrors];
