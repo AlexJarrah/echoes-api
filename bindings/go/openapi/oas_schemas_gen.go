@@ -661,7 +661,33 @@ func (s GetCalendarListensOK) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetCalendarListensOK) getCalendarListensRes() {}
+// GetCalendarListensOKHeaders wraps GetCalendarListensOK with response headers.
+type GetCalendarListensOKHeaders struct {
+	ContentDisposition string
+	Response           GetCalendarListensOK
+}
+
+// GetContentDisposition returns the value of ContentDisposition.
+func (s *GetCalendarListensOKHeaders) GetContentDisposition() string {
+	return s.ContentDisposition
+}
+
+// GetResponse returns the value of Response.
+func (s *GetCalendarListensOKHeaders) GetResponse() GetCalendarListensOK {
+	return s.Response
+}
+
+// SetContentDisposition sets the value of ContentDisposition.
+func (s *GetCalendarListensOKHeaders) SetContentDisposition(val string) {
+	s.ContentDisposition = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetCalendarListensOKHeaders) SetResponse(val GetCalendarListensOK) {
+	s.Response = val
+}
+
+func (*GetCalendarListensOKHeaders) getCalendarListensRes() {}
 
 type GetLibraryMetadataApplicationJSONInternalServerError ErrorResponse
 

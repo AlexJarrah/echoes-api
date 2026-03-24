@@ -1299,10 +1299,11 @@ export interface operations {
             /** @description Calendar ICS file */
             200: {
                 headers: {
+                    "Content-Disposition": string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "text/calendar": string;
+                    "text/calendar; charset=utf-8": string;
                 };
             };
             400: components["responses"]["BadRequest"];
