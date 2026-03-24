@@ -639,6 +639,10 @@ type GetCalendarListensApplicationJSONForbidden ErrorResponse
 
 func (*GetCalendarListensApplicationJSONForbidden) getCalendarListensRes() {}
 
+type GetCalendarListensApplicationJSONInternalServerError ErrorResponse
+
+func (*GetCalendarListensApplicationJSONInternalServerError) getCalendarListensRes() {}
+
 type GetCalendarListensApplicationJSONNotFound ErrorResponse
 
 func (*GetCalendarListensApplicationJSONNotFound) getCalendarListensRes() {}
@@ -745,6 +749,7 @@ func (*InternalServerErrorTextPlain) addFriendRes()              {}
 func (*InternalServerErrorTextPlain) addToLibraryRes()           {}
 func (*InternalServerErrorTextPlain) getAlbumRes()               {}
 func (*InternalServerErrorTextPlain) getArtistRes()              {}
+func (*InternalServerErrorTextPlain) getCalendarListensRes()     {}
 func (*InternalServerErrorTextPlain) getLibraryMetadataRes()     {}
 func (*InternalServerErrorTextPlain) getListenSessionsRes()      {}
 func (*InternalServerErrorTextPlain) getRelationsRes()           {}

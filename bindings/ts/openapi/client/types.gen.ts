@@ -939,6 +939,10 @@ export type GetCalendarListensErrors = {
      * Not found
      */
     404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
 };
 
 export type GetCalendarListensError = GetCalendarListensErrors[keyof GetCalendarListensErrors];
