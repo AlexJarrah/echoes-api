@@ -6,6 +6,7 @@ info:
 servers:
   - url: https://getechoes.com
     description: Production server.
+    x-ogen-server-name: Production
 
 components:
   securitySchemes:
