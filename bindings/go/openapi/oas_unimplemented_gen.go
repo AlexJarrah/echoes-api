@@ -59,6 +59,15 @@ func (UnimplementedHandler) GetCalendarListens(ctx context.Context, params GetCa
 	return r, ht.ErrNotImplemented
 }
 
+// GetFriends implements getFriends operation.
+//
+// Get friends.
+//
+// GET /api/friends
+func (UnimplementedHandler) GetFriends(ctx context.Context) (r GetFriendsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetLibraryMetadata implements getLibraryMetadata operation.
 //
 // Get library metadata.

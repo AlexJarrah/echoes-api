@@ -39,6 +39,12 @@ type Handler interface {
 	//
 	// GET /api/{user_id}/calendar/listens
 	GetCalendarListens(ctx context.Context, params GetCalendarListensParams) (GetCalendarListensRes, error)
+	// GetFriends implements getFriends operation.
+	//
+	// Get friends.
+	//
+	// GET /api/friends
+	GetFriends(ctx context.Context) (GetFriendsRes, error)
 	// GetLibraryMetadata implements getLibraryMetadata operation.
 	//
 	// Get library metadata.

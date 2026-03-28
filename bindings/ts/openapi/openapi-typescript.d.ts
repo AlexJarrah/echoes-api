@@ -313,6 +313,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/friends": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get friends */
+        get: operations["getFriends"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/add-friend": {
         parameters: {
             query?: never;
@@ -523,6 +540,24 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at?: string | null;
+        };
+        Friend: {
+            /** Format: uuid */
+            user_id: string;
+            name: string;
+            handle: string;
+            relation: components["schemas"]["UserRelation"];
+            statistics?: {
+                /** Format: uint64 */
+                year_listens: number;
+                /** Format: uint64 */
+                year_seconds: number;
+                /** Format: uint16 */
+                listening_streak: number;
+            };
+            activity?: {
+                listens: components["schemas"]["Listen"][] | null;
+            };
         };
         Relation: {
             /** Format: uuid */
@@ -1440,6 +1475,28 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getFriends: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Friends retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Friend"][];
+                };
             };
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];

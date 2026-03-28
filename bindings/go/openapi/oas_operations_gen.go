@@ -11,6 +11,7 @@ const (
 	GetAlbumOperation               OperationName = "GetAlbum"
 	GetArtistOperation              OperationName = "GetArtist"
 	GetCalendarListensOperation     OperationName = "GetCalendarListens"
+	GetFriendsOperation             OperationName = "GetFriends"
 	GetLibraryMetadataOperation     OperationName = "GetLibraryMetadata"
 	GetListenSessionsOperation      OperationName = "GetListenSessions"
 	GetRelationsOperation           OperationName = "GetRelations"

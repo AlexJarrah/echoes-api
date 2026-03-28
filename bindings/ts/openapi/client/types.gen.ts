@@ -102,6 +102,21 @@ export type Listen = {
     updated_at?: string | null;
 };
 
+export type Friend = {
+    user_id: string;
+    name: string;
+    handle: string;
+    relation: UserRelation;
+    statistics?: {
+        year_listens: number;
+        year_seconds: number;
+        listening_streak: number;
+    };
+    activity?: {
+        listens: Array<Listen> | null;
+    };
+};
+
 export type Relation = {
     source_id: string;
     target_id: string;
@@ -1129,6 +1144,35 @@ export type JoinFreeBetaResponses = {
 };
 
 export type JoinFreeBetaResponse = JoinFreeBetaResponses[keyof JoinFreeBetaResponses];
+
+export type GetFriendsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/friends';
+};
+
+export type GetFriendsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetFriendsError = GetFriendsErrors[keyof GetFriendsErrors];
+
+export type GetFriendsResponses = {
+    /**
+     * Friends retrieved successfully
+     */
+    200: Array<Friend>;
+};
+
+export type GetFriendsResponse = GetFriendsResponses[keyof GetFriendsResponses];
 
 export type AddFriendData = {
     body: FriendActionRequest;

@@ -39,6 +39,7 @@ var operationRolesCookieAuth = map[string][]string{
 	AddToLibraryOperation:           []string{},
 	GetAlbumOperation:               []string{},
 	GetArtistOperation:              []string{},
+	GetFriendsOperation:             []string{},
 	GetLibraryMetadataOperation:     []string{},
 	GetListenSessionsOperation:      []string{},
 	GetRelationsOperation:           []string{},
