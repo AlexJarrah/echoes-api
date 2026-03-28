@@ -207,7 +207,7 @@ func (UnimplementedHandler) UpdateLibrary(ctx context.Context, req *LibraryUpdat
 //
 // Update user profile.
 //
-// POST /api/update-user
+// POST /api/user/update
 func (UnimplementedHandler) UpdateUser(ctx context.Context, req *UpdateUserRequest) (r UpdateUserRes, _ error) {
 	return r, ht.ErrNotImplemented
 }

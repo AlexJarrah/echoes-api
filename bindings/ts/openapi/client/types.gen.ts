@@ -1043,7 +1043,7 @@ export type UpdateUserData = {
     body: UpdateUserRequest;
     path?: never;
     query?: never;
-    url: '/api/update-user';
+    url: '/api/user/update';
 };
 
 export type UpdateUserErrors = {

@@ -262,7 +262,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/update-user": {
+    "/api/user/update": {
         parameters: {
             query?: never;
             header?: never;

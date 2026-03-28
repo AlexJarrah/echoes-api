@@ -242,7 +242,7 @@ export const updateUser = <ThrowOnError extends boolean = false>(options: Option
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/update-user',
+    url: '/api/user/update',
     ...options,
     headers: {
         'Content-Type': 'application/json',

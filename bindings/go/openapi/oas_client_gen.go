@@ -218,7 +218,7 @@ type Invoker interface {
 	//
 	// Update user profile.
 	//
-	// POST /api/update-user
+	// POST /api/user/update
 	UpdateUser(ctx context.Context, request *UpdateUserRequest, options ...RequestOption) (UpdateUserRes, error)
 	// ValidateToken invokes validateToken operation.
 	//
@@ -3193,7 +3193,7 @@ func (c *Client) sendUpdateLibrary(ctx context.Context, request *LibraryUpdateRe
 //
 // Update user profile.
 //
-// POST /api/update-user
+// POST /api/user/update
 func (c *Client) UpdateUser(ctx context.Context, request *UpdateUserRequest, options ...RequestOption) (UpdateUserRes, error) {
 	res, err := c.sendUpdateUser(ctx, request, options...)
 	return res, err
@@ -3212,7 +3212,7 @@ func (c *Client) sendUpdateUser(ctx context.Context, request *UpdateUserRequest,
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("updateUser"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.URLTemplateKey.String("/api/update-user"),
+		semconv.URLTemplateKey.String("/api/user/update"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3256,7 +3256,7 @@ func (c *Client) sendUpdateUser(ctx context.Context, request *UpdateUserRequest,
 	}
 	u = uri.Clone(u)
 	var pathParts [1]string
-	pathParts[0] = "/api/update-user"
+	pathParts[0] = "/api/user/update"
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"

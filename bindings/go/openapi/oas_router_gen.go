@@ -758,9 +758,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				}
 
 				elem = origElem
-			case 'u': // Prefix: "u"
+			case 'u': // Prefix: "user/"
 				origElem := elem
-				if l := len("u"); len(elem) >= l && elem[0:l] == "u" {
+				if l := len("user/"); len(elem) >= l && elem[0:l] == "user/" {
 					elem = elem[l:]
 				} else {
 					break
@@ -770,34 +770,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					break
 				}
 				switch elem[0] {
-				case 'p': // Prefix: "pdate-user"
+				case 'd': // Prefix: "details"
 
-					if l := len("pdate-user"); len(elem) >= l && elem[0:l] == "pdate-user" {
-						elem = elem[l:]
-					} else {
-						break
-					}
-
-					if len(elem) == 0 {
-						// Leaf node.
-						switch r.Method {
-						case "POST":
-							s.handleUpdateUserRequest([0]string{}, elemIsEscaped, w, r)
-						default:
-							s.notAllowed(w, r, notAllowedParams{
-								allowedMethods: "POST",
-								allowedHeaders: rn38AllowedHeaders,
-								acceptPost:     "application/json",
-								acceptPatch:    "",
-							})
-						}
-
-						return
-					}
-
-				case 's': // Prefix: "ser/details"
-
-					if l := len("ser/details"); len(elem) >= l && elem[0:l] == "ser/details" {
+					if l := len("details"); len(elem) >= l && elem[0:l] == "details" {
 						elem = elem[l:]
 					} else {
 						break
@@ -813,6 +788,31 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 								allowedMethods: "GET",
 								allowedHeaders: nil,
 								acceptPost:     "",
+								acceptPatch:    "",
+							})
+						}
+
+						return
+					}
+
+				case 'u': // Prefix: "update"
+
+					if l := len("update"); len(elem) >= l && elem[0:l] == "update" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "POST":
+							s.handleUpdateUserRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, notAllowedParams{
+								allowedMethods: "POST",
+								allowedHeaders: rn38AllowedHeaders,
+								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
 						}
@@ -1634,9 +1634,9 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 				}
 
 				elem = origElem
-			case 'u': // Prefix: "u"
+			case 'u': // Prefix: "user/"
 				origElem := elem
-				if l := len("u"); len(elem) >= l && elem[0:l] == "u" {
+				if l := len("user/"); len(elem) >= l && elem[0:l] == "user/" {
 					elem = elem[l:]
 				} else {
 					break
@@ -1646,34 +1646,9 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 					break
 				}
 				switch elem[0] {
-				case 'p': // Prefix: "pdate-user"
+				case 'd': // Prefix: "details"
 
-					if l := len("pdate-user"); len(elem) >= l && elem[0:l] == "pdate-user" {
-						elem = elem[l:]
-					} else {
-						break
-					}
-
-					if len(elem) == 0 {
-						// Leaf node.
-						switch method {
-						case "POST":
-							r.name = UpdateUserOperation
-							r.summary = "Update user profile"
-							r.operationID = "updateUser"
-							r.operationGroup = ""
-							r.pathPattern = "/api/update-user"
-							r.args = args
-							r.count = 0
-							return r, true
-						default:
-							return
-						}
-					}
-
-				case 's': // Prefix: "ser/details"
-
-					if l := len("ser/details"); len(elem) >= l && elem[0:l] == "ser/details" {
+					if l := len("details"); len(elem) >= l && elem[0:l] == "details" {
 						elem = elem[l:]
 					} else {
 						break
@@ -1688,6 +1663,31 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 							r.operationID = "getUserDetails"
 							r.operationGroup = ""
 							r.pathPattern = "/api/user/details"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+
+				case 'u': // Prefix: "update"
+
+					if l := len("update"); len(elem) >= l && elem[0:l] == "update" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch method {
+						case "POST":
+							r.name = UpdateUserOperation
+							r.summary = "Update user profile"
+							r.operationID = "updateUser"
+							r.operationGroup = ""
+							r.pathPattern = "/api/user/update"
 							r.args = args
 							r.count = 0
 							return r, true

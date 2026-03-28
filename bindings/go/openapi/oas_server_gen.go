@@ -139,7 +139,7 @@ type Handler interface {
 	//
 	// Update user profile.
 	//
-	// POST /api/update-user
+	// POST /api/user/update
 	UpdateUser(ctx context.Context, req *UpdateUserRequest) (UpdateUserRes, error)
 	// ValidateToken implements validateToken operation.
 	//

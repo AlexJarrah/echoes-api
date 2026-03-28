@@ -3796,14 +3796,14 @@ func (s *Server) handleUpdateLibraryRequest(args [0]string, argsEscaped bool, w 
 //
 // Update user profile.
 //
-// POST /api/update-user
+// POST /api/user/update
 func (s *Server) handleUpdateUserRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("updateUser"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/update-user"),
+		semconv.HTTPRouteKey.String("/api/user/update"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
