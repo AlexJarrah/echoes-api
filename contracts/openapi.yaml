@@ -263,12 +263,13 @@ components:
           format: date-time
           nullable: true
 
-    Friend:
+    RelationDetails:
       type: object
       required:
         - user_id
         - name
         - handle
+        - visibility
         - relation
       properties:
         user_id:
@@ -276,10 +277,21 @@ components:
           format: uuid
         name:
           type: string
+        visibility:
+          $ref: "#/components/schemas/UserVisibility"
         handle:
           type: string
         relation:
           $ref: "#/components/schemas/UserRelation"
+        activity:
+          type: object
+          required:
+            - listens
+          properties:
+            listens:
+              type: array
+              items:
+                $ref: "#/components/schemas/Listen"
         statistics:
           type: object
           required:
@@ -296,16 +308,6 @@ components:
             listening_streak:
               type: integer
               format: uint16
-        activity:
-          type: object
-          required:
-            - listens
-          properties:
-            listens:
-              type: array
-              nullable: true
-              items:
-                $ref: "#/components/schemas/Listen"
 
     Relation:
       type: object
@@ -1622,28 +1624,6 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  /api/friends:
-    get:
-      summary: Get friends
-      operationId: getFriends
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: Friends retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Friend"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
   /api/add-friend:
     post:
       summary: Add a friend
@@ -1777,6 +1757,28 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Relation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/relations/details:
+    get:
+      summary: Get user relations with visible activity details
+      operationId: getRelationsDetails
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Relations details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RelationDetails"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "500":

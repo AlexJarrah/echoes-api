@@ -21,16 +21,16 @@ type GetCalendarListensRes interface {
 	getCalendarListensRes()
 }
 
-type GetFriendsRes interface {
-	getFriendsRes()
-}
-
 type GetLibraryMetadataRes interface {
 	getLibraryMetadataRes()
 }
 
 type GetListenSessionsRes interface {
 	getListenSessionsRes()
+}
+
+type GetRelationsDetailsRes interface {
+	getRelationsDetailsRes()
 }
 
 type GetRelationsRes interface {

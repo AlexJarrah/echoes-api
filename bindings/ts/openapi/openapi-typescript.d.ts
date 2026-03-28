@@ -313,23 +313,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/friends": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get friends */
-        get: operations["getFriends"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/add-friend": {
         parameters: {
             query?: never;
@@ -407,6 +390,23 @@ export interface paths {
         };
         /** Get user relations */
         get: operations["getRelations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/relations/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user relations with visible activity details */
+        get: operations["getRelationsDetails"];
         put?: never;
         post?: never;
         delete?: never;
@@ -541,12 +541,16 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
-        Friend: {
+        RelationDetails: {
             /** Format: uuid */
             user_id: string;
             name: string;
+            visibility: components["schemas"]["UserVisibility"];
             handle: string;
             relation: components["schemas"]["UserRelation"];
+            activity?: {
+                listens: components["schemas"]["Listen"][];
+            };
             statistics?: {
                 /** Format: uint64 */
                 year_listens: number;
@@ -554,9 +558,6 @@ export interface components {
                 year_seconds: number;
                 /** Format: uint16 */
                 listening_streak: number;
-            };
-            activity?: {
-                listens: components["schemas"]["Listen"][] | null;
             };
         };
         Relation: {
@@ -1480,28 +1481,6 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    getFriends: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Friends retrieved successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Friend"][];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
     addFriend: {
         parameters: {
             query?: never;
@@ -1610,6 +1589,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Relation"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getRelationsDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Relations details retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RelationDetails"][];
                 };
             };
             401: components["responses"]["Unauthorized"];

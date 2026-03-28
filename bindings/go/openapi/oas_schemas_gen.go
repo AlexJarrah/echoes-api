@@ -569,76 +569,6 @@ func (*ForbiddenTextPlain) removeFriendRes()          {}
 func (*ForbiddenTextPlain) setBestFriendRes()         {}
 func (*ForbiddenTextPlain) setBlockedRes()            {}
 
-// Ref: #/components/schemas/Friend
-type Friend struct {
-	UserID     uuid.UUID           `json:"user_id"`
-	Name       string              `json:"name"`
-	Handle     string              `json:"handle"`
-	Relation   UserRelation        `json:"relation"`
-	Statistics OptFriendStatistics `json:"statistics"`
-	Activity   OptFriendActivity   `json:"activity"`
-}
-
-// GetUserID returns the value of UserID.
-func (s *Friend) GetUserID() uuid.UUID {
-	return s.UserID
-}
-
-// GetName returns the value of Name.
-func (s *Friend) GetName() string {
-	return s.Name
-}
-
-// GetHandle returns the value of Handle.
-func (s *Friend) GetHandle() string {
-	return s.Handle
-}
-
-// GetRelation returns the value of Relation.
-func (s *Friend) GetRelation() UserRelation {
-	return s.Relation
-}
-
-// GetStatistics returns the value of Statistics.
-func (s *Friend) GetStatistics() OptFriendStatistics {
-	return s.Statistics
-}
-
-// GetActivity returns the value of Activity.
-func (s *Friend) GetActivity() OptFriendActivity {
-	return s.Activity
-}
-
-// SetUserID sets the value of UserID.
-func (s *Friend) SetUserID(val uuid.UUID) {
-	s.UserID = val
-}
-
-// SetName sets the value of Name.
-func (s *Friend) SetName(val string) {
-	s.Name = val
-}
-
-// SetHandle sets the value of Handle.
-func (s *Friend) SetHandle(val string) {
-	s.Handle = val
-}
-
-// SetRelation sets the value of Relation.
-func (s *Friend) SetRelation(val UserRelation) {
-	s.Relation = val
-}
-
-// SetStatistics sets the value of Statistics.
-func (s *Friend) SetStatistics(val OptFriendStatistics) {
-	s.Statistics = val
-}
-
-// SetActivity sets the value of Activity.
-func (s *Friend) SetActivity(val OptFriendActivity) {
-	s.Activity = val
-}
-
 // Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the
 // target user.
 // Ref: #/components/schemas/FriendActionRequest
@@ -667,56 +597,6 @@ func (s *FriendActionRequest) SetID(val OptNilUUID) {
 // SetHandle sets the value of Handle.
 func (s *FriendActionRequest) SetHandle(val OptNilString) {
 	s.Handle = val
-}
-
-type FriendActivity struct {
-	Listens []Listen `json:"listens"`
-}
-
-// GetListens returns the value of Listens.
-func (s *FriendActivity) GetListens() []Listen {
-	return s.Listens
-}
-
-// SetListens sets the value of Listens.
-func (s *FriendActivity) SetListens(val []Listen) {
-	s.Listens = val
-}
-
-type FriendStatistics struct {
-	YearListens     uint64 `json:"year_listens"`
-	YearSeconds     uint64 `json:"year_seconds"`
-	ListeningStreak uint16 `json:"listening_streak"`
-}
-
-// GetYearListens returns the value of YearListens.
-func (s *FriendStatistics) GetYearListens() uint64 {
-	return s.YearListens
-}
-
-// GetYearSeconds returns the value of YearSeconds.
-func (s *FriendStatistics) GetYearSeconds() uint64 {
-	return s.YearSeconds
-}
-
-// GetListeningStreak returns the value of ListeningStreak.
-func (s *FriendStatistics) GetListeningStreak() uint16 {
-	return s.ListeningStreak
-}
-
-// SetYearListens sets the value of YearListens.
-func (s *FriendStatistics) SetYearListens(val uint64) {
-	s.YearListens = val
-}
-
-// SetYearSeconds sets the value of YearSeconds.
-func (s *FriendStatistics) SetYearSeconds(val uint64) {
-	s.YearSeconds = val
-}
-
-// SetListeningStreak sets the value of ListeningStreak.
-func (s *FriendStatistics) SetListeningStreak(val uint16) {
-	s.ListeningStreak = val
 }
 
 type GetAlbumApplicationJSONBadRequest ErrorResponse
@@ -809,18 +689,6 @@ func (s *GetCalendarListensOKHeaders) SetResponse(val GetCalendarListensOK) {
 
 func (*GetCalendarListensOKHeaders) getCalendarListensRes() {}
 
-type GetFriendsApplicationJSONInternalServerError ErrorResponse
-
-func (*GetFriendsApplicationJSONInternalServerError) getFriendsRes() {}
-
-type GetFriendsApplicationJSONUnauthorized ErrorResponse
-
-func (*GetFriendsApplicationJSONUnauthorized) getFriendsRes() {}
-
-type GetFriendsOKApplicationJSON []Friend
-
-func (*GetFriendsOKApplicationJSON) getFriendsRes() {}
-
 type GetLibraryMetadataApplicationJSONInternalServerError ErrorResponse
 
 func (*GetLibraryMetadataApplicationJSONInternalServerError) getLibraryMetadataRes() {}
@@ -848,6 +716,18 @@ func (*GetRelationsApplicationJSONInternalServerError) getRelationsRes() {}
 type GetRelationsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetRelationsApplicationJSONUnauthorized) getRelationsRes() {}
+
+type GetRelationsDetailsApplicationJSONInternalServerError ErrorResponse
+
+func (*GetRelationsDetailsApplicationJSONInternalServerError) getRelationsDetailsRes() {}
+
+type GetRelationsDetailsApplicationJSONUnauthorized ErrorResponse
+
+func (*GetRelationsDetailsApplicationJSONUnauthorized) getRelationsDetailsRes() {}
+
+type GetRelationsDetailsOKApplicationJSON []RelationDetails
+
+func (*GetRelationsDetailsOKApplicationJSON) getRelationsDetailsRes() {}
 
 type GetRelationsOKApplicationJSON []Relation
 
@@ -908,9 +788,9 @@ func (*InternalServerErrorTextPlain) addToLibraryRes()           {}
 func (*InternalServerErrorTextPlain) getAlbumRes()               {}
 func (*InternalServerErrorTextPlain) getArtistRes()              {}
 func (*InternalServerErrorTextPlain) getCalendarListensRes()     {}
-func (*InternalServerErrorTextPlain) getFriendsRes()             {}
 func (*InternalServerErrorTextPlain) getLibraryMetadataRes()     {}
 func (*InternalServerErrorTextPlain) getListenSessionsRes()      {}
+func (*InternalServerErrorTextPlain) getRelationsDetailsRes()    {}
 func (*InternalServerErrorTextPlain) getRelationsRes()           {}
 func (*InternalServerErrorTextPlain) getTrackRes()               {}
 func (*InternalServerErrorTextPlain) getUserListenSessionsRes()  {}
@@ -2059,98 +1939,6 @@ func (o OptDateTime) Or(d time.Time) time.Time {
 	return d
 }
 
-// NewOptFriendActivity returns new OptFriendActivity with value set to v.
-func NewOptFriendActivity(v FriendActivity) OptFriendActivity {
-	return OptFriendActivity{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptFriendActivity is optional FriendActivity.
-type OptFriendActivity struct {
-	Value FriendActivity
-	Set   bool
-}
-
-// IsSet returns true if OptFriendActivity was set.
-func (o OptFriendActivity) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptFriendActivity) Reset() {
-	var v FriendActivity
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptFriendActivity) SetTo(v FriendActivity) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptFriendActivity) Get() (v FriendActivity, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptFriendActivity) Or(d FriendActivity) FriendActivity {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptFriendStatistics returns new OptFriendStatistics with value set to v.
-func NewOptFriendStatistics(v FriendStatistics) OptFriendStatistics {
-	return OptFriendStatistics{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptFriendStatistics is optional FriendStatistics.
-type OptFriendStatistics struct {
-	Value FriendStatistics
-	Set   bool
-}
-
-// IsSet returns true if OptFriendStatistics was set.
-func (o OptFriendStatistics) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptFriendStatistics) Reset() {
-	var v FriendStatistics
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptFriendStatistics) SetTo(v FriendStatistics) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptFriendStatistics) Get() (v FriendStatistics, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptFriendStatistics) Or(d FriendStatistics) FriendStatistics {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
 // NewOptInt64 returns new OptInt64 with value set to v.
 func NewOptInt64(v int64) OptInt64 {
 	return OptInt64{
@@ -2575,6 +2363,98 @@ func (o OptNilUint16) Or(d uint16) uint16 {
 	return d
 }
 
+// NewOptRelationDetailsActivity returns new OptRelationDetailsActivity with value set to v.
+func NewOptRelationDetailsActivity(v RelationDetailsActivity) OptRelationDetailsActivity {
+	return OptRelationDetailsActivity{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptRelationDetailsActivity is optional RelationDetailsActivity.
+type OptRelationDetailsActivity struct {
+	Value RelationDetailsActivity
+	Set   bool
+}
+
+// IsSet returns true if OptRelationDetailsActivity was set.
+func (o OptRelationDetailsActivity) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptRelationDetailsActivity) Reset() {
+	var v RelationDetailsActivity
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptRelationDetailsActivity) SetTo(v RelationDetailsActivity) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptRelationDetailsActivity) Get() (v RelationDetailsActivity, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptRelationDetailsActivity) Or(d RelationDetailsActivity) RelationDetailsActivity {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptRelationDetailsStatistics returns new OptRelationDetailsStatistics with value set to v.
+func NewOptRelationDetailsStatistics(v RelationDetailsStatistics) OptRelationDetailsStatistics {
+	return OptRelationDetailsStatistics{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptRelationDetailsStatistics is optional RelationDetailsStatistics.
+type OptRelationDetailsStatistics struct {
+	Value RelationDetailsStatistics
+	Set   bool
+}
+
+// IsSet returns true if OptRelationDetailsStatistics was set.
+func (o OptRelationDetailsStatistics) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptRelationDetailsStatistics) Reset() {
+	var v RelationDetailsStatistics
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptRelationDetailsStatistics) SetTo(v RelationDetailsStatistics) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptRelationDetailsStatistics) Get() (v RelationDetailsStatistics, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptRelationDetailsStatistics) Or(d RelationDetailsStatistics) RelationDetailsStatistics {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptString returns new OptString with value set to v.
 func NewOptString(v string) OptString {
 	return OptString{
@@ -2887,6 +2767,137 @@ func (s *Relation) SetUpdatedAt(val OptNilDateTime) {
 }
 
 func (*Relation) addFriendRes() {}
+
+// Ref: #/components/schemas/RelationDetails
+type RelationDetails struct {
+	UserID     uuid.UUID                    `json:"user_id"`
+	Name       string                       `json:"name"`
+	Visibility UserVisibility               `json:"visibility"`
+	Handle     string                       `json:"handle"`
+	Relation   UserRelation                 `json:"relation"`
+	Activity   OptRelationDetailsActivity   `json:"activity"`
+	Statistics OptRelationDetailsStatistics `json:"statistics"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *RelationDetails) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *RelationDetails) GetName() string {
+	return s.Name
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *RelationDetails) GetVisibility() UserVisibility {
+	return s.Visibility
+}
+
+// GetHandle returns the value of Handle.
+func (s *RelationDetails) GetHandle() string {
+	return s.Handle
+}
+
+// GetRelation returns the value of Relation.
+func (s *RelationDetails) GetRelation() UserRelation {
+	return s.Relation
+}
+
+// GetActivity returns the value of Activity.
+func (s *RelationDetails) GetActivity() OptRelationDetailsActivity {
+	return s.Activity
+}
+
+// GetStatistics returns the value of Statistics.
+func (s *RelationDetails) GetStatistics() OptRelationDetailsStatistics {
+	return s.Statistics
+}
+
+// SetUserID sets the value of UserID.
+func (s *RelationDetails) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *RelationDetails) SetName(val string) {
+	s.Name = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *RelationDetails) SetVisibility(val UserVisibility) {
+	s.Visibility = val
+}
+
+// SetHandle sets the value of Handle.
+func (s *RelationDetails) SetHandle(val string) {
+	s.Handle = val
+}
+
+// SetRelation sets the value of Relation.
+func (s *RelationDetails) SetRelation(val UserRelation) {
+	s.Relation = val
+}
+
+// SetActivity sets the value of Activity.
+func (s *RelationDetails) SetActivity(val OptRelationDetailsActivity) {
+	s.Activity = val
+}
+
+// SetStatistics sets the value of Statistics.
+func (s *RelationDetails) SetStatistics(val OptRelationDetailsStatistics) {
+	s.Statistics = val
+}
+
+type RelationDetailsActivity struct {
+	Listens []Listen `json:"listens"`
+}
+
+// GetListens returns the value of Listens.
+func (s *RelationDetailsActivity) GetListens() []Listen {
+	return s.Listens
+}
+
+// SetListens sets the value of Listens.
+func (s *RelationDetailsActivity) SetListens(val []Listen) {
+	s.Listens = val
+}
+
+type RelationDetailsStatistics struct {
+	YearListens     uint64 `json:"year_listens"`
+	YearSeconds     uint64 `json:"year_seconds"`
+	ListeningStreak uint16 `json:"listening_streak"`
+}
+
+// GetYearListens returns the value of YearListens.
+func (s *RelationDetailsStatistics) GetYearListens() uint64 {
+	return s.YearListens
+}
+
+// GetYearSeconds returns the value of YearSeconds.
+func (s *RelationDetailsStatistics) GetYearSeconds() uint64 {
+	return s.YearSeconds
+}
+
+// GetListeningStreak returns the value of ListeningStreak.
+func (s *RelationDetailsStatistics) GetListeningStreak() uint16 {
+	return s.ListeningStreak
+}
+
+// SetYearListens sets the value of YearListens.
+func (s *RelationDetailsStatistics) SetYearListens(val uint64) {
+	s.YearListens = val
+}
+
+// SetYearSeconds sets the value of YearSeconds.
+func (s *RelationDetailsStatistics) SetYearSeconds(val uint64) {
+	s.YearSeconds = val
+}
+
+// SetListeningStreak sets the value of ListeningStreak.
+func (s *RelationDetailsStatistics) SetListeningStreak(val uint16) {
+	s.ListeningStreak = val
+}
 
 type RemoveFriendApplicationJSONBadRequest ErrorResponse
 
@@ -3886,9 +3897,9 @@ func (*UnauthorizedTextPlain) addFriendRes()              {}
 func (*UnauthorizedTextPlain) addToLibraryRes()           {}
 func (*UnauthorizedTextPlain) getAlbumRes()               {}
 func (*UnauthorizedTextPlain) getArtistRes()              {}
-func (*UnauthorizedTextPlain) getFriendsRes()             {}
 func (*UnauthorizedTextPlain) getLibraryMetadataRes()     {}
 func (*UnauthorizedTextPlain) getListenSessionsRes()      {}
+func (*UnauthorizedTextPlain) getRelationsDetailsRes()    {}
 func (*UnauthorizedTextPlain) getRelationsRes()           {}
 func (*UnauthorizedTextPlain) getTrackRes()               {}
 func (*UnauthorizedTextPlain) getUserDetailsRes()         {}

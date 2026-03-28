@@ -59,15 +59,6 @@ func (UnimplementedHandler) GetCalendarListens(ctx context.Context, params GetCa
 	return r, ht.ErrNotImplemented
 }
 
-// GetFriends implements getFriends operation.
-//
-// Get friends.
-//
-// GET /api/friends
-func (UnimplementedHandler) GetFriends(ctx context.Context) (r GetFriendsRes, _ error) {
-	return r, ht.ErrNotImplemented
-}
-
 // GetLibraryMetadata implements getLibraryMetadata operation.
 //
 // Get library metadata.
@@ -92,6 +83,15 @@ func (UnimplementedHandler) GetListenSessions(ctx context.Context, req *ListensS
 //
 // GET /api/relations
 func (UnimplementedHandler) GetRelations(ctx context.Context) (r GetRelationsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetRelationsDetails implements getRelationsDetails operation.
+//
+// Get user relations with visible activity details.
+//
+// GET /api/relations/details
+func (UnimplementedHandler) GetRelationsDetails(ctx context.Context) (r GetRelationsDetailsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

@@ -26,7 +26,7 @@ var (
 	rn37AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn15AllowedHeaders = map[string]string{
+	rn14AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 	rn25AllowedHeaders = map[string]string{
@@ -269,32 +269,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				}
 
 				elem = origElem
-			case 'f': // Prefix: "friends"
-				origElem := elem
-				if l := len("friends"); len(elem) >= l && elem[0:l] == "friends" {
-					elem = elem[l:]
-				} else {
-					break
-				}
-
-				if len(elem) == 0 {
-					// Leaf node.
-					switch r.Method {
-					case "GET":
-						s.handleGetFriendsRequest([0]string{}, elemIsEscaped, w, r)
-					default:
-						s.notAllowed(w, r, notAllowedParams{
-							allowedMethods: "GET",
-							allowedHeaders: nil,
-							acceptPost:     "",
-							acceptPatch:    "",
-						})
-					}
-
-					return
-				}
-
-				elem = origElem
 			case 'j': // Prefix: "join-free-beta"
 				origElem := elem
 				if l := len("join-free-beta"); len(elem) >= l && elem[0:l] == "join-free-beta" {
@@ -463,7 +437,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn15AllowedHeaders,
+								allowedHeaders: rn14AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -521,7 +495,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					}
 
 					if len(elem) == 0 {
-						// Leaf node.
 						switch r.Method {
 						case "GET":
 							s.handleGetRelationsRequest([0]string{}, elemIsEscaped, w, r)
@@ -535,6 +508,33 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						}
 
 						return
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/details"
+
+						if l := len("/details"); len(elem) >= l && elem[0:l] == "/details" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							// Leaf node.
+							switch r.Method {
+							case "GET":
+								s.handleGetRelationsDetailsRequest([0]string{}, elemIsEscaped, w, r)
+							default:
+								s.notAllowed(w, r, notAllowedParams{
+									allowedMethods: "GET",
+									allowedHeaders: nil,
+									acceptPost:     "",
+									acceptPatch:    "",
+								})
+							}
+
+							return
+						}
+
 					}
 
 				case 'm': // Prefix: "move-friend"
@@ -1173,32 +1173,6 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 				}
 
 				elem = origElem
-			case 'f': // Prefix: "friends"
-				origElem := elem
-				if l := len("friends"); len(elem) >= l && elem[0:l] == "friends" {
-					elem = elem[l:]
-				} else {
-					break
-				}
-
-				if len(elem) == 0 {
-					// Leaf node.
-					switch method {
-					case "GET":
-						r.name = GetFriendsOperation
-						r.summary = "Get friends"
-						r.operationID = "getFriends"
-						r.operationGroup = ""
-						r.pathPattern = "/api/friends"
-						r.args = args
-						r.count = 0
-						return r, true
-					default:
-						return
-					}
-				}
-
-				elem = origElem
 			case 'j': // Prefix: "join-free-beta"
 				origElem := elem
 				if l := len("join-free-beta"); len(elem) >= l && elem[0:l] == "join-free-beta" {
@@ -1425,7 +1399,6 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 					}
 
 					if len(elem) == 0 {
-						// Leaf node.
 						switch method {
 						case "GET":
 							r.name = GetRelationsOperation
@@ -1439,6 +1412,33 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						default:
 							return
 						}
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/details"
+
+						if l := len("/details"); len(elem) >= l && elem[0:l] == "/details" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							// Leaf node.
+							switch method {
+							case "GET":
+								r.name = GetRelationsDetailsOperation
+								r.summary = "Get user relations with visible activity details"
+								r.operationID = "getRelationsDetails"
+								r.operationGroup = ""
+								r.pathPattern = "/api/relations/details"
+								r.args = args
+								r.count = 0
+								return r, true
+							default:
+								return
+							}
+						}
+
 					}
 
 				case 'm': // Prefix: "move-friend"

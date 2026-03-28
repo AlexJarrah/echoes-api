@@ -102,18 +102,19 @@ export type Listen = {
     updated_at?: string | null;
 };
 
-export type Friend = {
+export type RelationDetails = {
     user_id: string;
     name: string;
+    visibility: UserVisibility;
     handle: string;
     relation: UserRelation;
+    activity?: {
+        listens: Array<Listen>;
+    };
     statistics?: {
         year_listens: number;
         year_seconds: number;
         listening_streak: number;
-    };
-    activity?: {
-        listens: Array<Listen> | null;
     };
 };
 
@@ -1145,35 +1146,6 @@ export type JoinFreeBetaResponses = {
 
 export type JoinFreeBetaResponse = JoinFreeBetaResponses[keyof JoinFreeBetaResponses];
 
-export type GetFriendsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/friends';
-};
-
-export type GetFriendsErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetFriendsError = GetFriendsErrors[keyof GetFriendsErrors];
-
-export type GetFriendsResponses = {
-    /**
-     * Friends retrieved successfully
-     */
-    200: Array<Friend>;
-};
-
-export type GetFriendsResponse = GetFriendsResponses[keyof GetFriendsResponses];
-
 export type AddFriendData = {
     body: FriendActionRequest;
     path?: never;
@@ -1356,3 +1328,32 @@ export type GetRelationsResponses = {
 };
 
 export type GetRelationsResponse = GetRelationsResponses[keyof GetRelationsResponses];
+
+export type GetRelationsDetailsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/relations/details';
+};
+
+export type GetRelationsDetailsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetRelationsDetailsError = GetRelationsDetailsErrors[keyof GetRelationsDetailsErrors];
+
+export type GetRelationsDetailsResponses = {
+    /**
+     * Relations details retrieved successfully
+     */
+    200: Array<RelationDetails>;
+};
+
+export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
