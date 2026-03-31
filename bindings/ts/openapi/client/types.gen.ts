@@ -66,7 +66,6 @@ export type Artist = {
     user_id?: string | null;
     name: string;
     bio?: string | null;
-    image_ids?: string | null;
     musicbrainz_id?: string | null;
     spotify_url?: string | null;
     apple_music_url?: string | null;
@@ -83,7 +82,6 @@ export type Album = {
     name: string;
     release_date?: string | null;
     musicbrainz_id?: string | null;
-    image_ids?: string | null;
     spotify_url?: string | null;
     apple_music_url?: string | null;
     tidal_url?: string | null;
@@ -100,6 +98,16 @@ export type Listen = {
     method: ListenMethod;
     created_at: string;
     updated_at?: string | null;
+};
+
+export type EntityImage = {
+    listen_id?: number;
+    user_id?: string;
+    track_id?: string;
+    seconds?: number;
+    method?: ListenMethod;
+    created_at: string;
+    updated_at: string | null;
 };
 
 export type RelationDetails = {

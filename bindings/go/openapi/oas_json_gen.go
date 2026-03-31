@@ -360,12 +360,6 @@ func (s *Album) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.ImageIds.Set {
-			e.FieldStart("image_ids")
-			s.ImageIds.Encode(e)
-		}
-	}
-	{
 		if s.SpotifyURL.Set {
 			e.FieldStart("spotify_url")
 			s.SpotifyURL.Encode(e)
@@ -401,20 +395,19 @@ func (s *Album) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAlbum = [13]string{
+var jsonFieldsNameOfAlbum = [12]string{
 	0:  "album_id",
 	1:  "user_id",
 	2:  "base_album_id",
 	3:  "name",
 	4:  "release_date",
 	5:  "musicbrainz_id",
-	6:  "image_ids",
-	7:  "spotify_url",
-	8:  "apple_music_url",
-	9:  "tidal_url",
-	10: "youtube_music_url",
-	11: "created_at",
-	12: "updated_at",
+	6:  "spotify_url",
+	7:  "apple_music_url",
+	8:  "tidal_url",
+	9:  "youtube_music_url",
+	10: "created_at",
+	11: "updated_at",
 }
 
 // Decode decodes Album from json.
@@ -490,16 +483,6 @@ func (s *Album) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"musicbrainz_id\"")
 			}
-		case "image_ids":
-			if err := func() error {
-				s.ImageIds.Reset()
-				if err := s.ImageIds.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"image_ids\"")
-			}
 		case "spotify_url":
 			if err := func() error {
 				s.SpotifyURL.Reset()
@@ -541,7 +524,7 @@ func (s *Album) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"youtube_music_url\"")
 			}
 		case "created_at":
-			requiredBitSet[1] |= 1 << 3
+			requiredBitSet[1] |= 1 << 2
 			if err := func() error {
 				v, err := json.DecodeDateTime(d)
 				s.CreatedAt = v
@@ -573,7 +556,7 @@ func (s *Album) Decode(d *jx.Decoder) error {
 	var failures []validate.FieldError
 	for i, mask := range [2]uint8{
 		0b00001001,
-		0b00001000,
+		0b00000100,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -909,12 +892,6 @@ func (s *Artist) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.ImageIds.Set {
-			e.FieldStart("image_ids")
-			s.ImageIds.Encode(e)
-		}
-	}
-	{
 		if s.MusicbrainzID.Set {
 			e.FieldStart("musicbrainz_id")
 			s.MusicbrainzID.Encode(e)
@@ -956,19 +933,18 @@ func (s *Artist) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfArtist = [12]string{
+var jsonFieldsNameOfArtist = [11]string{
 	0:  "artist_id",
 	1:  "user_id",
 	2:  "name",
 	3:  "bio",
-	4:  "image_ids",
-	5:  "musicbrainz_id",
-	6:  "spotify_url",
-	7:  "apple_music_url",
-	8:  "tidal_url",
-	9:  "youtube_music_url",
-	10: "created_at",
-	11: "updated_at",
+	4:  "musicbrainz_id",
+	5:  "spotify_url",
+	6:  "apple_music_url",
+	7:  "tidal_url",
+	8:  "youtube_music_url",
+	9:  "created_at",
+	10: "updated_at",
 }
 
 // Decode decodes Artist from json.
@@ -1024,16 +1000,6 @@ func (s *Artist) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"bio\"")
 			}
-		case "image_ids":
-			if err := func() error {
-				s.ImageIds.Reset()
-				if err := s.ImageIds.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"image_ids\"")
-			}
 		case "musicbrainz_id":
 			if err := func() error {
 				s.MusicbrainzID.Reset()
@@ -1085,7 +1051,7 @@ func (s *Artist) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"youtube_music_url\"")
 			}
 		case "created_at":
-			requiredBitSet[1] |= 1 << 2
+			requiredBitSet[1] |= 1 << 1
 			if err := func() error {
 				v, err := json.DecodeDateTime(d)
 				s.CreatedAt = v
@@ -1117,7 +1083,7 @@ func (s *Artist) Decode(d *jx.Decoder) error {
 	var failures []validate.FieldError
 	for i, mask := range [2]uint8{
 		0b00000101,
-		0b00000100,
+		0b00000010,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.

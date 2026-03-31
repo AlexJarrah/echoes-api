@@ -49,7 +49,6 @@ type Album struct {
 	Name            string         `json:"name"`
 	ReleaseDate     OptNilDateTime `json:"release_date"`
 	MusicbrainzID   OptNilUUID     `json:"musicbrainz_id"`
-	ImageIds        OptNilString   `json:"image_ids"`
 	SpotifyURL      OptNilString   `json:"spotify_url"`
 	AppleMusicURL   OptNilString   `json:"apple_music_url"`
 	TidalURL        OptNilString   `json:"tidal_url"`
@@ -86,11 +85,6 @@ func (s *Album) GetReleaseDate() OptNilDateTime {
 // GetMusicbrainzID returns the value of MusicbrainzID.
 func (s *Album) GetMusicbrainzID() OptNilUUID {
 	return s.MusicbrainzID
-}
-
-// GetImageIds returns the value of ImageIds.
-func (s *Album) GetImageIds() OptNilString {
-	return s.ImageIds
 }
 
 // GetSpotifyURL returns the value of SpotifyURL.
@@ -151,11 +145,6 @@ func (s *Album) SetReleaseDate(val OptNilDateTime) {
 // SetMusicbrainzID sets the value of MusicbrainzID.
 func (s *Album) SetMusicbrainzID(val OptNilUUID) {
 	s.MusicbrainzID = val
-}
-
-// SetImageIds sets the value of ImageIds.
-func (s *Album) SetImageIds(val OptNilString) {
-	s.ImageIds = val
 }
 
 // SetSpotifyURL sets the value of SpotifyURL.
@@ -270,7 +259,6 @@ type Artist struct {
 	UserID          OptNilUUID     `json:"user_id"`
 	Name            string         `json:"name"`
 	Bio             OptNilString   `json:"bio"`
-	ImageIds        OptNilString   `json:"image_ids"`
 	MusicbrainzID   OptNilUUID     `json:"musicbrainz_id"`
 	SpotifyURL      OptNilString   `json:"spotify_url"`
 	AppleMusicURL   OptNilString   `json:"apple_music_url"`
@@ -298,11 +286,6 @@ func (s *Artist) GetName() string {
 // GetBio returns the value of Bio.
 func (s *Artist) GetBio() OptNilString {
 	return s.Bio
-}
-
-// GetImageIds returns the value of ImageIds.
-func (s *Artist) GetImageIds() OptNilString {
-	return s.ImageIds
 }
 
 // GetMusicbrainzID returns the value of MusicbrainzID.
@@ -358,11 +341,6 @@ func (s *Artist) SetName(val string) {
 // SetBio sets the value of Bio.
 func (s *Artist) SetBio(val OptNilString) {
 	s.Bio = val
-}
-
-// SetImageIds sets the value of ImageIds.
-func (s *Artist) SetImageIds(val OptNilString) {
-	s.ImageIds = val
 }
 
 // SetMusicbrainzID sets the value of MusicbrainzID.

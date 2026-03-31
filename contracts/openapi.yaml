@@ -153,9 +153,6 @@ components:
         bio:
           type: string
           nullable: true
-        image_ids:
-          type: string
-          nullable: true
         musicbrainz_id:
           type: string
           format: uuid
@@ -208,9 +205,6 @@ components:
           type: string
           format: uuid
           nullable: true
-        image_ids:
-          type: string
-          nullable: true
         spotify_url:
           type: string
           nullable: true
@@ -240,6 +234,37 @@ components:
         - seconds
         - method
         - created_at
+      properties:
+        listen_id:
+          type: integer
+          format: int64
+        user_id:
+          type: string
+          format: uuid
+        track_id:
+          type: string
+          format: uuid
+        seconds:
+          type: integer
+          format: uint16
+        method:
+          $ref: "#/components/schemas/ListenMethod"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    EntityImage:
+      type: object
+      required:
+        - entity_id
+        - image_id
+        - position
+        - created_at
+        - updated_at
       properties:
         listen_id:
           type: integer

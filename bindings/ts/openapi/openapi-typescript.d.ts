@@ -492,7 +492,6 @@ export interface components {
             user_id?: string | null;
             name: string;
             bio?: string | null;
-            image_ids?: string | null;
             /** Format: uuid */
             musicbrainz_id?: string | null;
             spotify_url?: string | null;
@@ -516,7 +515,6 @@ export interface components {
             release_date?: string | null;
             /** Format: uuid */
             musicbrainz_id?: string | null;
-            image_ids?: string | null;
             spotify_url?: string | null;
             apple_music_url?: string | null;
             tidal_url?: string | null;
@@ -540,6 +538,21 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at?: string | null;
+        };
+        EntityImage: {
+            /** Format: int64 */
+            listen_id?: number;
+            /** Format: uuid */
+            user_id?: string;
+            /** Format: uuid */
+            track_id?: string;
+            /** Format: uint16 */
+            seconds?: number;
+            method?: components["schemas"]["ListenMethod"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string | null;
         };
         RelationDetails: {
             /** Format: uuid */
