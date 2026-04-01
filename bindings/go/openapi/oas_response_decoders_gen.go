@@ -2435,85 +2435,127 @@ func decodeJoinFreeBetaResponse(resp *http.Response) (res JoinFreeBetaRes, _ err
 
 func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 	switch resp.StatusCode {
-	case 201:
-		// Code 201.
-		var wrapper RegisterCreated
-		h := uri.NewHeaderDecoder(resp.Header)
-		// Parse "Hx-Location" header.
-		{
-			cfg := uri.HeaderParameterDecodingConfig{
-				Name:    "Hx-Location",
-				Explode: false,
+	case 200:
+		// Code 200.
+		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		if err != nil {
+			return res, errors.Wrap(err, "parse media type")
+		}
+		switch {
+		case ct == "application/json":
+			buf, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return res, err
 			}
+			d := jx.DecodeBytes(buf)
+
+			var response User
 			if err := func() error {
-				if err := h.HasParam(cfg); err == nil {
-					if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
-						var wrapperDotHxLocationVal string
-						if err := func() error {
-							val, err := d.DecodeValue()
-							if err != nil {
-								return err
-							}
-
-							c, err := conv.ToString(val)
-							if err != nil {
-								return err
-							}
-
-							wrapperDotHxLocationVal = c
-							return nil
-						}(); err != nil {
-							return err
-						}
-						wrapper.HxLocation.SetTo(wrapperDotHxLocationVal)
-						return nil
-					}); err != nil {
-						return err
-					}
+				if err := response.Decode(d); err != nil {
+					return err
+				}
+				if err := d.Skip(); err != io.EOF {
+					return errors.New("unexpected trailing data")
 				}
 				return nil
 			}(); err != nil {
-				return res, errors.Wrap(err, "parse Hx-Location header")
+				err = &ogenerrors.DecodeBodyError{
+					ContentType: ct,
+					Body:        buf,
+					Err:         err,
+				}
+				return res, err
 			}
-		}
-		// Parse "Set-Cookie" header.
-		{
-			cfg := uri.HeaderParameterDecodingConfig{
-				Name:    "Set-Cookie",
-				Explode: false,
-			}
+			// Validate response.
 			if err := func() error {
-				if err := h.HasParam(cfg); err == nil {
-					if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
-						var wrapperDotSetCookieVal string
-						if err := func() error {
-							val, err := d.DecodeValue()
-							if err != nil {
-								return err
-							}
-
-							c, err := conv.ToString(val)
-							if err != nil {
-								return err
-							}
-
-							wrapperDotSetCookieVal = c
-							return nil
-						}(); err != nil {
-							return err
-						}
-						wrapper.SetCookie.SetTo(wrapperDotSetCookieVal)
-						return nil
-					}); err != nil {
-						return err
-					}
+				if err := response.Validate(); err != nil {
+					return err
 				}
 				return nil
 			}(); err != nil {
-				return res, errors.Wrap(err, "parse Set-Cookie header")
+				return res, errors.Wrap(err, "validate")
 			}
+			var wrapper UserHeaders
+			wrapper.Response = response
+			h := uri.NewHeaderDecoder(resp.Header)
+			// Parse "Hx-Location" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Hx-Location",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotHxLocationVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotHxLocationVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.HxLocation.SetTo(wrapperDotHxLocationVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Hx-Location header")
+				}
+			}
+			// Parse "Set-Cookie" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Set-Cookie",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotSetCookieVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotSetCookieVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.SetCookie.SetTo(wrapperDotSetCookieVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Set-Cookie header")
+				}
+			}
+			return &wrapper, nil
+		default:
+			return res, validate.InvalidContentType(ct)
 		}
-		return &wrapper, nil
 	case 400:
 		// Code 400.
 		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
@@ -3673,83 +3715,125 @@ func decodeSignInResponse(resp *http.Response) (res SignInRes, _ error) {
 	switch resp.StatusCode {
 	case 200:
 		// Code 200.
-		var wrapper SignInOK
-		h := uri.NewHeaderDecoder(resp.Header)
-		// Parse "Hx-Location" header.
-		{
-			cfg := uri.HeaderParameterDecodingConfig{
-				Name:    "Hx-Location",
-				Explode: false,
+		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		if err != nil {
+			return res, errors.Wrap(err, "parse media type")
+		}
+		switch {
+		case ct == "application/json":
+			buf, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return res, err
 			}
+			d := jx.DecodeBytes(buf)
+
+			var response User
 			if err := func() error {
-				if err := h.HasParam(cfg); err == nil {
-					if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
-						var wrapperDotHxLocationVal string
-						if err := func() error {
-							val, err := d.DecodeValue()
-							if err != nil {
-								return err
-							}
-
-							c, err := conv.ToString(val)
-							if err != nil {
-								return err
-							}
-
-							wrapperDotHxLocationVal = c
-							return nil
-						}(); err != nil {
-							return err
-						}
-						wrapper.HxLocation.SetTo(wrapperDotHxLocationVal)
-						return nil
-					}); err != nil {
-						return err
-					}
+				if err := response.Decode(d); err != nil {
+					return err
+				}
+				if err := d.Skip(); err != io.EOF {
+					return errors.New("unexpected trailing data")
 				}
 				return nil
 			}(); err != nil {
-				return res, errors.Wrap(err, "parse Hx-Location header")
+				err = &ogenerrors.DecodeBodyError{
+					ContentType: ct,
+					Body:        buf,
+					Err:         err,
+				}
+				return res, err
 			}
-		}
-		// Parse "Set-Cookie" header.
-		{
-			cfg := uri.HeaderParameterDecodingConfig{
-				Name:    "Set-Cookie",
-				Explode: false,
-			}
+			// Validate response.
 			if err := func() error {
-				if err := h.HasParam(cfg); err == nil {
-					if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
-						var wrapperDotSetCookieVal string
-						if err := func() error {
-							val, err := d.DecodeValue()
-							if err != nil {
-								return err
-							}
-
-							c, err := conv.ToString(val)
-							if err != nil {
-								return err
-							}
-
-							wrapperDotSetCookieVal = c
-							return nil
-						}(); err != nil {
-							return err
-						}
-						wrapper.SetCookie.SetTo(wrapperDotSetCookieVal)
-						return nil
-					}); err != nil {
-						return err
-					}
+				if err := response.Validate(); err != nil {
+					return err
 				}
 				return nil
 			}(); err != nil {
-				return res, errors.Wrap(err, "parse Set-Cookie header")
+				return res, errors.Wrap(err, "validate")
 			}
+			var wrapper UserHeaders
+			wrapper.Response = response
+			h := uri.NewHeaderDecoder(resp.Header)
+			// Parse "Hx-Location" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Hx-Location",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotHxLocationVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotHxLocationVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.HxLocation.SetTo(wrapperDotHxLocationVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Hx-Location header")
+				}
+			}
+			// Parse "Set-Cookie" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Set-Cookie",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotSetCookieVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotSetCookieVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.SetCookie.SetTo(wrapperDotSetCookieVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Set-Cookie header")
+				}
+			}
+			return &wrapper, nil
+		default:
+			return res, validate.InvalidContentType(ct)
 		}
-		return &wrapper, nil
 	case 400:
 		// Code 400.
 		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))

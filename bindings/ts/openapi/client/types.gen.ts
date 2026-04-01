@@ -101,11 +101,9 @@ export type Listen = {
 };
 
 export type EntityImage = {
-    listen_id?: number;
-    user_id?: string;
-    track_id?: string;
-    seconds?: number;
-    method?: ListenMethod;
+    entity_id: number;
+    image_id: string;
+    position: string;
     created_at: string;
     updated_at: string | null;
 };
@@ -1033,8 +1031,10 @@ export type RegisterResponses = {
     /**
      * User created successfully
      */
-    201: unknown;
+    200: User;
 };
+
+export type RegisterResponse = RegisterResponses[keyof RegisterResponses];
 
 export type SignInData = {
     body: SignInRequest;
@@ -1060,8 +1060,10 @@ export type SignInResponses = {
     /**
      * Sign in successful
      */
-    200: unknown;
+    200: User;
 };
+
+export type SignInResponse = SignInResponses[keyof SignInResponses];
 
 export type UpdateUserData = {
     body: UpdateUserRequest;

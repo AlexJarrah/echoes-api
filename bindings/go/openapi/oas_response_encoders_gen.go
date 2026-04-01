@@ -1504,7 +1504,16 @@ func encodeJoinFreeBetaResponse(response JoinFreeBetaRes, w http.ResponseWriter,
 
 func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *RegisterCreated:
+	case *UserHeaders:
+		if err := func() error {
+			if err := response.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			return errors.Wrap(err, "validate")
+		}
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Header().Set("Access-Control-Expose-Headers", "Hx-Location,Set-Cookie")
 		// Encoding response headers.
 		{
@@ -1540,8 +1549,14 @@ func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span tr
 				}
 			}
 		}
-		w.WriteHeader(201)
-		span.SetStatus(codes.Ok, http.StatusText(201))
+		w.WriteHeader(200)
+		span.SetStatus(codes.Ok, http.StatusText(200))
+
+		e := new(jx.Encoder)
+		response.Response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
 
 		return nil
 
@@ -2317,7 +2332,16 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 
 func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *SignInOK:
+	case *UserHeaders:
+		if err := func() error {
+			if err := response.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			return errors.Wrap(err, "validate")
+		}
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Header().Set("Access-Control-Expose-Headers", "Hx-Location,Set-Cookie")
 		// Encoding response headers.
 		{
@@ -2355,6 +2379,12 @@ func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.
 		}
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
+
+		e := new(jx.Encoder)
+		response.Response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
 
 		return nil
 

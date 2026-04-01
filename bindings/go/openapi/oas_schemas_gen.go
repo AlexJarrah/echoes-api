@@ -2629,34 +2629,6 @@ type RegisterApplicationJSONInternalServerError ErrorResponse
 
 func (*RegisterApplicationJSONInternalServerError) registerRes() {}
 
-// RegisterCreated is response for Register operation.
-type RegisterCreated struct {
-	HxLocation OptString
-	SetCookie  OptString
-}
-
-// GetHxLocation returns the value of HxLocation.
-func (s *RegisterCreated) GetHxLocation() OptString {
-	return s.HxLocation
-}
-
-// GetSetCookie returns the value of SetCookie.
-func (s *RegisterCreated) GetSetCookie() OptString {
-	return s.SetCookie
-}
-
-// SetHxLocation sets the value of HxLocation.
-func (s *RegisterCreated) SetHxLocation(val OptString) {
-	s.HxLocation = val
-}
-
-// SetSetCookie sets the value of SetCookie.
-func (s *RegisterCreated) SetSetCookie(val OptString) {
-	s.SetCookie = val
-}
-
-func (*RegisterCreated) registerRes() {}
-
 // Ref: #/components/schemas/RegisterRequest
 type RegisterRequest struct {
 	// 2+ Unicode letters, spaces allowed.
@@ -3628,34 +3600,6 @@ type SignInApplicationJSONInternalServerError ErrorResponse
 
 func (*SignInApplicationJSONInternalServerError) signInRes() {}
 
-// SignInOK is response for SignIn operation.
-type SignInOK struct {
-	HxLocation OptString
-	SetCookie  OptString
-}
-
-// GetHxLocation returns the value of HxLocation.
-func (s *SignInOK) GetHxLocation() OptString {
-	return s.HxLocation
-}
-
-// GetSetCookie returns the value of SetCookie.
-func (s *SignInOK) GetSetCookie() OptString {
-	return s.SetCookie
-}
-
-// SetHxLocation sets the value of HxLocation.
-func (s *SignInOK) SetHxLocation(val OptString) {
-	s.HxLocation = val
-}
-
-// SetSetCookie sets the value of SetCookie.
-func (s *SignInOK) SetSetCookie(val OptString) {
-	s.SetCookie = val
-}
-
-func (*SignInOK) signInRes() {}
-
 // Ref: #/components/schemas/SignInRequest
 type SignInRequest struct {
 	Email    string `json:"email"`
@@ -4073,6 +4017,46 @@ func (s *User) SetUpdatedAt(val OptNilDateTime) {
 }
 
 func (*User) getUserDetailsRes() {}
+
+// UserHeaders wraps User with response headers.
+type UserHeaders struct {
+	HxLocation OptString
+	SetCookie  OptString
+	Response   User
+}
+
+// GetHxLocation returns the value of HxLocation.
+func (s *UserHeaders) GetHxLocation() OptString {
+	return s.HxLocation
+}
+
+// GetSetCookie returns the value of SetCookie.
+func (s *UserHeaders) GetSetCookie() OptString {
+	return s.SetCookie
+}
+
+// GetResponse returns the value of Response.
+func (s *UserHeaders) GetResponse() User {
+	return s.Response
+}
+
+// SetHxLocation sets the value of HxLocation.
+func (s *UserHeaders) SetHxLocation(val OptString) {
+	s.HxLocation = val
+}
+
+// SetSetCookie sets the value of SetCookie.
+func (s *UserHeaders) SetSetCookie(val OptString) {
+	s.SetCookie = val
+}
+
+// SetResponse sets the value of Response.
+func (s *UserHeaders) SetResponse(val User) {
+	s.Response = val
+}
+
+func (*UserHeaders) registerRes() {}
+func (*UserHeaders) signInRes()   {}
 
 // 0=Friend: users are friends
 // 1=BestFriend: source user set target user as a best friend

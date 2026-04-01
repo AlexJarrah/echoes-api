@@ -541,14 +541,10 @@ export interface components {
         };
         EntityImage: {
             /** Format: int64 */
-            listen_id?: number;
+            entity_id: number;
             /** Format: uuid */
-            user_id?: string;
-            /** Format: uuid */
-            track_id?: string;
-            /** Format: uint16 */
-            seconds?: number;
-            method?: components["schemas"]["ListenMethod"];
+            image_id: string;
+            position: string;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -1388,7 +1384,7 @@ export interface operations {
         };
         responses: {
             /** @description User created successfully */
-            201: {
+            200: {
                 headers: {
                     /** @description Redirect location */
                     "Hx-Location"?: string;
@@ -1396,7 +1392,9 @@ export interface operations {
                     "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
             };
             400: components["responses"]["BadRequest"];
             409: components["responses"]["Conflict"];
@@ -1425,7 +1423,9 @@ export interface operations {
                     "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
             };
             400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
