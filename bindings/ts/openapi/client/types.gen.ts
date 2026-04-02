@@ -24,6 +24,14 @@ export type UserVisibility = 0 | 1 | 2 | 3;
 export type ListenMethod = 0 | 1 | 2 | 3 | 4;
 
 /**
+ * 0=Google
+ * 1=Spotify
+ * 2=Last
+ *
+ */
+export type IntegrationProvider = 0 | 1 | 2;
+
+/**
  * 0=Friend: users are friends
  * 1=BestFriend: source user set target user as a best friend
  * 2=OutgoingRequest: source user has an outgoing friend request
@@ -128,6 +136,14 @@ export type Relation = {
     source_id: string;
     target_id: string;
     relation: UserRelation;
+    updated_at?: string | null;
+};
+
+export type Integration = {
+    user_id: string;
+    provider: IntegrationProvider;
+    details: string;
+    created_at: string;
     updated_at?: string | null;
 };
 
@@ -1126,6 +1142,35 @@ export type GetUserDetailsResponses = {
 };
 
 export type GetUserDetailsResponse = GetUserDetailsResponses[keyof GetUserDetailsResponses];
+
+export type GetUserIntegrationsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/integrations';
+};
+
+export type GetUserIntegrationsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserIntegrationsError = GetUserIntegrationsErrors[keyof GetUserIntegrationsErrors];
+
+export type GetUserIntegrationsResponses = {
+    /**
+     * User integration details
+     */
+    200: Array<Integration>;
+};
+
+export type GetUserIntegrationsResponse = GetUserIntegrationsResponses[keyof GetUserIntegrationsResponses];
 
 export type JoinFreeBetaData = {
     body?: never;

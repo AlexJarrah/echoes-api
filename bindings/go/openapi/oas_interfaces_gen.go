@@ -45,6 +45,10 @@ type GetUserDetailsRes interface {
 	getUserDetailsRes()
 }
 
+type GetUserIntegrationsRes interface {
+	getUserIntegrationsRes()
+}
+
 type GetUserListenSessionsRes interface {
 	getUserListenSessionsRes()
 }

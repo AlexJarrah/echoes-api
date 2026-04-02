@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -260,6 +260,19 @@ export const getUserDetails = <ThrowOnError extends boolean = false>(options?: O
             type: 'apiKey'
         }],
     url: '/api/user/details',
+    ...options
+});
+
+/**
+ * Get user integration details
+ */
+export const getUserIntegrations = <ThrowOnError extends boolean = false>(options?: Options<GetUserIntegrationsData, ThrowOnError>) => (options?.client ?? client).get<GetUserIntegrationsResponses, GetUserIntegrationsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/user/integrations',
     ...options
 });
 

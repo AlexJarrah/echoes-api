@@ -17,6 +17,7 @@ const (
 	GetRelationsDetailsOperation    OperationName = "GetRelationsDetails"
 	GetTrackOperation               OperationName = "GetTrack"
 	GetUserDetailsOperation         OperationName = "GetUserDetails"
+	GetUserIntegrationsOperation    OperationName = "GetUserIntegrations"
 	GetUserListenSessionsOperation  OperationName = "GetUserListenSessions"
 	JoinFreeBetaOperation           OperationName = "JoinFreeBeta"
 	RegisterOperation               OperationName = "Register"

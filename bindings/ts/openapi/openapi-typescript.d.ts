@@ -296,6 +296,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/user/integrations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user integration details */
+        get: operations["getUserIntegrations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/join-free-beta": {
         parameters: {
             query?: never;
@@ -440,6 +457,14 @@ export interface components {
         ListenMethod: 0 | 1 | 2 | 3 | 4;
         /**
          * Format: uint8
+         * @description 0=Google
+         *     1=Spotify
+         *     2=Last
+         * @enum {integer}
+         */
+        IntegrationProvider: 0 | 1 | 2;
+        /**
+         * Format: uint8
          * @description 0=Friend: users are friends
          *     1=BestFriend: source user set target user as a best friend
          *     2=OutgoingRequest: source user has an outgoing friend request
@@ -575,6 +600,16 @@ export interface components {
             /** Format: uuid */
             target_id: string;
             relation: components["schemas"]["UserRelation"];
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        Integration: {
+            /** Format: uuid */
+            user_id: string;
+            provider: components["schemas"]["IntegrationProvider"];
+            details: string;
+            /** Format: date-time */
+            created_at: string;
             /** Format: date-time */
             updated_at?: string | null;
         };
@@ -1470,6 +1505,28 @@ export interface operations {
                 };
             };
             401: components["responses"]["Unauthorized"];
+        };
+    };
+    getUserIntegrations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User integration details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Integration"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
         };
     };
     joinFreeBeta: {

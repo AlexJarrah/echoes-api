@@ -113,6 +113,15 @@ func (UnimplementedHandler) GetUserDetails(ctx context.Context) (r GetUserDetail
 	return r, ht.ErrNotImplemented
 }
 
+// GetUserIntegrations implements getUserIntegrations operation.
+//
+// Get user integration details.
+//
+// GET /api/user/integrations
+func (UnimplementedHandler) GetUserIntegrations(ctx context.Context) (r GetUserIntegrationsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetUserListenSessions implements getUserListenSessions operation.
 //
 // Get listen sessions for another user.

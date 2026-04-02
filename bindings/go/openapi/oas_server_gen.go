@@ -75,6 +75,12 @@ type Handler interface {
 	//
 	// GET /api/user/details
 	GetUserDetails(ctx context.Context) (GetUserDetailsRes, error)
+	// GetUserIntegrations implements getUserIntegrations operation.
+	//
+	// Get user integration details.
+	//
+	// GET /api/user/integrations
+	GetUserIntegrations(ctx context.Context) (GetUserIntegrationsRes, error)
 	// GetUserListenSessions implements getUserListenSessions operation.
 	//
 	// Get listen sessions for another user.

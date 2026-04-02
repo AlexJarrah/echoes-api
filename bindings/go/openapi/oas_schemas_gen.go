@@ -727,6 +727,18 @@ type GetTrackApplicationJSONUnauthorized ErrorResponse
 
 func (*GetTrackApplicationJSONUnauthorized) getTrackRes() {}
 
+type GetUserIntegrationsApplicationJSONInternalServerError ErrorResponse
+
+func (*GetUserIntegrationsApplicationJSONInternalServerError) getUserIntegrationsRes() {}
+
+type GetUserIntegrationsApplicationJSONUnauthorized ErrorResponse
+
+func (*GetUserIntegrationsApplicationJSONUnauthorized) getUserIntegrationsRes() {}
+
+type GetUserIntegrationsOKApplicationJSON []Integration
+
+func (*GetUserIntegrationsOKApplicationJSON) getUserIntegrationsRes() {}
+
 type GetUserListenSessionsApplicationJSONBadRequest ErrorResponse
 
 func (*GetUserListenSessionsApplicationJSONBadRequest) getUserListenSessionsRes() {}
@@ -746,6 +758,86 @@ func (*GetUserListenSessionsApplicationJSONNotFound) getUserListenSessionsRes() 
 type GetUserListenSessionsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetUserListenSessionsApplicationJSONUnauthorized) getUserListenSessionsRes() {}
+
+// Ref: #/components/schemas/Integration
+type Integration struct {
+	UserID    uuid.UUID           `json:"user_id"`
+	Provider  IntegrationProvider `json:"provider"`
+	Details   string              `json:"details"`
+	CreatedAt time.Time           `json:"created_at"`
+	UpdatedAt OptNilDateTime      `json:"updated_at"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *Integration) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetProvider returns the value of Provider.
+func (s *Integration) GetProvider() IntegrationProvider {
+	return s.Provider
+}
+
+// GetDetails returns the value of Details.
+func (s *Integration) GetDetails() string {
+	return s.Details
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Integration) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Integration) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetUserID sets the value of UserID.
+func (s *Integration) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetProvider sets the value of Provider.
+func (s *Integration) SetProvider(val IntegrationProvider) {
+	s.Provider = val
+}
+
+// SetDetails sets the value of Details.
+func (s *Integration) SetDetails(val string) {
+	s.Details = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Integration) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Integration) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+// 0=Google
+// 1=Spotify
+// 2=Last.
+// Ref: #/components/schemas/IntegrationProvider
+type IntegrationProvider uint8
+
+const (
+	IntegrationProvider0 IntegrationProvider = 0
+	IntegrationProvider1 IntegrationProvider = 1
+	IntegrationProvider2 IntegrationProvider = 2
+)
+
+// AllValues returns all IntegrationProvider values.
+func (IntegrationProvider) AllValues() []IntegrationProvider {
+	return []IntegrationProvider{
+		IntegrationProvider0,
+		IntegrationProvider1,
+		IntegrationProvider2,
+	}
+}
 
 type InternalServerErrorTextPlain struct {
 	Data io.Reader
@@ -771,6 +863,7 @@ func (*InternalServerErrorTextPlain) getListenSessionsRes()      {}
 func (*InternalServerErrorTextPlain) getRelationsDetailsRes()    {}
 func (*InternalServerErrorTextPlain) getRelationsRes()           {}
 func (*InternalServerErrorTextPlain) getTrackRes()               {}
+func (*InternalServerErrorTextPlain) getUserIntegrationsRes()    {}
 func (*InternalServerErrorTextPlain) getUserListenSessionsRes()  {}
 func (*InternalServerErrorTextPlain) joinFreeBetaRes()           {}
 func (*InternalServerErrorTextPlain) registerRes()               {}
@@ -3825,6 +3918,7 @@ func (*UnauthorizedTextPlain) getRelationsDetailsRes()    {}
 func (*UnauthorizedTextPlain) getRelationsRes()           {}
 func (*UnauthorizedTextPlain) getTrackRes()               {}
 func (*UnauthorizedTextPlain) getUserDetailsRes()         {}
+func (*UnauthorizedTextPlain) getUserIntegrationsRes()    {}
 func (*UnauthorizedTextPlain) getUserListenSessionsRes()  {}
 func (*UnauthorizedTextPlain) joinFreeBetaRes()           {}
 func (*UnauthorizedTextPlain) removeFriendRes()           {}

@@ -38,6 +38,15 @@ components:
         3=AppleMusic: listen was imported from Apple Music
         4=Last: listen was imported from Last
 
+    IntegrationProvider:
+      type: integer
+      format: uint8
+      enum: [0, 1, 2]
+      description: |
+        0=Google
+        1=Spotify
+        2=Last
+
     UserRelation:
       type: integer
       format: uint8
@@ -343,6 +352,29 @@ components:
           format: uuid
         relation:
           $ref: "#/components/schemas/UserRelation"
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    Integration:
+      type: object
+      required:
+        - user_id
+        - provider
+        - details
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        provider:
+          $ref: "#/components/schemas/IntegrationProvider"
+        details:
+          type: string
+        created_at:
+          type: string
+          format: date-time
         updated_at:
           type: string
           format: date-time
@@ -1629,6 +1661,28 @@ paths:
                 $ref: "#/components/schemas/User"
         "401":
           $ref: "#/components/responses/Unauthorized"
+
+  /api/user/integrations:
+    get:
+      summary: Get user integration details
+      operationId: getUserIntegrations
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: User integration details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Integration"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/join-free-beta:
     post:
