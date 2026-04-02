@@ -380,6 +380,26 @@ components:
           format: date-time
           nullable: true
 
+    IntegrationMetadata:
+      type: object
+      required:
+        - user_id
+        - provider
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        provider:
+          $ref: "#/components/schemas/IntegrationProvider"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
     RegisterRequest:
       type: object
       required:
@@ -1678,7 +1698,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Integration"
+                  $ref: "#/components/schemas/IntegrationMetadata"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "500":

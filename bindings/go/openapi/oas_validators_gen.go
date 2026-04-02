@@ -60,7 +60,7 @@ func (s GetRelationsOKApplicationJSON) Validate() error {
 }
 
 func (s GetUserIntegrationsOKApplicationJSON) Validate() error {
-	alias := ([]Integration)(s)
+	alias := ([]IntegrationMetadata)(s)
 	if alias == nil {
 		return errors.New("nil is invalid value")
 	}
@@ -84,7 +84,7 @@ func (s GetUserIntegrationsOKApplicationJSON) Validate() error {
 	return nil
 }
 
-func (s *Integration) Validate() error {
+func (s *IntegrationMetadata) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}

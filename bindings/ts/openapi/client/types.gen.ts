@@ -147,6 +147,13 @@ export type Integration = {
     updated_at?: string | null;
 };
 
+export type IntegrationMetadata = {
+    user_id: string;
+    provider: IntegrationProvider;
+    created_at: string;
+    updated_at?: string | null;
+};
+
 export type RegisterRequest = {
     /**
      * 2+ Unicode letters, spaces allowed
@@ -1167,7 +1174,7 @@ export type GetUserIntegrationsResponses = {
     /**
      * User integration details
      */
-    200: Array<Integration>;
+    200: Array<IntegrationMetadata>;
 };
 
 export type GetUserIntegrationsResponse = GetUserIntegrationsResponses[keyof GetUserIntegrationsResponses];

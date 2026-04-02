@@ -2659,7 +2659,7 @@ func (s *GetUserIntegrationsApplicationJSONUnauthorized) UnmarshalJSON(data []by
 
 // Encode encodes GetUserIntegrationsOKApplicationJSON as json.
 func (s GetUserIntegrationsOKApplicationJSON) Encode(e *jx.Encoder) {
-	unwrapped := []Integration(s)
+	unwrapped := []IntegrationMetadata(s)
 
 	e.ArrStart()
 	for _, elem := range unwrapped {
@@ -2673,11 +2673,11 @@ func (s *GetUserIntegrationsOKApplicationJSON) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode GetUserIntegrationsOKApplicationJSON to nil")
 	}
-	var unwrapped []Integration
+	var unwrapped []IntegrationMetadata
 	if err := func() error {
-		unwrapped = make([]Integration, 0)
+		unwrapped = make([]IntegrationMetadata, 0)
 		if err := d.Arr(func(d *jx.Decoder) error {
-			var elem Integration
+			var elem IntegrationMetadata
 			if err := elem.Decode(d); err != nil {
 				return err
 			}
@@ -2898,14 +2898,14 @@ func (s *GetUserListenSessionsApplicationJSONUnauthorized) UnmarshalJSON(data []
 }
 
 // Encode implements json.Marshaler.
-func (s *Integration) Encode(e *jx.Encoder) {
+func (s *IntegrationMetadata) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *Integration) encodeFields(e *jx.Encoder) {
+func (s *IntegrationMetadata) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("user_id")
 		json.EncodeUUID(e, s.UserID)
@@ -2913,10 +2913,6 @@ func (s *Integration) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("provider")
 		s.Provider.Encode(e)
-	}
-	{
-		e.FieldStart("details")
-		e.Str(s.Details)
 	}
 	{
 		e.FieldStart("created_at")
@@ -2930,18 +2926,17 @@ func (s *Integration) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfIntegration = [5]string{
+var jsonFieldsNameOfIntegrationMetadata = [4]string{
 	0: "user_id",
 	1: "provider",
-	2: "details",
-	3: "created_at",
-	4: "updated_at",
+	2: "created_at",
+	3: "updated_at",
 }
 
-// Decode decodes Integration from json.
-func (s *Integration) Decode(d *jx.Decoder) error {
+// Decode decodes IntegrationMetadata from json.
+func (s *IntegrationMetadata) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode Integration to nil")
+		return errors.New("invalid: unable to decode IntegrationMetadata to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -2969,20 +2964,8 @@ func (s *Integration) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"provider\"")
 			}
-		case "details":
-			requiredBitSet[0] |= 1 << 2
-			if err := func() error {
-				v, err := d.Str()
-				s.Details = string(v)
-				if err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"details\"")
-			}
 		case "created_at":
-			requiredBitSet[0] |= 1 << 3
+			requiredBitSet[0] |= 1 << 2
 			if err := func() error {
 				v, err := json.DecodeDateTime(d)
 				s.CreatedAt = v
@@ -3008,12 +2991,12 @@ func (s *Integration) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode Integration")
+		return errors.Wrap(err, "decode IntegrationMetadata")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
 	for i, mask := range [1]uint8{
-		0b00001111,
+		0b00000111,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -3025,8 +3008,8 @@ func (s *Integration) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfIntegration) {
-					name = jsonFieldsNameOfIntegration[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfIntegrationMetadata) {
+					name = jsonFieldsNameOfIntegrationMetadata[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -3047,14 +3030,14 @@ func (s *Integration) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *Integration) MarshalJSON() ([]byte, error) {
+func (s *IntegrationMetadata) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *Integration) UnmarshalJSON(data []byte) error {
+func (s *IntegrationMetadata) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

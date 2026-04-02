@@ -735,7 +735,7 @@ type GetUserIntegrationsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetUserIntegrationsApplicationJSONUnauthorized) getUserIntegrationsRes() {}
 
-type GetUserIntegrationsOKApplicationJSON []Integration
+type GetUserIntegrationsOKApplicationJSON []IntegrationMetadata
 
 func (*GetUserIntegrationsOKApplicationJSON) getUserIntegrationsRes() {}
 
@@ -759,62 +759,51 @@ type GetUserListenSessionsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetUserListenSessionsApplicationJSONUnauthorized) getUserListenSessionsRes() {}
 
-// Ref: #/components/schemas/Integration
-type Integration struct {
+// Ref: #/components/schemas/IntegrationMetadata
+type IntegrationMetadata struct {
 	UserID    uuid.UUID           `json:"user_id"`
 	Provider  IntegrationProvider `json:"provider"`
-	Details   string              `json:"details"`
 	CreatedAt time.Time           `json:"created_at"`
 	UpdatedAt OptNilDateTime      `json:"updated_at"`
 }
 
 // GetUserID returns the value of UserID.
-func (s *Integration) GetUserID() uuid.UUID {
+func (s *IntegrationMetadata) GetUserID() uuid.UUID {
 	return s.UserID
 }
 
 // GetProvider returns the value of Provider.
-func (s *Integration) GetProvider() IntegrationProvider {
+func (s *IntegrationMetadata) GetProvider() IntegrationProvider {
 	return s.Provider
 }
 
-// GetDetails returns the value of Details.
-func (s *Integration) GetDetails() string {
-	return s.Details
-}
-
 // GetCreatedAt returns the value of CreatedAt.
-func (s *Integration) GetCreatedAt() time.Time {
+func (s *IntegrationMetadata) GetCreatedAt() time.Time {
 	return s.CreatedAt
 }
 
 // GetUpdatedAt returns the value of UpdatedAt.
-func (s *Integration) GetUpdatedAt() OptNilDateTime {
+func (s *IntegrationMetadata) GetUpdatedAt() OptNilDateTime {
 	return s.UpdatedAt
 }
 
 // SetUserID sets the value of UserID.
-func (s *Integration) SetUserID(val uuid.UUID) {
+func (s *IntegrationMetadata) SetUserID(val uuid.UUID) {
 	s.UserID = val
 }
 
 // SetProvider sets the value of Provider.
-func (s *Integration) SetProvider(val IntegrationProvider) {
+func (s *IntegrationMetadata) SetProvider(val IntegrationProvider) {
 	s.Provider = val
 }
 
-// SetDetails sets the value of Details.
-func (s *Integration) SetDetails(val string) {
-	s.Details = val
-}
-
 // SetCreatedAt sets the value of CreatedAt.
-func (s *Integration) SetCreatedAt(val time.Time) {
+func (s *IntegrationMetadata) SetCreatedAt(val time.Time) {
 	s.CreatedAt = val
 }
 
 // SetUpdatedAt sets the value of UpdatedAt.
-func (s *Integration) SetUpdatedAt(val OptNilDateTime) {
+func (s *IntegrationMetadata) SetUpdatedAt(val OptNilDateTime) {
 	s.UpdatedAt = val
 }
 

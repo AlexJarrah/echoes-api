@@ -613,6 +613,15 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
+        IntegrationMetadata: {
+            /** Format: uuid */
+            user_id: string;
+            provider: components["schemas"]["IntegrationProvider"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
         RegisterRequest: {
             /** @description 2+ Unicode letters, spaces allowed */
             name: string;
@@ -1522,7 +1531,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Integration"][];
+                    "application/json": components["schemas"]["IntegrationMetadata"][];
                 };
             };
             401: components["responses"]["Unauthorized"];
