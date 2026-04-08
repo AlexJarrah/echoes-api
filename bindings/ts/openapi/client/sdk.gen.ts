@@ -2,9 +2,9 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
-export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
+export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
      * You can provide a client instance returned by `createClient()` instead of
      * individual options. This might be also useful if you want to implement a
@@ -382,3 +382,18 @@ export const getRelationsDetails = <ThrowOnError extends boolean = false>(option
     url: '/api/relations/details',
     ...options
 });
+
+/**
+ * Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+ */
+export const getGlobalTopAlbums = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopAlbumsData, ThrowOnError>) => (options?.client ?? client).get<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError>({ url: '/api/statistics/global/top/albums', ...options });
+
+/**
+ * Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+ */
+export const getGlobalTopTracks = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopTracksData, ThrowOnError>) => (options?.client ?? client).get<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError>({ url: '/api/statistics/global/top/tracks', ...options });
+
+/**
+ * Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+ */
+export const getGlobalTopArtists = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopArtistsData, ThrowOnError>) => (options?.client ?? client).get<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError>({ url: '/api/statistics/global/top/artists', ...options });

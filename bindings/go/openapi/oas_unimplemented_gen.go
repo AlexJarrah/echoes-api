@@ -59,6 +59,36 @@ func (UnimplementedHandler) GetCalendarListens(ctx context.Context, params GetCa
 	return r, ht.ErrNotImplemented
 }
 
+// GetGlobalTopAlbums implements getGlobalTopAlbums operation.
+//
+// Get global top albums in the specified time range. Time range values default to the range of the
+// previous full week starting on Friday.
+//
+// GET /api/statistics/global/top/albums
+func (UnimplementedHandler) GetGlobalTopAlbums(ctx context.Context, params GetGlobalTopAlbumsParams) (r GetGlobalTopAlbumsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetGlobalTopArtists implements getGlobalTopArtists operation.
+//
+// Get global top artists in the specified time range. Time range values default to the range of the
+// previous full week starting on Friday.
+//
+// GET /api/statistics/global/top/artists
+func (UnimplementedHandler) GetGlobalTopArtists(ctx context.Context, params GetGlobalTopArtistsParams) (r GetGlobalTopArtistsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetGlobalTopTracks implements getGlobalTopTracks operation.
+//
+// Get global top tracks in the specified time range. Time range values default to the range of the
+// previous full week starting on Friday.
+//
+// GET /api/statistics/global/top/tracks
+func (UnimplementedHandler) GetGlobalTopTracks(ctx context.Context, params GetGlobalTopTracksParams) (r GetGlobalTopTracksRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetLibraryMetadata implements getLibraryMetadata operation.
 //
 // Get library metadata.

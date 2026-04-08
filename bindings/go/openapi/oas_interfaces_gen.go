@@ -21,6 +21,18 @@ type GetCalendarListensRes interface {
 	getCalendarListensRes()
 }
 
+type GetGlobalTopAlbumsRes interface {
+	getGlobalTopAlbumsRes()
+}
+
+type GetGlobalTopArtistsRes interface {
+	getGlobalTopArtistsRes()
+}
+
+type GetGlobalTopTracksRes interface {
+	getGlobalTopTracksRes()
+}
+
 type GetLibraryMetadataRes interface {
 	getLibraryMetadataRes()
 }

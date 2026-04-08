@@ -362,6 +362,44 @@ export type ListensSessionsRequest = {
     limit?: number;
 };
 
+export type TopEntityPlays = {
+    count: number;
+    /**
+     * Play duration in seconds
+     */
+    duration: number;
+};
+
+export type TopAlbumEntry = {
+    id: string;
+    rank: number;
+    album: Album;
+    artists: Array<Artist>;
+    current: TopEntityPlays;
+    previous?: TopEntityPlays;
+    change?: TopEntityPlays;
+};
+
+export type TopTrackEntry = {
+    id: string;
+    rank: number;
+    track: Track;
+    album: Album;
+    artists: Array<Artist>;
+    current: TopEntityPlays;
+    previous?: TopEntityPlays;
+    change?: TopEntityPlays;
+};
+
+export type TopArtistEntry = {
+    id: string;
+    rank: number;
+    artists: Array<Artist>;
+    current: TopEntityPlays;
+    previous?: TopEntityPlays;
+    change?: TopEntityPlays;
+};
+
 export type SessionListen = {
     /**
      * Unique identifier for this listen event.
@@ -1419,3 +1457,117 @@ export type GetRelationsDetailsResponses = {
 };
 
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
+
+export type GetGlobalTopAlbumsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Start timestamp for the time range
+         */
+        start?: string;
+        /**
+         * End timestamp for the time range
+         */
+        end?: string;
+        /**
+         * Maximum number of results to return
+         */
+        limit?: number;
+    };
+    url: '/api/statistics/global/top/albums';
+};
+
+export type GetGlobalTopAlbumsErrors = {
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGlobalTopAlbumsError = GetGlobalTopAlbumsErrors[keyof GetGlobalTopAlbumsErrors];
+
+export type GetGlobalTopAlbumsResponses = {
+    /**
+     * Top albums returned successfully
+     */
+    200: Array<TopAlbumEntry>;
+};
+
+export type GetGlobalTopAlbumsResponse = GetGlobalTopAlbumsResponses[keyof GetGlobalTopAlbumsResponses];
+
+export type GetGlobalTopTracksData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Start timestamp for the time range
+         */
+        start?: string;
+        /**
+         * End timestamp for the time range
+         */
+        end?: string;
+        /**
+         * Maximum number of results to return
+         */
+        limit?: number;
+    };
+    url: '/api/statistics/global/top/tracks';
+};
+
+export type GetGlobalTopTracksErrors = {
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGlobalTopTracksError = GetGlobalTopTracksErrors[keyof GetGlobalTopTracksErrors];
+
+export type GetGlobalTopTracksResponses = {
+    /**
+     * Top tracks returned successfully
+     */
+    200: Array<TopTrackEntry>;
+};
+
+export type GetGlobalTopTracksResponse = GetGlobalTopTracksResponses[keyof GetGlobalTopTracksResponses];
+
+export type GetGlobalTopArtistsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Start timestamp for the time range
+         */
+        start?: string;
+        /**
+         * End timestamp for the time range
+         */
+        end?: string;
+        /**
+         * Maximum number of results to return
+         */
+        limit?: number;
+    };
+    url: '/api/statistics/global/top/artists';
+};
+
+export type GetGlobalTopArtistsErrors = {
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGlobalTopArtistsError = GetGlobalTopArtistsErrors[keyof GetGlobalTopArtistsErrors];
+
+export type GetGlobalTopArtistsResponses = {
+    /**
+     * Top artists returned successfully
+     */
+    200: Array<TopArtistEntry>;
+};
+
+export type GetGlobalTopArtistsResponse = GetGlobalTopArtistsResponses[keyof GetGlobalTopArtistsResponses];

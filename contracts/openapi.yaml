@@ -856,6 +856,104 @@ components:
           default: 1000
           description: Maximum amount of listens to be fetched.
 
+    TopEntityPlays:
+      type: object
+      required:
+        - count
+        - duration
+      properties:
+        count:
+          type: integer
+          format: uint64
+        duration:
+          type: integer
+          format: uint64
+          description: Play duration in seconds
+
+    TopAlbumEntry:
+      type: object
+      required:
+        - id
+        - rank
+        - album
+        - artists
+        - current
+      properties:
+        id:
+          type: string
+          format: uuid
+        rank:
+          type: integer
+          format: uint
+        album:
+          $ref: "#/components/schemas/Album"
+        artists:
+          type: array
+          items:
+            $ref: "#/components/schemas/Artist"
+        current:
+          $ref: "#/components/schemas/TopEntityPlays"
+        previous:
+          $ref: "#/components/schemas/TopEntityPlays"
+        change:
+          $ref: "#/components/schemas/TopEntityPlays"
+
+    TopTrackEntry:
+      type: object
+      required:
+        - id
+        - rank
+        - track
+        - album
+        - artists
+        - current
+      properties:
+        id:
+          type: string
+          format: uuid
+        rank:
+          type: integer
+          format: uint
+        track:
+          $ref: "#/components/schemas/Track"
+        album:
+          $ref: "#/components/schemas/Album"
+        artists:
+          type: array
+          items:
+            $ref: "#/components/schemas/Artist"
+        current:
+          $ref: "#/components/schemas/TopEntityPlays"
+        previous:
+          $ref: "#/components/schemas/TopEntityPlays"
+        change:
+          $ref: "#/components/schemas/TopEntityPlays"
+
+    TopArtistEntry:
+      type: object
+      required:
+        - id
+        - rank
+        - artists
+        - current
+      properties:
+        id:
+          type: string
+          format: uuid
+        rank:
+          type: integer
+          format: uint
+        artists:
+          type: array
+          items:
+            $ref: "#/components/schemas/Artist"
+        current:
+          $ref: "#/components/schemas/TopEntityPlays"
+        previous:
+          $ref: "#/components/schemas/TopEntityPlays"
+        change:
+          $ref: "#/components/schemas/TopEntityPlays"
+
     SessionListen:
       type: object
       required:
@@ -1882,5 +1980,122 @@ paths:
                   $ref: "#/components/schemas/RelationDetails"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/statistics/global/top/albums:
+    get:
+      summary: Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopAlbums
+      tags:
+        - Statistics
+      parameters:
+        - name: start
+          in: query
+          description: Start timestamp for the time range
+          schema:
+            type: string
+            format: date-time
+        - name: end
+          in: query
+          description: End timestamp for the time range
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            format: int32
+            default: 100
+            maximum: 1000
+      responses:
+        "200":
+          description: Top albums returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopAlbumEntry"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/statistics/global/top/tracks:
+    get:
+      summary: Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopTracks
+      tags:
+        - Statistics
+      parameters:
+        - name: start
+          in: query
+          description: Start timestamp for the time range
+          schema:
+            type: string
+            format: date-time
+        - name: end
+          in: query
+          description: End timestamp for the time range
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            format: int32
+            default: 100
+            maximum: 1000
+      responses:
+        "200":
+          description: Top tracks returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopTrackEntry"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/statistics/global/top/artists:
+    get:
+      summary: Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopArtists
+      tags:
+        - Statistics
+      parameters:
+        - name: start
+          in: query
+          description: Start timestamp for the time range
+          schema:
+            type: string
+            format: date-time
+        - name: end
+          in: query
+          description: End timestamp for the time range
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            format: int32
+            default: 100
+            maximum: 1000
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopArtistEntry"
         "500":
           $ref: "#/components/responses/InternalServerError"
