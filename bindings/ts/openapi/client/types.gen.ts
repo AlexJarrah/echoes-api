@@ -108,14 +108,6 @@ export type Listen = {
     updated_at?: string | null;
 };
 
-export type EntityImage = {
-    entity_id: number;
-    image_id: string;
-    position: string;
-    created_at: string;
-    updated_at: string | null;
-};
-
 export type RelationDetails = {
     user_id: string;
     name: string;
@@ -494,9 +486,9 @@ export type SessionAlbum = {
      */
     name: string;
     /**
-     * URL to the album cover image.
+     * URL to the album cover asset.
      */
-    image_url?: string | null;
+    asset_url?: string | null;
 };
 
 export type SessionArtist = {

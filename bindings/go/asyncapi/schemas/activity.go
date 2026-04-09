@@ -18,8 +18,8 @@ type Activity struct {
 	Artists *[]Artist `json:"artists"`
 	// AlbumName--Album name.
 	AlbumName string `json:"album_name"`
-	// AlbumImageURL--Album cover URL.
-	AlbumImageURL string `json:"album_image_url"`
+	// AlbumAssetURL--Album cover URL.
+	AlbumAssetURL string `json:"album_asset_url"`
 	// Active--Whether the user is currently playing this track (true) or has stopped/paused (false)..
 	Active *bool `json:"active"`
 	// Position--Current playback position in seconds.

@@ -615,17 +615,6 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
-        EntityImage: {
-            /** Format: int64 */
-            entity_id: number;
-            /** Format: uuid */
-            image_id: string;
-            position: string;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at: string | null;
-        };
         RelationDetails: {
             /** Format: uuid */
             user_id: string;
@@ -1024,8 +1013,8 @@ export interface components {
             id: string;
             /** @description Album name. */
             name: string;
-            /** @description URL to the album cover image. */
-            image_url?: string | null;
+            /** @description URL to the album cover asset. */
+            asset_url?: string | null;
         };
         SessionArtist: {
             /**

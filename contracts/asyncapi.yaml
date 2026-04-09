@@ -212,7 +212,7 @@ components:
           type: string
           nullable: true
           description: Album name.
-        album_image_url:
+        album_asset_url:
           type: string
           nullable: true
           description: Album cover URL.

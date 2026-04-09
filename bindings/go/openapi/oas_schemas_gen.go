@@ -3401,8 +3401,8 @@ type SessionAlbum struct {
 	ID uuid.UUID `json:"id"`
 	// Album name.
 	Name string `json:"name"`
-	// URL to the album cover image.
-	ImageURL OptNilString `json:"image_url"`
+	// URL to the album cover asset.
+	AssetURL OptNilString `json:"asset_url"`
 }
 
 // GetID returns the value of ID.
@@ -3415,9 +3415,9 @@ func (s *SessionAlbum) GetName() string {
 	return s.Name
 }
 
-// GetImageURL returns the value of ImageURL.
-func (s *SessionAlbum) GetImageURL() OptNilString {
-	return s.ImageURL
+// GetAssetURL returns the value of AssetURL.
+func (s *SessionAlbum) GetAssetURL() OptNilString {
+	return s.AssetURL
 }
 
 // SetID sets the value of ID.
@@ -3430,9 +3430,9 @@ func (s *SessionAlbum) SetName(val string) {
 	s.Name = val
 }
 
-// SetImageURL sets the value of ImageURL.
-func (s *SessionAlbum) SetImageURL(val OptNilString) {
-	s.ImageURL = val
+// SetAssetURL sets the value of AssetURL.
+func (s *SessionAlbum) SetAssetURL(val OptNilString) {
+	s.AssetURL = val
 }
 
 // Ref: #/components/schemas/SessionArtist

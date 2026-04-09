@@ -8963,9 +8963,9 @@ func (s *SessionAlbum) encodeFields(e *jx.Encoder) {
 		e.Str(s.Name)
 	}
 	{
-		if s.ImageURL.Set {
-			e.FieldStart("image_url")
-			s.ImageURL.Encode(e)
+		if s.AssetURL.Set {
+			e.FieldStart("asset_url")
+			s.AssetURL.Encode(e)
 		}
 	}
 }
@@ -8973,7 +8973,7 @@ func (s *SessionAlbum) encodeFields(e *jx.Encoder) {
 var jsonFieldsNameOfSessionAlbum = [3]string{
 	0: "id",
 	1: "name",
-	2: "image_url",
+	2: "asset_url",
 }
 
 // Decode decodes SessionAlbum from json.
@@ -9009,15 +9009,15 @@ func (s *SessionAlbum) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"name\"")
 			}
-		case "image_url":
+		case "asset_url":
 			if err := func() error {
-				s.ImageURL.Reset()
-				if err := s.ImageURL.Decode(d); err != nil {
+				s.AssetURL.Reset()
+				if err := s.AssetURL.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"image_url\"")
+				return errors.Wrap(err, "decode field \"asset_url\"")
 			}
 		default:
 			return d.Skip()

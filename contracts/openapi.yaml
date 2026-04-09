@@ -266,31 +266,6 @@ components:
           format: date-time
           nullable: true
 
-    EntityImage:
-      type: object
-      required:
-        - entity_id
-        - image_id
-        - position
-        - created_at
-        - updated_at
-      properties:
-        entity_id:
-          type: integer
-          format: int64
-        image_id:
-          type: string
-          format: uuid
-        position:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
     RelationDetails:
       type: object
       required:
@@ -1077,10 +1052,10 @@ components:
         name:
           type: string
           description: Album name.
-        image_url:
+        asset_url:
           type: string
           nullable: true
-          description: URL to the album cover image.
+          description: URL to the album cover asset.
 
     SessionArtist:
       type: object

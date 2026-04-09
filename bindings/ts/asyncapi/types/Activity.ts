@@ -5,7 +5,7 @@ class Activity {
   private _trackName: string;
   private _artists: Artist[];
   private _albumName?: string;
-  private _albumImageUrl?: string;
+  private _albumAssetUrl?: string;
   private _active: boolean;
   private _position: number;
   private _startTimestamp: string;
@@ -19,7 +19,7 @@ class Activity {
     trackName: string,
     artists: Artist[],
     albumName?: string,
-    albumImageUrl?: string,
+    albumAssetUrl?: string,
     active: boolean,
     position: number,
     startTimestamp: string,
@@ -32,7 +32,7 @@ class Activity {
     this._trackName = input.trackName;
     this._artists = input.artists;
     this._albumName = input.albumName;
-    this._albumImageUrl = input.albumImageUrl;
+    this._albumAssetUrl = input.albumAssetUrl;
     this._active = input.active;
     this._position = input.position;
     this._startTimestamp = input.startTimestamp;
@@ -56,8 +56,8 @@ class Activity {
   get albumName(): string | undefined { return this._albumName; }
   set albumName(albumName: string | undefined) { this._albumName = albumName; }
 
-  get albumImageUrl(): string | undefined { return this._albumImageUrl; }
-  set albumImageUrl(albumImageUrl: string | undefined) { this._albumImageUrl = albumImageUrl; }
+  get albumAssetUrl(): string | undefined { return this._albumAssetUrl; }
+  set albumAssetUrl(albumAssetUrl: string | undefined) { this._albumAssetUrl = albumAssetUrl; }
 
   get active(): boolean { return this._active; }
   set active(active: boolean) { this._active = active; }
