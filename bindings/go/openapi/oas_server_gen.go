@@ -44,22 +44,22 @@ type Handler interface {
 	// Get global top albums in the specified time range. Time range values default to the range of the
 	// previous full week starting on Friday.
 	//
-	// GET /api/statistics/global/top/albums
-	GetGlobalTopAlbums(ctx context.Context, params GetGlobalTopAlbumsParams) (GetGlobalTopAlbumsRes, error)
+	// POST /api/statistics/global/top/albums
+	GetGlobalTopAlbums(ctx context.Context, req OptStatisticsQuery) (GetGlobalTopAlbumsRes, error)
 	// GetGlobalTopArtists implements getGlobalTopArtists operation.
 	//
 	// Get global top artists in the specified time range. Time range values default to the range of the
 	// previous full week starting on Friday.
 	//
-	// GET /api/statistics/global/top/artists
-	GetGlobalTopArtists(ctx context.Context, params GetGlobalTopArtistsParams) (GetGlobalTopArtistsRes, error)
+	// POST /api/statistics/global/top/artists
+	GetGlobalTopArtists(ctx context.Context, req OptStatisticsQuery) (GetGlobalTopArtistsRes, error)
 	// GetGlobalTopTracks implements getGlobalTopTracks operation.
 	//
 	// Get global top tracks in the specified time range. Time range values default to the range of the
 	// previous full week starting on Friday.
 	//
-	// GET /api/statistics/global/top/tracks
-	GetGlobalTopTracks(ctx context.Context, params GetGlobalTopTracksParams) (GetGlobalTopTracksRes, error)
+	// POST /api/statistics/global/top/tracks
+	GetGlobalTopTracks(ctx context.Context, req OptStatisticsQuery) (GetGlobalTopTracksRes, error)
 	// GetLibraryMetadata implements getLibraryMetadata operation.
 	//
 	// Get library metadata.

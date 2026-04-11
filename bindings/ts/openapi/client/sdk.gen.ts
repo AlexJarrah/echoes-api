@@ -386,14 +386,35 @@ export const getRelationsDetails = <ThrowOnError extends boolean = false>(option
 /**
  * Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
  */
-export const getGlobalTopAlbums = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopAlbumsData, ThrowOnError>) => (options?.client ?? client).get<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError>({ url: '/api/statistics/global/top/albums', ...options });
+export const getGlobalTopAlbums = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopAlbumsData, ThrowOnError>) => (options?.client ?? client).post<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError>({
+    url: '/api/statistics/global/top/albums',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
  */
-export const getGlobalTopTracks = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopTracksData, ThrowOnError>) => (options?.client ?? client).get<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError>({ url: '/api/statistics/global/top/tracks', ...options });
+export const getGlobalTopTracks = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopTracksData, ThrowOnError>) => (options?.client ?? client).post<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError>({
+    url: '/api/statistics/global/top/tracks',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
  */
-export const getGlobalTopArtists = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopArtistsData, ThrowOnError>) => (options?.client ?? client).get<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError>({ url: '/api/statistics/global/top/artists', ...options });
+export const getGlobalTopArtists = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopArtistsData, ThrowOnError>) => (options?.client ?? client).post<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError>({
+    url: '/api/statistics/global/top/artists',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});

@@ -938,13 +938,13 @@ func (s *Server) handleGetCalendarListensRequest(args [1]string, argsEscaped boo
 // Get global top albums in the specified time range. Time range values default to the range of the
 // previous full week starting on Friday.
 //
-// GET /api/statistics/global/top/albums
+// POST /api/statistics/global/top/albums
 func (s *Server) handleGetGlobalTopAlbumsRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getGlobalTopAlbums"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/statistics/global/top/albums"),
 	}
 	// Add attributes from config.
@@ -1010,18 +1010,23 @@ func (s *Server) handleGetGlobalTopAlbumsRequest(args [0]string, argsEscaped boo
 			ID:   "getGlobalTopAlbums",
 		}
 	)
-	params, err := decodeGetGlobalTopAlbumsParams(args, argsEscaped, r)
+
+	var rawBody []byte
+	request, rawBody, close, err := s.decodeGetGlobalTopAlbumsRequest(r)
 	if err != nil {
-		err = &ogenerrors.DecodeParamsError{
+		err = &ogenerrors.DecodeRequestError{
 			OperationContext: opErrContext,
 			Err:              err,
 		}
-		defer recordError("DecodeParams", err)
+		defer recordError("DecodeRequest", err)
 		s.cfg.ErrorHandler(ctx, w, r, err)
 		return
 	}
-
-	var rawBody []byte
+	defer func() {
+		if err := close(); err != nil {
+			recordError("CloseRequest", err)
+		}
+	}()
 
 	var response GetGlobalTopAlbumsRes
 	if m := s.cfg.Middleware; m != nil {
@@ -1030,28 +1035,15 @@ func (s *Server) handleGetGlobalTopAlbumsRequest(args [0]string, argsEscaped boo
 			OperationName:    GetGlobalTopAlbumsOperation,
 			OperationSummary: "Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.",
 			OperationID:      "getGlobalTopAlbums",
-			Body:             nil,
+			Body:             request,
 			RawBody:          rawBody,
-			Params: middleware.Parameters{
-				{
-					Name: "start",
-					In:   "query",
-				}: params.Start,
-				{
-					Name: "end",
-					In:   "query",
-				}: params.End,
-				{
-					Name: "limit",
-					In:   "query",
-				}: params.Limit,
-			},
-			Raw: r,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
-			Request  = struct{}
-			Params   = GetGlobalTopAlbumsParams
+			Request  = OptStatisticsQuery
+			Params   = struct{}
 			Response = GetGlobalTopAlbumsRes
 		)
 		response, err = middleware.HookMiddleware[
@@ -1061,14 +1053,14 @@ func (s *Server) handleGetGlobalTopAlbumsRequest(args [0]string, argsEscaped boo
 		](
 			m,
 			mreq,
-			unpackGetGlobalTopAlbumsParams,
+			nil,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.GetGlobalTopAlbums(ctx, params)
+				response, err = s.h.GetGlobalTopAlbums(ctx, request)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.GetGlobalTopAlbums(ctx, params)
+		response, err = s.h.GetGlobalTopAlbums(ctx, request)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -1090,13 +1082,13 @@ func (s *Server) handleGetGlobalTopAlbumsRequest(args [0]string, argsEscaped boo
 // Get global top artists in the specified time range. Time range values default to the range of the
 // previous full week starting on Friday.
 //
-// GET /api/statistics/global/top/artists
+// POST /api/statistics/global/top/artists
 func (s *Server) handleGetGlobalTopArtistsRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getGlobalTopArtists"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/statistics/global/top/artists"),
 	}
 	// Add attributes from config.
@@ -1162,18 +1154,23 @@ func (s *Server) handleGetGlobalTopArtistsRequest(args [0]string, argsEscaped bo
 			ID:   "getGlobalTopArtists",
 		}
 	)
-	params, err := decodeGetGlobalTopArtistsParams(args, argsEscaped, r)
+
+	var rawBody []byte
+	request, rawBody, close, err := s.decodeGetGlobalTopArtistsRequest(r)
 	if err != nil {
-		err = &ogenerrors.DecodeParamsError{
+		err = &ogenerrors.DecodeRequestError{
 			OperationContext: opErrContext,
 			Err:              err,
 		}
-		defer recordError("DecodeParams", err)
+		defer recordError("DecodeRequest", err)
 		s.cfg.ErrorHandler(ctx, w, r, err)
 		return
 	}
-
-	var rawBody []byte
+	defer func() {
+		if err := close(); err != nil {
+			recordError("CloseRequest", err)
+		}
+	}()
 
 	var response GetGlobalTopArtistsRes
 	if m := s.cfg.Middleware; m != nil {
@@ -1182,28 +1179,15 @@ func (s *Server) handleGetGlobalTopArtistsRequest(args [0]string, argsEscaped bo
 			OperationName:    GetGlobalTopArtistsOperation,
 			OperationSummary: "Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.",
 			OperationID:      "getGlobalTopArtists",
-			Body:             nil,
+			Body:             request,
 			RawBody:          rawBody,
-			Params: middleware.Parameters{
-				{
-					Name: "start",
-					In:   "query",
-				}: params.Start,
-				{
-					Name: "end",
-					In:   "query",
-				}: params.End,
-				{
-					Name: "limit",
-					In:   "query",
-				}: params.Limit,
-			},
-			Raw: r,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
-			Request  = struct{}
-			Params   = GetGlobalTopArtistsParams
+			Request  = OptStatisticsQuery
+			Params   = struct{}
 			Response = GetGlobalTopArtistsRes
 		)
 		response, err = middleware.HookMiddleware[
@@ -1213,14 +1197,14 @@ func (s *Server) handleGetGlobalTopArtistsRequest(args [0]string, argsEscaped bo
 		](
 			m,
 			mreq,
-			unpackGetGlobalTopArtistsParams,
+			nil,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.GetGlobalTopArtists(ctx, params)
+				response, err = s.h.GetGlobalTopArtists(ctx, request)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.GetGlobalTopArtists(ctx, params)
+		response, err = s.h.GetGlobalTopArtists(ctx, request)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -1242,13 +1226,13 @@ func (s *Server) handleGetGlobalTopArtistsRequest(args [0]string, argsEscaped bo
 // Get global top tracks in the specified time range. Time range values default to the range of the
 // previous full week starting on Friday.
 //
-// GET /api/statistics/global/top/tracks
+// POST /api/statistics/global/top/tracks
 func (s *Server) handleGetGlobalTopTracksRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getGlobalTopTracks"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/statistics/global/top/tracks"),
 	}
 	// Add attributes from config.
@@ -1314,18 +1298,23 @@ func (s *Server) handleGetGlobalTopTracksRequest(args [0]string, argsEscaped boo
 			ID:   "getGlobalTopTracks",
 		}
 	)
-	params, err := decodeGetGlobalTopTracksParams(args, argsEscaped, r)
+
+	var rawBody []byte
+	request, rawBody, close, err := s.decodeGetGlobalTopTracksRequest(r)
 	if err != nil {
-		err = &ogenerrors.DecodeParamsError{
+		err = &ogenerrors.DecodeRequestError{
 			OperationContext: opErrContext,
 			Err:              err,
 		}
-		defer recordError("DecodeParams", err)
+		defer recordError("DecodeRequest", err)
 		s.cfg.ErrorHandler(ctx, w, r, err)
 		return
 	}
-
-	var rawBody []byte
+	defer func() {
+		if err := close(); err != nil {
+			recordError("CloseRequest", err)
+		}
+	}()
 
 	var response GetGlobalTopTracksRes
 	if m := s.cfg.Middleware; m != nil {
@@ -1334,28 +1323,15 @@ func (s *Server) handleGetGlobalTopTracksRequest(args [0]string, argsEscaped boo
 			OperationName:    GetGlobalTopTracksOperation,
 			OperationSummary: "Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.",
 			OperationID:      "getGlobalTopTracks",
-			Body:             nil,
+			Body:             request,
 			RawBody:          rawBody,
-			Params: middleware.Parameters{
-				{
-					Name: "start",
-					In:   "query",
-				}: params.Start,
-				{
-					Name: "end",
-					In:   "query",
-				}: params.End,
-				{
-					Name: "limit",
-					In:   "query",
-				}: params.Limit,
-			},
-			Raw: r,
+			Params:           middleware.Parameters{},
+			Raw:              r,
 		}
 
 		type (
-			Request  = struct{}
-			Params   = GetGlobalTopTracksParams
+			Request  = OptStatisticsQuery
+			Params   = struct{}
 			Response = GetGlobalTopTracksRes
 		)
 		response, err = middleware.HookMiddleware[
@@ -1365,14 +1341,14 @@ func (s *Server) handleGetGlobalTopTracksRequest(args [0]string, argsEscaped boo
 		](
 			m,
 			mreq,
-			unpackGetGlobalTopTracksParams,
+			nil,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.GetGlobalTopTracks(ctx, params)
+				response, err = s.h.GetGlobalTopTracks(ctx, request)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.GetGlobalTopTracks(ctx, params)
+		response, err = s.h.GetGlobalTopTracks(ctx, request)
 	}
 	if err != nil {
 		defer recordError("Internal", err)

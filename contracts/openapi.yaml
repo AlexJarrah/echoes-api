@@ -1199,6 +1199,30 @@ components:
         best_friend:
           type: boolean
 
+    StatisticsQuery:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start timestamp for the time range
+        end:
+          type: string
+          format: date-time
+          description: End timestamp for the time range
+        limit:
+          type: integer
+          format: int32
+          default: 100
+          maximum: 10000
+          description: Maximum number of results to return
+        users:
+          type: array
+          description: Limit statistics to specified users by ID
+          items:
+            type: string
+            format: uuid
+
     ErrorResponse:
       type: object
       required:
@@ -1959,32 +1983,17 @@ paths:
           $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/global/top/albums:
-    get:
+    post:
       summary: Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopAlbums
       tags:
         - Statistics
-      parameters:
-        - name: start
-          in: query
-          description: Start timestamp for the time range
-          schema:
-            type: string
-            format: date-time
-        - name: end
-          in: query
-          description: End timestamp for the time range
-          schema:
-            type: string
-            format: date-time
-        - name: limit
-          in: query
-          description: Maximum number of results to return
-          schema:
-            type: integer
-            format: int32
-            default: 100
-            maximum: 1000
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatisticsQuery"
       responses:
         "200":
           description: Top albums returned successfully
@@ -2000,32 +2009,17 @@ paths:
           $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/global/top/tracks:
-    get:
+    post:
       summary: Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopTracks
       tags:
         - Statistics
-      parameters:
-        - name: start
-          in: query
-          description: Start timestamp for the time range
-          schema:
-            type: string
-            format: date-time
-        - name: end
-          in: query
-          description: End timestamp for the time range
-          schema:
-            type: string
-            format: date-time
-        - name: limit
-          in: query
-          description: Maximum number of results to return
-          schema:
-            type: integer
-            format: int32
-            default: 100
-            maximum: 1000
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatisticsQuery"
       responses:
         "200":
           description: Top tracks returned successfully
@@ -2041,32 +2035,17 @@ paths:
           $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/global/top/artists:
-    get:
+    post:
       summary: Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopArtists
       tags:
         - Statistics
-      parameters:
-        - name: start
-          in: query
-          description: Start timestamp for the time range
-          schema:
-            type: string
-            format: date-time
-        - name: end
-          in: query
-          description: End timestamp for the time range
-          schema:
-            type: string
-            format: date-time
-        - name: limit
-          in: query
-          description: Maximum number of results to return
-          schema:
-            type: integer
-            format: int32
-            default: 100
-            maximum: 1000
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatisticsQuery"
       responses:
         "200":
           description: Top artists returned successfully

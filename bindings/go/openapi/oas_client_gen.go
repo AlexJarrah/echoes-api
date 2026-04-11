@@ -123,22 +123,22 @@ type Invoker interface {
 	// Get global top albums in the specified time range. Time range values default to the range of the
 	// previous full week starting on Friday.
 	//
-	// GET /api/statistics/global/top/albums
-	GetGlobalTopAlbums(ctx context.Context, params GetGlobalTopAlbumsParams, options ...RequestOption) (GetGlobalTopAlbumsRes, error)
+	// POST /api/statistics/global/top/albums
+	GetGlobalTopAlbums(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopAlbumsRes, error)
 	// GetGlobalTopArtists invokes getGlobalTopArtists operation.
 	//
 	// Get global top artists in the specified time range. Time range values default to the range of the
 	// previous full week starting on Friday.
 	//
-	// GET /api/statistics/global/top/artists
-	GetGlobalTopArtists(ctx context.Context, params GetGlobalTopArtistsParams, options ...RequestOption) (GetGlobalTopArtistsRes, error)
+	// POST /api/statistics/global/top/artists
+	GetGlobalTopArtists(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopArtistsRes, error)
 	// GetGlobalTopTracks invokes getGlobalTopTracks operation.
 	//
 	// Get global top tracks in the specified time range. Time range values default to the range of the
 	// previous full week starting on Friday.
 	//
-	// GET /api/statistics/global/top/tracks
-	GetGlobalTopTracks(ctx context.Context, params GetGlobalTopTracksParams, options ...RequestOption) (GetGlobalTopTracksRes, error)
+	// POST /api/statistics/global/top/tracks
+	GetGlobalTopTracks(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopTracksRes, error)
 	// GetLibraryMetadata invokes getLibraryMetadata operation.
 	//
 	// Get library metadata.
@@ -1050,16 +1050,32 @@ func (c *Client) sendGetCalendarListens(ctx context.Context, params GetCalendarL
 // Get global top albums in the specified time range. Time range values default to the range of the
 // previous full week starting on Friday.
 //
-// GET /api/statistics/global/top/albums
-func (c *Client) GetGlobalTopAlbums(ctx context.Context, params GetGlobalTopAlbumsParams, options ...RequestOption) (GetGlobalTopAlbumsRes, error) {
-	res, err := c.sendGetGlobalTopAlbums(ctx, params, options...)
+// POST /api/statistics/global/top/albums
+func (c *Client) GetGlobalTopAlbums(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopAlbumsRes, error) {
+	res, err := c.sendGetGlobalTopAlbums(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendGetGlobalTopAlbums(ctx context.Context, params GetGlobalTopAlbumsParams, requestOptions ...RequestOption) (res GetGlobalTopAlbumsRes, err error) {
+func (c *Client) sendGetGlobalTopAlbums(ctx context.Context, request OptStatisticsQuery, requestOptions ...RequestOption) (res GetGlobalTopAlbumsRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getGlobalTopAlbums"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.URLTemplateKey.String("/api/statistics/global/top/albums"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
@@ -1107,65 +1123,13 @@ func (c *Client) sendGetGlobalTopAlbums(ctx context.Context, params GetGlobalTop
 	pathParts[0] = "/api/statistics/global/top/albums"
 	uri.AddPathParts(u, pathParts[:]...)
 
-	stage = "EncodeQueryParams"
-	q := uri.NewQueryEncoder()
-	{
-		// Encode "start" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "start",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.Start.Get(); ok {
-				return e.EncodeValue(conv.DateTimeToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	{
-		// Encode "end" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "end",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.End.Get(); ok {
-				return e.EncodeValue(conv.DateTimeToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	{
-		// Encode "limit" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "limit",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.Limit.Get(); ok {
-				return e.EncodeValue(conv.Int32ToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	u.RawQuery = q.Values().Encode()
-
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeGetGlobalTopAlbumsRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
 	}
 
 	if err := c.onRequest(ctx, r); err != nil {
@@ -1206,16 +1170,32 @@ func (c *Client) sendGetGlobalTopAlbums(ctx context.Context, params GetGlobalTop
 // Get global top artists in the specified time range. Time range values default to the range of the
 // previous full week starting on Friday.
 //
-// GET /api/statistics/global/top/artists
-func (c *Client) GetGlobalTopArtists(ctx context.Context, params GetGlobalTopArtistsParams, options ...RequestOption) (GetGlobalTopArtistsRes, error) {
-	res, err := c.sendGetGlobalTopArtists(ctx, params, options...)
+// POST /api/statistics/global/top/artists
+func (c *Client) GetGlobalTopArtists(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopArtistsRes, error) {
+	res, err := c.sendGetGlobalTopArtists(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendGetGlobalTopArtists(ctx context.Context, params GetGlobalTopArtistsParams, requestOptions ...RequestOption) (res GetGlobalTopArtistsRes, err error) {
+func (c *Client) sendGetGlobalTopArtists(ctx context.Context, request OptStatisticsQuery, requestOptions ...RequestOption) (res GetGlobalTopArtistsRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getGlobalTopArtists"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.URLTemplateKey.String("/api/statistics/global/top/artists"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
@@ -1263,65 +1243,13 @@ func (c *Client) sendGetGlobalTopArtists(ctx context.Context, params GetGlobalTo
 	pathParts[0] = "/api/statistics/global/top/artists"
 	uri.AddPathParts(u, pathParts[:]...)
 
-	stage = "EncodeQueryParams"
-	q := uri.NewQueryEncoder()
-	{
-		// Encode "start" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "start",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.Start.Get(); ok {
-				return e.EncodeValue(conv.DateTimeToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	{
-		// Encode "end" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "end",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.End.Get(); ok {
-				return e.EncodeValue(conv.DateTimeToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	{
-		// Encode "limit" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "limit",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.Limit.Get(); ok {
-				return e.EncodeValue(conv.Int32ToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	u.RawQuery = q.Values().Encode()
-
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeGetGlobalTopArtistsRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
 	}
 
 	if err := c.onRequest(ctx, r); err != nil {
@@ -1362,16 +1290,32 @@ func (c *Client) sendGetGlobalTopArtists(ctx context.Context, params GetGlobalTo
 // Get global top tracks in the specified time range. Time range values default to the range of the
 // previous full week starting on Friday.
 //
-// GET /api/statistics/global/top/tracks
-func (c *Client) GetGlobalTopTracks(ctx context.Context, params GetGlobalTopTracksParams, options ...RequestOption) (GetGlobalTopTracksRes, error) {
-	res, err := c.sendGetGlobalTopTracks(ctx, params, options...)
+// POST /api/statistics/global/top/tracks
+func (c *Client) GetGlobalTopTracks(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopTracksRes, error) {
+	res, err := c.sendGetGlobalTopTracks(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendGetGlobalTopTracks(ctx context.Context, params GetGlobalTopTracksParams, requestOptions ...RequestOption) (res GetGlobalTopTracksRes, err error) {
+func (c *Client) sendGetGlobalTopTracks(ctx context.Context, request OptStatisticsQuery, requestOptions ...RequestOption) (res GetGlobalTopTracksRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getGlobalTopTracks"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.URLTemplateKey.String("/api/statistics/global/top/tracks"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
@@ -1419,65 +1363,13 @@ func (c *Client) sendGetGlobalTopTracks(ctx context.Context, params GetGlobalTop
 	pathParts[0] = "/api/statistics/global/top/tracks"
 	uri.AddPathParts(u, pathParts[:]...)
 
-	stage = "EncodeQueryParams"
-	q := uri.NewQueryEncoder()
-	{
-		// Encode "start" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "start",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.Start.Get(); ok {
-				return e.EncodeValue(conv.DateTimeToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	{
-		// Encode "end" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "end",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.End.Get(); ok {
-				return e.EncodeValue(conv.DateTimeToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	{
-		// Encode "limit" parameter.
-		cfg := uri.QueryParameterEncodingConfig{
-			Name:    "limit",
-			Style:   uri.QueryStyleForm,
-			Explode: true,
-		}
-
-		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			if val, ok := params.Limit.Get(); ok {
-				return e.EncodeValue(conv.Int32ToString(val))
-			}
-			return nil
-		}); err != nil {
-			return res, errors.Wrap(err, "encode query")
-		}
-	}
-	u.RawQuery = q.Values().Encode()
-
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeGetGlobalTopTracksRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
 	}
 
 	if err := c.onRequest(ctx, r); err != nil {

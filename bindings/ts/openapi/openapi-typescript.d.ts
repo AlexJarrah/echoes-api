@@ -439,10 +439,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
-        get: operations["getGlobalTopAlbums"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
+        post: operations["getGlobalTopAlbums"];
         delete?: never;
         options?: never;
         head?: never;
@@ -456,10 +456,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
-        get: operations["getGlobalTopTracks"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
+        post: operations["getGlobalTopTracks"];
         delete?: never;
         options?: never;
         head?: never;
@@ -473,10 +473,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
-        get: operations["getGlobalTopArtists"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
+        post: operations["getGlobalTopArtists"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1091,6 +1091,26 @@ export interface components {
             /** Format: uuid */
             id: string;
             best_friend: boolean;
+        };
+        StatisticsQuery: {
+            /**
+             * Format: date-time
+             * @description Start timestamp for the time range
+             */
+            start?: string;
+            /**
+             * Format: date-time
+             * @description End timestamp for the time range
+             */
+            end?: string;
+            /**
+             * Format: int32
+             * @description Maximum number of results to return
+             * @default 100
+             */
+            limit: number;
+            /** @description Limit statistics to specified users by ID */
+            users?: string[];
         };
         ErrorResponse: {
             /** @description Human-readable error message */
@@ -1780,19 +1800,16 @@ export interface operations {
     };
     getGlobalTopAlbums: {
         parameters: {
-            query?: {
-                /** @description Start timestamp for the time range */
-                start?: string;
-                /** @description End timestamp for the time range */
-                end?: string;
-                /** @description Maximum number of results to return */
-                limit?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
         responses: {
             /** @description Top albums returned successfully */
             200: {
@@ -1809,19 +1826,16 @@ export interface operations {
     };
     getGlobalTopTracks: {
         parameters: {
-            query?: {
-                /** @description Start timestamp for the time range */
-                start?: string;
-                /** @description End timestamp for the time range */
-                end?: string;
-                /** @description Maximum number of results to return */
-                limit?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
         responses: {
             /** @description Top tracks returned successfully */
             200: {
@@ -1838,19 +1852,16 @@ export interface operations {
     };
     getGlobalTopArtists: {
         parameters: {
-            query?: {
-                /** @description Start timestamp for the time range */
-                start?: string;
-                /** @description End timestamp for the time range */
-                end?: string;
-                /** @description Maximum number of results to return */
-                limit?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
         responses: {
             /** @description Top artists returned successfully */
             200: {

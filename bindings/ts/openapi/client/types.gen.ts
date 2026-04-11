@@ -586,6 +586,25 @@ export type BestFriendActionRequest = {
     best_friend: boolean;
 };
 
+export type StatisticsQuery = {
+    /**
+     * Start timestamp for the time range
+     */
+    start?: string;
+    /**
+     * End timestamp for the time range
+     */
+    end?: string;
+    /**
+     * Maximum number of results to return
+     */
+    limit?: number;
+    /**
+     * Limit statistics to specified users by ID
+     */
+    users?: Array<string>;
+};
+
 export type ErrorResponse = {
     /**
      * Human-readable error message
@@ -1451,22 +1470,9 @@ export type GetRelationsDetailsResponses = {
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
 
 export type GetGlobalTopAlbumsData = {
-    body?: never;
+    body?: StatisticsQuery;
     path?: never;
-    query?: {
-        /**
-         * Start timestamp for the time range
-         */
-        start?: string;
-        /**
-         * End timestamp for the time range
-         */
-        end?: string;
-        /**
-         * Maximum number of results to return
-         */
-        limit?: number;
-    };
+    query?: never;
     url: '/api/statistics/global/top/albums';
 };
 
@@ -1493,22 +1499,9 @@ export type GetGlobalTopAlbumsResponses = {
 export type GetGlobalTopAlbumsResponse = GetGlobalTopAlbumsResponses[keyof GetGlobalTopAlbumsResponses];
 
 export type GetGlobalTopTracksData = {
-    body?: never;
+    body?: StatisticsQuery;
     path?: never;
-    query?: {
-        /**
-         * Start timestamp for the time range
-         */
-        start?: string;
-        /**
-         * End timestamp for the time range
-         */
-        end?: string;
-        /**
-         * Maximum number of results to return
-         */
-        limit?: number;
-    };
+    query?: never;
     url: '/api/statistics/global/top/tracks';
 };
 
@@ -1535,22 +1528,9 @@ export type GetGlobalTopTracksResponses = {
 export type GetGlobalTopTracksResponse = GetGlobalTopTracksResponses[keyof GetGlobalTopTracksResponses];
 
 export type GetGlobalTopArtistsData = {
-    body?: never;
+    body?: StatisticsQuery;
     path?: never;
-    query?: {
-        /**
-         * Start timestamp for the time range
-         */
-        start?: string;
-        /**
-         * End timestamp for the time range
-         */
-        end?: string;
-        /**
-         * Maximum number of results to return
-         */
-        limit?: number;
-    };
+    query?: never;
     url: '/api/statistics/global/top/artists';
 };
 

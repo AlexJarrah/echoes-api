@@ -2603,6 +2603,52 @@ func (o OptRelationDetailsStatistics) Or(d RelationDetailsStatistics) RelationDe
 	return d
 }
 
+// NewOptStatisticsQuery returns new OptStatisticsQuery with value set to v.
+func NewOptStatisticsQuery(v StatisticsQuery) OptStatisticsQuery {
+	return OptStatisticsQuery{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptStatisticsQuery is optional StatisticsQuery.
+type OptStatisticsQuery struct {
+	Value StatisticsQuery
+	Set   bool
+}
+
+// IsSet returns true if OptStatisticsQuery was set.
+func (o OptStatisticsQuery) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptStatisticsQuery) Reset() {
+	var v StatisticsQuery
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptStatisticsQuery) SetTo(v StatisticsQuery) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptStatisticsQuery) Get() (v StatisticsQuery, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptStatisticsQuery) Or(d StatisticsQuery) StatisticsQuery {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptString returns new OptString with value set to v.
 func NewOptString(v string) OptString {
 	return OptString{
@@ -3840,6 +3886,58 @@ func (s *SignInRequest) SetEmail(val string) {
 // SetPassword sets the value of Password.
 func (s *SignInRequest) SetPassword(val string) {
 	s.Password = val
+}
+
+// Ref: #/components/schemas/StatisticsQuery
+type StatisticsQuery struct {
+	// Start timestamp for the time range.
+	Start OptDateTime `json:"start"`
+	// End timestamp for the time range.
+	End OptDateTime `json:"end"`
+	// Maximum number of results to return.
+	Limit OptInt32 `json:"limit"`
+	// Limit statistics to specified users by ID.
+	Users []uuid.UUID `json:"users"`
+}
+
+// GetStart returns the value of Start.
+func (s *StatisticsQuery) GetStart() OptDateTime {
+	return s.Start
+}
+
+// GetEnd returns the value of End.
+func (s *StatisticsQuery) GetEnd() OptDateTime {
+	return s.End
+}
+
+// GetLimit returns the value of Limit.
+func (s *StatisticsQuery) GetLimit() OptInt32 {
+	return s.Limit
+}
+
+// GetUsers returns the value of Users.
+func (s *StatisticsQuery) GetUsers() []uuid.UUID {
+	return s.Users
+}
+
+// SetStart sets the value of Start.
+func (s *StatisticsQuery) SetStart(val OptDateTime) {
+	s.Start = val
+}
+
+// SetEnd sets the value of End.
+func (s *StatisticsQuery) SetEnd(val OptDateTime) {
+	s.End = val
+}
+
+// SetLimit sets the value of Limit.
+func (s *StatisticsQuery) SetLimit(val OptInt32) {
+	s.Limit = val
+}
+
+// SetUsers sets the value of Users.
+func (s *StatisticsQuery) SetUsers(val []uuid.UUID) {
+	s.Users = val
 }
 
 // Ref: #/components/schemas/TopAlbumEntry
