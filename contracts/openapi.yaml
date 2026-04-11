@@ -1994,6 +1994,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/TopAlbumEntry"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "500":
           $ref: "#/components/responses/InternalServerError"
 
@@ -2033,6 +2035,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/TopTrackEntry"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "500":
           $ref: "#/components/responses/InternalServerError"
 
@@ -2072,5 +2076,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/TopArtistEntry"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "500":
           $ref: "#/components/responses/InternalServerError"

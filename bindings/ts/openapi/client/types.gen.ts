@@ -1472,6 +1472,10 @@ export type GetGlobalTopAlbumsData = {
 
 export type GetGlobalTopAlbumsErrors = {
     /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
      * Internal server error
      */
     500: ErrorResponse;
@@ -1510,6 +1514,10 @@ export type GetGlobalTopTracksData = {
 
 export type GetGlobalTopTracksErrors = {
     /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
      * Internal server error
      */
     500: ErrorResponse;
@@ -1547,6 +1555,10 @@ export type GetGlobalTopArtistsData = {
 };
 
 export type GetGlobalTopArtistsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
     /**
      * Internal server error
      */

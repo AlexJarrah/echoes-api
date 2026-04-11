@@ -399,6 +399,9 @@ func (*BadRequestTextPlain) addToLibraryRes()           {}
 func (*BadRequestTextPlain) getAlbumRes()               {}
 func (*BadRequestTextPlain) getArtistRes()              {}
 func (*BadRequestTextPlain) getCalendarListensRes()     {}
+func (*BadRequestTextPlain) getGlobalTopAlbumsRes()     {}
+func (*BadRequestTextPlain) getGlobalTopArtistsRes()    {}
+func (*BadRequestTextPlain) getGlobalTopTracksRes()     {}
 func (*BadRequestTextPlain) getListenSessionsRes()      {}
 func (*BadRequestTextPlain) getTrackRes()               {}
 func (*BadRequestTextPlain) getUserListenSessionsRes()  {}
@@ -523,11 +526,8 @@ func (s *ErrorResponse) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*ErrorResponse) getGlobalTopAlbumsRes()  {}
-func (*ErrorResponse) getGlobalTopArtistsRes() {}
-func (*ErrorResponse) getGlobalTopTracksRes()  {}
-func (*ErrorResponse) getUserDetailsRes()      {}
-func (*ErrorResponse) validateTokenRes()       {}
+func (*ErrorResponse) getUserDetailsRes() {}
+func (*ErrorResponse) validateTokenRes()  {}
 
 type ForbiddenTextPlain struct {
 	Data io.Reader
@@ -670,13 +670,37 @@ func (s *GetCalendarListensOKHeaders) SetResponse(val GetCalendarListensOK) {
 
 func (*GetCalendarListensOKHeaders) getCalendarListensRes() {}
 
+type GetGlobalTopAlbumsApplicationJSONBadRequest ErrorResponse
+
+func (*GetGlobalTopAlbumsApplicationJSONBadRequest) getGlobalTopAlbumsRes() {}
+
+type GetGlobalTopAlbumsApplicationJSONInternalServerError ErrorResponse
+
+func (*GetGlobalTopAlbumsApplicationJSONInternalServerError) getGlobalTopAlbumsRes() {}
+
 type GetGlobalTopAlbumsOKApplicationJSON []TopAlbumEntry
 
 func (*GetGlobalTopAlbumsOKApplicationJSON) getGlobalTopAlbumsRes() {}
 
+type GetGlobalTopArtistsApplicationJSONBadRequest ErrorResponse
+
+func (*GetGlobalTopArtistsApplicationJSONBadRequest) getGlobalTopArtistsRes() {}
+
+type GetGlobalTopArtistsApplicationJSONInternalServerError ErrorResponse
+
+func (*GetGlobalTopArtistsApplicationJSONInternalServerError) getGlobalTopArtistsRes() {}
+
 type GetGlobalTopArtistsOKApplicationJSON []TopArtistEntry
 
 func (*GetGlobalTopArtistsOKApplicationJSON) getGlobalTopArtistsRes() {}
+
+type GetGlobalTopTracksApplicationJSONBadRequest ErrorResponse
+
+func (*GetGlobalTopTracksApplicationJSONBadRequest) getGlobalTopTracksRes() {}
+
+type GetGlobalTopTracksApplicationJSONInternalServerError ErrorResponse
+
+func (*GetGlobalTopTracksApplicationJSONInternalServerError) getGlobalTopTracksRes() {}
 
 type GetGlobalTopTracksOKApplicationJSON []TopTrackEntry
 

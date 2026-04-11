@@ -1803,6 +1803,7 @@ export interface operations {
                     "application/json": components["schemas"]["TopAlbumEntry"][];
                 };
             };
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
         };
     };
@@ -1831,6 +1832,7 @@ export interface operations {
                     "application/json": components["schemas"]["TopTrackEntry"][];
                 };
             };
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
         };
     };
@@ -1859,6 +1861,7 @@ export interface operations {
                     "application/json": components["schemas"]["TopArtistEntry"][];
                 };
             };
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
         };
     };
