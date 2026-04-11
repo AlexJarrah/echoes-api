@@ -920,7 +920,7 @@ export interface components {
             id: string;
             /** Format: uint */
             rank: number;
-            artists: components["schemas"]["Artist"][];
+            artist?: components["schemas"]["Artist"];
             current: components["schemas"]["TopEntityPlays"];
             previous?: components["schemas"]["TopEntityPlays"];
             change?: components["schemas"]["TopEntityPlays"];

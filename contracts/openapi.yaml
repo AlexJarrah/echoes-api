@@ -918,10 +918,8 @@ components:
         rank:
           type: integer
           format: uint
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/Artist"
+        artist:
+          $ref: "#/components/schemas/Artist"
         current:
           $ref: "#/components/schemas/TopEntityPlays"
         previous:

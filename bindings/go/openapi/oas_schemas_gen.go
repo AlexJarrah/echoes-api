@@ -1949,6 +1949,52 @@ func (*NotFoundTextPlain) getCalendarListensRes()    {}
 func (*NotFoundTextPlain) getTrackRes()              {}
 func (*NotFoundTextPlain) getUserListenSessionsRes() {}
 
+// NewOptArtist returns new OptArtist with value set to v.
+func NewOptArtist(v Artist) OptArtist {
+	return OptArtist{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtist is optional Artist.
+type OptArtist struct {
+	Value Artist
+	Set   bool
+}
+
+// IsSet returns true if OptArtist was set.
+func (o OptArtist) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtist) Reset() {
+	var v Artist
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtist) SetTo(v Artist) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtist) Get() (v Artist, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtist) Or(d Artist) Artist {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptBool returns new OptBool with value set to v.
 func NewOptBool(v bool) OptBool {
 	return OptBool{
@@ -4025,7 +4071,7 @@ func (s *TopAlbumEntry) SetChange(val OptTopEntityPlays) {
 type TopArtistEntry struct {
 	ID       uuid.UUID         `json:"id"`
 	Rank     uint              `json:"rank"`
-	Artists  []Artist          `json:"artists"`
+	Artist   OptArtist         `json:"artist"`
 	Current  TopEntityPlays    `json:"current"`
 	Previous OptTopEntityPlays `json:"previous"`
 	Change   OptTopEntityPlays `json:"change"`
@@ -4041,9 +4087,9 @@ func (s *TopArtistEntry) GetRank() uint {
 	return s.Rank
 }
 
-// GetArtists returns the value of Artists.
-func (s *TopArtistEntry) GetArtists() []Artist {
-	return s.Artists
+// GetArtist returns the value of Artist.
+func (s *TopArtistEntry) GetArtist() OptArtist {
+	return s.Artist
 }
 
 // GetCurrent returns the value of Current.
@@ -4071,9 +4117,9 @@ func (s *TopArtistEntry) SetRank(val uint) {
 	s.Rank = val
 }
 
-// SetArtists sets the value of Artists.
-func (s *TopArtistEntry) SetArtists(val []Artist) {
-	s.Artists = val
+// SetArtist sets the value of Artist.
+func (s *TopArtistEntry) SetArtist(val OptArtist) {
+	s.Artist = val
 }
 
 // SetCurrent sets the value of Current.

@@ -386,7 +386,7 @@ export type TopTrackEntry = {
 export type TopArtistEntry = {
     id: string;
     rank: number;
-    artists: Array<Artist>;
+    artist?: Artist;
     current: TopEntityPlays;
     previous?: TopEntityPlays;
     change?: TopEntityPlays;
