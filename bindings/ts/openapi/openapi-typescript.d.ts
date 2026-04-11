@@ -1109,8 +1109,6 @@ export interface components {
              * @default 100
              */
             limit: number;
-            /** @description Limit statistics to specified users by ID */
-            users?: string[];
         };
         ErrorResponse: {
             /** @description Human-readable error message */

@@ -599,10 +599,6 @@ export type StatisticsQuery = {
      * Maximum number of results to return
      */
     limit?: number;
-    /**
-     * Limit statistics to specified users by ID
-     */
-    users?: Array<string>;
 };
 
 export type ErrorResponse = {

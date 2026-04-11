@@ -3942,8 +3942,6 @@ type StatisticsQuery struct {
 	End OptDateTime `json:"end"`
 	// Maximum number of results to return.
 	Limit OptInt32 `json:"limit"`
-	// Limit statistics to specified users by ID.
-	Users []uuid.UUID `json:"users"`
 }
 
 // GetStart returns the value of Start.
@@ -3961,11 +3959,6 @@ func (s *StatisticsQuery) GetLimit() OptInt32 {
 	return s.Limit
 }
 
-// GetUsers returns the value of Users.
-func (s *StatisticsQuery) GetUsers() []uuid.UUID {
-	return s.Users
-}
-
 // SetStart sets the value of Start.
 func (s *StatisticsQuery) SetStart(val OptDateTime) {
 	s.Start = val
@@ -3979,11 +3972,6 @@ func (s *StatisticsQuery) SetEnd(val OptDateTime) {
 // SetLimit sets the value of Limit.
 func (s *StatisticsQuery) SetLimit(val OptInt32) {
 	s.Limit = val
-}
-
-// SetUsers sets the value of Users.
-func (s *StatisticsQuery) SetUsers(val []uuid.UUID) {
-	s.Users = val
 }
 
 // Ref: #/components/schemas/TopAlbumEntry

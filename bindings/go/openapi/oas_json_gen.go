@@ -10966,23 +10966,12 @@ func (s *StatisticsQuery) encodeFields(e *jx.Encoder) {
 			s.Limit.Encode(e)
 		}
 	}
-	{
-		if s.Users != nil {
-			e.FieldStart("users")
-			e.ArrStart()
-			for _, elem := range s.Users {
-				json.EncodeUUID(e, elem)
-			}
-			e.ArrEnd()
-		}
-	}
 }
 
-var jsonFieldsNameOfStatisticsQuery = [4]string{
+var jsonFieldsNameOfStatisticsQuery = [3]string{
 	0: "start",
 	1: "end",
 	2: "limit",
-	3: "users",
 }
 
 // Decode decodes StatisticsQuery from json.
@@ -11023,25 +11012,6 @@ func (s *StatisticsQuery) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"limit\"")
-			}
-		case "users":
-			if err := func() error {
-				s.Users = make([]uuid.UUID, 0)
-				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem uuid.UUID
-					v, err := json.DecodeUUID(d)
-					elem = v
-					if err != nil {
-						return err
-					}
-					s.Users = append(s.Users, elem)
-					return nil
-				}); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"users\"")
 			}
 		default:
 			return d.Skip()

@@ -1214,12 +1214,6 @@ components:
           default: 100
           maximum: 10000
           description: Maximum number of results to return
-        users:
-          type: array
-          description: Limit statistics to specified users by ID
-          items:
-            type: string
-            format: uuid
 
     ErrorResponse:
       type: object
