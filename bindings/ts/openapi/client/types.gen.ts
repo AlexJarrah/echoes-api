@@ -362,6 +362,9 @@ export type TopEntityPlays = {
     duration: number;
 };
 
+/**
+ * Values change in percentage.
+ */
 export type TopEntityChange = {
     count: number;
     /**

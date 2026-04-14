@@ -4171,6 +4171,7 @@ func (s *TopArtistEntry) SetChange(val OptTopEntityChange) {
 	s.Change = val
 }
 
+// Values change in percentage.
 // Ref: #/components/schemas/TopEntityChange
 type TopEntityChange struct {
 	Count int64 `json:"count"`

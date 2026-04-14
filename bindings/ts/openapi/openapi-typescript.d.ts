@@ -892,6 +892,7 @@ export interface components {
              */
             duration: number;
         };
+        /** @description Values change in percentage. */
         TopEntityChange: {
             /** Format: int64 */
             count: number;
