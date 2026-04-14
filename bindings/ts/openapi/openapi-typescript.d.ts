@@ -892,6 +892,15 @@ export interface components {
              */
             duration: number;
         };
+        TopEntityChange: {
+            /** Format: int64 */
+            count: number;
+            /**
+             * Format: int64
+             * @description Play duration in seconds
+             */
+            duration: number;
+        };
         TopAlbumEntry: {
             /** Format: uuid */
             id: string;
@@ -901,7 +910,7 @@ export interface components {
             artists: components["schemas"]["Artist"][];
             current: components["schemas"]["TopEntityPlays"];
             previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityPlays"];
+            change?: components["schemas"]["TopEntityChange"];
         };
         TopTrackEntry: {
             /** Format: uuid */
@@ -913,7 +922,7 @@ export interface components {
             artists: components["schemas"]["Artist"][];
             current: components["schemas"]["TopEntityPlays"];
             previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityPlays"];
+            change?: components["schemas"]["TopEntityChange"];
         };
         TopArtistEntry: {
             /** Format: uuid */
@@ -923,7 +932,7 @@ export interface components {
             artist?: components["schemas"]["Artist"];
             current: components["schemas"]["TopEntityPlays"];
             previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityPlays"];
+            change?: components["schemas"]["TopEntityChange"];
         };
         SessionListen: {
             /**

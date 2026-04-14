@@ -362,6 +362,14 @@ export type TopEntityPlays = {
     duration: number;
 };
 
+export type TopEntityChange = {
+    count: number;
+    /**
+     * Play duration in seconds
+     */
+    duration: number;
+};
+
 export type TopAlbumEntry = {
     id: string;
     rank: number;
@@ -369,7 +377,7 @@ export type TopAlbumEntry = {
     artists: Array<Artist>;
     current: TopEntityPlays;
     previous?: TopEntityPlays;
-    change?: TopEntityPlays;
+    change?: TopEntityChange;
 };
 
 export type TopTrackEntry = {
@@ -380,7 +388,7 @@ export type TopTrackEntry = {
     artists: Array<Artist>;
     current: TopEntityPlays;
     previous?: TopEntityPlays;
-    change?: TopEntityPlays;
+    change?: TopEntityChange;
 };
 
 export type TopArtistEntry = {
@@ -389,7 +397,7 @@ export type TopArtistEntry = {
     artist?: Artist;
     current: TopEntityPlays;
     previous?: TopEntityPlays;
-    change?: TopEntityPlays;
+    change?: TopEntityChange;
 };
 
 export type SessionListen = {

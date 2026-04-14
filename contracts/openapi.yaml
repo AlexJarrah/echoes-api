@@ -845,6 +845,20 @@ components:
           format: uint64
           description: Play duration in seconds
 
+    TopEntityChange:
+      type: object
+      required:
+        - count
+        - duration
+      properties:
+        count:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+          format: int64
+          description: Play duration in seconds
+
     TopAlbumEntry:
       type: object
       required:
@@ -871,7 +885,7 @@ components:
         previous:
           $ref: "#/components/schemas/TopEntityPlays"
         change:
-          $ref: "#/components/schemas/TopEntityPlays"
+          $ref: "#/components/schemas/TopEntityChange"
 
     TopTrackEntry:
       type: object
@@ -902,7 +916,7 @@ components:
         previous:
           $ref: "#/components/schemas/TopEntityPlays"
         change:
-          $ref: "#/components/schemas/TopEntityPlays"
+          $ref: "#/components/schemas/TopEntityChange"
 
     TopArtistEntry:
       type: object
@@ -925,7 +939,7 @@ components:
         previous:
           $ref: "#/components/schemas/TopEntityPlays"
         change:
-          $ref: "#/components/schemas/TopEntityPlays"
+          $ref: "#/components/schemas/TopEntityChange"
 
     SessionListen:
       type: object

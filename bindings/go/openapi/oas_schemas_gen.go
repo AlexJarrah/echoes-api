@@ -2741,6 +2741,52 @@ func (o OptString) Or(d string) string {
 	return d
 }
 
+// NewOptTopEntityChange returns new OptTopEntityChange with value set to v.
+func NewOptTopEntityChange(v TopEntityChange) OptTopEntityChange {
+	return OptTopEntityChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptTopEntityChange is optional TopEntityChange.
+type OptTopEntityChange struct {
+	Value TopEntityChange
+	Set   bool
+}
+
+// IsSet returns true if OptTopEntityChange was set.
+func (o OptTopEntityChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptTopEntityChange) Reset() {
+	var v TopEntityChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptTopEntityChange) SetTo(v TopEntityChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptTopEntityChange) Get() (v TopEntityChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptTopEntityChange) Or(d TopEntityChange) TopEntityChange {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptTopEntityPlays returns new OptTopEntityPlays with value set to v.
 func NewOptTopEntityPlays(v TopEntityPlays) OptTopEntityPlays {
 	return OptTopEntityPlays{
@@ -3976,13 +4022,13 @@ func (s *StatisticsQuery) SetLimit(val OptInt32) {
 
 // Ref: #/components/schemas/TopAlbumEntry
 type TopAlbumEntry struct {
-	ID       uuid.UUID         `json:"id"`
-	Rank     uint              `json:"rank"`
-	Album    Album             `json:"album"`
-	Artists  []Artist          `json:"artists"`
-	Current  TopEntityPlays    `json:"current"`
-	Previous OptTopEntityPlays `json:"previous"`
-	Change   OptTopEntityPlays `json:"change"`
+	ID       uuid.UUID          `json:"id"`
+	Rank     uint               `json:"rank"`
+	Album    Album              `json:"album"`
+	Artists  []Artist           `json:"artists"`
+	Current  TopEntityPlays     `json:"current"`
+	Previous OptTopEntityPlays  `json:"previous"`
+	Change   OptTopEntityChange `json:"change"`
 }
 
 // GetID returns the value of ID.
@@ -4016,7 +4062,7 @@ func (s *TopAlbumEntry) GetPrevious() OptTopEntityPlays {
 }
 
 // GetChange returns the value of Change.
-func (s *TopAlbumEntry) GetChange() OptTopEntityPlays {
+func (s *TopAlbumEntry) GetChange() OptTopEntityChange {
 	return s.Change
 }
 
@@ -4051,18 +4097,18 @@ func (s *TopAlbumEntry) SetPrevious(val OptTopEntityPlays) {
 }
 
 // SetChange sets the value of Change.
-func (s *TopAlbumEntry) SetChange(val OptTopEntityPlays) {
+func (s *TopAlbumEntry) SetChange(val OptTopEntityChange) {
 	s.Change = val
 }
 
 // Ref: #/components/schemas/TopArtistEntry
 type TopArtistEntry struct {
-	ID       uuid.UUID         `json:"id"`
-	Rank     uint              `json:"rank"`
-	Artist   OptArtist         `json:"artist"`
-	Current  TopEntityPlays    `json:"current"`
-	Previous OptTopEntityPlays `json:"previous"`
-	Change   OptTopEntityPlays `json:"change"`
+	ID       uuid.UUID          `json:"id"`
+	Rank     uint               `json:"rank"`
+	Artist   OptArtist          `json:"artist"`
+	Current  TopEntityPlays     `json:"current"`
+	Previous OptTopEntityPlays  `json:"previous"`
+	Change   OptTopEntityChange `json:"change"`
 }
 
 // GetID returns the value of ID.
@@ -4091,7 +4137,7 @@ func (s *TopArtistEntry) GetPrevious() OptTopEntityPlays {
 }
 
 // GetChange returns the value of Change.
-func (s *TopArtistEntry) GetChange() OptTopEntityPlays {
+func (s *TopArtistEntry) GetChange() OptTopEntityChange {
 	return s.Change
 }
 
@@ -4121,8 +4167,35 @@ func (s *TopArtistEntry) SetPrevious(val OptTopEntityPlays) {
 }
 
 // SetChange sets the value of Change.
-func (s *TopArtistEntry) SetChange(val OptTopEntityPlays) {
+func (s *TopArtistEntry) SetChange(val OptTopEntityChange) {
 	s.Change = val
+}
+
+// Ref: #/components/schemas/TopEntityChange
+type TopEntityChange struct {
+	Count int64 `json:"count"`
+	// Play duration in seconds.
+	Duration int64 `json:"duration"`
+}
+
+// GetCount returns the value of Count.
+func (s *TopEntityChange) GetCount() int64 {
+	return s.Count
+}
+
+// GetDuration returns the value of Duration.
+func (s *TopEntityChange) GetDuration() int64 {
+	return s.Duration
+}
+
+// SetCount sets the value of Count.
+func (s *TopEntityChange) SetCount(val int64) {
+	s.Count = val
+}
+
+// SetDuration sets the value of Duration.
+func (s *TopEntityChange) SetDuration(val int64) {
+	s.Duration = val
 }
 
 // Ref: #/components/schemas/TopEntityPlays
@@ -4154,14 +4227,14 @@ func (s *TopEntityPlays) SetDuration(val uint64) {
 
 // Ref: #/components/schemas/TopTrackEntry
 type TopTrackEntry struct {
-	ID       uuid.UUID         `json:"id"`
-	Rank     uint              `json:"rank"`
-	Track    Track             `json:"track"`
-	Album    Album             `json:"album"`
-	Artists  []Artist          `json:"artists"`
-	Current  TopEntityPlays    `json:"current"`
-	Previous OptTopEntityPlays `json:"previous"`
-	Change   OptTopEntityPlays `json:"change"`
+	ID       uuid.UUID          `json:"id"`
+	Rank     uint               `json:"rank"`
+	Track    Track              `json:"track"`
+	Album    Album              `json:"album"`
+	Artists  []Artist           `json:"artists"`
+	Current  TopEntityPlays     `json:"current"`
+	Previous OptTopEntityPlays  `json:"previous"`
+	Change   OptTopEntityChange `json:"change"`
 }
 
 // GetID returns the value of ID.
@@ -4200,7 +4273,7 @@ func (s *TopTrackEntry) GetPrevious() OptTopEntityPlays {
 }
 
 // GetChange returns the value of Change.
-func (s *TopTrackEntry) GetChange() OptTopEntityPlays {
+func (s *TopTrackEntry) GetChange() OptTopEntityChange {
 	return s.Change
 }
 
@@ -4240,7 +4313,7 @@ func (s *TopTrackEntry) SetPrevious(val OptTopEntityPlays) {
 }
 
 // SetChange sets the value of Change.
-func (s *TopTrackEntry) SetChange(val OptTopEntityPlays) {
+func (s *TopTrackEntry) SetChange(val OptTopEntityChange) {
 	s.Change = val
 }
 
