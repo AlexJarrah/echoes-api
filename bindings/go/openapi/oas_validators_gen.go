@@ -273,6 +273,8 @@ func (s ListenMethod) Validate() error {
 		return nil
 	case 4:
 		return nil
+	case 5:
+		return nil
 	default:
 		return errors.Errorf("invalid value: %v", s)
 	}

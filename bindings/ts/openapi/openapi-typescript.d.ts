@@ -503,9 +503,10 @@ export interface components {
          *     2=Spotify: listen was imported from Spotify
          *     3=AppleMusic: listen was imported from Apple Music
          *     4=Last: listen was imported from Last
+         *     5=YouTube: listen was imported from YouTube
          * @enum {integer}
          */
-        ListenMethod: 0 | 1 | 2 | 3 | 4;
+        ListenMethod: 0 | 1 | 2 | 3 | 4 | 5;
         /**
          * Format: uint8
          * @description 0=Google

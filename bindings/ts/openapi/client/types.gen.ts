@@ -19,9 +19,10 @@ export type UserVisibility = 0 | 1 | 2 | 3;
  * 2=Spotify: listen was imported from Spotify
  * 3=AppleMusic: listen was imported from Apple Music
  * 4=Last: listen was imported from Last
+ * 5=YouTube: listen was imported from YouTube
  *
  */
-export type ListenMethod = 0 | 1 | 2 | 3 | 4;
+export type ListenMethod = 0 | 1 | 2 | 3 | 4 | 5;
 
 /**
  * 0=Google

@@ -1841,7 +1841,8 @@ func (s *Listen) SetUpdatedAt(val OptNilDateTime) {
 // 1=App: listen was added via an official client application
 // 2=Spotify: listen was imported from Spotify
 // 3=AppleMusic: listen was imported from Apple Music
-// 4=Last: listen was imported from Last.
+// 4=Last: listen was imported from Last
+// 5=YouTube: listen was imported from YouTube.
 // Ref: #/components/schemas/ListenMethod
 type ListenMethod uint8
 
@@ -1851,6 +1852,7 @@ const (
 	ListenMethod2 ListenMethod = 2
 	ListenMethod3 ListenMethod = 3
 	ListenMethod4 ListenMethod = 4
+	ListenMethod5 ListenMethod = 5
 )
 
 // AllValues returns all ListenMethod values.
@@ -1861,6 +1863,7 @@ func (ListenMethod) AllValues() []ListenMethod {
 		ListenMethod2,
 		ListenMethod3,
 		ListenMethod4,
+		ListenMethod5,
 	}
 }
 
