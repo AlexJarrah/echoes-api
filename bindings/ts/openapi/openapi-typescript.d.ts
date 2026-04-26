@@ -432,6 +432,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/statistics/user/top/artist-plays": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get user's top artists with each artist's top tracks and albums. */
+        post: operations["getUserTopArtistPlayStats"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/statistics/global/top/albums": {
         parameters: {
             query?: never;
@@ -936,6 +953,34 @@ export interface components {
             previous?: components["schemas"]["TopEntityPlays"];
             change?: components["schemas"]["TopEntityChange"];
         };
+        ArtistPlayStatistics: {
+            /** Format: uint */
+            rank: number;
+            artist: components["schemas"]["ArtistPlayStats"];
+            top_tracks: components["schemas"]["TrackPlayStats"][];
+            top_albums: components["schemas"]["AlbumPlayStats"][];
+        };
+        TrackPlayStats: {
+            track: components["schemas"]["Track"];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
+        };
+        ArtistPlayStats: {
+            artist: components["schemas"]["Artist"];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
+        };
+        AlbumPlayStats: {
+            album: components["schemas"]["Album"];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
+        };
         SessionListen: {
             /**
              * Format: int32
@@ -1102,6 +1147,41 @@ export interface components {
             /** Format: uuid */
             id: string;
             best_friend: boolean;
+        };
+        ArtistPlayStatisticsQuery: {
+            /**
+             * Format: date-time
+             * @description Start timestamp for the time range
+             */
+            start?: string;
+            /**
+             * Format: date-time
+             * @description End timestamp for the time range
+             */
+            end?: string;
+            /**
+             * Format: int32
+             * @description Maximum number of artists to return
+             * @default 10
+             */
+            artist_limit: number;
+            /**
+             * Format: int32
+             * @description Maximum number of tracks per artist to return
+             * @default 3
+             */
+            track_limit: number;
+            /**
+             * Format: int32
+             * @description Maximum number of albums per artist to return
+             * @default 1
+             */
+            album_limit: number;
+            /**
+             * Format: int32
+             * @default 0
+             */
+            artist_offset: number;
         };
         StatisticsQuery: {
             /**
@@ -1803,6 +1883,33 @@ export interface operations {
                     "application/json": components["schemas"]["RelationDetails"][];
                 };
             };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserTopArtistPlayStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ArtistPlayStatisticsQuery"];
+            };
+        };
+        responses: {
+            /** @description Top artist plays returned successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtistPlayStatistics"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };

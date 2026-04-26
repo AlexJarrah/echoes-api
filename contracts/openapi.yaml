@@ -393,7 +393,8 @@ components:
         password:
           type: string
           minLength: 8
-          description: 8+ characters, must contain uppercase, lowercase, digit, and special character
+          description: 8+ characters, must contain uppercase, lowercase, digit, and
+            special character
 
     SignInRequest:
       type: object
@@ -694,10 +695,12 @@ components:
         reference_id:
           type: integer
           format: int64
-          description: Reference ID provided in the request, echoed back for client correlation.
+          description: Reference ID provided in the request, echoed back for client
+            correlation.
         created:
           type: boolean
-          description: True if a new entity was created, false if an existing entity was resolved.
+          description: True if a new entity was created, false if an existing entity was
+            resolved.
 
     LibraryAddResponse:
       type: object
@@ -824,7 +827,8 @@ components:
         minimum:
           type: integer
           format: int64
-          description: Minimum amount of listens to be fetched. The start parameter's value may not be respected to achieve this.
+          description: Minimum amount of listens to be fetched. The start parameter's
+            value may not be respected to achieve this.
         limit:
           type: integer
           format: int64
@@ -942,6 +946,76 @@ components:
           $ref: "#/components/schemas/TopEntityPlays"
         change:
           $ref: "#/components/schemas/TopEntityChange"
+
+    ArtistPlayStatistics:
+      type: object
+      required:
+        - rank
+        - artist
+        - top_tracks
+        - top_albums
+      properties:
+        rank:
+          type: integer
+          format: uint
+        artist:
+          $ref: "#/components/schemas/ArtistPlayStats"
+        top_tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackPlayStats"
+        top_albums:
+          type: array
+          items:
+            $ref: "#/components/schemas/AlbumPlayStats"
+
+    TrackPlayStats:
+      type: object
+      required:
+        - track
+        - play_count
+        - play_duration
+      properties:
+        track:
+          $ref: "#/components/schemas/Track"
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
+
+    ArtistPlayStats:
+      type: object
+      required:
+        - artist
+        - play_count
+        - play_duration
+      properties:
+        artist:
+          $ref: "#/components/schemas/Artist"
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
+
+    AlbumPlayStats:
+      type: object
+      required:
+        - album
+        - play_count
+        - play_duration
+      properties:
+        album:
+          $ref: "#/components/schemas/Album"
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
 
     SessionListen:
       type: object
@@ -1124,14 +1198,16 @@ components:
       properties:
         session_id:
           type: string
-          description: Unique identifier for the listening session, typically a UUID or random string used to group related activities.
+          description: Unique identifier for the listening session, typically a UUID or
+            random string used to group related activities.
         track_id:
           type: string
           format: uuid
           description: UUID of the track being played.
         active:
           type: boolean
-          description: Whether the user is currently playing this track (true) or has stopped/paused (false).
+          description: Whether the user is currently playing this track (true) or has
+            stopped/paused (false).
         position:
           type: integer
           format: int64
@@ -1143,7 +1219,8 @@ components:
         end_timestamp:
           type: string
           format: date-time
-          description: ISO 8601 timestamp when playback of this track is expected to end (for background playback estimation).
+          description: ISO 8601 timestamp when playback of this track is expected to end
+            (for background playback estimation).
 
     SearchTracksRequest:
       type: object
@@ -1177,7 +1254,8 @@ components:
 
     FriendActionRequest:
       type: object
-      description: Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user.
+      description: Request body for friend actions. At least one of 'id' or 'handle'
+        must be provided to identify the target user.
       properties:
         id:
           type: string
@@ -1212,6 +1290,40 @@ components:
           format: uuid
         best_friend:
           type: boolean
+
+    ArtistPlayStatisticsQuery:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start timestamp for the time range
+        end:
+          type: string
+          format: date-time
+          description: End timestamp for the time range
+        artist_limit:
+          type: integer
+          format: int32
+          default: 10
+          maximum: 30
+          description: Maximum number of artists to return
+        track_limit:
+          type: integer
+          format: int32
+          default: 3
+          maximum: 10
+          description: Maximum number of tracks per artist to return
+        album_limit:
+          type: integer
+          format: int32
+          default: 1
+          maximum: 10
+          description: Maximum number of albums per artist to return
+        artist_offset:
+          type: integer
+          format: int32
+          default: 0
 
     StatisticsQuery:
       type: object
@@ -1618,7 +1730,9 @@ paths:
     get:
       summary: Get calendar listens for user (ICS feed)
       operationId: getCalendarListens
-      description: Serves listening history as an ICS feed. Access respects requested user's privacy settings. If requested user's privacy is not public, auth and token params are required.
+      description: Serves listening history as an ICS feed. Access respects requested
+        user's privacy settings. If requested user's privacy is not public, auth
+        and token params are required.
       tags:
         - Listens
       parameters:
@@ -1631,13 +1745,15 @@ paths:
             format: uuid
         - name: auth_id
           in: query
-          description: The requesting user's ID (the viewer). Required if target user's visibility is not public.
+          description: The requesting user's ID (the viewer). Required if target user's
+            visibility is not public.
           schema:
             type: string
             format: uuid
         - name: token
           in: query
-          description: HMAC token for authentication. Required if target user's visibility is not public.
+          description: HMAC token for authentication. Required if target user's visibility
+            is not public.
           schema:
             type: string
       responses:
@@ -1990,9 +2106,38 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+  /api/statistics/user/top/artist-plays:
+    post:
+      summary: Get user's top artists with each artist's top tracks and albums.
+      operationId: getUserTopArtistPlayStats
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtistPlayStatisticsQuery"
+      responses:
+        "200":
+          description: Top artist plays returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ArtistPlayStatistics"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   /api/statistics/global/top/albums:
     post:
-      summary: Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      summary: Get global top albums in the specified time range. Time range values
+        default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopAlbums
       tags:
         - Statistics
@@ -2018,7 +2163,8 @@ paths:
 
   /api/statistics/global/top/tracks:
     post:
-      summary: Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      summary: Get global top tracks in the specified time range. Time range values
+        default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopTracks
       tags:
         - Statistics
@@ -2044,7 +2190,8 @@ paths:
 
   /api/statistics/global/top/artists:
     post:
-      summary: Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      summary: Get global top artists in the specified time range. Time range values
+        default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopArtists
       tags:
         - Statistics

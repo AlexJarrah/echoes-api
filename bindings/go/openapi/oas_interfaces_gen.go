@@ -65,6 +65,10 @@ type GetUserListenSessionsRes interface {
 	getUserListenSessionsRes()
 }
 
+type GetUserTopArtistPlayStatsRes interface {
+	getUserTopArtistPlayStatsRes()
+}
+
 type JoinFreeBetaRes interface {
 	joinFreeBetaRes()
 }

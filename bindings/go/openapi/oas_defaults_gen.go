@@ -3,6 +3,26 @@
 package openapi
 
 // setDefaults set default value of fields.
+func (s *ArtistPlayStatisticsQuery) setDefaults() {
+	{
+		val := int32(10)
+		s.ArtistLimit.SetTo(val)
+	}
+	{
+		val := int32(3)
+		s.TrackLimit.SetTo(val)
+	}
+	{
+		val := int32(1)
+		s.AlbumLimit.SetTo(val)
+	}
+	{
+		val := int32(0)
+		s.ArtistOffset.SetTo(val)
+	}
+}
+
+// setDefaults set default value of fields.
 func (s *LibraryAddAlbum) setDefaults() {
 	{
 		val := bool(false)

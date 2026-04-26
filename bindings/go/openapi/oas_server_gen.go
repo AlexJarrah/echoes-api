@@ -108,6 +108,12 @@ type Handler interface {
 	//
 	// POST /api/@{handle}/listens/sessions
 	GetUserListenSessions(ctx context.Context, req *ListensSessionsRequest, params GetUserListenSessionsParams) (GetUserListenSessionsRes, error)
+	// GetUserTopArtistPlayStats implements getUserTopArtistPlayStats operation.
+	//
+	// Get user's top artists with each artist's top tracks and albums.
+	//
+	// POST /api/statistics/user/top/artist-plays
+	GetUserTopArtistPlayStats(ctx context.Context, req OptArtistPlayStatisticsQuery) (GetUserTopArtistPlayStatsRes, error)
 	// JoinFreeBeta implements joinFreeBeta operation.
 	//
 	// Join free beta.

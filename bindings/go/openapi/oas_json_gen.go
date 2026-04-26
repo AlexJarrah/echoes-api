@@ -716,6 +716,134 @@ func (s *AlbumArtist) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
+func (s *AlbumPlayStats) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *AlbumPlayStats) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("album")
+		s.Album.Encode(e)
+	}
+	{
+		e.FieldStart("play_count")
+		e.UInt64(s.PlayCount)
+	}
+	{
+		e.FieldStart("play_duration")
+		e.UInt64(s.PlayDuration)
+	}
+}
+
+var jsonFieldsNameOfAlbumPlayStats = [3]string{
+	0: "album",
+	1: "play_count",
+	2: "play_duration",
+}
+
+// Decode decodes AlbumPlayStats from json.
+func (s *AlbumPlayStats) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode AlbumPlayStats to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "album":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Album.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album\"")
+			}
+		case "play_count":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := d.UInt64()
+				s.PlayCount = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"play_count\"")
+			}
+		case "play_duration":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.UInt64()
+				s.PlayDuration = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"play_duration\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode AlbumPlayStats")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAlbumPlayStats) {
+					name = jsonFieldsNameOfAlbumPlayStats[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *AlbumPlayStats) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *AlbumPlayStats) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
 func (s *AlbumTrack) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -1125,6 +1253,448 @@ func (s *Artist) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *Artist) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *ArtistPlayStatistics) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *ArtistPlayStatistics) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("rank")
+		e.UInt(s.Rank)
+	}
+	{
+		e.FieldStart("artist")
+		s.Artist.Encode(e)
+	}
+	{
+		e.FieldStart("top_tracks")
+		e.ArrStart()
+		for _, elem := range s.TopTracks {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("top_albums")
+		e.ArrStart()
+		for _, elem := range s.TopAlbums {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+}
+
+var jsonFieldsNameOfArtistPlayStatistics = [4]string{
+	0: "rank",
+	1: "artist",
+	2: "top_tracks",
+	3: "top_albums",
+}
+
+// Decode decodes ArtistPlayStatistics from json.
+func (s *ArtistPlayStatistics) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode ArtistPlayStatistics to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "rank":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.UInt()
+				s.Rank = uint(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"rank\"")
+			}
+		case "artist":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				if err := s.Artist.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist\"")
+			}
+		case "top_tracks":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				s.TopTracks = make([]TrackPlayStats, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem TrackPlayStats
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.TopTracks = append(s.TopTracks, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"top_tracks\"")
+			}
+		case "top_albums":
+			requiredBitSet[0] |= 1 << 3
+			if err := func() error {
+				s.TopAlbums = make([]AlbumPlayStats, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem AlbumPlayStats
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.TopAlbums = append(s.TopAlbums, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"top_albums\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode ArtistPlayStatistics")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00001111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfArtistPlayStatistics) {
+					name = jsonFieldsNameOfArtistPlayStatistics[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *ArtistPlayStatistics) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *ArtistPlayStatistics) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *ArtistPlayStatisticsQuery) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *ArtistPlayStatisticsQuery) encodeFields(e *jx.Encoder) {
+	{
+		if s.Start.Set {
+			e.FieldStart("start")
+			s.Start.Encode(e, json.EncodeDateTime)
+		}
+	}
+	{
+		if s.End.Set {
+			e.FieldStart("end")
+			s.End.Encode(e, json.EncodeDateTime)
+		}
+	}
+	{
+		if s.ArtistLimit.Set {
+			e.FieldStart("artist_limit")
+			s.ArtistLimit.Encode(e)
+		}
+	}
+	{
+		if s.TrackLimit.Set {
+			e.FieldStart("track_limit")
+			s.TrackLimit.Encode(e)
+		}
+	}
+	{
+		if s.AlbumLimit.Set {
+			e.FieldStart("album_limit")
+			s.AlbumLimit.Encode(e)
+		}
+	}
+	{
+		if s.ArtistOffset.Set {
+			e.FieldStart("artist_offset")
+			s.ArtistOffset.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfArtistPlayStatisticsQuery = [6]string{
+	0: "start",
+	1: "end",
+	2: "artist_limit",
+	3: "track_limit",
+	4: "album_limit",
+	5: "artist_offset",
+}
+
+// Decode decodes ArtistPlayStatisticsQuery from json.
+func (s *ArtistPlayStatisticsQuery) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode ArtistPlayStatisticsQuery to nil")
+	}
+	s.setDefaults()
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "start":
+			if err := func() error {
+				s.Start.Reset()
+				if err := s.Start.Decode(d, json.DecodeDateTime); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"start\"")
+			}
+		case "end":
+			if err := func() error {
+				s.End.Reset()
+				if err := s.End.Decode(d, json.DecodeDateTime); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"end\"")
+			}
+		case "artist_limit":
+			if err := func() error {
+				s.ArtistLimit.Reset()
+				if err := s.ArtistLimit.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist_limit\"")
+			}
+		case "track_limit":
+			if err := func() error {
+				s.TrackLimit.Reset()
+				if err := s.TrackLimit.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track_limit\"")
+			}
+		case "album_limit":
+			if err := func() error {
+				s.AlbumLimit.Reset()
+				if err := s.AlbumLimit.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album_limit\"")
+			}
+		case "artist_offset":
+			if err := func() error {
+				s.ArtistOffset.Reset()
+				if err := s.ArtistOffset.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist_offset\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode ArtistPlayStatisticsQuery")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *ArtistPlayStatisticsQuery) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *ArtistPlayStatisticsQuery) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *ArtistPlayStats) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *ArtistPlayStats) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("artist")
+		s.Artist.Encode(e)
+	}
+	{
+		e.FieldStart("play_count")
+		e.UInt64(s.PlayCount)
+	}
+	{
+		e.FieldStart("play_duration")
+		e.UInt64(s.PlayDuration)
+	}
+}
+
+var jsonFieldsNameOfArtistPlayStats = [3]string{
+	0: "artist",
+	1: "play_count",
+	2: "play_duration",
+}
+
+// Decode decodes ArtistPlayStats from json.
+func (s *ArtistPlayStats) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode ArtistPlayStats to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "artist":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Artist.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist\"")
+			}
+		case "play_count":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := d.UInt64()
+				s.PlayCount = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"play_count\"")
+			}
+		case "play_duration":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.UInt64()
+				s.PlayDuration = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"play_duration\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode ArtistPlayStats")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfArtistPlayStats) {
+					name = jsonFieldsNameOfArtistPlayStats[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *ArtistPlayStats) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *ArtistPlayStats) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -3271,6 +3841,170 @@ func (s *GetUserListenSessionsApplicationJSONUnauthorized) MarshalJSON() ([]byte
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *GetUserListenSessionsApplicationJSONUnauthorized) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetUserTopArtistPlayStatsApplicationJSONBadRequest as json.
+func (s *GetUserTopArtistPlayStatsApplicationJSONBadRequest) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetUserTopArtistPlayStatsApplicationJSONBadRequest from json.
+func (s *GetUserTopArtistPlayStatsApplicationJSONBadRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetUserTopArtistPlayStatsApplicationJSONBadRequest to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetUserTopArtistPlayStatsApplicationJSONBadRequest(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetUserTopArtistPlayStatsApplicationJSONBadRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetUserTopArtistPlayStatsApplicationJSONBadRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetUserTopArtistPlayStatsApplicationJSONInternalServerError as json.
+func (s *GetUserTopArtistPlayStatsApplicationJSONInternalServerError) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetUserTopArtistPlayStatsApplicationJSONInternalServerError from json.
+func (s *GetUserTopArtistPlayStatsApplicationJSONInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetUserTopArtistPlayStatsApplicationJSONInternalServerError to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetUserTopArtistPlayStatsApplicationJSONInternalServerError(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetUserTopArtistPlayStatsApplicationJSONInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetUserTopArtistPlayStatsApplicationJSONInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetUserTopArtistPlayStatsApplicationJSONUnauthorized as json.
+func (s *GetUserTopArtistPlayStatsApplicationJSONUnauthorized) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetUserTopArtistPlayStatsApplicationJSONUnauthorized from json.
+func (s *GetUserTopArtistPlayStatsApplicationJSONUnauthorized) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetUserTopArtistPlayStatsApplicationJSONUnauthorized to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetUserTopArtistPlayStatsApplicationJSONUnauthorized(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetUserTopArtistPlayStatsApplicationJSONUnauthorized) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetUserTopArtistPlayStatsApplicationJSONUnauthorized) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetUserTopArtistPlayStatsOKApplicationJSON as json.
+func (s GetUserTopArtistPlayStatsOKApplicationJSON) Encode(e *jx.Encoder) {
+	unwrapped := []ArtistPlayStatistics(s)
+
+	e.ArrStart()
+	for _, elem := range unwrapped {
+		elem.Encode(e)
+	}
+	e.ArrEnd()
+}
+
+// Decode decodes GetUserTopArtistPlayStatsOKApplicationJSON from json.
+func (s *GetUserTopArtistPlayStatsOKApplicationJSON) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetUserTopArtistPlayStatsOKApplicationJSON to nil")
+	}
+	var unwrapped []ArtistPlayStatistics
+	if err := func() error {
+		unwrapped = make([]ArtistPlayStatistics, 0)
+		if err := d.Arr(func(d *jx.Decoder) error {
+			var elem ArtistPlayStatistics
+			if err := elem.Decode(d); err != nil {
+				return err
+			}
+			unwrapped = append(unwrapped, elem)
+			return nil
+		}); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetUserTopArtistPlayStatsOKApplicationJSON(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s GetUserTopArtistPlayStatsOKApplicationJSON) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetUserTopArtistPlayStatsOKApplicationJSON) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -6523,6 +7257,39 @@ func (s OptArtist) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptArtist) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes ArtistPlayStatisticsQuery as json.
+func (o OptArtistPlayStatisticsQuery) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes ArtistPlayStatisticsQuery from json.
+func (o *OptArtistPlayStatisticsQuery) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptArtistPlayStatisticsQuery to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptArtistPlayStatisticsQuery) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptArtistPlayStatisticsQuery) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -12308,6 +13075,134 @@ func (s *TrackArtist) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *TrackArtist) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *TrackPlayStats) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *TrackPlayStats) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("track")
+		s.Track.Encode(e)
+	}
+	{
+		e.FieldStart("play_count")
+		e.UInt64(s.PlayCount)
+	}
+	{
+		e.FieldStart("play_duration")
+		e.UInt64(s.PlayDuration)
+	}
+}
+
+var jsonFieldsNameOfTrackPlayStats = [3]string{
+	0: "track",
+	1: "play_count",
+	2: "play_duration",
+}
+
+// Decode decodes TrackPlayStats from json.
+func (s *TrackPlayStats) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode TrackPlayStats to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "track":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Track.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track\"")
+			}
+		case "play_count":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := d.UInt64()
+				s.PlayCount = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"play_count\"")
+			}
+		case "play_duration":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.UInt64()
+				s.PlayDuration = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"play_duration\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode TrackPlayStats")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfTrackPlayStats) {
+					name = jsonFieldsNameOfTrackPlayStats[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *TrackPlayStats) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *TrackPlayStats) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

@@ -161,6 +161,15 @@ func (UnimplementedHandler) GetUserListenSessions(ctx context.Context, req *List
 	return r, ht.ErrNotImplemented
 }
 
+// GetUserTopArtistPlayStats implements getUserTopArtistPlayStats operation.
+//
+// Get user's top artists with each artist's top tracks and albums.
+//
+// POST /api/statistics/user/top/artist-plays
+func (UnimplementedHandler) GetUserTopArtistPlayStats(ctx context.Context, req OptArtistPlayStatisticsQuery) (r GetUserTopArtistPlayStatsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // JoinFreeBeta implements joinFreeBeta operation.
 //
 // Join free beta.

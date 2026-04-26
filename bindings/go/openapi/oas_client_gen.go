@@ -187,6 +187,12 @@ type Invoker interface {
 	//
 	// POST /api/@{handle}/listens/sessions
 	GetUserListenSessions(ctx context.Context, request *ListensSessionsRequest, params GetUserListenSessionsParams, options ...RequestOption) (GetUserListenSessionsRes, error)
+	// GetUserTopArtistPlayStats invokes getUserTopArtistPlayStats operation.
+	//
+	// Get user's top artists with each artist's top tracks and albums.
+	//
+	// POST /api/statistics/user/top/artist-plays
+	GetUserTopArtistPlayStats(ctx context.Context, request OptArtistPlayStatisticsQuery, options ...RequestOption) (GetUserTopArtistPlayStatsRes, error)
 	// JoinFreeBeta invokes joinFreeBeta operation.
 	//
 	// Join free beta.
@@ -2523,6 +2529,125 @@ func (c *Client) sendGetUserListenSessions(ctx context.Context, request *Listens
 
 	stage = "DecodeResponse"
 	result, err := decodeGetUserListenSessionsResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetUserTopArtistPlayStats invokes getUserTopArtistPlayStats operation.
+//
+// Get user's top artists with each artist's top tracks and albums.
+//
+// POST /api/statistics/user/top/artist-plays
+func (c *Client) GetUserTopArtistPlayStats(ctx context.Context, request OptArtistPlayStatisticsQuery, options ...RequestOption) (GetUserTopArtistPlayStatsRes, error) {
+	res, err := c.sendGetUserTopArtistPlayStats(ctx, request, options...)
+	return res, err
+}
+
+func (c *Client) sendGetUserTopArtistPlayStats(ctx context.Context, request OptArtistPlayStatisticsQuery, requestOptions ...RequestOption) (res GetUserTopArtistPlayStatsRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getUserTopArtistPlayStats"),
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.URLTemplateKey.String("/api/statistics/user/top/artist-plays"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetUserTopArtistPlayStatsOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/api/statistics/user/top/artist-plays"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeGetUserTopArtistPlayStatsRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetUserTopArtistPlayStatsResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

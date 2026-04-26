@@ -205,6 +205,43 @@ func (s *AlbumArtist) SetArtistID(val uuid.UUID) {
 	s.ArtistID = val
 }
 
+// Ref: #/components/schemas/AlbumPlayStats
+type AlbumPlayStats struct {
+	Album        Album  `json:"album"`
+	PlayCount    uint64 `json:"play_count"`
+	PlayDuration uint64 `json:"play_duration"`
+}
+
+// GetAlbum returns the value of Album.
+func (s *AlbumPlayStats) GetAlbum() Album {
+	return s.Album
+}
+
+// GetPlayCount returns the value of PlayCount.
+func (s *AlbumPlayStats) GetPlayCount() uint64 {
+	return s.PlayCount
+}
+
+// GetPlayDuration returns the value of PlayDuration.
+func (s *AlbumPlayStats) GetPlayDuration() uint64 {
+	return s.PlayDuration
+}
+
+// SetAlbum sets the value of Album.
+func (s *AlbumPlayStats) SetAlbum(val Album) {
+	s.Album = val
+}
+
+// SetPlayCount sets the value of PlayCount.
+func (s *AlbumPlayStats) SetPlayCount(val uint64) {
+	s.PlayCount = val
+}
+
+// SetPlayDuration sets the value of PlayDuration.
+func (s *AlbumPlayStats) SetPlayDuration(val uint64) {
+	s.PlayDuration = val
+}
+
 // Ref: #/components/schemas/AlbumTrack
 type AlbumTrack struct {
 	AlbumID     uuid.UUID  `json:"album_id"`
@@ -380,6 +417,166 @@ func (s *Artist) SetUpdatedAt(val OptNilDateTime) {
 
 func (*Artist) getArtistRes() {}
 
+// Ref: #/components/schemas/ArtistPlayStatistics
+type ArtistPlayStatistics struct {
+	Rank      uint             `json:"rank"`
+	Artist    ArtistPlayStats  `json:"artist"`
+	TopTracks []TrackPlayStats `json:"top_tracks"`
+	TopAlbums []AlbumPlayStats `json:"top_albums"`
+}
+
+// GetRank returns the value of Rank.
+func (s *ArtistPlayStatistics) GetRank() uint {
+	return s.Rank
+}
+
+// GetArtist returns the value of Artist.
+func (s *ArtistPlayStatistics) GetArtist() ArtistPlayStats {
+	return s.Artist
+}
+
+// GetTopTracks returns the value of TopTracks.
+func (s *ArtistPlayStatistics) GetTopTracks() []TrackPlayStats {
+	return s.TopTracks
+}
+
+// GetTopAlbums returns the value of TopAlbums.
+func (s *ArtistPlayStatistics) GetTopAlbums() []AlbumPlayStats {
+	return s.TopAlbums
+}
+
+// SetRank sets the value of Rank.
+func (s *ArtistPlayStatistics) SetRank(val uint) {
+	s.Rank = val
+}
+
+// SetArtist sets the value of Artist.
+func (s *ArtistPlayStatistics) SetArtist(val ArtistPlayStats) {
+	s.Artist = val
+}
+
+// SetTopTracks sets the value of TopTracks.
+func (s *ArtistPlayStatistics) SetTopTracks(val []TrackPlayStats) {
+	s.TopTracks = val
+}
+
+// SetTopAlbums sets the value of TopAlbums.
+func (s *ArtistPlayStatistics) SetTopAlbums(val []AlbumPlayStats) {
+	s.TopAlbums = val
+}
+
+// Ref: #/components/schemas/ArtistPlayStatisticsQuery
+type ArtistPlayStatisticsQuery struct {
+	// Start timestamp for the time range.
+	Start OptDateTime `json:"start"`
+	// End timestamp for the time range.
+	End OptDateTime `json:"end"`
+	// Maximum number of artists to return.
+	ArtistLimit OptInt32 `json:"artist_limit"`
+	// Maximum number of tracks per artist to return.
+	TrackLimit OptInt32 `json:"track_limit"`
+	// Maximum number of albums per artist to return.
+	AlbumLimit   OptInt32 `json:"album_limit"`
+	ArtistOffset OptInt32 `json:"artist_offset"`
+}
+
+// GetStart returns the value of Start.
+func (s *ArtistPlayStatisticsQuery) GetStart() OptDateTime {
+	return s.Start
+}
+
+// GetEnd returns the value of End.
+func (s *ArtistPlayStatisticsQuery) GetEnd() OptDateTime {
+	return s.End
+}
+
+// GetArtistLimit returns the value of ArtistLimit.
+func (s *ArtistPlayStatisticsQuery) GetArtistLimit() OptInt32 {
+	return s.ArtistLimit
+}
+
+// GetTrackLimit returns the value of TrackLimit.
+func (s *ArtistPlayStatisticsQuery) GetTrackLimit() OptInt32 {
+	return s.TrackLimit
+}
+
+// GetAlbumLimit returns the value of AlbumLimit.
+func (s *ArtistPlayStatisticsQuery) GetAlbumLimit() OptInt32 {
+	return s.AlbumLimit
+}
+
+// GetArtistOffset returns the value of ArtistOffset.
+func (s *ArtistPlayStatisticsQuery) GetArtistOffset() OptInt32 {
+	return s.ArtistOffset
+}
+
+// SetStart sets the value of Start.
+func (s *ArtistPlayStatisticsQuery) SetStart(val OptDateTime) {
+	s.Start = val
+}
+
+// SetEnd sets the value of End.
+func (s *ArtistPlayStatisticsQuery) SetEnd(val OptDateTime) {
+	s.End = val
+}
+
+// SetArtistLimit sets the value of ArtistLimit.
+func (s *ArtistPlayStatisticsQuery) SetArtistLimit(val OptInt32) {
+	s.ArtistLimit = val
+}
+
+// SetTrackLimit sets the value of TrackLimit.
+func (s *ArtistPlayStatisticsQuery) SetTrackLimit(val OptInt32) {
+	s.TrackLimit = val
+}
+
+// SetAlbumLimit sets the value of AlbumLimit.
+func (s *ArtistPlayStatisticsQuery) SetAlbumLimit(val OptInt32) {
+	s.AlbumLimit = val
+}
+
+// SetArtistOffset sets the value of ArtistOffset.
+func (s *ArtistPlayStatisticsQuery) SetArtistOffset(val OptInt32) {
+	s.ArtistOffset = val
+}
+
+// Ref: #/components/schemas/ArtistPlayStats
+type ArtistPlayStats struct {
+	Artist       Artist `json:"artist"`
+	PlayCount    uint64 `json:"play_count"`
+	PlayDuration uint64 `json:"play_duration"`
+}
+
+// GetArtist returns the value of Artist.
+func (s *ArtistPlayStats) GetArtist() Artist {
+	return s.Artist
+}
+
+// GetPlayCount returns the value of PlayCount.
+func (s *ArtistPlayStats) GetPlayCount() uint64 {
+	return s.PlayCount
+}
+
+// GetPlayDuration returns the value of PlayDuration.
+func (s *ArtistPlayStats) GetPlayDuration() uint64 {
+	return s.PlayDuration
+}
+
+// SetArtist sets the value of Artist.
+func (s *ArtistPlayStats) SetArtist(val Artist) {
+	s.Artist = val
+}
+
+// SetPlayCount sets the value of PlayCount.
+func (s *ArtistPlayStats) SetPlayCount(val uint64) {
+	s.PlayCount = val
+}
+
+// SetPlayDuration sets the value of PlayDuration.
+func (s *ArtistPlayStats) SetPlayDuration(val uint64) {
+	s.PlayDuration = val
+}
+
 type BadRequestTextPlain struct {
 	Data io.Reader
 }
@@ -394,27 +591,28 @@ func (s BadRequestTextPlain) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*BadRequestTextPlain) addFriendRes()              {}
-func (*BadRequestTextPlain) addToLibraryRes()           {}
-func (*BadRequestTextPlain) getAlbumRes()               {}
-func (*BadRequestTextPlain) getArtistRes()              {}
-func (*BadRequestTextPlain) getCalendarListensRes()     {}
-func (*BadRequestTextPlain) getGlobalTopAlbumsRes()     {}
-func (*BadRequestTextPlain) getGlobalTopArtistsRes()    {}
-func (*BadRequestTextPlain) getGlobalTopTracksRes()     {}
-func (*BadRequestTextPlain) getListenSessionsRes()      {}
-func (*BadRequestTextPlain) getTrackRes()               {}
-func (*BadRequestTextPlain) getUserListenSessionsRes()  {}
-func (*BadRequestTextPlain) registerRes()               {}
-func (*BadRequestTextPlain) removeFriendRes()           {}
-func (*BadRequestTextPlain) removeFromLibraryRes()      {}
-func (*BadRequestTextPlain) searchTracksViaDetailsRes() {}
-func (*BadRequestTextPlain) setActivityRes()            {}
-func (*BadRequestTextPlain) setBestFriendRes()          {}
-func (*BadRequestTextPlain) setBlockedRes()             {}
-func (*BadRequestTextPlain) signInRes()                 {}
-func (*BadRequestTextPlain) updateLibraryRes()          {}
-func (*BadRequestTextPlain) updateUserRes()             {}
+func (*BadRequestTextPlain) addFriendRes()                 {}
+func (*BadRequestTextPlain) addToLibraryRes()              {}
+func (*BadRequestTextPlain) getAlbumRes()                  {}
+func (*BadRequestTextPlain) getArtistRes()                 {}
+func (*BadRequestTextPlain) getCalendarListensRes()        {}
+func (*BadRequestTextPlain) getGlobalTopAlbumsRes()        {}
+func (*BadRequestTextPlain) getGlobalTopArtistsRes()       {}
+func (*BadRequestTextPlain) getGlobalTopTracksRes()        {}
+func (*BadRequestTextPlain) getListenSessionsRes()         {}
+func (*BadRequestTextPlain) getTrackRes()                  {}
+func (*BadRequestTextPlain) getUserListenSessionsRes()     {}
+func (*BadRequestTextPlain) getUserTopArtistPlayStatsRes() {}
+func (*BadRequestTextPlain) registerRes()                  {}
+func (*BadRequestTextPlain) removeFriendRes()              {}
+func (*BadRequestTextPlain) removeFromLibraryRes()         {}
+func (*BadRequestTextPlain) searchTracksViaDetailsRes()    {}
+func (*BadRequestTextPlain) setActivityRes()               {}
+func (*BadRequestTextPlain) setBestFriendRes()             {}
+func (*BadRequestTextPlain) setBlockedRes()                {}
+func (*BadRequestTextPlain) signInRes()                    {}
+func (*BadRequestTextPlain) updateLibraryRes()             {}
+func (*BadRequestTextPlain) updateUserRes()                {}
 
 // Ref: #/components/schemas/BestFriendActionRequest
 type BestFriendActionRequest struct {
@@ -798,6 +996,22 @@ type GetUserListenSessionsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetUserListenSessionsApplicationJSONUnauthorized) getUserListenSessionsRes() {}
 
+type GetUserTopArtistPlayStatsApplicationJSONBadRequest ErrorResponse
+
+func (*GetUserTopArtistPlayStatsApplicationJSONBadRequest) getUserTopArtistPlayStatsRes() {}
+
+type GetUserTopArtistPlayStatsApplicationJSONInternalServerError ErrorResponse
+
+func (*GetUserTopArtistPlayStatsApplicationJSONInternalServerError) getUserTopArtistPlayStatsRes() {}
+
+type GetUserTopArtistPlayStatsApplicationJSONUnauthorized ErrorResponse
+
+func (*GetUserTopArtistPlayStatsApplicationJSONUnauthorized) getUserTopArtistPlayStatsRes() {}
+
+type GetUserTopArtistPlayStatsOKApplicationJSON []ArtistPlayStatistics
+
+func (*GetUserTopArtistPlayStatsOKApplicationJSON) getUserTopArtistPlayStatsRes() {}
+
 // Ref: #/components/schemas/IntegrationMetadata
 type IntegrationMetadata struct {
 	UserID    uuid.UUID           `json:"user_id"`
@@ -881,32 +1095,33 @@ func (s InternalServerErrorTextPlain) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*InternalServerErrorTextPlain) addFriendRes()              {}
-func (*InternalServerErrorTextPlain) addToLibraryRes()           {}
-func (*InternalServerErrorTextPlain) getAlbumRes()               {}
-func (*InternalServerErrorTextPlain) getArtistRes()              {}
-func (*InternalServerErrorTextPlain) getCalendarListensRes()     {}
-func (*InternalServerErrorTextPlain) getGlobalTopAlbumsRes()     {}
-func (*InternalServerErrorTextPlain) getGlobalTopArtistsRes()    {}
-func (*InternalServerErrorTextPlain) getGlobalTopTracksRes()     {}
-func (*InternalServerErrorTextPlain) getLibraryMetadataRes()     {}
-func (*InternalServerErrorTextPlain) getListenSessionsRes()      {}
-func (*InternalServerErrorTextPlain) getRelationsDetailsRes()    {}
-func (*InternalServerErrorTextPlain) getRelationsRes()           {}
-func (*InternalServerErrorTextPlain) getTrackRes()               {}
-func (*InternalServerErrorTextPlain) getUserIntegrationsRes()    {}
-func (*InternalServerErrorTextPlain) getUserListenSessionsRes()  {}
-func (*InternalServerErrorTextPlain) joinFreeBetaRes()           {}
-func (*InternalServerErrorTextPlain) registerRes()               {}
-func (*InternalServerErrorTextPlain) removeFriendRes()           {}
-func (*InternalServerErrorTextPlain) removeFromLibraryRes()      {}
-func (*InternalServerErrorTextPlain) searchTracksViaDetailsRes() {}
-func (*InternalServerErrorTextPlain) setActivityRes()            {}
-func (*InternalServerErrorTextPlain) setBestFriendRes()          {}
-func (*InternalServerErrorTextPlain) setBlockedRes()             {}
-func (*InternalServerErrorTextPlain) signInRes()                 {}
-func (*InternalServerErrorTextPlain) updateLibraryRes()          {}
-func (*InternalServerErrorTextPlain) updateUserRes()             {}
+func (*InternalServerErrorTextPlain) addFriendRes()                 {}
+func (*InternalServerErrorTextPlain) addToLibraryRes()              {}
+func (*InternalServerErrorTextPlain) getAlbumRes()                  {}
+func (*InternalServerErrorTextPlain) getArtistRes()                 {}
+func (*InternalServerErrorTextPlain) getCalendarListensRes()        {}
+func (*InternalServerErrorTextPlain) getGlobalTopAlbumsRes()        {}
+func (*InternalServerErrorTextPlain) getGlobalTopArtistsRes()       {}
+func (*InternalServerErrorTextPlain) getGlobalTopTracksRes()        {}
+func (*InternalServerErrorTextPlain) getLibraryMetadataRes()        {}
+func (*InternalServerErrorTextPlain) getListenSessionsRes()         {}
+func (*InternalServerErrorTextPlain) getRelationsDetailsRes()       {}
+func (*InternalServerErrorTextPlain) getRelationsRes()              {}
+func (*InternalServerErrorTextPlain) getTrackRes()                  {}
+func (*InternalServerErrorTextPlain) getUserIntegrationsRes()       {}
+func (*InternalServerErrorTextPlain) getUserListenSessionsRes()     {}
+func (*InternalServerErrorTextPlain) getUserTopArtistPlayStatsRes() {}
+func (*InternalServerErrorTextPlain) joinFreeBetaRes()              {}
+func (*InternalServerErrorTextPlain) registerRes()                  {}
+func (*InternalServerErrorTextPlain) removeFriendRes()              {}
+func (*InternalServerErrorTextPlain) removeFromLibraryRes()         {}
+func (*InternalServerErrorTextPlain) searchTracksViaDetailsRes()    {}
+func (*InternalServerErrorTextPlain) setActivityRes()               {}
+func (*InternalServerErrorTextPlain) setBestFriendRes()             {}
+func (*InternalServerErrorTextPlain) setBlockedRes()                {}
+func (*InternalServerErrorTextPlain) signInRes()                    {}
+func (*InternalServerErrorTextPlain) updateLibraryRes()             {}
+func (*InternalServerErrorTextPlain) updateUserRes()                {}
 
 type JoinFreeBetaApplicationJSONInternalServerError ErrorResponse
 
@@ -1992,6 +2207,52 @@ func (o OptArtist) Get() (v Artist, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptArtist) Or(d Artist) Artist {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptArtistPlayStatisticsQuery returns new OptArtistPlayStatisticsQuery with value set to v.
+func NewOptArtistPlayStatisticsQuery(v ArtistPlayStatisticsQuery) OptArtistPlayStatisticsQuery {
+	return OptArtistPlayStatisticsQuery{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtistPlayStatisticsQuery is optional ArtistPlayStatisticsQuery.
+type OptArtistPlayStatisticsQuery struct {
+	Value ArtistPlayStatisticsQuery
+	Set   bool
+}
+
+// IsSet returns true if OptArtistPlayStatisticsQuery was set.
+func (o OptArtistPlayStatisticsQuery) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtistPlayStatisticsQuery) Reset() {
+	var v ArtistPlayStatisticsQuery
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtistPlayStatisticsQuery) SetTo(v ArtistPlayStatisticsQuery) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtistPlayStatisticsQuery) Get() (v ArtistPlayStatisticsQuery, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtistPlayStatisticsQuery) Or(d ArtistPlayStatisticsQuery) ArtistPlayStatisticsQuery {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -4496,6 +4757,43 @@ func (s *TrackArtist) SetArtistID(val uuid.UUID) {
 	s.ArtistID = val
 }
 
+// Ref: #/components/schemas/TrackPlayStats
+type TrackPlayStats struct {
+	Track        Track  `json:"track"`
+	PlayCount    uint64 `json:"play_count"`
+	PlayDuration uint64 `json:"play_duration"`
+}
+
+// GetTrack returns the value of Track.
+func (s *TrackPlayStats) GetTrack() Track {
+	return s.Track
+}
+
+// GetPlayCount returns the value of PlayCount.
+func (s *TrackPlayStats) GetPlayCount() uint64 {
+	return s.PlayCount
+}
+
+// GetPlayDuration returns the value of PlayDuration.
+func (s *TrackPlayStats) GetPlayDuration() uint64 {
+	return s.PlayDuration
+}
+
+// SetTrack sets the value of Track.
+func (s *TrackPlayStats) SetTrack(val Track) {
+	s.Track = val
+}
+
+// SetPlayCount sets the value of PlayCount.
+func (s *TrackPlayStats) SetPlayCount(val uint64) {
+	s.PlayCount = val
+}
+
+// SetPlayDuration sets the value of PlayDuration.
+func (s *TrackPlayStats) SetPlayDuration(val uint64) {
+	s.PlayDuration = val
+}
+
 type UnauthorizedTextPlain struct {
 	Data io.Reader
 }
@@ -4510,28 +4808,29 @@ func (s UnauthorizedTextPlain) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*UnauthorizedTextPlain) addFriendRes()              {}
-func (*UnauthorizedTextPlain) addToLibraryRes()           {}
-func (*UnauthorizedTextPlain) getAlbumRes()               {}
-func (*UnauthorizedTextPlain) getArtistRes()              {}
-func (*UnauthorizedTextPlain) getLibraryMetadataRes()     {}
-func (*UnauthorizedTextPlain) getListenSessionsRes()      {}
-func (*UnauthorizedTextPlain) getRelationsDetailsRes()    {}
-func (*UnauthorizedTextPlain) getRelationsRes()           {}
-func (*UnauthorizedTextPlain) getTrackRes()               {}
-func (*UnauthorizedTextPlain) getUserDetailsRes()         {}
-func (*UnauthorizedTextPlain) getUserIntegrationsRes()    {}
-func (*UnauthorizedTextPlain) getUserListenSessionsRes()  {}
-func (*UnauthorizedTextPlain) joinFreeBetaRes()           {}
-func (*UnauthorizedTextPlain) removeFriendRes()           {}
-func (*UnauthorizedTextPlain) removeFromLibraryRes()      {}
-func (*UnauthorizedTextPlain) searchTracksViaDetailsRes() {}
-func (*UnauthorizedTextPlain) setActivityRes()            {}
-func (*UnauthorizedTextPlain) setBestFriendRes()          {}
-func (*UnauthorizedTextPlain) setBlockedRes()             {}
-func (*UnauthorizedTextPlain) updateLibraryRes()          {}
-func (*UnauthorizedTextPlain) updateUserRes()             {}
-func (*UnauthorizedTextPlain) validateTokenRes()          {}
+func (*UnauthorizedTextPlain) addFriendRes()                 {}
+func (*UnauthorizedTextPlain) addToLibraryRes()              {}
+func (*UnauthorizedTextPlain) getAlbumRes()                  {}
+func (*UnauthorizedTextPlain) getArtistRes()                 {}
+func (*UnauthorizedTextPlain) getLibraryMetadataRes()        {}
+func (*UnauthorizedTextPlain) getListenSessionsRes()         {}
+func (*UnauthorizedTextPlain) getRelationsDetailsRes()       {}
+func (*UnauthorizedTextPlain) getRelationsRes()              {}
+func (*UnauthorizedTextPlain) getTrackRes()                  {}
+func (*UnauthorizedTextPlain) getUserDetailsRes()            {}
+func (*UnauthorizedTextPlain) getUserIntegrationsRes()       {}
+func (*UnauthorizedTextPlain) getUserListenSessionsRes()     {}
+func (*UnauthorizedTextPlain) getUserTopArtistPlayStatsRes() {}
+func (*UnauthorizedTextPlain) joinFreeBetaRes()              {}
+func (*UnauthorizedTextPlain) removeFriendRes()              {}
+func (*UnauthorizedTextPlain) removeFromLibraryRes()         {}
+func (*UnauthorizedTextPlain) searchTracksViaDetailsRes()    {}
+func (*UnauthorizedTextPlain) setActivityRes()               {}
+func (*UnauthorizedTextPlain) setBestFriendRes()             {}
+func (*UnauthorizedTextPlain) setBlockedRes()                {}
+func (*UnauthorizedTextPlain) updateLibraryRes()             {}
+func (*UnauthorizedTextPlain) updateUserRes()                {}
+func (*UnauthorizedTextPlain) validateTokenRes()             {}
 
 type UpdateLibraryApplicationJSONBadRequest ErrorResponse
 

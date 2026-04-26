@@ -404,6 +404,31 @@ export type TopArtistEntry = {
     change?: TopEntityChange;
 };
 
+export type ArtistPlayStatistics = {
+    rank: number;
+    artist: ArtistPlayStats;
+    top_tracks: Array<TrackPlayStats>;
+    top_albums: Array<AlbumPlayStats>;
+};
+
+export type TrackPlayStats = {
+    track: Track;
+    play_count: number;
+    play_duration: number;
+};
+
+export type ArtistPlayStats = {
+    artist: Artist;
+    play_count: number;
+    play_duration: number;
+};
+
+export type AlbumPlayStats = {
+    album: Album;
+    play_count: number;
+    play_duration: number;
+};
+
 export type SessionListen = {
     /**
      * Unique identifier for this listen event.
@@ -596,6 +621,30 @@ export type BlockedActionRequest = {
 export type BestFriendActionRequest = {
     id: string;
     best_friend: boolean;
+};
+
+export type ArtistPlayStatisticsQuery = {
+    /**
+     * Start timestamp for the time range
+     */
+    start?: string;
+    /**
+     * End timestamp for the time range
+     */
+    end?: string;
+    /**
+     * Maximum number of artists to return
+     */
+    artist_limit?: number;
+    /**
+     * Maximum number of tracks per artist to return
+     */
+    track_limit?: number;
+    /**
+     * Maximum number of albums per artist to return
+     */
+    album_limit?: number;
+    artist_offset?: number;
 };
 
 export type StatisticsQuery = {
@@ -1476,6 +1525,39 @@ export type GetRelationsDetailsResponses = {
 };
 
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
+
+export type GetUserTopArtistPlayStatsData = {
+    body?: ArtistPlayStatisticsQuery;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/user/top/artist-plays';
+};
+
+export type GetUserTopArtistPlayStatsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserTopArtistPlayStatsError = GetUserTopArtistPlayStatsErrors[keyof GetUserTopArtistPlayStatsErrors];
+
+export type GetUserTopArtistPlayStatsResponses = {
+    /**
+     * Top artist plays returned successfully
+     */
+    200: Array<ArtistPlayStatistics>;
+};
+
+export type GetUserTopArtistPlayStatsResponse = GetUserTopArtistPlayStatsResponses[keyof GetUserTopArtistPlayStatsResponses];
 
 export type GetGlobalTopAlbumsData = {
     body?: StatisticsQuery;

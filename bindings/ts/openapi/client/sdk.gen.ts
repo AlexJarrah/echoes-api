@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -381,6 +381,18 @@ export const getRelationsDetails = <ThrowOnError extends boolean = false>(option
         }],
     url: '/api/relations/details',
     ...options
+});
+
+/**
+ * Get user's top artists with each artist's top tracks and albums.
+ */
+export const getUserTopArtistPlayStats = <ThrowOnError extends boolean = false>(options?: Options<GetUserTopArtistPlayStatsData, ThrowOnError>) => (options?.client ?? client).post<GetUserTopArtistPlayStatsResponses, GetUserTopArtistPlayStatsErrors, ThrowOnError>({
+    url: '/api/statistics/user/top/artist-plays',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
 });
 
 /**
