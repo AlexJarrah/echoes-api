@@ -7,7 +7,7 @@ info:
 
 servers:
   production:
-    host: getechoes.com
+    host: echoes.la
     protocol: ws
     description: Production WebSocket server.
 
@@ -218,7 +218,8 @@ components:
           description: Album cover URL.
         active:
           type: boolean
-          description: Whether the user is currently playing this track (true) or has stopped/paused (false)..
+          description: Whether the user is currently playing this track (true) or has
+            stopped/paused (false)..
         position:
           type: integer
           format: int64

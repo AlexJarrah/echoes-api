@@ -50,5 +50,5 @@ const (
 	// ProductionServer is a server URL.
 	//
 	// Production server.
-	ProductionServer serverConst = "https://getechoes.com"
+	ProductionServer serverConst = "https://echoes.la"
 )

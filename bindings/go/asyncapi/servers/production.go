@@ -14,7 +14,7 @@ import (
 )
 
 func ProductionURL() (*url.URL, error) {
-	return &url.URL{Scheme: "ws", Host: "getechoes.com", Path: ""}, nil
+	return &url.URL{Scheme: "ws", Host: "echoes.la", Path: ""}, nil
 }
 
 func NewProduction(producer ws.Producer, consumer ws.Consumer) *Production {
