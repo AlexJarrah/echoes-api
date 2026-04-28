@@ -387,6 +387,11 @@ export const getRelationsDetails = <ThrowOnError extends boolean = false>(option
  * Get user's top artists with each artist's top tracks and albums.
  */
 export const getUserTopArtistPlayStats = <ThrowOnError extends boolean = false>(options?: Options<GetUserTopArtistPlayStatsData, ThrowOnError>) => (options?.client ?? client).post<GetUserTopArtistPlayStatsResponses, GetUserTopArtistPlayStatsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
     url: '/api/statistics/user/top/artist-plays',
     ...options,
     headers: {

@@ -2220,6 +2220,8 @@ paths:
       operationId: getUserTopArtistPlayStats
       tags:
         - Statistics
+      security:
+        - CookieAuth: []
       requestBody:
         required: false
         content:
