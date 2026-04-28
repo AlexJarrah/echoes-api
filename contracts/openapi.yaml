@@ -267,6 +267,105 @@ components:
           format: date-time
           nullable: true
 
+    Asset:
+      type: object
+      required:
+        - asset_id
+        - mime_type
+        - created_at
+        - updated_at
+      properties:
+        asset_id:
+          type: string
+          format: uuid
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    UserAsset:
+      type: object
+      required:
+        - user_id
+        - asset_id
+        - position
+        - created_at
+        - updated_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    AlbumAsset:
+      type: object
+      required:
+        - album_id
+        - asset_id
+        - position
+        - created_at
+        - updated_at
+      properties:
+        album_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    ArtistAsset:
+      type: object
+      required:
+        - artist_id
+        - asset_id
+        - position
+        - created_at
+        - updated_at
+      properties:
+        artist_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
     RelationDetails:
       type: object
       required:
@@ -947,7 +1046,7 @@ components:
         change:
           $ref: "#/components/schemas/TopEntityChange"
 
-    ArtistPlayStatistics:
+    TopArtistPlayStats:
       type: object
       required:
         - rank
@@ -989,11 +1088,16 @@ components:
       type: object
       required:
         - artist
+        - assets
         - play_count
         - play_duration
       properties:
         artist:
           $ref: "#/components/schemas/Artist"
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/ArtistAsset"
         play_count:
           type: integer
           format: uint64
@@ -1005,11 +1109,16 @@ components:
       type: object
       required:
         - album
+        - assets
         - play_count
         - play_duration
       properties:
         album:
           $ref: "#/components/schemas/Album"
+        assets:
+          type: array
+          items:
+            $ref: "#/components/schemas/AlbumAsset"
         play_count:
           type: integer
           format: uint64
@@ -1142,7 +1251,6 @@ components:
           description: Album name.
         asset_url:
           type: string
-          nullable: true
           description: URL to the album cover asset.
 
     SessionArtist:
@@ -1297,32 +1405,32 @@ components:
         start:
           type: string
           format: date-time
-          description: Start timestamp for the time range
+          description: Start timestamp for the time range, defaults to one year ago.
         end:
           type: string
           format: date-time
-          description: End timestamp for the time range
+          description: Start timestamp for the time range, defaults to current time.
         artist_limit:
           type: integer
-          format: int32
+          format: uint32
           default: 10
           maximum: 30
           description: Maximum number of artists to return
         track_limit:
           type: integer
-          format: int32
+          format: uint32
           default: 3
           maximum: 10
           description: Maximum number of tracks per artist to return
         album_limit:
           type: integer
-          format: int32
+          format: uint32
           default: 1
           maximum: 10
           description: Maximum number of albums per artist to return
         artist_offset:
           type: integer
-          format: int32
+          format: uint32
           default: 0
 
     StatisticsQuery:
@@ -2126,7 +2234,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ArtistPlayStatistics"
+                  $ref: "#/components/schemas/TopArtistPlayStats"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":

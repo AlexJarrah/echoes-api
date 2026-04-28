@@ -9,31 +9,20 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func (s *ArtistPlayStatistics) Validate() error {
+func (s *AlbumPlayStats) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
 
 	var failures []validate.FieldError
 	if err := func() error {
-		if s.TopTracks == nil {
+		if s.Assets == nil {
 			return errors.New("nil is invalid value")
 		}
 		return nil
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
-			Name:  "top_tracks",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if s.TopAlbums == nil {
-			return errors.New("nil is invalid value")
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "top_albums",
+			Name:  "assets",
 			Error: err,
 		})
 	}
@@ -130,6 +119,29 @@ func (s *ArtistPlayStatisticsQuery) Validate() error {
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
 			Name:  "album_limit",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *ArtistPlayStats) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if s.Assets == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "assets",
 			Error: err,
 		})
 	}
@@ -273,7 +285,7 @@ func (s GetUserIntegrationsOKApplicationJSON) Validate() error {
 }
 
 func (s GetUserTopArtistPlayStatsOKApplicationJSON) Validate() error {
-	alias := ([]ArtistPlayStatistics)(s)
+	alias := ([]TopArtistPlayStats)(s)
 	if alias == nil {
 		return errors.New("nil is invalid value")
 	}
@@ -954,6 +966,68 @@ func (s *TopAlbumEntry) Validate() error {
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
 			Name:  "artists",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *TopArtistPlayStats) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Artist.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "artist",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.TopTracks == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "top_tracks",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.TopAlbums == nil {
+			return errors.New("nil is invalid value")
+		}
+		var failures []validate.FieldError
+		for i, elem := range s.TopAlbums {
+			if err := func() error {
+				if err := elem.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "top_albums",
 			Error: err,
 		})
 	}

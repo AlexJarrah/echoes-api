@@ -109,6 +109,46 @@ export type Listen = {
     updated_at?: string | null;
 };
 
+export type Asset = {
+    asset_id: string;
+    mime_type: string;
+    created_at: string;
+    updated_at: string | null;
+};
+
+export type UserAsset = {
+    user_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+    created_at: string;
+    updated_at: string | null;
+};
+
+export type AlbumAsset = {
+    album_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+    created_at: string;
+    updated_at: string | null;
+};
+
+export type ArtistAsset = {
+    artist_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+    created_at: string;
+    updated_at: string | null;
+};
+
 export type RelationDetails = {
     user_id: string;
     name: string;
@@ -404,7 +444,7 @@ export type TopArtistEntry = {
     change?: TopEntityChange;
 };
 
-export type ArtistPlayStatistics = {
+export type TopArtistPlayStats = {
     rank: number;
     artist: ArtistPlayStats;
     top_tracks: Array<TrackPlayStats>;
@@ -419,12 +459,14 @@ export type TrackPlayStats = {
 
 export type ArtistPlayStats = {
     artist: Artist;
+    assets: Array<ArtistAsset>;
     play_count: number;
     play_duration: number;
 };
 
 export type AlbumPlayStats = {
     album: Album;
+    assets: Array<AlbumAsset>;
     play_count: number;
     play_duration: number;
 };
@@ -525,7 +567,7 @@ export type SessionAlbum = {
     /**
      * URL to the album cover asset.
      */
-    asset_url?: string | null;
+    asset_url?: string;
 };
 
 export type SessionArtist = {
@@ -625,11 +667,11 @@ export type BestFriendActionRequest = {
 
 export type ArtistPlayStatisticsQuery = {
     /**
-     * Start timestamp for the time range
+     * Start timestamp for the time range, defaults to one year ago.
      */
     start?: string;
     /**
-     * End timestamp for the time range
+     * Start timestamp for the time range, defaults to current time.
      */
     end?: string;
     /**
@@ -1554,7 +1596,7 @@ export type GetUserTopArtistPlayStatsResponses = {
     /**
      * Top artist plays returned successfully
      */
-    200: Array<ArtistPlayStatistics>;
+    200: Array<TopArtistPlayStats>;
 };
 
 export type GetUserTopArtistPlayStatsResponse = GetUserTopArtistPlayStatsResponses[keyof GetUserTopArtistPlayStatsResponses];

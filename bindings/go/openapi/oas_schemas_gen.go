@@ -205,16 +205,82 @@ func (s *AlbumArtist) SetArtistID(val uuid.UUID) {
 	s.ArtistID = val
 }
 
+// Ref: #/components/schemas/AlbumAsset
+type AlbumAsset struct {
+	AlbumID uuid.UUID `json:"album_id"`
+	AssetID uuid.UUID `json:"asset_id"`
+	// Lexicographically sortable string.
+	Position  string      `json:"position"`
+	CreatedAt time.Time   `json:"created_at"`
+	UpdatedAt NilDateTime `json:"updated_at"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumAsset) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *AlbumAsset) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// GetPosition returns the value of Position.
+func (s *AlbumAsset) GetPosition() string {
+	return s.Position
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *AlbumAsset) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *AlbumAsset) GetUpdatedAt() NilDateTime {
+	return s.UpdatedAt
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumAsset) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *AlbumAsset) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *AlbumAsset) SetPosition(val string) {
+	s.Position = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *AlbumAsset) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *AlbumAsset) SetUpdatedAt(val NilDateTime) {
+	s.UpdatedAt = val
+}
+
 // Ref: #/components/schemas/AlbumPlayStats
 type AlbumPlayStats struct {
-	Album        Album  `json:"album"`
-	PlayCount    uint64 `json:"play_count"`
-	PlayDuration uint64 `json:"play_duration"`
+	Album        Album        `json:"album"`
+	Assets       []AlbumAsset `json:"assets"`
+	PlayCount    uint64       `json:"play_count"`
+	PlayDuration uint64       `json:"play_duration"`
 }
 
 // GetAlbum returns the value of Album.
 func (s *AlbumPlayStats) GetAlbum() Album {
 	return s.Album
+}
+
+// GetAssets returns the value of Assets.
+func (s *AlbumPlayStats) GetAssets() []AlbumAsset {
+	return s.Assets
 }
 
 // GetPlayCount returns the value of PlayCount.
@@ -230,6 +296,11 @@ func (s *AlbumPlayStats) GetPlayDuration() uint64 {
 // SetAlbum sets the value of Album.
 func (s *AlbumPlayStats) SetAlbum(val Album) {
 	s.Album = val
+}
+
+// SetAssets sets the value of Assets.
+func (s *AlbumPlayStats) SetAssets(val []AlbumAsset) {
+	s.Assets = val
 }
 
 // SetPlayCount sets the value of PlayCount.
@@ -417,67 +488,79 @@ func (s *Artist) SetUpdatedAt(val OptNilDateTime) {
 
 func (*Artist) getArtistRes() {}
 
-// Ref: #/components/schemas/ArtistPlayStatistics
-type ArtistPlayStatistics struct {
-	Rank      uint             `json:"rank"`
-	Artist    ArtistPlayStats  `json:"artist"`
-	TopTracks []TrackPlayStats `json:"top_tracks"`
-	TopAlbums []AlbumPlayStats `json:"top_albums"`
+// Ref: #/components/schemas/ArtistAsset
+type ArtistAsset struct {
+	ArtistID uuid.UUID `json:"artist_id"`
+	AssetID  uuid.UUID `json:"asset_id"`
+	// Lexicographically sortable string.
+	Position  string      `json:"position"`
+	CreatedAt time.Time   `json:"created_at"`
+	UpdatedAt NilDateTime `json:"updated_at"`
 }
 
-// GetRank returns the value of Rank.
-func (s *ArtistPlayStatistics) GetRank() uint {
-	return s.Rank
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistAsset) GetArtistID() uuid.UUID {
+	return s.ArtistID
 }
 
-// GetArtist returns the value of Artist.
-func (s *ArtistPlayStatistics) GetArtist() ArtistPlayStats {
-	return s.Artist
+// GetAssetID returns the value of AssetID.
+func (s *ArtistAsset) GetAssetID() uuid.UUID {
+	return s.AssetID
 }
 
-// GetTopTracks returns the value of TopTracks.
-func (s *ArtistPlayStatistics) GetTopTracks() []TrackPlayStats {
-	return s.TopTracks
+// GetPosition returns the value of Position.
+func (s *ArtistAsset) GetPosition() string {
+	return s.Position
 }
 
-// GetTopAlbums returns the value of TopAlbums.
-func (s *ArtistPlayStatistics) GetTopAlbums() []AlbumPlayStats {
-	return s.TopAlbums
+// GetCreatedAt returns the value of CreatedAt.
+func (s *ArtistAsset) GetCreatedAt() time.Time {
+	return s.CreatedAt
 }
 
-// SetRank sets the value of Rank.
-func (s *ArtistPlayStatistics) SetRank(val uint) {
-	s.Rank = val
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *ArtistAsset) GetUpdatedAt() NilDateTime {
+	return s.UpdatedAt
 }
 
-// SetArtist sets the value of Artist.
-func (s *ArtistPlayStatistics) SetArtist(val ArtistPlayStats) {
-	s.Artist = val
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistAsset) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
 }
 
-// SetTopTracks sets the value of TopTracks.
-func (s *ArtistPlayStatistics) SetTopTracks(val []TrackPlayStats) {
-	s.TopTracks = val
+// SetAssetID sets the value of AssetID.
+func (s *ArtistAsset) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
 }
 
-// SetTopAlbums sets the value of TopAlbums.
-func (s *ArtistPlayStatistics) SetTopAlbums(val []AlbumPlayStats) {
-	s.TopAlbums = val
+// SetPosition sets the value of Position.
+func (s *ArtistAsset) SetPosition(val string) {
+	s.Position = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *ArtistAsset) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *ArtistAsset) SetUpdatedAt(val NilDateTime) {
+	s.UpdatedAt = val
 }
 
 // Ref: #/components/schemas/ArtistPlayStatisticsQuery
 type ArtistPlayStatisticsQuery struct {
-	// Start timestamp for the time range.
+	// Start timestamp for the time range, defaults to one year ago.
 	Start OptDateTime `json:"start"`
-	// End timestamp for the time range.
+	// Start timestamp for the time range, defaults to current time.
 	End OptDateTime `json:"end"`
 	// Maximum number of artists to return.
-	ArtistLimit OptInt32 `json:"artist_limit"`
+	ArtistLimit OptUint32 `json:"artist_limit"`
 	// Maximum number of tracks per artist to return.
-	TrackLimit OptInt32 `json:"track_limit"`
+	TrackLimit OptUint32 `json:"track_limit"`
 	// Maximum number of albums per artist to return.
-	AlbumLimit   OptInt32 `json:"album_limit"`
-	ArtistOffset OptInt32 `json:"artist_offset"`
+	AlbumLimit   OptUint32 `json:"album_limit"`
+	ArtistOffset OptUint32 `json:"artist_offset"`
 }
 
 // GetStart returns the value of Start.
@@ -491,22 +574,22 @@ func (s *ArtistPlayStatisticsQuery) GetEnd() OptDateTime {
 }
 
 // GetArtistLimit returns the value of ArtistLimit.
-func (s *ArtistPlayStatisticsQuery) GetArtistLimit() OptInt32 {
+func (s *ArtistPlayStatisticsQuery) GetArtistLimit() OptUint32 {
 	return s.ArtistLimit
 }
 
 // GetTrackLimit returns the value of TrackLimit.
-func (s *ArtistPlayStatisticsQuery) GetTrackLimit() OptInt32 {
+func (s *ArtistPlayStatisticsQuery) GetTrackLimit() OptUint32 {
 	return s.TrackLimit
 }
 
 // GetAlbumLimit returns the value of AlbumLimit.
-func (s *ArtistPlayStatisticsQuery) GetAlbumLimit() OptInt32 {
+func (s *ArtistPlayStatisticsQuery) GetAlbumLimit() OptUint32 {
 	return s.AlbumLimit
 }
 
 // GetArtistOffset returns the value of ArtistOffset.
-func (s *ArtistPlayStatisticsQuery) GetArtistOffset() OptInt32 {
+func (s *ArtistPlayStatisticsQuery) GetArtistOffset() OptUint32 {
 	return s.ArtistOffset
 }
 
@@ -521,35 +604,41 @@ func (s *ArtistPlayStatisticsQuery) SetEnd(val OptDateTime) {
 }
 
 // SetArtistLimit sets the value of ArtistLimit.
-func (s *ArtistPlayStatisticsQuery) SetArtistLimit(val OptInt32) {
+func (s *ArtistPlayStatisticsQuery) SetArtistLimit(val OptUint32) {
 	s.ArtistLimit = val
 }
 
 // SetTrackLimit sets the value of TrackLimit.
-func (s *ArtistPlayStatisticsQuery) SetTrackLimit(val OptInt32) {
+func (s *ArtistPlayStatisticsQuery) SetTrackLimit(val OptUint32) {
 	s.TrackLimit = val
 }
 
 // SetAlbumLimit sets the value of AlbumLimit.
-func (s *ArtistPlayStatisticsQuery) SetAlbumLimit(val OptInt32) {
+func (s *ArtistPlayStatisticsQuery) SetAlbumLimit(val OptUint32) {
 	s.AlbumLimit = val
 }
 
 // SetArtistOffset sets the value of ArtistOffset.
-func (s *ArtistPlayStatisticsQuery) SetArtistOffset(val OptInt32) {
+func (s *ArtistPlayStatisticsQuery) SetArtistOffset(val OptUint32) {
 	s.ArtistOffset = val
 }
 
 // Ref: #/components/schemas/ArtistPlayStats
 type ArtistPlayStats struct {
-	Artist       Artist `json:"artist"`
-	PlayCount    uint64 `json:"play_count"`
-	PlayDuration uint64 `json:"play_duration"`
+	Artist       Artist        `json:"artist"`
+	Assets       []ArtistAsset `json:"assets"`
+	PlayCount    uint64        `json:"play_count"`
+	PlayDuration uint64        `json:"play_duration"`
 }
 
 // GetArtist returns the value of Artist.
 func (s *ArtistPlayStats) GetArtist() Artist {
 	return s.Artist
+}
+
+// GetAssets returns the value of Assets.
+func (s *ArtistPlayStats) GetAssets() []ArtistAsset {
+	return s.Assets
 }
 
 // GetPlayCount returns the value of PlayCount.
@@ -565,6 +654,11 @@ func (s *ArtistPlayStats) GetPlayDuration() uint64 {
 // SetArtist sets the value of Artist.
 func (s *ArtistPlayStats) SetArtist(val Artist) {
 	s.Artist = val
+}
+
+// SetAssets sets the value of Assets.
+func (s *ArtistPlayStats) SetAssets(val []ArtistAsset) {
+	s.Assets = val
 }
 
 // SetPlayCount sets the value of PlayCount.
@@ -1008,7 +1102,7 @@ type GetUserTopArtistPlayStatsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetUserTopArtistPlayStatsApplicationJSONUnauthorized) getUserTopArtistPlayStatsRes() {}
 
-type GetUserTopArtistPlayStatsOKApplicationJSON []ArtistPlayStatistics
+type GetUserTopArtistPlayStatsOKApplicationJSON []TopArtistPlayStats
 
 func (*GetUserTopArtistPlayStatsOKApplicationJSON) getUserTopArtistPlayStatsRes() {}
 
@@ -2135,6 +2229,51 @@ func (s *ListensSessionsRequest) SetLimit(val OptInt64) {
 	s.Limit = val
 }
 
+// NewNilDateTime returns new NilDateTime with value set to v.
+func NewNilDateTime(v time.Time) NilDateTime {
+	return NilDateTime{
+		Value: v,
+	}
+}
+
+// NilDateTime is nullable time.Time.
+type NilDateTime struct {
+	Value time.Time
+	Null  bool
+}
+
+// SetTo sets value to v.
+func (o *NilDateTime) SetTo(v time.Time) {
+	o.Null = false
+	o.Value = v
+}
+
+// IsNull returns true if value is Null.
+func (o NilDateTime) IsNull() bool { return o.Null }
+
+// SetToNull sets value to null.
+func (o *NilDateTime) SetToNull() {
+	o.Null = true
+	var v time.Time
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o NilDateTime) Get() (v time.Time, ok bool) {
+	if o.Null {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o NilDateTime) Or(d time.Time) time.Time {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // Ref: #/components/responses/NoContent
 type NoContent struct{}
 
@@ -3189,6 +3328,52 @@ func (o OptUint16) Or(d uint16) uint16 {
 	return d
 }
 
+// NewOptUint32 returns new OptUint32 with value set to v.
+func NewOptUint32(v uint32) OptUint32 {
+	return OptUint32{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptUint32 is optional uint32.
+type OptUint32 struct {
+	Value uint32
+	Set   bool
+}
+
+// IsSet returns true if OptUint32 was set.
+func (o OptUint32) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptUint32) Reset() {
+	var v uint32
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptUint32) SetTo(v uint32) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptUint32) Get() (v uint32, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptUint32) Or(d uint32) uint32 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptUserVisibility returns new OptUserVisibility with value set to v.
 func NewOptUserVisibility(v UserVisibility) OptUserVisibility {
 	return OptUserVisibility{
@@ -3828,7 +4013,7 @@ type SessionAlbum struct {
 	// Album name.
 	Name string `json:"name"`
 	// URL to the album cover asset.
-	AssetURL OptNilString `json:"asset_url"`
+	AssetURL OptString `json:"asset_url"`
 }
 
 // GetID returns the value of ID.
@@ -3842,7 +4027,7 @@ func (s *SessionAlbum) GetName() string {
 }
 
 // GetAssetURL returns the value of AssetURL.
-func (s *SessionAlbum) GetAssetURL() OptNilString {
+func (s *SessionAlbum) GetAssetURL() OptString {
 	return s.AssetURL
 }
 
@@ -3857,7 +4042,7 @@ func (s *SessionAlbum) SetName(val string) {
 }
 
 // SetAssetURL sets the value of AssetURL.
-func (s *SessionAlbum) SetAssetURL(val OptNilString) {
+func (s *SessionAlbum) SetAssetURL(val OptString) {
 	s.AssetURL = val
 }
 
@@ -4433,6 +4618,54 @@ func (s *TopArtistEntry) SetPrevious(val OptTopEntityPlays) {
 // SetChange sets the value of Change.
 func (s *TopArtistEntry) SetChange(val OptTopEntityChange) {
 	s.Change = val
+}
+
+// Ref: #/components/schemas/TopArtistPlayStats
+type TopArtistPlayStats struct {
+	Rank      uint             `json:"rank"`
+	Artist    ArtistPlayStats  `json:"artist"`
+	TopTracks []TrackPlayStats `json:"top_tracks"`
+	TopAlbums []AlbumPlayStats `json:"top_albums"`
+}
+
+// GetRank returns the value of Rank.
+func (s *TopArtistPlayStats) GetRank() uint {
+	return s.Rank
+}
+
+// GetArtist returns the value of Artist.
+func (s *TopArtistPlayStats) GetArtist() ArtistPlayStats {
+	return s.Artist
+}
+
+// GetTopTracks returns the value of TopTracks.
+func (s *TopArtistPlayStats) GetTopTracks() []TrackPlayStats {
+	return s.TopTracks
+}
+
+// GetTopAlbums returns the value of TopAlbums.
+func (s *TopArtistPlayStats) GetTopAlbums() []AlbumPlayStats {
+	return s.TopAlbums
+}
+
+// SetRank sets the value of Rank.
+func (s *TopArtistPlayStats) SetRank(val uint) {
+	s.Rank = val
+}
+
+// SetArtist sets the value of Artist.
+func (s *TopArtistPlayStats) SetArtist(val ArtistPlayStats) {
+	s.Artist = val
+}
+
+// SetTopTracks sets the value of TopTracks.
+func (s *TopArtistPlayStats) SetTopTracks(val []TrackPlayStats) {
+	s.TopTracks = val
+}
+
+// SetTopAlbums sets the value of TopAlbums.
+func (s *TopArtistPlayStats) SetTopAlbums(val []AlbumPlayStats) {
+	s.TopAlbums = val
 }
 
 // Values change in percentage.

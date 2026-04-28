@@ -633,6 +633,51 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
+        Asset: {
+            /** Format: uuid */
+            asset_id: string;
+            mime_type: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
+        UserAsset: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
+        AlbumAsset: {
+            /** Format: uuid */
+            album_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
+        ArtistAsset: {
+            /** Format: uuid */
+            artist_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         RelationDetails: {
             /** Format: uuid */
             user_id: string;
@@ -953,7 +998,7 @@ export interface components {
             previous?: components["schemas"]["TopEntityPlays"];
             change?: components["schemas"]["TopEntityChange"];
         };
-        ArtistPlayStatistics: {
+        TopArtistPlayStats: {
             /** Format: uint */
             rank: number;
             artist: components["schemas"]["ArtistPlayStats"];
@@ -969,6 +1014,7 @@ export interface components {
         };
         ArtistPlayStats: {
             artist: components["schemas"]["Artist"];
+            assets: components["schemas"]["ArtistAsset"][];
             /** Format: uint64 */
             play_count: number;
             /** Format: uint64 */
@@ -976,6 +1022,7 @@ export interface components {
         };
         AlbumPlayStats: {
             album: components["schemas"]["Album"];
+            assets: components["schemas"]["AlbumAsset"][];
             /** Format: uint64 */
             play_count: number;
             /** Format: uint64 */
@@ -1070,7 +1117,7 @@ export interface components {
             /** @description Album name. */
             name: string;
             /** @description URL to the album cover asset. */
-            asset_url?: string | null;
+            asset_url?: string;
         };
         SessionArtist: {
             /**
@@ -1151,34 +1198,34 @@ export interface components {
         ArtistPlayStatisticsQuery: {
             /**
              * Format: date-time
-             * @description Start timestamp for the time range
+             * @description Start timestamp for the time range, defaults to one year ago.
              */
             start?: string;
             /**
              * Format: date-time
-             * @description End timestamp for the time range
+             * @description Start timestamp for the time range, defaults to current time.
              */
             end?: string;
             /**
-             * Format: int32
+             * Format: uint32
              * @description Maximum number of artists to return
              * @default 10
              */
             artist_limit: number;
             /**
-             * Format: int32
+             * Format: uint32
              * @description Maximum number of tracks per artist to return
              * @default 3
              */
             track_limit: number;
             /**
-             * Format: int32
+             * Format: uint32
              * @description Maximum number of albums per artist to return
              * @default 1
              */
             album_limit: number;
             /**
-             * Format: int32
+             * Format: uint32
              * @default 0
              */
             artist_offset: number;
@@ -1906,7 +1953,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ArtistPlayStatistics"][];
+                    "application/json": components["schemas"]["TopArtistPlayStats"][];
                 };
             };
             400: components["responses"]["BadRequest"];
