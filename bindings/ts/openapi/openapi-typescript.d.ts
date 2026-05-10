@@ -432,6 +432,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/statistics/user/listens/days": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get user's listening information for the specified time range. */
+        post: operations["getUserListensByDays"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/statistics/user/top/artist-plays": {
         parameters: {
             query?: never;
@@ -998,6 +1015,14 @@ export interface components {
             previous?: components["schemas"]["TopEntityPlays"];
             change?: components["schemas"]["TopEntityChange"];
         };
+        DayListenDetails: {
+            /** Format: date */
+            date: string;
+            /** Format: uint16 */
+            count: number;
+            /** Format: uint64 */
+            seconds: number;
+        };
         TopArtistPlayStats: {
             /** Format: uint */
             rank: number;
@@ -1194,6 +1219,12 @@ export interface components {
             /** Format: uuid */
             id: string;
             best_friend: boolean;
+        };
+        DateTimeRange: {
+            /** Format: date-time */
+            start: string;
+            /** Format: date-time */
+            end: string;
         };
         ArtistPlayStatisticsQuery: {
             /**
@@ -1930,6 +1961,33 @@ export interface operations {
                     "application/json": components["schemas"]["RelationDetails"][];
                 };
             };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserListensByDays: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DateTimeRange"];
+            };
+        };
+        responses: {
+            /** @description Successfully retrieved listening information by day */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayListenDetails"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };

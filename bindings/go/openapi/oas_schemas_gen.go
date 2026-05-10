@@ -696,6 +696,7 @@ func (*BadRequestTextPlain) getGlobalTopTracksRes()        {}
 func (*BadRequestTextPlain) getListenSessionsRes()         {}
 func (*BadRequestTextPlain) getTrackRes()                  {}
 func (*BadRequestTextPlain) getUserListenSessionsRes()     {}
+func (*BadRequestTextPlain) getUserListensByDaysRes()      {}
 func (*BadRequestTextPlain) getUserTopArtistPlayStatsRes() {}
 func (*BadRequestTextPlain) registerRes()                  {}
 func (*BadRequestTextPlain) removeFriendRes()              {}
@@ -800,6 +801,69 @@ func (s *CookieAuth) SetAPIKey(val string) {
 // SetRoles sets the value of Roles.
 func (s *CookieAuth) SetRoles(val []string) {
 	s.Roles = val
+}
+
+// Ref: #/components/schemas/DateTimeRange
+type DateTimeRange struct {
+	Start time.Time `json:"start"`
+	End   time.Time `json:"end"`
+}
+
+// GetStart returns the value of Start.
+func (s *DateTimeRange) GetStart() time.Time {
+	return s.Start
+}
+
+// GetEnd returns the value of End.
+func (s *DateTimeRange) GetEnd() time.Time {
+	return s.End
+}
+
+// SetStart sets the value of Start.
+func (s *DateTimeRange) SetStart(val time.Time) {
+	s.Start = val
+}
+
+// SetEnd sets the value of End.
+func (s *DateTimeRange) SetEnd(val time.Time) {
+	s.End = val
+}
+
+// Ref: #/components/schemas/DayListenDetails
+type DayListenDetails struct {
+	Date    time.Time `json:"date"`
+	Count   uint16    `json:"count"`
+	Seconds uint64    `json:"seconds"`
+}
+
+// GetDate returns the value of Date.
+func (s *DayListenDetails) GetDate() time.Time {
+	return s.Date
+}
+
+// GetCount returns the value of Count.
+func (s *DayListenDetails) GetCount() uint16 {
+	return s.Count
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *DayListenDetails) GetSeconds() uint64 {
+	return s.Seconds
+}
+
+// SetDate sets the value of Date.
+func (s *DayListenDetails) SetDate(val time.Time) {
+	s.Date = val
+}
+
+// SetCount sets the value of Count.
+func (s *DayListenDetails) SetCount(val uint16) {
+	s.Count = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *DayListenDetails) SetSeconds(val uint64) {
+	s.Seconds = val
 }
 
 // Ref: #/components/schemas/ErrorResponse
@@ -1090,6 +1154,22 @@ type GetUserListenSessionsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetUserListenSessionsApplicationJSONUnauthorized) getUserListenSessionsRes() {}
 
+type GetUserListensByDaysApplicationJSONBadRequest ErrorResponse
+
+func (*GetUserListensByDaysApplicationJSONBadRequest) getUserListensByDaysRes() {}
+
+type GetUserListensByDaysApplicationJSONInternalServerError ErrorResponse
+
+func (*GetUserListensByDaysApplicationJSONInternalServerError) getUserListensByDaysRes() {}
+
+type GetUserListensByDaysApplicationJSONUnauthorized ErrorResponse
+
+func (*GetUserListensByDaysApplicationJSONUnauthorized) getUserListensByDaysRes() {}
+
+type GetUserListensByDaysOKApplicationJSON []DayListenDetails
+
+func (*GetUserListensByDaysOKApplicationJSON) getUserListensByDaysRes() {}
+
 type GetUserTopArtistPlayStatsApplicationJSONBadRequest ErrorResponse
 
 func (*GetUserTopArtistPlayStatsApplicationJSONBadRequest) getUserTopArtistPlayStatsRes() {}
@@ -1204,6 +1284,7 @@ func (*InternalServerErrorTextPlain) getRelationsRes()              {}
 func (*InternalServerErrorTextPlain) getTrackRes()                  {}
 func (*InternalServerErrorTextPlain) getUserIntegrationsRes()       {}
 func (*InternalServerErrorTextPlain) getUserListenSessionsRes()     {}
+func (*InternalServerErrorTextPlain) getUserListensByDaysRes()      {}
 func (*InternalServerErrorTextPlain) getUserTopArtistPlayStatsRes() {}
 func (*InternalServerErrorTextPlain) joinFreeBetaRes()              {}
 func (*InternalServerErrorTextPlain) registerRes()                  {}
@@ -5053,6 +5134,7 @@ func (*UnauthorizedTextPlain) getTrackRes()                  {}
 func (*UnauthorizedTextPlain) getUserDetailsRes()            {}
 func (*UnauthorizedTextPlain) getUserIntegrationsRes()       {}
 func (*UnauthorizedTextPlain) getUserListenSessionsRes()     {}
+func (*UnauthorizedTextPlain) getUserListensByDaysRes()      {}
 func (*UnauthorizedTextPlain) getUserTopArtistPlayStatsRes() {}
 func (*UnauthorizedTextPlain) joinFreeBetaRes()              {}
 func (*UnauthorizedTextPlain) removeFriendRes()              {}

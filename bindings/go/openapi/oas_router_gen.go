@@ -20,22 +20,19 @@ var (
 	rn3AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn36AllowedHeaders = map[string]string{
+	rn38AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn46AllowedHeaders = map[string]string{
+	rn48AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 	rn19AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn34AllowedHeaders = map[string]string{
+	rn36AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn35AllowedHeaders = map[string]string{
-		"POST": "Content-Type",
-	}
-	rn38AllowedHeaders = map[string]string{
+	rn37AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 	rn40AllowedHeaders = map[string]string{
@@ -47,7 +44,10 @@ var (
 	rn44AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn45AllowedHeaders = map[string]string{
+	rn46AllowedHeaders = map[string]string{
+		"POST": "Content-Type",
+	}
+	rn47AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 	rn11AllowedHeaders = map[string]string{
@@ -62,7 +62,10 @@ var (
 	rn31AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn47AllowedHeaders = map[string]string{
+	rn33AllowedHeaders = map[string]string{
+		"POST": "Content-Type",
+	}
+	rn49AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 )
@@ -397,7 +400,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 							default:
 								s.notAllowed(w, r, notAllowedParams{
 									allowedMethods: "POST",
-									allowedHeaders: rn36AllowedHeaders,
+									allowedHeaders: rn38AllowedHeaders,
 									acceptPost:     "application/json",
 									acceptPatch:    "",
 								})
@@ -422,7 +425,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 							default:
 								s.notAllowed(w, r, notAllowedParams{
 									allowedMethods: "POST",
-									allowedHeaders: rn46AllowedHeaders,
+									allowedHeaders: rn48AllowedHeaders,
 									acceptPost:     "application/json",
 									acceptPatch:    "",
 								})
@@ -489,7 +492,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn34AllowedHeaders,
+								allowedHeaders: rn36AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -565,7 +568,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn35AllowedHeaders,
+								allowedHeaders: rn37AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -617,7 +620,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 							default:
 								s.notAllowed(w, r, notAllowedParams{
 									allowedMethods: "POST",
-									allowedHeaders: rn38AllowedHeaders,
+									allowedHeaders: rn40AllowedHeaders,
 									acceptPost:     "application/json",
 									acceptPatch:    "",
 								})
@@ -654,7 +657,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 								default:
 									s.notAllowed(w, r, notAllowedParams{
 										allowedMethods: "POST",
-										allowedHeaders: rn40AllowedHeaders,
+										allowedHeaders: rn42AllowedHeaders,
 										acceptPost:     "application/json",
 										acceptPatch:    "",
 									})
@@ -691,7 +694,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 									default:
 										s.notAllowed(w, r, notAllowedParams{
 											allowedMethods: "POST",
-											allowedHeaders: rn42AllowedHeaders,
+											allowedHeaders: rn44AllowedHeaders,
 											acceptPost:     "application/json",
 											acceptPatch:    "",
 										})
@@ -716,7 +719,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 									default:
 										s.notAllowed(w, r, notAllowedParams{
 											allowedMethods: "POST",
-											allowedHeaders: rn44AllowedHeaders,
+											allowedHeaders: rn46AllowedHeaders,
 											acceptPost:     "application/json",
 											acceptPatch:    "",
 										})
@@ -747,7 +750,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn45AllowedHeaders,
+								allowedHeaders: rn47AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -871,29 +874,68 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 						}
 
-					case 'u': // Prefix: "user/top/artist-plays"
+					case 'u': // Prefix: "user/"
 
-						if l := len("user/top/artist-plays"); len(elem) >= l && elem[0:l] == "user/top/artist-plays" {
+						if l := len("user/"); len(elem) >= l && elem[0:l] == "user/" {
 							elem = elem[l:]
 						} else {
 							break
 						}
 
 						if len(elem) == 0 {
-							// Leaf node.
-							switch r.Method {
-							case "POST":
-								s.handleGetUserTopArtistPlayStatsRequest([0]string{}, elemIsEscaped, w, r)
-							default:
-								s.notAllowed(w, r, notAllowedParams{
-									allowedMethods: "POST",
-									allowedHeaders: rn31AllowedHeaders,
-									acceptPost:     "application/json",
-									acceptPatch:    "",
-								})
+							break
+						}
+						switch elem[0] {
+						case 'l': // Prefix: "listens/days"
+
+							if l := len("listens/days"); len(elem) >= l && elem[0:l] == "listens/days" {
+								elem = elem[l:]
+							} else {
+								break
 							}
 
-							return
+							if len(elem) == 0 {
+								// Leaf node.
+								switch r.Method {
+								case "POST":
+									s.handleGetUserListensByDaysRequest([0]string{}, elemIsEscaped, w, r)
+								default:
+									s.notAllowed(w, r, notAllowedParams{
+										allowedMethods: "POST",
+										allowedHeaders: rn31AllowedHeaders,
+										acceptPost:     "application/json",
+										acceptPatch:    "",
+									})
+								}
+
+								return
+							}
+
+						case 't': // Prefix: "top/artist-plays"
+
+							if l := len("top/artist-plays"); len(elem) >= l && elem[0:l] == "top/artist-plays" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch r.Method {
+								case "POST":
+									s.handleGetUserTopArtistPlayStatsRequest([0]string{}, elemIsEscaped, w, r)
+								default:
+									s.notAllowed(w, r, notAllowedParams{
+										allowedMethods: "POST",
+										allowedHeaders: rn33AllowedHeaders,
+										acceptPost:     "application/json",
+										acceptPatch:    "",
+									})
+								}
+
+								return
+							}
+
 						}
 
 					}
@@ -1016,7 +1058,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn47AllowedHeaders,
+								allowedHeaders: rn49AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -1942,29 +1984,68 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 
 						}
 
-					case 'u': // Prefix: "user/top/artist-plays"
+					case 'u': // Prefix: "user/"
 
-						if l := len("user/top/artist-plays"); len(elem) >= l && elem[0:l] == "user/top/artist-plays" {
+						if l := len("user/"); len(elem) >= l && elem[0:l] == "user/" {
 							elem = elem[l:]
 						} else {
 							break
 						}
 
 						if len(elem) == 0 {
-							// Leaf node.
-							switch method {
-							case "POST":
-								r.name = GetUserTopArtistPlayStatsOperation
-								r.summary = "Get user's top artists with each artist's top tracks and albums."
-								r.operationID = "getUserTopArtistPlayStats"
-								r.operationGroup = ""
-								r.pathPattern = "/api/statistics/user/top/artist-plays"
-								r.args = args
-								r.count = 0
-								return r, true
-							default:
-								return
+							break
+						}
+						switch elem[0] {
+						case 'l': // Prefix: "listens/days"
+
+							if l := len("listens/days"); len(elem) >= l && elem[0:l] == "listens/days" {
+								elem = elem[l:]
+							} else {
+								break
 							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch method {
+								case "POST":
+									r.name = GetUserListensByDaysOperation
+									r.summary = "Get user's listening information for the specified time range."
+									r.operationID = "getUserListensByDays"
+									r.operationGroup = ""
+									r.pathPattern = "/api/statistics/user/listens/days"
+									r.args = args
+									r.count = 0
+									return r, true
+								default:
+									return
+								}
+							}
+
+						case 't': // Prefix: "top/artist-plays"
+
+							if l := len("top/artist-plays"); len(elem) >= l && elem[0:l] == "top/artist-plays" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch method {
+								case "POST":
+									r.name = GetUserTopArtistPlayStatsOperation
+									r.summary = "Get user's top artists with each artist's top tracks and albums."
+									r.operationID = "getUserTopArtistPlayStats"
+									r.operationGroup = ""
+									r.pathPattern = "/api/statistics/user/top/artist-plays"
+									r.args = args
+									r.count = 0
+									return r, true
+								default:
+									return
+								}
+							}
+
 						}
 
 					}

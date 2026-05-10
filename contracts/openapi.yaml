@@ -1046,6 +1046,23 @@ components:
         change:
           $ref: "#/components/schemas/TopEntityChange"
 
+    DayListenDetails:
+      type: object
+      required:
+        - date
+        - count
+        - seconds
+      properties:
+        date:
+          type: string
+          format: date
+        count:
+          type: integer
+          format: uint16
+        seconds:
+          type: integer
+          format: uint64
+
     TopArtistPlayStats:
       type: object
       required:
@@ -1398,6 +1415,19 @@ components:
           format: uuid
         best_friend:
           type: boolean
+
+    DateTimeRange:
+      type: object
+      required:
+        - start
+        - end
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
 
     ArtistPlayStatisticsQuery:
       type: object
@@ -2209,6 +2239,36 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/RelationDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/statistics/user/listens/days:
+    post:
+      summary: Get user's listening information for the specified time range.
+      operationId: getUserListensByDays
+      tags:
+        - Statistics
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DateTimeRange"
+      responses:
+        "200":
+          description: Successfully retrieved listening information by day
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DayListenDetails"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "500":

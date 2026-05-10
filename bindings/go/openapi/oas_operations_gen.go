@@ -22,6 +22,7 @@ const (
 	GetUserDetailsOperation            OperationName = "GetUserDetails"
 	GetUserIntegrationsOperation       OperationName = "GetUserIntegrations"
 	GetUserListenSessionsOperation     OperationName = "GetUserListenSessions"
+	GetUserListensByDaysOperation      OperationName = "GetUserListensByDays"
 	GetUserTopArtistPlayStatsOperation OperationName = "GetUserTopArtistPlayStats"
 	JoinFreeBetaOperation              OperationName = "JoinFreeBeta"
 	RegisterOperation                  OperationName = "Register"

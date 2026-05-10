@@ -444,6 +444,12 @@ export type TopArtistEntry = {
     change?: TopEntityChange;
 };
 
+export type DayListenDetails = {
+    date: string;
+    count: number;
+    seconds: number;
+};
+
 export type TopArtistPlayStats = {
     rank: number;
     artist: ArtistPlayStats;
@@ -663,6 +669,11 @@ export type BlockedActionRequest = {
 export type BestFriendActionRequest = {
     id: string;
     best_friend: boolean;
+};
+
+export type DateTimeRange = {
+    start: string;
+    end: string;
 };
 
 export type ArtistPlayStatisticsQuery = {
@@ -1567,6 +1578,39 @@ export type GetRelationsDetailsResponses = {
 };
 
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
+
+export type GetUserListensByDaysData = {
+    body: DateTimeRange;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/user/listens/days';
+};
+
+export type GetUserListensByDaysErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserListensByDaysError = GetUserListensByDaysErrors[keyof GetUserListensByDaysErrors];
+
+export type GetUserListensByDaysResponses = {
+    /**
+     * Successfully retrieved listening information by day
+     */
+    200: Array<DayListenDetails>;
+};
+
+export type GetUserListensByDaysResponse = GetUserListensByDaysResponses[keyof GetUserListensByDaysResponses];
 
 export type GetUserTopArtistPlayStatsData = {
     body?: ArtistPlayStatisticsQuery;

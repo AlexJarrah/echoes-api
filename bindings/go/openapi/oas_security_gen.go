@@ -47,6 +47,7 @@ var operationRolesCookieAuth = map[string][]string{
 	GetUserDetailsOperation:            []string{},
 	GetUserIntegrationsOperation:       []string{},
 	GetUserListenSessionsOperation:     []string{},
+	GetUserListensByDaysOperation:      []string{},
 	GetUserTopArtistPlayStatsOperation: []string{},
 	JoinFreeBetaOperation:              []string{},
 	RemoveFriendOperation:              []string{},

@@ -161,6 +161,15 @@ func (UnimplementedHandler) GetUserListenSessions(ctx context.Context, req *List
 	return r, ht.ErrNotImplemented
 }
 
+// GetUserListensByDays implements getUserListensByDays operation.
+//
+// Get user's listening information for the specified time range.
+//
+// POST /api/statistics/user/listens/days
+func (UnimplementedHandler) GetUserListensByDays(ctx context.Context, req *DateTimeRange) (r GetUserListensByDaysRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetUserTopArtistPlayStats implements getUserTopArtistPlayStats operation.
 //
 // Get user's top artists with each artist's top tracks and albums.

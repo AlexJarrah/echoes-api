@@ -65,6 +65,10 @@ type GetUserListenSessionsRes interface {
 	getUserListenSessionsRes()
 }
 
+type GetUserListensByDaysRes interface {
+	getUserListensByDaysRes()
+}
+
 type GetUserTopArtistPlayStatsRes interface {
 	getUserTopArtistPlayStatsRes()
 }

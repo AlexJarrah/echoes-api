@@ -108,6 +108,12 @@ type Handler interface {
 	//
 	// POST /api/@{handle}/listens/sessions
 	GetUserListenSessions(ctx context.Context, req *ListensSessionsRequest, params GetUserListenSessionsParams) (GetUserListenSessionsRes, error)
+	// GetUserListensByDays implements getUserListensByDays operation.
+	//
+	// Get user's listening information for the specified time range.
+	//
+	// POST /api/statistics/user/listens/days
+	GetUserListensByDays(ctx context.Context, req *DateTimeRange) (GetUserListensByDaysRes, error)
 	// GetUserTopArtistPlayStats implements getUserTopArtistPlayStats operation.
 	//
 	// Get user's top artists with each artist's top tracks and albums.

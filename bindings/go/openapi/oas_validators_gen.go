@@ -284,6 +284,14 @@ func (s GetUserIntegrationsOKApplicationJSON) Validate() error {
 	return nil
 }
 
+func (s GetUserListensByDaysOKApplicationJSON) Validate() error {
+	alias := ([]DayListenDetails)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
 func (s GetUserTopArtistPlayStatsOKApplicationJSON) Validate() error {
 	alias := ([]TopArtistPlayStats)(s)
 	if alias == nil {
