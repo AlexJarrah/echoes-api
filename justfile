@@ -12,7 +12,7 @@ _default:
     @just --list --unsorted
 
 # Generate all bindings
-generate: docs go ts
+generate: clean docs go ts
 
 # Validate OpenAPI & AsyncAPI contracts
 validate:
@@ -22,7 +22,7 @@ validate:
 # Remove generated bindings
 clean:
     rm -rf {{docs}}/*
-    rm -rf {{bindings}}/go/{openapi,asyncapi}
+    rm -rf {{bindings}}/go/{openapi,asyncapi,schemas}
     rm -rf {{bindings}}/ts/{openapi,asyncapi}
 
 # Generate documentation
@@ -53,11 +53,11 @@ go-asyncapi:
 
 go-schemas:
     mkdir -p {{bindings}}/go/schemas
-    printf 'package schemas; const OpenAPI = `%s`' \
-        "$(cat {{contracts}}/openapi.yaml)" \
+    printf 'package schemas\n\nconst OpenAPI = `%s`\n' \
+        "$(sed 's/`/`+"`"+`/g' {{contracts}}/openapi.yaml)" \
         > {{bindings}}/go/schemas/openapi.go
-    printf 'package schemas; const AsyncAPI = `%s`' \
-        "$(cat {{contracts}}/openapi.yaml)" \
+    printf 'package schemas\n\nconst AsyncAPI = `%s`\n' \
+        "$(sed 's/`/`+"`"+`/g' {{contracts}}/asyncapi.yaml)" \
         > {{bindings}}/go/schemas/asyncapi.go
     gofmt -w {{bindings}}/go/schemas/*
 
