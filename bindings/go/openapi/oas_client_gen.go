@@ -111,6 +111,12 @@ type Invoker interface {
 	//
 	// GET /api/artists/{id}
 	GetArtist(ctx context.Context, params GetArtistParams, options ...RequestOption) (GetArtistRes, error)
+	// GetAsyncAPI invokes getAsyncAPI operation.
+	//
+	// Get AsyncAPI schema.
+	//
+	// GET /asyncapi.yaml
+	GetAsyncAPI(ctx context.Context, options ...RequestOption) (GetAsyncAPIOK, error)
 	// GetCalendarListens invokes getCalendarListens operation.
 	//
 	// Serves listening history as an ICS feed. Access respects requested user's privacy settings. If
@@ -151,6 +157,12 @@ type Invoker interface {
 	//
 	// POST /api/listens/sessions
 	GetListenSessions(ctx context.Context, request *ListensSessionsRequest, options ...RequestOption) (GetListenSessionsRes, error)
+	// GetOpenAPI invokes getOpenAPI operation.
+	//
+	// Get OpenAPI schema.
+	//
+	// GET /openapi.yaml
+	GetOpenAPI(ctx context.Context, options ...RequestOption) (GetOpenAPIOK, error)
 	// GetRelations invokes getRelations operation.
 	//
 	// Get user relations.
@@ -892,6 +904,106 @@ func (c *Client) sendGetArtist(ctx context.Context, params GetArtistParams, requ
 
 	stage = "DecodeResponse"
 	result, err := decodeGetArtistResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetAsyncAPI invokes getAsyncAPI operation.
+//
+// Get AsyncAPI schema.
+//
+// GET /asyncapi.yaml
+func (c *Client) GetAsyncAPI(ctx context.Context, options ...RequestOption) (GetAsyncAPIOK, error) {
+	res, err := c.sendGetAsyncAPI(ctx, options...)
+	return res, err
+}
+
+func (c *Client) sendGetAsyncAPI(ctx context.Context, requestOptions ...RequestOption) (res GetAsyncAPIOK, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getAsyncAPI"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/asyncapi.yaml"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetAsyncAPIOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/asyncapi.yaml"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetAsyncAPIResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -1688,6 +1800,106 @@ func (c *Client) sendGetListenSessions(ctx context.Context, request *ListensSess
 
 	stage = "DecodeResponse"
 	result, err := decodeGetListenSessionsResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetOpenAPI invokes getOpenAPI operation.
+//
+// Get OpenAPI schema.
+//
+// GET /openapi.yaml
+func (c *Client) GetOpenAPI(ctx context.Context, options ...RequestOption) (GetOpenAPIOK, error) {
+	res, err := c.sendGetOpenAPI(ctx, options...)
+	return res, err
+}
+
+func (c *Client) sendGetOpenAPI(ctx context.Context, requestOptions ...RequestOption) (res GetOpenAPIOK, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getOpenAPI"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/openapi.yaml"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetOpenAPIOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/openapi.yaml"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetOpenAPIResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

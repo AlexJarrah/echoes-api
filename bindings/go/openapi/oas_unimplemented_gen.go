@@ -49,6 +49,15 @@ func (UnimplementedHandler) GetArtist(ctx context.Context, params GetArtistParam
 	return r, ht.ErrNotImplemented
 }
 
+// GetAsyncAPI implements getAsyncAPI operation.
+//
+// Get AsyncAPI schema.
+//
+// GET /asyncapi.yaml
+func (UnimplementedHandler) GetAsyncAPI(ctx context.Context) (r GetAsyncAPIOK, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetCalendarListens implements getCalendarListens operation.
 //
 // Serves listening history as an ICS feed. Access respects requested user's privacy settings. If
@@ -104,6 +113,15 @@ func (UnimplementedHandler) GetLibraryMetadata(ctx context.Context) (r GetLibrar
 //
 // POST /api/listens/sessions
 func (UnimplementedHandler) GetListenSessions(ctx context.Context, req *ListensSessionsRequest) (r GetListenSessionsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetOpenAPI implements getOpenAPI operation.
+//
+// Get OpenAPI schema.
+//
+// GET /openapi.yaml
+func (UnimplementedHandler) GetOpenAPI(ctx context.Context) (r GetOpenAPIOK, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

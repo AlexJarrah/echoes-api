@@ -968,6 +968,20 @@ type GetArtistApplicationJSONUnauthorized ErrorResponse
 
 func (*GetArtistApplicationJSONUnauthorized) getArtistRes() {}
 
+type GetAsyncAPIOK struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetAsyncAPIOK) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
 type GetCalendarListensApplicationJSONBadRequest ErrorResponse
 
 func (*GetCalendarListensApplicationJSONBadRequest) getCalendarListensRes() {}
@@ -1081,6 +1095,20 @@ func (*GetListenSessionsApplicationJSONInternalServerError) getListenSessionsRes
 type GetListenSessionsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetListenSessionsApplicationJSONUnauthorized) getListenSessionsRes() {}
+
+type GetOpenAPIOK struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetOpenAPIOK) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
 
 type GetRelationsApplicationJSONInternalServerError ErrorResponse
 

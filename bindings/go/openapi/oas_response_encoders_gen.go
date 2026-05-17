@@ -550,6 +550,22 @@ func encodeGetArtistResponse(response GetArtistRes, w http.ResponseWriter, span 
 	}
 }
 
+func encodeGetAsyncAPIResponse(response GetAsyncAPIOK, w http.ResponseWriter, span trace.Span) error {
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.WriteHeader(200)
+	span.SetStatus(codes.Ok, http.StatusText(200))
+
+	writer := w
+	if closer, ok := response.Data.(io.Closer); ok {
+		defer closer.Close()
+	}
+	if _, err := io.Copy(writer, response); err != nil {
+		return errors.Wrap(err, "write")
+	}
+
+	return nil
+}
+
 func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *GetCalendarListensOKHeaders:
@@ -1139,6 +1155,22 @@ func encodeGetListenSessionsResponse(response GetListenSessionsRes, w http.Respo
 	default:
 		return errors.Errorf("unexpected response type: %T", response)
 	}
+}
+
+func encodeGetOpenAPIResponse(response GetOpenAPIOK, w http.ResponseWriter, span trace.Span) error {
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.WriteHeader(200)
+	span.SetStatus(codes.Ok, http.StatusText(200))
+
+	writer := w
+	if closer, ok := response.Data.(io.Closer); ok {
+		defer closer.Close()
+	}
+	if _, err := io.Copy(writer, response); err != nil {
+		return errors.Wrap(err, "write")
+	}
+
+	return nil
 }
 
 func encodeGetRelationsResponse(response GetRelationsRes, w http.ResponseWriter, span trace.Span) error {

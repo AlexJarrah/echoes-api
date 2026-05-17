@@ -722,6 +722,38 @@ export type ErrorResponse = {
     message: string;
 };
 
+export type GetOpenApiData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/openapi.yaml';
+};
+
+export type GetOpenApiResponses = {
+    /**
+     * Top artists returned successfully
+     */
+    200: string;
+};
+
+export type GetOpenApiResponse = GetOpenApiResponses[keyof GetOpenApiResponses];
+
+export type GetAsyncApiData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/asyncapi.yaml';
+};
+
+export type GetAsyncApiResponses = {
+    /**
+     * Top artists returned successfully
+     */
+    200: string;
+};
+
+export type GetAsyncApiResponse = GetAsyncApiResponses[keyof GetAsyncApiResponses];
+
 export type GetTrackData = {
     body?: never;
     path: {

@@ -32,6 +32,12 @@ type Handler interface {
 	//
 	// GET /api/artists/{id}
 	GetArtist(ctx context.Context, params GetArtistParams) (GetArtistRes, error)
+	// GetAsyncAPI implements getAsyncAPI operation.
+	//
+	// Get AsyncAPI schema.
+	//
+	// GET /asyncapi.yaml
+	GetAsyncAPI(ctx context.Context) (GetAsyncAPIOK, error)
 	// GetCalendarListens implements getCalendarListens operation.
 	//
 	// Serves listening history as an ICS feed. Access respects requested user's privacy settings. If
@@ -72,6 +78,12 @@ type Handler interface {
 	//
 	// POST /api/listens/sessions
 	GetListenSessions(ctx context.Context, req *ListensSessionsRequest) (GetListenSessionsRes, error)
+	// GetOpenAPI implements getOpenAPI operation.
+	//
+	// Get OpenAPI schema.
+	//
+	// GET /openapi.yaml
+	GetOpenAPI(ctx context.Context) (GetOpenAPIOK, error)
 	// GetRelations implements getRelations operation.
 	//
 	// Get user relations.

@@ -1551,6 +1551,30 @@ components:
       description: No content
 
 paths:
+  /openapi.yaml:
+    get:
+      summary: Get OpenAPI schema.
+      operationId: getOpenAPI
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /asyncapi.yaml:
+    get:
+      summary: Get AsyncAPI schema.
+      operationId: getAsyncAPI
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+
   /api/tracks/{id}:
     get:
       summary: Get track details

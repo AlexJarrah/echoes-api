@@ -893,6 +893,31 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 	return res, validate.UnexpectedStatusCodeWithResponse(resp)
 }
 
+func decodeGetAsyncAPIResponse(resp *http.Response) (res GetAsyncAPIOK, _ error) {
+	switch resp.StatusCode {
+	case 200:
+		// Code 200.
+		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		if err != nil {
+			return res, errors.Wrap(err, "parse media type")
+		}
+		switch {
+		case ct == "text/plain":
+			reader := resp.Body
+			b, err := io.ReadAll(reader)
+			if err != nil {
+				return res, err
+			}
+
+			response := GetAsyncAPIOK{Data: bytes.NewReader(b)}
+			return response, nil
+		default:
+			return res, validate.InvalidContentType(ct)
+		}
+	}
+	return res, validate.UnexpectedStatusCodeWithResponse(resp)
+}
+
 func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListensRes, _ error) {
 	switch resp.StatusCode {
 	case 200:
@@ -1847,6 +1872,31 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 
 			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
+		default:
+			return res, validate.InvalidContentType(ct)
+		}
+	}
+	return res, validate.UnexpectedStatusCodeWithResponse(resp)
+}
+
+func decodeGetOpenAPIResponse(resp *http.Response) (res GetOpenAPIOK, _ error) {
+	switch resp.StatusCode {
+	case 200:
+		// Code 200.
+		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		if err != nil {
+			return res, errors.Wrap(err, "parse media type")
+		}
+		switch {
+		case ct == "text/plain":
+			reader := resp.Body
+			b, err := io.ReadAll(reader)
+			if err != nil {
+				return res, err
+			}
+
+			response := GetOpenAPIOK{Data: bytes.NewReader(b)}
+			return response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
 		}
