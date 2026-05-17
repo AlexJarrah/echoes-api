@@ -5,6 +5,9 @@ generation := "./generation"
 bindings   := "./bindings"
 docs       := "./docs"
 
+openapi_schema  := `cat ./contracts/openapi.yaml`
+asyncapi_schema := `cat ./contracts/asyncapi.yaml`
+
 _default:
     @just --list --unsorted
 
@@ -30,7 +33,7 @@ docs:
     sed -i "s|<doc-url>|./contracts/asyncapi.yaml|g" {{docs}}/asyncapi.html
 
 # Generate Go bindings
-go: go-openapi go-asyncapi
+go: go-openapi go-asyncapi go-schemas
 
 go-openapi:
     mkdir -p {{bindings}}/go/openapi
@@ -47,6 +50,16 @@ go-asyncapi:
     go-asyncapi code {{contracts}}/asyncapi.yaml \
       --target-dir {{bindings}}/go/asyncapi/ \
       -M gitlab.com/AlexJarrah/echoes-api/bindings/go/asyncapi
+
+go-schemas:
+    mkdir -p {{bindings}}/go/schemas
+    printf 'package schemas; const OpenAPI = `%s`' \
+        "$(cat {{contracts}}/openapi.yaml)" \
+        > {{bindings}}/go/schemas/openapi.go
+    printf 'package schemas; const AsyncAPI = `%s`' \
+        "$(cat {{contracts}}/openapi.yaml)" \
+        > {{bindings}}/go/schemas/asyncapi.go
+    gofmt -w {{bindings}}/go/schemas/*
 
 # Generate TypeScript bindings
 ts: ts-openapi ts-asyncapi
