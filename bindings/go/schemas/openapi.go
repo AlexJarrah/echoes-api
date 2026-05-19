@@ -494,7 +494,8 @@ components:
         password:
           type: string
           minLength: 8
-          description: 8+ characters, must contain uppercase, lowercase, digit, and
+          description:
+            8+ characters, must contain uppercase, lowercase, digit, and
             special character
 
     SignInRequest:
@@ -796,11 +797,13 @@ components:
         reference_id:
           type: integer
           format: int64
-          description: Reference ID provided in the request, echoed back for client
+          description:
+            Reference ID provided in the request, echoed back for client
             correlation.
         created:
           type: boolean
-          description: True if a new entity was created, false if an existing entity was
+          description:
+            True if a new entity was created, false if an existing entity was
             resolved.
 
     LibraryAddResponse:
@@ -928,7 +931,8 @@ components:
         minimum:
           type: integer
           format: int64
-          description: Minimum amount of listens to be fetched. The start parameter's
+          description:
+            Minimum amount of listens to be fetched. The start parameter's
             value may not be respected to achieve this.
         limit:
           type: integer
@@ -940,10 +944,10 @@ components:
     TopEntityPlays:
       type: object
       required:
-        - count
+        - play_count
         - duration
       properties:
-        count:
+        play_count:
           type: integer
           format: uint64
         duration:
@@ -954,11 +958,11 @@ components:
     TopEntityChange:
       type: object
       required:
-        - count
+        - play_count
         - duration
       description: Values change in percentage.
       properties:
-        count:
+        play_count:
           type: integer
           format: int64
         duration:
@@ -1052,13 +1056,13 @@ components:
       type: object
       required:
         - date
-        - count
+        - play_count
         - seconds
       properties:
         date:
           type: string
           format: date
-        count:
+        play_count:
           type: integer
           format: uint16
         seconds:
@@ -1325,7 +1329,8 @@ components:
       properties:
         session_id:
           type: string
-          description: Unique identifier for the listening session, typically a UUID or
+          description:
+            Unique identifier for the listening session, typically a UUID or
             random string used to group related activities.
         track_id:
           type: string
@@ -1333,7 +1338,8 @@ components:
           description: UUID of the track being played.
         active:
           type: boolean
-          description: Whether the user is currently playing this track (true) or has
+          description:
+            Whether the user is currently playing this track (true) or has
             stopped/paused (false).
         position:
           type: integer
@@ -1346,7 +1352,8 @@ components:
         end_timestamp:
           type: string
           format: date-time
-          description: ISO 8601 timestamp when playback of this track is expected to end
+          description:
+            ISO 8601 timestamp when playback of this track is expected to end
             (for background playback estimation).
 
     SearchTracksRequest:
@@ -1381,7 +1388,8 @@ components:
 
     FriendActionRequest:
       type: object
-      description: Request body for friend actions. At least one of 'id' or 'handle'
+      description:
+        Request body for friend actions. At least one of 'id' or 'handle'
         must be provided to identify the target user.
       properties:
         id:
@@ -1894,7 +1902,8 @@ paths:
     get:
       summary: Get calendar listens for user (ICS feed)
       operationId: getCalendarListens
-      description: Serves listening history as an ICS feed. Access respects requested
+      description:
+        Serves listening history as an ICS feed. Access respects requested
         user's privacy settings. If requested user's privacy is not public, auth
         and token params are required.
       tags:
@@ -1909,14 +1918,16 @@ paths:
             format: uuid
         - name: auth_id
           in: query
-          description: The requesting user's ID (the viewer). Required if target user's
+          description:
+            The requesting user's ID (the viewer). Required if target user's
             visibility is not public.
           schema:
             type: string
             format: uuid
         - name: token
           in: query
-          description: HMAC token for authentication. Required if target user's visibility
+          description:
+            HMAC token for authentication. Required if target user's visibility
             is not public.
           schema:
             type: string
@@ -2332,7 +2343,8 @@ paths:
 
   /api/statistics/global/top/albums:
     post:
-      summary: Get global top albums in the specified time range. Time range values
+      summary:
+        Get global top albums in the specified time range. Time range values
         default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopAlbums
       tags:
@@ -2359,7 +2371,8 @@ paths:
 
   /api/statistics/global/top/tracks:
     post:
-      summary: Get global top tracks in the specified time range. Time range values
+      summary:
+        Get global top tracks in the specified time range. Time range values
         default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopTracks
       tags:
@@ -2386,7 +2399,8 @@ paths:
 
   /api/statistics/global/top/artists:
     post:
-      summary: Get global top artists in the specified time range. Time range values
+      summary:
+        Get global top artists in the specified time range. Time range values
         default to the range of the previous full week starting on Friday.
       operationId: getGlobalTopArtists
       tags:

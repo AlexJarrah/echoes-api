@@ -999,7 +999,7 @@ export interface components {
         };
         TopEntityPlays: {
             /** Format: uint64 */
-            count: number;
+            play_count: number;
             /**
              * Format: uint64
              * @description Play duration in seconds
@@ -1009,7 +1009,7 @@ export interface components {
         /** @description Values change in percentage. */
         TopEntityChange: {
             /** Format: int64 */
-            count: number;
+            play_count: number;
             /**
              * Format: int64
              * @description Play duration in seconds
@@ -1053,7 +1053,7 @@ export interface components {
             /** Format: date */
             date: string;
             /** Format: uint16 */
-            count: number;
+            play_count: number;
             /** Format: uint64 */
             seconds: number;
         };

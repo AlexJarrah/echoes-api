@@ -2265,8 +2265,8 @@ func (s *DayListenDetails) encodeFields(e *jx.Encoder) {
 		json.EncodeDate(e, s.Date)
 	}
 	{
-		e.FieldStart("count")
-		e.UInt16(s.Count)
+		e.FieldStart("play_count")
+		e.UInt16(s.PlayCount)
 	}
 	{
 		e.FieldStart("seconds")
@@ -2276,7 +2276,7 @@ func (s *DayListenDetails) encodeFields(e *jx.Encoder) {
 
 var jsonFieldsNameOfDayListenDetails = [3]string{
 	0: "date",
-	1: "count",
+	1: "play_count",
 	2: "seconds",
 }
 
@@ -2301,17 +2301,17 @@ func (s *DayListenDetails) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"date\"")
 			}
-		case "count":
+		case "play_count":
 			requiredBitSet[0] |= 1 << 1
 			if err := func() error {
 				v, err := d.UInt16()
-				s.Count = uint16(v)
+				s.PlayCount = uint16(v)
 				if err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"count\"")
+				return errors.Wrap(err, "decode field \"play_count\"")
 			}
 		case "seconds":
 			requiredBitSet[0] |= 1 << 2
@@ -13096,8 +13096,8 @@ func (s *TopEntityChange) Encode(e *jx.Encoder) {
 // encodeFields encodes fields.
 func (s *TopEntityChange) encodeFields(e *jx.Encoder) {
 	{
-		e.FieldStart("count")
-		e.Int64(s.Count)
+		e.FieldStart("play_count")
+		e.Int64(s.PlayCount)
 	}
 	{
 		e.FieldStart("duration")
@@ -13106,7 +13106,7 @@ func (s *TopEntityChange) encodeFields(e *jx.Encoder) {
 }
 
 var jsonFieldsNameOfTopEntityChange = [2]string{
-	0: "count",
+	0: "play_count",
 	1: "duration",
 }
 
@@ -13119,17 +13119,17 @@ func (s *TopEntityChange) Decode(d *jx.Decoder) error {
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
-		case "count":
+		case "play_count":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
 				v, err := d.Int64()
-				s.Count = int64(v)
+				s.PlayCount = int64(v)
 				if err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"count\"")
+				return errors.Wrap(err, "decode field \"play_count\"")
 			}
 		case "duration":
 			requiredBitSet[0] |= 1 << 1
@@ -13209,8 +13209,8 @@ func (s *TopEntityPlays) Encode(e *jx.Encoder) {
 // encodeFields encodes fields.
 func (s *TopEntityPlays) encodeFields(e *jx.Encoder) {
 	{
-		e.FieldStart("count")
-		e.UInt64(s.Count)
+		e.FieldStart("play_count")
+		e.UInt64(s.PlayCount)
 	}
 	{
 		e.FieldStart("duration")
@@ -13219,7 +13219,7 @@ func (s *TopEntityPlays) encodeFields(e *jx.Encoder) {
 }
 
 var jsonFieldsNameOfTopEntityPlays = [2]string{
-	0: "count",
+	0: "play_count",
 	1: "duration",
 }
 
@@ -13232,17 +13232,17 @@ func (s *TopEntityPlays) Decode(d *jx.Decoder) error {
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
-		case "count":
+		case "play_count":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
 				v, err := d.UInt64()
-				s.Count = uint64(v)
+				s.PlayCount = uint64(v)
 				if err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"count\"")
+				return errors.Wrap(err, "decode field \"play_count\"")
 			}
 		case "duration":
 			requiredBitSet[0] |= 1 << 1

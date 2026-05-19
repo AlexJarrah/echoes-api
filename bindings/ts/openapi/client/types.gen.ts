@@ -396,7 +396,7 @@ export type ListensSessionsRequest = {
 };
 
 export type TopEntityPlays = {
-    count: number;
+    play_count: number;
     /**
      * Play duration in seconds
      */
@@ -407,7 +407,7 @@ export type TopEntityPlays = {
  * Values change in percentage.
  */
 export type TopEntityChange = {
-    count: number;
+    play_count: number;
     /**
      * Play duration in seconds
      */
@@ -446,7 +446,7 @@ export type TopArtistEntry = {
 
 export type DayListenDetails = {
     date: string;
-    count: number;
+    play_count: number;
     seconds: number;
 };
 

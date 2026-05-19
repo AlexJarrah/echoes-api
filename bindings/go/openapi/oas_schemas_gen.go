@@ -831,9 +831,9 @@ func (s *DateTimeRange) SetEnd(val time.Time) {
 
 // Ref: #/components/schemas/DayListenDetails
 type DayListenDetails struct {
-	Date    time.Time `json:"date"`
-	Count   uint16    `json:"count"`
-	Seconds uint64    `json:"seconds"`
+	Date      time.Time `json:"date"`
+	PlayCount uint16    `json:"play_count"`
+	Seconds   uint64    `json:"seconds"`
 }
 
 // GetDate returns the value of Date.
@@ -841,9 +841,9 @@ func (s *DayListenDetails) GetDate() time.Time {
 	return s.Date
 }
 
-// GetCount returns the value of Count.
-func (s *DayListenDetails) GetCount() uint16 {
-	return s.Count
+// GetPlayCount returns the value of PlayCount.
+func (s *DayListenDetails) GetPlayCount() uint16 {
+	return s.PlayCount
 }
 
 // GetSeconds returns the value of Seconds.
@@ -856,9 +856,9 @@ func (s *DayListenDetails) SetDate(val time.Time) {
 	s.Date = val
 }
 
-// SetCount sets the value of Count.
-func (s *DayListenDetails) SetCount(val uint16) {
-	s.Count = val
+// SetPlayCount sets the value of PlayCount.
+func (s *DayListenDetails) SetPlayCount(val uint16) {
+	s.PlayCount = val
 }
 
 // SetSeconds sets the value of Seconds.
@@ -4780,14 +4780,14 @@ func (s *TopArtistPlayStats) SetTopAlbums(val []AlbumPlayStats) {
 // Values change in percentage.
 // Ref: #/components/schemas/TopEntityChange
 type TopEntityChange struct {
-	Count int64 `json:"count"`
+	PlayCount int64 `json:"play_count"`
 	// Play duration in seconds.
 	Duration int64 `json:"duration"`
 }
 
-// GetCount returns the value of Count.
-func (s *TopEntityChange) GetCount() int64 {
-	return s.Count
+// GetPlayCount returns the value of PlayCount.
+func (s *TopEntityChange) GetPlayCount() int64 {
+	return s.PlayCount
 }
 
 // GetDuration returns the value of Duration.
@@ -4795,9 +4795,9 @@ func (s *TopEntityChange) GetDuration() int64 {
 	return s.Duration
 }
 
-// SetCount sets the value of Count.
-func (s *TopEntityChange) SetCount(val int64) {
-	s.Count = val
+// SetPlayCount sets the value of PlayCount.
+func (s *TopEntityChange) SetPlayCount(val int64) {
+	s.PlayCount = val
 }
 
 // SetDuration sets the value of Duration.
@@ -4807,14 +4807,14 @@ func (s *TopEntityChange) SetDuration(val int64) {
 
 // Ref: #/components/schemas/TopEntityPlays
 type TopEntityPlays struct {
-	Count uint64 `json:"count"`
+	PlayCount uint64 `json:"play_count"`
 	// Play duration in seconds.
 	Duration uint64 `json:"duration"`
 }
 
-// GetCount returns the value of Count.
-func (s *TopEntityPlays) GetCount() uint64 {
-	return s.Count
+// GetPlayCount returns the value of PlayCount.
+func (s *TopEntityPlays) GetPlayCount() uint64 {
+	return s.PlayCount
 }
 
 // GetDuration returns the value of Duration.
@@ -4822,9 +4822,9 @@ func (s *TopEntityPlays) GetDuration() uint64 {
 	return s.Duration
 }
 
-// SetCount sets the value of Count.
-func (s *TopEntityPlays) SetCount(val uint64) {
-	s.Count = val
+// SetPlayCount sets the value of PlayCount.
+func (s *TopEntityPlays) SetPlayCount(val uint64) {
+	s.PlayCount = val
 }
 
 // SetDuration sets the value of Duration.
