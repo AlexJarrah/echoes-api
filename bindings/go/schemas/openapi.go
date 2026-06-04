@@ -249,7 +249,7 @@ components:
       properties:
         listen_id:
           type: integer
-          format: int64
+          format: uint64
         user_id:
           type: string
           format: uuid
@@ -915,7 +915,7 @@ components:
           type: array
           items:
             type: integer
-            format: int64
+            format: uint64
 
     ListensSessionsRequest:
       type: object

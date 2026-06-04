@@ -6957,7 +6957,7 @@ func (s *LibraryRemoveRequest) encodeFields(e *jx.Encoder) {
 			e.FieldStart("listen_ids")
 			e.ArrStart()
 			for _, elem := range s.ListenIds {
-				e.Int64(elem)
+				e.UInt64(elem)
 			}
 			e.ArrEnd()
 		}
@@ -7038,11 +7038,11 @@ func (s *LibraryRemoveRequest) Decode(d *jx.Decoder) error {
 			}
 		case "listen_ids":
 			if err := func() error {
-				s.ListenIds = make([]int64, 0)
+				s.ListenIds = make([]uint64, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem int64
-					v, err := d.Int64()
-					elem = int64(v)
+					var elem uint64
+					v, err := d.UInt64()
+					elem = uint64(v)
 					if err != nil {
 						return err
 					}
@@ -7516,7 +7516,7 @@ func (s *Listen) Encode(e *jx.Encoder) {
 func (s *Listen) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("listen_id")
-		e.Int64(s.ListenID)
+		e.UInt64(s.ListenID)
 	}
 	{
 		e.FieldStart("user_id")
@@ -7568,8 +7568,8 @@ func (s *Listen) Decode(d *jx.Decoder) error {
 		case "listen_id":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				v, err := d.Int64()
-				s.ListenID = int64(v)
+				v, err := d.UInt64()
+				s.ListenID = uint64(v)
 				if err != nil {
 					return err
 				}

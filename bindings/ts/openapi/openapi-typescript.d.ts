@@ -670,7 +670,7 @@ export interface components {
             updated_at?: string | null;
         };
         Listen: {
-            /** Format: int64 */
+            /** Format: uint64 */
             listen_id: number;
             /** Format: uuid */
             user_id: string;

@@ -1978,7 +1978,7 @@ type LibraryRemoveRequest struct {
 	TrackIds  []uuid.UUID `json:"track_ids"`
 	AlbumIds  []uuid.UUID `json:"album_ids"`
 	ArtistIds []uuid.UUID `json:"artist_ids"`
-	ListenIds []int64     `json:"listen_ids"`
+	ListenIds []uint64    `json:"listen_ids"`
 }
 
 // GetTrackIds returns the value of TrackIds.
@@ -1997,7 +1997,7 @@ func (s *LibraryRemoveRequest) GetArtistIds() []uuid.UUID {
 }
 
 // GetListenIds returns the value of ListenIds.
-func (s *LibraryRemoveRequest) GetListenIds() []int64 {
+func (s *LibraryRemoveRequest) GetListenIds() []uint64 {
 	return s.ListenIds
 }
 
@@ -2017,7 +2017,7 @@ func (s *LibraryRemoveRequest) SetArtistIds(val []uuid.UUID) {
 }
 
 // SetListenIds sets the value of ListenIds.
-func (s *LibraryRemoveRequest) SetListenIds(val []int64) {
+func (s *LibraryRemoveRequest) SetListenIds(val []uint64) {
 	s.ListenIds = val
 }
 
@@ -2176,7 +2176,7 @@ func (*LibraryUpdateResponse) updateLibraryRes() {}
 
 // Ref: #/components/schemas/Listen
 type Listen struct {
-	ListenID  int64          `json:"listen_id"`
+	ListenID  uint64         `json:"listen_id"`
 	UserID    uuid.UUID      `json:"user_id"`
 	TrackID   uuid.UUID      `json:"track_id"`
 	Seconds   uint16         `json:"seconds"`
@@ -2186,7 +2186,7 @@ type Listen struct {
 }
 
 // GetListenID returns the value of ListenID.
-func (s *Listen) GetListenID() int64 {
+func (s *Listen) GetListenID() uint64 {
 	return s.ListenID
 }
 
@@ -2221,7 +2221,7 @@ func (s *Listen) GetUpdatedAt() OptNilDateTime {
 }
 
 // SetListenID sets the value of ListenID.
-func (s *Listen) SetListenID(val int64) {
+func (s *Listen) SetListenID(val uint64) {
 	s.ListenID = val
 }
 
