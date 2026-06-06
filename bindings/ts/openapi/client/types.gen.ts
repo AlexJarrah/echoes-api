@@ -11,7 +11,7 @@ export type ClientOptions = {
  * 3=Private: visible to only the user
  *
  */
-export type UserVisibility = 0 | 1 | 2 | 3;
+export type Visibility = 0 | 1 | 2 | 3;
 
 /**
  * 0=API: listen was added via API
@@ -43,12 +43,20 @@ export type IntegrationProvider = 0 | 1 | 2;
  */
 export type UserRelation = 0 | 1 | 2 | 3 | 4 | 5;
 
+/**
+ * 0=Owner
+ * 1=Moderator
+ * 2=Member
+ *
+ */
+export type GroupRoleType = 0 | 1 | 2;
+
 export type User = {
     user_id: string;
     handle: string;
     name: string;
     email: string;
-    visibility: UserVisibility;
+    visibility: Visibility;
     subscription_expiration: string;
     created_at: string;
     updated_at?: string | null;
@@ -123,8 +131,6 @@ export type UserAsset = {
      * Lexicographically sortable string
      */
     position: string;
-    created_at: string;
-    updated_at: string | null;
 };
 
 export type AlbumAsset = {
@@ -134,8 +140,6 @@ export type AlbumAsset = {
      * Lexicographically sortable string
      */
     position: string;
-    created_at: string;
-    updated_at: string | null;
 };
 
 export type ArtistAsset = {
@@ -145,14 +149,12 @@ export type ArtistAsset = {
      * Lexicographically sortable string
      */
     position: string;
-    created_at: string;
-    updated_at: string | null;
 };
 
 export type RelationDetails = {
     user_id: string;
     name: string;
-    visibility: UserVisibility;
+    visibility: Visibility;
     handle: string;
     relation: UserRelation;
     activity?: {
@@ -170,6 +172,80 @@ export type Relation = {
     target_id: string;
     relation: UserRelation;
     updated_at?: string | null;
+};
+
+export type Conversation = {
+    conversation_id: string;
+    created_at: string;
+};
+
+export type ConversationParticipant = {
+    conversation_id: string;
+    user_id: string;
+    created_at: string;
+};
+
+export type Group = {
+    group_id: string;
+    conversation_id: string;
+    name: string;
+    description?: string | null;
+    visibility: Visibility;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+export type GroupRole = {
+    group_id: string;
+    user_id: string;
+    role: GroupRoleType;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+export type Message = {
+    message_id: number;
+    conversation_id: string;
+    /**
+     * Null if user is deleted.
+     */
+    user_id?: string | null;
+    parent_id?: number | null;
+    deleted_at?: string | null;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+export type GroupAsset = {
+    group_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+};
+
+export type MessageAsset = {
+    message_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+};
+
+export type MessageReaction = {
+    user_id: string;
+    message_id: number;
+    emoji: string;
+    created_at: string;
+};
+
+export type ConversationRead = {
+    user_id: string;
+    message_id?: number;
+    latest_message_id: number;
+    read_at: string;
 };
 
 export type Integration = {
@@ -209,7 +285,7 @@ export type UpdateUserRequest = {
     name?: string | null;
     email?: string | null;
     password?: string | null;
-    visibility?: UserVisibility;
+    visibility?: Visibility;
 };
 
 export type LibraryMetadataArtist = {

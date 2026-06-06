@@ -736,22 +736,12 @@ func (s *AlbumAsset) encodeFields(e *jx.Encoder) {
 		e.FieldStart("position")
 		e.Str(s.Position)
 	}
-	{
-		e.FieldStart("created_at")
-		json.EncodeDateTime(e, s.CreatedAt)
-	}
-	{
-		e.FieldStart("updated_at")
-		s.UpdatedAt.Encode(e, json.EncodeDateTime)
-	}
 }
 
-var jsonFieldsNameOfAlbumAsset = [5]string{
+var jsonFieldsNameOfAlbumAsset = [3]string{
 	0: "album_id",
 	1: "asset_id",
 	2: "position",
-	3: "created_at",
-	4: "updated_at",
 }
 
 // Decode decodes AlbumAsset from json.
@@ -799,28 +789,6 @@ func (s *AlbumAsset) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"position\"")
 			}
-		case "created_at":
-			requiredBitSet[0] |= 1 << 3
-			if err := func() error {
-				v, err := json.DecodeDateTime(d)
-				s.CreatedAt = v
-				if err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"created_at\"")
-			}
-		case "updated_at":
-			requiredBitSet[0] |= 1 << 4
-			if err := func() error {
-				if err := s.UpdatedAt.Decode(d, json.DecodeDateTime); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"updated_at\"")
-			}
 		default:
 			return d.Skip()
 		}
@@ -831,7 +799,7 @@ func (s *AlbumAsset) Decode(d *jx.Decoder) error {
 	// Validate required fields.
 	var failures []validate.FieldError
 	for i, mask := range [1]uint8{
-		0b00011111,
+		0b00000111,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -1467,22 +1435,12 @@ func (s *ArtistAsset) encodeFields(e *jx.Encoder) {
 		e.FieldStart("position")
 		e.Str(s.Position)
 	}
-	{
-		e.FieldStart("created_at")
-		json.EncodeDateTime(e, s.CreatedAt)
-	}
-	{
-		e.FieldStart("updated_at")
-		s.UpdatedAt.Encode(e, json.EncodeDateTime)
-	}
 }
 
-var jsonFieldsNameOfArtistAsset = [5]string{
+var jsonFieldsNameOfArtistAsset = [3]string{
 	0: "artist_id",
 	1: "asset_id",
 	2: "position",
-	3: "created_at",
-	4: "updated_at",
 }
 
 // Decode decodes ArtistAsset from json.
@@ -1530,28 +1488,6 @@ func (s *ArtistAsset) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"position\"")
 			}
-		case "created_at":
-			requiredBitSet[0] |= 1 << 3
-			if err := func() error {
-				v, err := json.DecodeDateTime(d)
-				s.CreatedAt = v
-				if err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"created_at\"")
-			}
-		case "updated_at":
-			requiredBitSet[0] |= 1 << 4
-			if err := func() error {
-				if err := s.UpdatedAt.Decode(d, json.DecodeDateTime); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"updated_at\"")
-			}
 		default:
 			return d.Skip()
 		}
@@ -1562,7 +1498,7 @@ func (s *ArtistAsset) Decode(d *jx.Decoder) error {
 	// Validate required fields.
 	var failures []validate.FieldError
 	for i, mask := range [1]uint8{
-		0b00011111,
+		0b00000111,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.
@@ -7848,52 +7784,6 @@ func (s *ListensSessionsRequest) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes time.Time as json.
-func (o NilDateTime) Encode(e *jx.Encoder, format func(*jx.Encoder, time.Time)) {
-	if o.Null {
-		e.Null()
-		return
-	}
-	format(e, o.Value)
-}
-
-// Decode decodes time.Time from json.
-func (o *NilDateTime) Decode(d *jx.Decoder, format func(*jx.Decoder) (time.Time, error)) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode NilDateTime to nil")
-	}
-	if d.Next() == jx.Null {
-		if err := d.Null(); err != nil {
-			return err
-		}
-
-		var v time.Time
-		o.Value = v
-		o.Null = true
-		return nil
-	}
-	o.Null = false
-	v, err := format(d)
-	if err != nil {
-		return err
-	}
-	o.Value = v
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s NilDateTime) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e, json.EncodeDateTime)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *NilDateTime) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d, json.DecodeDateTime)
-}
-
 // Encode encodes Artist as json.
 func (o OptArtist) Encode(e *jx.Encoder) {
 	if !o.Set {
@@ -8711,18 +8601,18 @@ func (s *OptUint32) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes UserVisibility as json.
-func (o OptUserVisibility) Encode(e *jx.Encoder) {
+// Encode encodes Visibility as json.
+func (o OptVisibility) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.UInt8(uint8(o.Value))
 }
 
-// Decode decodes UserVisibility from json.
-func (o *OptUserVisibility) Decode(d *jx.Decoder) error {
+// Decode decodes Visibility from json.
+func (o *OptVisibility) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptUserVisibility to nil")
+		return errors.New("invalid: unable to decode OptVisibility to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -8732,14 +8622,14 @@ func (o *OptUserVisibility) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptUserVisibility) MarshalJSON() ([]byte, error) {
+func (s OptVisibility) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptUserVisibility) UnmarshalJSON(data []byte) error {
+func (s *OptVisibility) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -14715,34 +14605,34 @@ func (s *UserRelation) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes UserVisibility as json.
-func (s UserVisibility) Encode(e *jx.Encoder) {
+// Encode encodes Visibility as json.
+func (s Visibility) Encode(e *jx.Encoder) {
 	e.UInt8(uint8(s))
 }
 
-// Decode decodes UserVisibility from json.
-func (s *UserVisibility) Decode(d *jx.Decoder) error {
+// Decode decodes Visibility from json.
+func (s *Visibility) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode UserVisibility to nil")
+		return errors.New("invalid: unable to decode Visibility to nil")
 	}
 	v, err := d.UInt8()
 	if err != nil {
 		return err
 	}
-	*s = UserVisibility(v)
+	*s = Visibility(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s UserVisibility) MarshalJSON() ([]byte, error) {
+func (s Visibility) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *UserVisibility) UnmarshalJSON(data []byte) error {
+func (s *Visibility) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

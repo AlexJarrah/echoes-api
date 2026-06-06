@@ -210,9 +210,7 @@ type AlbumAsset struct {
 	AlbumID uuid.UUID `json:"album_id"`
 	AssetID uuid.UUID `json:"asset_id"`
 	// Lexicographically sortable string.
-	Position  string      `json:"position"`
-	CreatedAt time.Time   `json:"created_at"`
-	UpdatedAt NilDateTime `json:"updated_at"`
+	Position string `json:"position"`
 }
 
 // GetAlbumID returns the value of AlbumID.
@@ -230,16 +228,6 @@ func (s *AlbumAsset) GetPosition() string {
 	return s.Position
 }
 
-// GetCreatedAt returns the value of CreatedAt.
-func (s *AlbumAsset) GetCreatedAt() time.Time {
-	return s.CreatedAt
-}
-
-// GetUpdatedAt returns the value of UpdatedAt.
-func (s *AlbumAsset) GetUpdatedAt() NilDateTime {
-	return s.UpdatedAt
-}
-
 // SetAlbumID sets the value of AlbumID.
 func (s *AlbumAsset) SetAlbumID(val uuid.UUID) {
 	s.AlbumID = val
@@ -253,16 +241,6 @@ func (s *AlbumAsset) SetAssetID(val uuid.UUID) {
 // SetPosition sets the value of Position.
 func (s *AlbumAsset) SetPosition(val string) {
 	s.Position = val
-}
-
-// SetCreatedAt sets the value of CreatedAt.
-func (s *AlbumAsset) SetCreatedAt(val time.Time) {
-	s.CreatedAt = val
-}
-
-// SetUpdatedAt sets the value of UpdatedAt.
-func (s *AlbumAsset) SetUpdatedAt(val NilDateTime) {
-	s.UpdatedAt = val
 }
 
 // Ref: #/components/schemas/AlbumPlayStats
@@ -493,9 +471,7 @@ type ArtistAsset struct {
 	ArtistID uuid.UUID `json:"artist_id"`
 	AssetID  uuid.UUID `json:"asset_id"`
 	// Lexicographically sortable string.
-	Position  string      `json:"position"`
-	CreatedAt time.Time   `json:"created_at"`
-	UpdatedAt NilDateTime `json:"updated_at"`
+	Position string `json:"position"`
 }
 
 // GetArtistID returns the value of ArtistID.
@@ -513,16 +489,6 @@ func (s *ArtistAsset) GetPosition() string {
 	return s.Position
 }
 
-// GetCreatedAt returns the value of CreatedAt.
-func (s *ArtistAsset) GetCreatedAt() time.Time {
-	return s.CreatedAt
-}
-
-// GetUpdatedAt returns the value of UpdatedAt.
-func (s *ArtistAsset) GetUpdatedAt() NilDateTime {
-	return s.UpdatedAt
-}
-
 // SetArtistID sets the value of ArtistID.
 func (s *ArtistAsset) SetArtistID(val uuid.UUID) {
 	s.ArtistID = val
@@ -536,16 +502,6 @@ func (s *ArtistAsset) SetAssetID(val uuid.UUID) {
 // SetPosition sets the value of Position.
 func (s *ArtistAsset) SetPosition(val string) {
 	s.Position = val
-}
-
-// SetCreatedAt sets the value of CreatedAt.
-func (s *ArtistAsset) SetCreatedAt(val time.Time) {
-	s.CreatedAt = val
-}
-
-// SetUpdatedAt sets the value of UpdatedAt.
-func (s *ArtistAsset) SetUpdatedAt(val NilDateTime) {
-	s.UpdatedAt = val
 }
 
 // Ref: #/components/schemas/ArtistPlayStatisticsQuery
@@ -2338,51 +2294,6 @@ func (s *ListensSessionsRequest) SetLimit(val OptInt64) {
 	s.Limit = val
 }
 
-// NewNilDateTime returns new NilDateTime with value set to v.
-func NewNilDateTime(v time.Time) NilDateTime {
-	return NilDateTime{
-		Value: v,
-	}
-}
-
-// NilDateTime is nullable time.Time.
-type NilDateTime struct {
-	Value time.Time
-	Null  bool
-}
-
-// SetTo sets value to v.
-func (o *NilDateTime) SetTo(v time.Time) {
-	o.Null = false
-	o.Value = v
-}
-
-// IsNull returns true if value is Null.
-func (o NilDateTime) IsNull() bool { return o.Null }
-
-// SetToNull sets value to null.
-func (o *NilDateTime) SetToNull() {
-	o.Null = true
-	var v time.Time
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o NilDateTime) Get() (v time.Time, ok bool) {
-	if o.Null {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o NilDateTime) Or(d time.Time) time.Time {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
 // Ref: #/components/responses/NoContent
 type NoContent struct{}
 
@@ -3483,38 +3394,38 @@ func (o OptUint32) Or(d uint32) uint32 {
 	return d
 }
 
-// NewOptUserVisibility returns new OptUserVisibility with value set to v.
-func NewOptUserVisibility(v UserVisibility) OptUserVisibility {
-	return OptUserVisibility{
+// NewOptVisibility returns new OptVisibility with value set to v.
+func NewOptVisibility(v Visibility) OptVisibility {
+	return OptVisibility{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptUserVisibility is optional UserVisibility.
-type OptUserVisibility struct {
-	Value UserVisibility
+// OptVisibility is optional Visibility.
+type OptVisibility struct {
+	Value Visibility
 	Set   bool
 }
 
-// IsSet returns true if OptUserVisibility was set.
-func (o OptUserVisibility) IsSet() bool { return o.Set }
+// IsSet returns true if OptVisibility was set.
+func (o OptVisibility) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptUserVisibility) Reset() {
-	var v UserVisibility
+func (o *OptVisibility) Reset() {
+	var v Visibility
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptUserVisibility) SetTo(v UserVisibility) {
+func (o *OptVisibility) SetTo(v Visibility) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptUserVisibility) Get() (v UserVisibility, ok bool) {
+func (o OptVisibility) Get() (v Visibility, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -3522,7 +3433,7 @@ func (o OptUserVisibility) Get() (v UserVisibility, ok bool) {
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptUserVisibility) Or(d UserVisibility) UserVisibility {
+func (o OptVisibility) Or(d Visibility) Visibility {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -3634,7 +3545,7 @@ func (*Relation) addFriendRes() {}
 type RelationDetails struct {
 	UserID     uuid.UUID                    `json:"user_id"`
 	Name       string                       `json:"name"`
-	Visibility UserVisibility               `json:"visibility"`
+	Visibility Visibility                   `json:"visibility"`
 	Handle     string                       `json:"handle"`
 	Relation   UserRelation                 `json:"relation"`
 	Activity   OptRelationDetailsActivity   `json:"activity"`
@@ -3652,7 +3563,7 @@ func (s *RelationDetails) GetName() string {
 }
 
 // GetVisibility returns the value of Visibility.
-func (s *RelationDetails) GetVisibility() UserVisibility {
+func (s *RelationDetails) GetVisibility() Visibility {
 	return s.Visibility
 }
 
@@ -3687,7 +3598,7 @@ func (s *RelationDetails) SetName(val string) {
 }
 
 // SetVisibility sets the value of Visibility.
-func (s *RelationDetails) SetVisibility(val UserVisibility) {
+func (s *RelationDetails) SetVisibility(val Visibility) {
 	s.Visibility = val
 }
 
@@ -5205,11 +5116,11 @@ func (*UpdateUserApplicationJSONUnauthorized) updateUserRes() {}
 
 // Ref: #/components/schemas/UpdateUserRequest
 type UpdateUserRequest struct {
-	Handle     OptNilString      `json:"handle"`
-	Name       OptNilString      `json:"name"`
-	Email      OptNilString      `json:"email"`
-	Password   OptNilString      `json:"password"`
-	Visibility OptUserVisibility `json:"visibility"`
+	Handle     OptNilString  `json:"handle"`
+	Name       OptNilString  `json:"name"`
+	Email      OptNilString  `json:"email"`
+	Password   OptNilString  `json:"password"`
+	Visibility OptVisibility `json:"visibility"`
 }
 
 // GetHandle returns the value of Handle.
@@ -5233,7 +5144,7 @@ func (s *UpdateUserRequest) GetPassword() OptNilString {
 }
 
 // GetVisibility returns the value of Visibility.
-func (s *UpdateUserRequest) GetVisibility() OptUserVisibility {
+func (s *UpdateUserRequest) GetVisibility() OptVisibility {
 	return s.Visibility
 }
 
@@ -5258,7 +5169,7 @@ func (s *UpdateUserRequest) SetPassword(val OptNilString) {
 }
 
 // SetVisibility sets the value of Visibility.
-func (s *UpdateUserRequest) SetVisibility(val OptUserVisibility) {
+func (s *UpdateUserRequest) SetVisibility(val OptVisibility) {
 	s.Visibility = val
 }
 
@@ -5268,7 +5179,7 @@ type User struct {
 	Handle                 string         `json:"handle"`
 	Name                   string         `json:"name"`
 	Email                  string         `json:"email"`
-	Visibility             UserVisibility `json:"visibility"`
+	Visibility             Visibility     `json:"visibility"`
 	SubscriptionExpiration time.Time      `json:"subscription_expiration"`
 	CreatedAt              time.Time      `json:"created_at"`
 	UpdatedAt              OptNilDateTime `json:"updated_at"`
@@ -5295,7 +5206,7 @@ func (s *User) GetEmail() string {
 }
 
 // GetVisibility returns the value of Visibility.
-func (s *User) GetVisibility() UserVisibility {
+func (s *User) GetVisibility() Visibility {
 	return s.Visibility
 }
 
@@ -5335,7 +5246,7 @@ func (s *User) SetEmail(val string) {
 }
 
 // SetVisibility sets the value of Visibility.
-func (s *User) SetVisibility(val UserVisibility) {
+func (s *User) SetVisibility(val Visibility) {
 	s.Visibility = val
 }
 
@@ -5430,22 +5341,22 @@ func (UserRelation) AllValues() []UserRelation {
 // 1=Friends: visible to the user's friends
 // 2=BestFriends: visible to the user's best friends
 // 3=Private: visible to only the user.
-// Ref: #/components/schemas/UserVisibility
-type UserVisibility uint8
+// Ref: #/components/schemas/Visibility
+type Visibility uint8
 
 const (
-	UserVisibility0 UserVisibility = 0
-	UserVisibility1 UserVisibility = 1
-	UserVisibility2 UserVisibility = 2
-	UserVisibility3 UserVisibility = 3
+	Visibility0 Visibility = 0
+	Visibility1 Visibility = 1
+	Visibility2 Visibility = 2
+	Visibility3 Visibility = 3
 )
 
-// AllValues returns all UserVisibility values.
-func (UserVisibility) AllValues() []UserVisibility {
-	return []UserVisibility{
-		UserVisibility0,
-		UserVisibility1,
-		UserVisibility2,
-		UserVisibility3,
+// AllValues returns all Visibility values.
+func (Visibility) AllValues() []Visibility {
+	return []Visibility{
+		Visibility0,
+		Visibility1,
+		Visibility2,
+		Visibility3,
 	}
 }

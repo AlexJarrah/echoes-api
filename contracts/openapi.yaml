@@ -17,7 +17,7 @@ components:
       description: JWT token
 
   schemas:
-    UserVisibility:
+    Visibility:
       type: integer
       format: uint8
       enum: [0, 1, 2, 3]
@@ -60,6 +60,15 @@ components:
         4=BlockSent: source user has blocked target user
         5=BlockReceived: target user has blocked source user
 
+    GroupRoleType:
+      type: integer
+      format: uint8
+      enum: [0, 1, 2]
+      description: |
+        0=Owner
+        1=Moderator
+        2=Member
+
     User:
       type: object
       required:
@@ -82,7 +91,7 @@ components:
           type: string
           format: email
         visibility:
-          $ref: "#/components/schemas/UserVisibility"
+          $ref: "#/components/schemas/Visibility"
         subscription_expiration:
           type: string
           format: date-time
@@ -294,8 +303,6 @@ components:
         - user_id
         - asset_id
         - position
-        - created_at
-        - updated_at
       properties:
         user_id:
           type: string
@@ -306,13 +313,6 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
 
     AlbumAsset:
       type: object
@@ -320,8 +320,6 @@ components:
         - album_id
         - asset_id
         - position
-        - created_at
-        - updated_at
       properties:
         album_id:
           type: string
@@ -332,13 +330,6 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
 
     ArtistAsset:
       type: object
@@ -346,8 +337,6 @@ components:
         - artist_id
         - asset_id
         - position
-        - created_at
-        - updated_at
       properties:
         artist_id:
           type: string
@@ -358,13 +347,6 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
 
     RelationDetails:
       type: object
@@ -381,7 +363,7 @@ components:
         name:
           type: string
         visibility:
-          $ref: "#/components/schemas/UserVisibility"
+          $ref: "#/components/schemas/Visibility"
         handle:
           type: string
         relation:
@@ -431,6 +413,200 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    Conversation:
+      type: object
+      required:
+        - conversation_id
+        - created_at
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+
+    ConversationParticipant:
+      type: object
+      required:
+        - conversation_id
+        - user_id
+        - created_at
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+
+    Group:
+      type: object
+      required:
+        - group_id
+        - conversation_id
+        - name
+        - visibility
+        - created_at
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        conversation_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        visibility:
+          $ref: "#/components/schemas/Visibility"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    GroupRole:
+      type: object
+      required:
+        - group_id
+        - user_id
+        - role
+        - created_at
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        role:
+          $ref: "#/components/schemas/GroupRoleType"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    Message:
+      type: object
+      required:
+        - message_id
+        - conversation_id
+        - body
+        - created_at
+      properties:
+        message_id:
+          type: integer
+          format: uint64
+        conversation_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Null if user is deleted.
+        parent_id:
+          type: integer
+          format: uint64
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    GroupAsset:
+      type: object
+      required:
+        - group_id
+        - asset_id
+        - position
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+
+    MessageAsset:
+      type: object
+      required:
+        - message_id
+        - asset_id
+        - position
+      properties:
+        message_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+
+    MessageReaction:
+      type: object
+      required:
+        - user_id
+        - message_id
+        - emoji
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        message_id:
+          type: integer
+          format: uint64
+        emoji:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    ConversationRead:
+      type: object
+      required:
+        - user_id
+        - conversation_id
+        - latest_message_id
+        - read_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        message_id:
+          type: integer
+          format: uint64
+        latest_message_id:
+          type: integer
+          format: uint64
+        read_at:
+          type: string
+          format: date-time
 
     Integration:
       type: object
@@ -530,7 +706,7 @@ components:
           minLength: 8
           nullable: true
         visibility:
-          $ref: "#/components/schemas/UserVisibility"
+          $ref: "#/components/schemas/Visibility"
 
     LibraryMetadataArtist:
       type: object

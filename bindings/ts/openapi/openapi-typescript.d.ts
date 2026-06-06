@@ -563,7 +563,7 @@ export interface components {
          *     3=Private: visible to only the user
          * @enum {integer}
          */
-        UserVisibility: 0 | 1 | 2 | 3;
+        Visibility: 0 | 1 | 2 | 3;
         /**
          * Format: uint8
          * @description 0=API: listen was added via API
@@ -594,6 +594,14 @@ export interface components {
          * @enum {integer}
          */
         UserRelation: 0 | 1 | 2 | 3 | 4 | 5;
+        /**
+         * Format: uint8
+         * @description 0=Owner
+         *     1=Moderator
+         *     2=Member
+         * @enum {integer}
+         */
+        GroupRoleType: 0 | 1 | 2;
         User: {
             /** Format: uuid */
             user_id: string;
@@ -601,7 +609,7 @@ export interface components {
             name: string;
             /** Format: email */
             email: string;
-            visibility: components["schemas"]["UserVisibility"];
+            visibility: components["schemas"]["Visibility"];
             /** Format: date-time */
             subscription_expiration: string;
             /** Format: date-time */
@@ -700,10 +708,6 @@ export interface components {
             asset_id: string;
             /** @description Lexicographically sortable string */
             position: string;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at: string | null;
         };
         AlbumAsset: {
             /** Format: uuid */
@@ -712,10 +716,6 @@ export interface components {
             asset_id: string;
             /** @description Lexicographically sortable string */
             position: string;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at: string | null;
         };
         ArtistAsset: {
             /** Format: uuid */
@@ -724,16 +724,12 @@ export interface components {
             asset_id: string;
             /** @description Lexicographically sortable string */
             position: string;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at: string | null;
         };
         RelationDetails: {
             /** Format: uuid */
             user_id: string;
             name: string;
-            visibility: components["schemas"]["UserVisibility"];
+            visibility: components["schemas"]["Visibility"];
             handle: string;
             relation: components["schemas"]["UserRelation"];
             activity?: {
@@ -756,6 +752,98 @@ export interface components {
             relation: components["schemas"]["UserRelation"];
             /** Format: date-time */
             updated_at?: string | null;
+        };
+        Conversation: {
+            /** Format: uuid */
+            conversation_id: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        ConversationParticipant: {
+            /** Format: uuid */
+            conversation_id: string;
+            /** Format: uuid */
+            user_id: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        Group: {
+            /** Format: uuid */
+            group_id: string;
+            /** Format: uuid */
+            conversation_id: string;
+            name: string;
+            description?: string | null;
+            visibility: components["schemas"]["Visibility"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        GroupRole: {
+            /** Format: uuid */
+            group_id: string;
+            /** Format: uuid */
+            user_id: string;
+            role: components["schemas"]["GroupRoleType"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        Message: {
+            /** Format: uint64 */
+            message_id: number;
+            /** Format: uuid */
+            conversation_id: string;
+            /**
+             * Format: uuid
+             * @description Null if user is deleted.
+             */
+            user_id?: string | null;
+            /** Format: uint64 */
+            parent_id?: number | null;
+            /** Format: date-time */
+            deleted_at?: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        GroupAsset: {
+            /** Format: uuid */
+            group_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
+        MessageAsset: {
+            /** Format: uuid */
+            message_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
+        MessageReaction: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uint64 */
+            message_id: number;
+            emoji: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        ConversationRead: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uint64 */
+            message_id?: number;
+            /** Format: uint64 */
+            latest_message_id: number;
+            /** Format: date-time */
+            read_at: string;
         };
         Integration: {
             /** Format: uuid */
@@ -795,7 +883,7 @@ export interface components {
             /** Format: email */
             email?: string | null;
             password?: string | null;
-            visibility?: components["schemas"]["UserVisibility"];
+            visibility?: components["schemas"]["Visibility"];
         };
         LibraryMetadataArtist: {
             /** Format: uuid */

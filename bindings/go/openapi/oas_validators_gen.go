@@ -1306,7 +1306,7 @@ func (s UserRelation) Validate() error {
 	}
 }
 
-func (s UserVisibility) Validate() error {
+func (s Visibility) Validate() error {
 	switch s {
 	case 0:
 		return nil
