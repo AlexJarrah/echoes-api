@@ -4,6 +4,7 @@ package openapi
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -15,6 +16,7 @@ import (
 	"github.com/ogen-go/ogen/ogenerrors"
 	"github.com/ogen-go/ogen/otelogen"
 	"github.com/ogen-go/ogen/uri"
+	"github.com/ogen-go/ogen/validate"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/metric"
@@ -93,12 +95,66 @@ type Invoker interface {
 	//
 	// POST /api/add-friend
 	AddFriend(ctx context.Context, request *FriendActionRequest, options ...RequestOption) (AddFriendRes, error)
+	// AddGroupRoles invokes AddGroupRoles operation.
+	//
+	// Add group roles.
+	//
+	// POST /api/groups/{group_id}/roles
+	AddGroupRoles(ctx context.Context, request []GroupRole, params AddGroupRolesParams, options ...RequestOption) (AddGroupRolesRes, error)
+	// AddMessageReaction invokes addMessageReaction operation.
+	//
+	// Add a reaction to a message.
+	//
+	// PUT /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+	AddMessageReaction(ctx context.Context, params AddMessageReactionParams, options ...RequestOption) (AddMessageReactionRes, error)
 	// AddToLibrary invokes addToLibrary operation.
 	//
 	// Add items to library.
 	//
 	// POST /api/library/add
 	AddToLibrary(ctx context.Context, request *LibraryAddRequest, options ...RequestOption) (AddToLibraryRes, error)
+	// CreateGroup invokes createGroup operation.
+	//
+	// Create a new group as owner.
+	//
+	// POST /api/groups
+	CreateGroup(ctx context.Context, request *CreateGroupRequest, options ...RequestOption) (CreateGroupRes, error)
+	// DeleteGroup invokes deleteGroup operation.
+	//
+	// Delete a group if owned by the user.
+	//
+	// DELETE /api/groups/{group_id}
+	DeleteGroup(ctx context.Context, params DeleteGroupParams, options ...RequestOption) (DeleteGroupRes, error)
+	// DeleteGroupRole invokes deleteGroupRole operation.
+	//
+	// Remove a user from a group.
+	//
+	// DELETE /api/groups/{group_id}/roles/{user_id}
+	DeleteGroupRole(ctx context.Context, params DeleteGroupRoleParams, options ...RequestOption) (DeleteGroupRoleRes, error)
+	// DeleteMessage invokes deleteMessage operation.
+	//
+	// Delete a message.
+	//
+	// DELETE /api/conversations/{conversation_id}/messages/{message_id}
+	DeleteMessage(ctx context.Context, params DeleteMessageParams, options ...RequestOption) (DeleteMessageRes, error)
+	// DeleteMessageReaction invokes deleteMessageReaction operation.
+	//
+	// Remove a reaction from a message.
+	//
+	// DELETE /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+	DeleteMessageReaction(ctx context.Context, params DeleteMessageReactionParams, options ...RequestOption) (DeleteMessageReactionRes, error)
+	// EditGroup invokes editGroup operation.
+	//
+	// Edit a group.
+	//
+	// PATCH /api/groups/{group_id}
+	EditGroup(ctx context.Context, request *EditGroupRequest, params EditGroupParams, options ...RequestOption) (EditGroupRes, error)
+	// EditMessage invokes editMessage operation.
+	//
+	// Edit a message.
+	//
+	// PATCH /api/conversations/{conversation_id}/messages/{message_id}
+	EditMessage(ctx context.Context, request *EditMessageReq, params EditMessageParams, options ...RequestOption) (EditMessageRes, error)
 	// GetAlbum invokes getAlbum operation.
 	//
 	// Get album details.
@@ -145,6 +201,24 @@ type Invoker interface {
 	//
 	// POST /api/statistics/global/top/tracks
 	GetGlobalTopTracks(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetGlobalTopTracksRes, error)
+	// GetGroup invokes getGroup operation.
+	//
+	// Get group.
+	//
+	// GET /api/groups/{group_id}
+	GetGroup(ctx context.Context, params GetGroupParams, options ...RequestOption) (GetGroupRes, error)
+	// GetGroupRoles invokes getGroupRoles operation.
+	//
+	// Get group roles.
+	//
+	// GET /api/groups/{group_id}/roles
+	GetGroupRoles(ctx context.Context, params GetGroupRolesParams, options ...RequestOption) (GetGroupRolesRes, error)
+	// GetGroups invokes getGroups operation.
+	//
+	// Get groups visible to the user.
+	//
+	// GET /api/groups
+	GetGroups(ctx context.Context, options ...RequestOption) (GetGroupsRes, error)
 	// GetLibraryMetadata invokes getLibraryMetadata operation.
 	//
 	// Get library metadata.
@@ -157,6 +231,18 @@ type Invoker interface {
 	//
 	// POST /api/listens/sessions
 	GetListenSessions(ctx context.Context, request *ListensSessionsRequest, options ...RequestOption) (GetListenSessionsRes, error)
+	// GetMessageThread invokes getMessageThread operation.
+	//
+	// Get message thread.
+	//
+	// GET /api/conversations/{conversation_id}/messages/{message_id}/thread
+	GetMessageThread(ctx context.Context, params GetMessageThreadParams, options ...RequestOption) (GetMessageThreadRes, error)
+	// GetMessages invokes getMessages operation.
+	//
+	// Get conversation messages.
+	//
+	// GET /api/conversations/{conversation_id}/messages
+	GetMessages(ctx context.Context, params GetMessagesParams, options ...RequestOption) (GetMessagesRes, error)
 	// GetOpenAPI invokes getOpenAPI operation.
 	//
 	// Get OpenAPI schema.
@@ -217,6 +303,12 @@ type Invoker interface {
 	//
 	// POST /api/join-free-beta
 	JoinFreeBeta(ctx context.Context, options ...RequestOption) (JoinFreeBetaRes, error)
+	// ReadMessage invokes readMessage operation.
+	//
+	// Read a message.
+	//
+	// POST /api/conversations/{conversation_id}/messages/{message_id}/read
+	ReadMessage(ctx context.Context, params ReadMessageParams, options ...RequestOption) (ReadMessageRes, error)
 	// Register invokes register operation.
 	//
 	// Register a new user.
@@ -241,6 +333,12 @@ type Invoker interface {
 	//
 	// POST /api/search-tracks-via-details
 	SearchTracksViaDetails(ctx context.Context, request *SearchTracksRequest, options ...RequestOption) (SearchTracksViaDetailsRes, error)
+	// SendMessage invokes sendMessage operation.
+	//
+	// Send a conversation message.
+	//
+	// POST /api/conversations/{conversation_id}/messages
+	SendMessage(ctx context.Context, request *SendMessageReq, params SendMessageParams, options ...RequestOption) (SendMessageRes, error)
 	// SetActivity invokes setActivity operation.
 	//
 	// Set current activity.
@@ -265,6 +363,12 @@ type Invoker interface {
 	//
 	// POST /api/signin
 	SignIn(ctx context.Context, request *SignInRequest, options ...RequestOption) (SignInRes, error)
+	// UpdateGroupRoles invokes UpdateGroupRoles operation.
+	//
+	// Update group roles.
+	//
+	// PATCH /api/groups/{group_id}/roles/{user_id}
+	UpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesReq, params UpdateGroupRolesParams, options ...RequestOption) (UpdateGroupRolesRes, error)
 	// UpdateLibrary invokes updateLibrary operation.
 	//
 	// Update items in library.
@@ -464,6 +568,376 @@ func (c *Client) sendAddFriend(ctx context.Context, request *FriendActionRequest
 	return result, nil
 }
 
+// AddGroupRoles invokes AddGroupRoles operation.
+//
+// Add group roles.
+//
+// POST /api/groups/{group_id}/roles
+func (c *Client) AddGroupRoles(ctx context.Context, request []GroupRole, params AddGroupRolesParams, options ...RequestOption) (AddGroupRolesRes, error) {
+	res, err := c.sendAddGroupRoles(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendAddGroupRoles(ctx context.Context, request []GroupRole, params AddGroupRolesParams, requestOptions ...RequestOption) (res AddGroupRolesRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if request == nil {
+			return errors.New("nil is invalid value")
+		}
+		var failures []validate.FieldError
+		for i, elem := range request {
+			if err := func() error {
+				if err := elem.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("AddGroupRoles"),
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}/roles"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, AddGroupRolesOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/roles"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeAddGroupRolesRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, AddGroupRolesOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeAddGroupRolesResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// AddMessageReaction invokes addMessageReaction operation.
+//
+// Add a reaction to a message.
+//
+// PUT /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+func (c *Client) AddMessageReaction(ctx context.Context, params AddMessageReactionParams, options ...RequestOption) (AddMessageReactionRes, error) {
+	res, err := c.sendAddMessageReaction(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendAddMessageReaction(ctx context.Context, params AddMessageReactionParams, requestOptions ...RequestOption) (res AddMessageReactionRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("addMessageReaction"),
+		semconv.HTTPRequestMethodKey.String("PUT"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, AddMessageReactionOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [6]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages/"
+	{
+		// Encode "message_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "message_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.Uint64ToString(params.MessageID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	pathParts[4] = "/reactions/"
+	{
+		// Encode "emoji" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "emoji",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Emoji))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[5] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "PUT", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, AddMessageReactionOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeAddMessageReactionResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
 // AddToLibrary invokes addToLibrary operation.
 //
 // Add items to library.
@@ -602,6 +1076,1167 @@ func (c *Client) sendAddToLibrary(ctx context.Context, request *LibraryAddReques
 
 	stage = "DecodeResponse"
 	result, err := decodeAddToLibraryResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// CreateGroup invokes createGroup operation.
+//
+// Create a new group as owner.
+//
+// POST /api/groups
+func (c *Client) CreateGroup(ctx context.Context, request *CreateGroupRequest, options ...RequestOption) (CreateGroupRes, error) {
+	res, err := c.sendCreateGroup(ctx, request, options...)
+	return res, err
+}
+
+func (c *Client) sendCreateGroup(ctx context.Context, request *CreateGroupRequest, requestOptions ...RequestOption) (res CreateGroupRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if err := request.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("createGroup"),
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.URLTemplateKey.String("/api/groups"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, CreateGroupOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/api/groups"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeCreateGroupRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, CreateGroupOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeCreateGroupResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// DeleteGroup invokes deleteGroup operation.
+//
+// Delete a group if owned by the user.
+//
+// DELETE /api/groups/{group_id}
+func (c *Client) DeleteGroup(ctx context.Context, params DeleteGroupParams, options ...RequestOption) (DeleteGroupRes, error) {
+	res, err := c.sendDeleteGroup(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendDeleteGroup(ctx context.Context, params DeleteGroupParams, requestOptions ...RequestOption) (res DeleteGroupRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("deleteGroup"),
+		semconv.HTTPRequestMethodKey.String("DELETE"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, DeleteGroupOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [2]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "DELETE", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, DeleteGroupOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeDeleteGroupResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// DeleteGroupRole invokes deleteGroupRole operation.
+//
+// Remove a user from a group.
+//
+// DELETE /api/groups/{group_id}/roles/{user_id}
+func (c *Client) DeleteGroupRole(ctx context.Context, params DeleteGroupRoleParams, options ...RequestOption) (DeleteGroupRoleRes, error) {
+	res, err := c.sendDeleteGroupRole(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendDeleteGroupRole(ctx context.Context, params DeleteGroupRoleParams, requestOptions ...RequestOption) (res DeleteGroupRoleRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("deleteGroupRole"),
+		semconv.HTTPRequestMethodKey.String("DELETE"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}/roles/{user_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, DeleteGroupRoleOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [4]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/roles/"
+	{
+		// Encode "user_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "user_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.UserID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "DELETE", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, DeleteGroupRoleOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeDeleteGroupRoleResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// DeleteMessage invokes deleteMessage operation.
+//
+// Delete a message.
+//
+// DELETE /api/conversations/{conversation_id}/messages/{message_id}
+func (c *Client) DeleteMessage(ctx context.Context, params DeleteMessageParams, options ...RequestOption) (DeleteMessageRes, error) {
+	res, err := c.sendDeleteMessage(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendDeleteMessage(ctx context.Context, params DeleteMessageParams, requestOptions ...RequestOption) (res DeleteMessageRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("deleteMessage"),
+		semconv.HTTPRequestMethodKey.String("DELETE"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages/{message_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, DeleteMessageOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [4]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages/"
+	{
+		// Encode "message_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "message_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.Uint64ToString(params.MessageID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "DELETE", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, DeleteMessageOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeDeleteMessageResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// DeleteMessageReaction invokes deleteMessageReaction operation.
+//
+// Remove a reaction from a message.
+//
+// DELETE /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+func (c *Client) DeleteMessageReaction(ctx context.Context, params DeleteMessageReactionParams, options ...RequestOption) (DeleteMessageReactionRes, error) {
+	res, err := c.sendDeleteMessageReaction(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendDeleteMessageReaction(ctx context.Context, params DeleteMessageReactionParams, requestOptions ...RequestOption) (res DeleteMessageReactionRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("deleteMessageReaction"),
+		semconv.HTTPRequestMethodKey.String("DELETE"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, DeleteMessageReactionOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [6]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages/"
+	{
+		// Encode "message_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "message_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.Uint64ToString(params.MessageID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	pathParts[4] = "/reactions/"
+	{
+		// Encode "emoji" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "emoji",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.StringToString(params.Emoji))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[5] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "DELETE", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, DeleteMessageReactionOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeDeleteMessageReactionResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// EditGroup invokes editGroup operation.
+//
+// Edit a group.
+//
+// PATCH /api/groups/{group_id}
+func (c *Client) EditGroup(ctx context.Context, request *EditGroupRequest, params EditGroupParams, options ...RequestOption) (EditGroupRes, error) {
+	res, err := c.sendEditGroup(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendEditGroup(ctx context.Context, request *EditGroupRequest, params EditGroupParams, requestOptions ...RequestOption) (res EditGroupRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if err := request.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("editGroup"),
+		semconv.HTTPRequestMethodKey.String("PATCH"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, EditGroupOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [2]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "PATCH", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeEditGroupRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, EditGroupOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeEditGroupResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// EditMessage invokes editMessage operation.
+//
+// Edit a message.
+//
+// PATCH /api/conversations/{conversation_id}/messages/{message_id}
+func (c *Client) EditMessage(ctx context.Context, request *EditMessageReq, params EditMessageParams, options ...RequestOption) (EditMessageRes, error) {
+	res, err := c.sendEditMessage(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendEditMessage(ctx context.Context, request *EditMessageReq, params EditMessageParams, requestOptions ...RequestOption) (res EditMessageRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("editMessage"),
+		semconv.HTTPRequestMethodKey.String("PATCH"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages/{message_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, EditMessageOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [4]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages/"
+	{
+		// Encode "message_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "message_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.Uint64ToString(params.MessageID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "PATCH", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeEditMessageRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, EditMessageOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeEditMessageResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -1529,6 +3164,442 @@ func (c *Client) sendGetGlobalTopTracks(ctx context.Context, request OptStatisti
 	return result, nil
 }
 
+// GetGroup invokes getGroup operation.
+//
+// Get group.
+//
+// GET /api/groups/{group_id}
+func (c *Client) GetGroup(ctx context.Context, params GetGroupParams, options ...RequestOption) (GetGroupRes, error) {
+	res, err := c.sendGetGroup(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetGroup(ctx context.Context, params GetGroupParams, requestOptions ...RequestOption) (res GetGroupRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getGroup"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetGroupOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [2]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetGroupOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetGroupResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetGroupRoles invokes getGroupRoles operation.
+//
+// Get group roles.
+//
+// GET /api/groups/{group_id}/roles
+func (c *Client) GetGroupRoles(ctx context.Context, params GetGroupRolesParams, options ...RequestOption) (GetGroupRolesRes, error) {
+	res, err := c.sendGetGroupRoles(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetGroupRoles(ctx context.Context, params GetGroupRolesParams, requestOptions ...RequestOption) (res GetGroupRolesRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getGroupRoles"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}/roles"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetGroupRolesOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/roles"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetGroupRolesOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetGroupRolesResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetGroups invokes getGroups operation.
+//
+// Get groups visible to the user.
+//
+// GET /api/groups
+func (c *Client) GetGroups(ctx context.Context, options ...RequestOption) (GetGroupsRes, error) {
+	res, err := c.sendGetGroups(ctx, options...)
+	return res, err
+}
+
+func (c *Client) sendGetGroups(ctx context.Context, requestOptions ...RequestOption) (res GetGroupsRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getGroups"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/groups"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetGroupsOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [1]string
+	pathParts[0] = "/api/groups"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetGroupsOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetGroupsResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
 // GetLibraryMetadata invokes getLibraryMetadata operation.
 //
 // Get library metadata.
@@ -1800,6 +3871,405 @@ func (c *Client) sendGetListenSessions(ctx context.Context, request *ListensSess
 
 	stage = "DecodeResponse"
 	result, err := decodeGetListenSessionsResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetMessageThread invokes getMessageThread operation.
+//
+// Get message thread.
+//
+// GET /api/conversations/{conversation_id}/messages/{message_id}/thread
+func (c *Client) GetMessageThread(ctx context.Context, params GetMessageThreadParams, options ...RequestOption) (GetMessageThreadRes, error) {
+	res, err := c.sendGetMessageThread(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetMessageThread(ctx context.Context, params GetMessageThreadParams, requestOptions ...RequestOption) (res GetMessageThreadRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getMessageThread"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages/{message_id}/thread"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetMessageThreadOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [5]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages/"
+	{
+		// Encode "message_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "message_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.Uint64ToString(params.MessageID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	pathParts[4] = "/thread"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeQueryParams"
+	q := uri.NewQueryEncoder()
+	{
+		// Encode "before" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "before",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.Before.Get(); ok {
+				return e.EncodeValue(conv.Uint64ToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	{
+		// Encode "limit" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "limit",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.Limit.Get(); ok {
+				return e.EncodeValue(conv.IntToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	u.RawQuery = q.Values().Encode()
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetMessageThreadOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetMessageThreadResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetMessages invokes getMessages operation.
+//
+// Get conversation messages.
+//
+// GET /api/conversations/{conversation_id}/messages
+func (c *Client) GetMessages(ctx context.Context, params GetMessagesParams, options ...RequestOption) (GetMessagesRes, error) {
+	res, err := c.sendGetMessages(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetMessages(ctx context.Context, params GetMessagesParams, requestOptions ...RequestOption) (res GetMessagesRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getMessages"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetMessagesOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeQueryParams"
+	q := uri.NewQueryEncoder()
+	{
+		// Encode "before" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "before",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.Before.Get(); ok {
+				return e.EncodeValue(conv.Uint64ToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	{
+		// Encode "limit" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "limit",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.Limit.Get(); ok {
+				return e.EncodeValue(conv.IntToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	u.RawQuery = q.Values().Encode()
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetMessagesOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetMessagesResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -3175,6 +5645,177 @@ func (c *Client) sendJoinFreeBeta(ctx context.Context, requestOptions ...Request
 	return result, nil
 }
 
+// ReadMessage invokes readMessage operation.
+//
+// Read a message.
+//
+// POST /api/conversations/{conversation_id}/messages/{message_id}/read
+func (c *Client) ReadMessage(ctx context.Context, params ReadMessageParams, options ...RequestOption) (ReadMessageRes, error) {
+	res, err := c.sendReadMessage(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendReadMessage(ctx context.Context, params ReadMessageParams, requestOptions ...RequestOption) (res ReadMessageRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("readMessage"),
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages/{message_id}/read"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, ReadMessageOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [5]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages/"
+	{
+		// Encode "message_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "message_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.Uint64ToString(params.MessageID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	pathParts[4] = "/read"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, ReadMessageOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeReadMessageResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
 // Register invokes register operation.
 //
 // Register a new user.
@@ -3688,6 +6329,161 @@ func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *Search
 
 	stage = "DecodeResponse"
 	result, err := decodeSearchTracksViaDetailsResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// SendMessage invokes sendMessage operation.
+//
+// Send a conversation message.
+//
+// POST /api/conversations/{conversation_id}/messages
+func (c *Client) SendMessage(ctx context.Context, request *SendMessageReq, params SendMessageParams, options ...RequestOption) (SendMessageRes, error) {
+	res, err := c.sendSendMessage(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendSendMessage(ctx context.Context, request *SendMessageReq, params SendMessageParams, requestOptions ...RequestOption) (res SendMessageRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("sendMessage"),
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.URLTemplateKey.String("/api/conversations/{conversation_id}/messages"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, SendMessageOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/conversations/"
+	{
+		// Encode "conversation_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "conversation_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ConversationID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/messages"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeSendMessageRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, SendMessageOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeSendMessageResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -4217,6 +7013,188 @@ func (c *Client) sendSignIn(ctx context.Context, request *SignInRequest, request
 
 	stage = "DecodeResponse"
 	result, err := decodeSignInResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// UpdateGroupRoles invokes UpdateGroupRoles operation.
+//
+// Update group roles.
+//
+// PATCH /api/groups/{group_id}/roles/{user_id}
+func (c *Client) UpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesReq, params UpdateGroupRolesParams, options ...RequestOption) (UpdateGroupRolesRes, error) {
+	res, err := c.sendUpdateGroupRoles(ctx, request, params, options...)
+	return res, err
+}
+
+func (c *Client) sendUpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesReq, params UpdateGroupRolesParams, requestOptions ...RequestOption) (res UpdateGroupRolesRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if err := request.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("UpdateGroupRoles"),
+		semconv.HTTPRequestMethodKey.String("PATCH"),
+		semconv.URLTemplateKey.String("/api/groups/{group_id}/roles/{user_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, UpdateGroupRolesOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [4]string
+	pathParts[0] = "/api/groups/"
+	{
+		// Encode "group_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "group_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.GroupID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/roles/"
+	{
+		// Encode "user_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "user_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.UserID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[3] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "PATCH", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeUpdateGroupRolesRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, UpdateGroupRolesOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer body.Close()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeUpdateGroupRolesResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

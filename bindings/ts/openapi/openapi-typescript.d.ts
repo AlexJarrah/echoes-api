@@ -551,6 +551,167 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get groups visible to the user. */
+        get: operations["getGroups"];
+        put?: never;
+        /** Create a new group as owner. */
+        post: operations["createGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/groups/{group_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get group. */
+        get: operations["getGroup"];
+        put?: never;
+        post?: never;
+        /** Delete a group if owned by the user. */
+        delete: operations["deleteGroup"];
+        options?: never;
+        head?: never;
+        /** Edit a group. */
+        patch: operations["editGroup"];
+        trace?: never;
+    };
+    "/api/groups/{group_id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get group roles. */
+        get: operations["getGroupRoles"];
+        put?: never;
+        /** Add group roles. */
+        post: operations["AddGroupRoles"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/groups/{group_id}/roles/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a user from a group. */
+        delete: operations["deleteGroupRole"];
+        options?: never;
+        head?: never;
+        /** Update group roles. */
+        patch: operations["UpdateGroupRoles"];
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get conversation messages. */
+        get: operations["getMessages"];
+        put?: never;
+        /** Send a conversation message. */
+        post: operations["sendMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages/{message_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a message. */
+        delete: operations["deleteMessage"];
+        options?: never;
+        head?: never;
+        /** Edit a message. */
+        patch: operations["editMessage"];
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages/{message_id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read a message. */
+        post: operations["readMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages/{message_id}/thread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get message thread. */
+        get: operations["getMessageThread"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Add a reaction to a message. */
+        put: operations["addMessageReaction"];
+        post?: never;
+        /** Remove a reaction from a message. */
+        delete: operations["deleteMessageReaction"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -780,6 +941,25 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
+        GroupDetails: {
+            group: components["schemas"]["Group"];
+            conversation: components["schemas"]["Conversation"];
+            roles: components["schemas"]["GroupRole"][];
+            latest_message: components["schemas"]["Message"];
+            /** Format: uint32 */
+            unread_count: number;
+        };
+        CreateGroupRequest: {
+            name: string;
+            description?: string;
+            visibility: components["schemas"]["Visibility"];
+            members: string[];
+        };
+        EditGroupRequest: {
+            name?: string;
+            description?: string;
+            visibility?: components["schemas"]["Visibility"];
+        };
         GroupRole: {
             /** Format: uuid */
             group_id: string;
@@ -801,6 +981,7 @@ export interface components {
              * @description Null if user is deleted.
              */
             user_id?: string | null;
+            body: string;
             /** Format: uint64 */
             parent_id?: number | null;
             /** Format: date-time */
@@ -809,6 +990,10 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at?: string | null;
+        };
+        MessageDetails: {
+            message: components["schemas"]["Message"];
+            reactions?: components["schemas"]["MessageReaction"][];
         };
         GroupAsset: {
             /** Format: uuid */
@@ -819,8 +1004,8 @@ export interface components {
             position: string;
         };
         MessageAsset: {
-            /** Format: uuid */
-            message_id: string;
+            /** Format: uint64 */
+            message_id: number;
             /** Format: uuid */
             asset_id: string;
             /** @description Lexicographically sortable string */
@@ -838,8 +1023,8 @@ export interface components {
         ConversationRead: {
             /** Format: uuid */
             user_id: string;
-            /** Format: uint64 */
-            message_id?: number;
+            /** Format: uuid */
+            conversation_id: string;
             /** Format: uint64 */
             latest_message_id: number;
             /** Format: date-time */
@@ -2256,6 +2441,423 @@ export interface operations {
                 };
             };
             400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Groups retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    createGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Group created successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Group"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupDetails"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Group edited successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Group"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getGroupRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Group roles retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRole"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    AddGroupRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GroupRole"][];
+            };
+        };
+        responses: {
+            /** @description Group roles added successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRole"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteGroupRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    UpdateGroupRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    role: components["schemas"]["GroupRoleType"];
+                };
+            };
+        };
+        responses: {
+            /** @description Group roles updated successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRole"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getMessages: {
+        parameters: {
+            query?: {
+                before?: number;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Messages retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    sendMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body: string;
+                    /** Format: uint64 */
+                    parent_id?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Message sent successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Message edited successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    readMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getMessageThread: {
+        parameters: {
+            query?: {
+                before?: number;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Thread retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    addMessageReaction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+                emoji: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Reaction added successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageReaction"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteMessageReaction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+                emoji: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };

@@ -24,8 +24,68 @@ func encodeAddFriendRequest(
 	return nil
 }
 
+func encodeAddGroupRolesRequest(
+	req []GroupRole,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		e.ArrStart()
+		for _, elem := range req {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
 func encodeAddToLibraryRequest(
 	req *LibraryAddRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeCreateGroupRequest(
+	req *CreateGroupRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeEditGroupRequest(
+	req *EditGroupRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeEditMessageRequest(
+	req *EditMessageReq,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -216,6 +276,20 @@ func encodeSearchTracksViaDetailsRequest(
 	return nil
 }
 
+func encodeSendMessageRequest(
+	req *SendMessageReq,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
 func encodeSetActivityRequest(
 	req []SetActivityItem,
 	r *http.Request,
@@ -264,6 +338,20 @@ func encodeSetBlockedRequest(
 
 func encodeSignInRequest(
 	req *SignInRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeUpdateGroupRolesRequest(
+	req *UpdateGroupRolesReq,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"

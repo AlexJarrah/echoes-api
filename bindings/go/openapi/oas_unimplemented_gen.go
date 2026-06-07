@@ -22,12 +22,93 @@ func (UnimplementedHandler) AddFriend(ctx context.Context, req *FriendActionRequ
 	return r, ht.ErrNotImplemented
 }
 
+// AddGroupRoles implements AddGroupRoles operation.
+//
+// Add group roles.
+//
+// POST /api/groups/{group_id}/roles
+func (UnimplementedHandler) AddGroupRoles(ctx context.Context, req []GroupRole, params AddGroupRolesParams) (r AddGroupRolesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// AddMessageReaction implements addMessageReaction operation.
+//
+// Add a reaction to a message.
+//
+// PUT /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+func (UnimplementedHandler) AddMessageReaction(ctx context.Context, params AddMessageReactionParams) (r AddMessageReactionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // AddToLibrary implements addToLibrary operation.
 //
 // Add items to library.
 //
 // POST /api/library/add
 func (UnimplementedHandler) AddToLibrary(ctx context.Context, req *LibraryAddRequest) (r AddToLibraryRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// CreateGroup implements createGroup operation.
+//
+// Create a new group as owner.
+//
+// POST /api/groups
+func (UnimplementedHandler) CreateGroup(ctx context.Context, req *CreateGroupRequest) (r CreateGroupRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DeleteGroup implements deleteGroup operation.
+//
+// Delete a group if owned by the user.
+//
+// DELETE /api/groups/{group_id}
+func (UnimplementedHandler) DeleteGroup(ctx context.Context, params DeleteGroupParams) (r DeleteGroupRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DeleteGroupRole implements deleteGroupRole operation.
+//
+// Remove a user from a group.
+//
+// DELETE /api/groups/{group_id}/roles/{user_id}
+func (UnimplementedHandler) DeleteGroupRole(ctx context.Context, params DeleteGroupRoleParams) (r DeleteGroupRoleRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DeleteMessage implements deleteMessage operation.
+//
+// Delete a message.
+//
+// DELETE /api/conversations/{conversation_id}/messages/{message_id}
+func (UnimplementedHandler) DeleteMessage(ctx context.Context, params DeleteMessageParams) (r DeleteMessageRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DeleteMessageReaction implements deleteMessageReaction operation.
+//
+// Remove a reaction from a message.
+//
+// DELETE /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+func (UnimplementedHandler) DeleteMessageReaction(ctx context.Context, params DeleteMessageReactionParams) (r DeleteMessageReactionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// EditGroup implements editGroup operation.
+//
+// Edit a group.
+//
+// PATCH /api/groups/{group_id}
+func (UnimplementedHandler) EditGroup(ctx context.Context, req *EditGroupRequest, params EditGroupParams) (r EditGroupRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// EditMessage implements editMessage operation.
+//
+// Edit a message.
+//
+// PATCH /api/conversations/{conversation_id}/messages/{message_id}
+func (UnimplementedHandler) EditMessage(ctx context.Context, req *EditMessageReq, params EditMessageParams) (r EditMessageRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -98,6 +179,33 @@ func (UnimplementedHandler) GetGlobalTopTracks(ctx context.Context, req OptStati
 	return r, ht.ErrNotImplemented
 }
 
+// GetGroup implements getGroup operation.
+//
+// Get group.
+//
+// GET /api/groups/{group_id}
+func (UnimplementedHandler) GetGroup(ctx context.Context, params GetGroupParams) (r GetGroupRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetGroupRoles implements getGroupRoles operation.
+//
+// Get group roles.
+//
+// GET /api/groups/{group_id}/roles
+func (UnimplementedHandler) GetGroupRoles(ctx context.Context, params GetGroupRolesParams) (r GetGroupRolesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetGroups implements getGroups operation.
+//
+// Get groups visible to the user.
+//
+// GET /api/groups
+func (UnimplementedHandler) GetGroups(ctx context.Context) (r GetGroupsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetLibraryMetadata implements getLibraryMetadata operation.
 //
 // Get library metadata.
@@ -113,6 +221,24 @@ func (UnimplementedHandler) GetLibraryMetadata(ctx context.Context) (r GetLibrar
 //
 // POST /api/listens/sessions
 func (UnimplementedHandler) GetListenSessions(ctx context.Context, req *ListensSessionsRequest) (r GetListenSessionsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetMessageThread implements getMessageThread operation.
+//
+// Get message thread.
+//
+// GET /api/conversations/{conversation_id}/messages/{message_id}/thread
+func (UnimplementedHandler) GetMessageThread(ctx context.Context, params GetMessageThreadParams) (r GetMessageThreadRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetMessages implements getMessages operation.
+//
+// Get conversation messages.
+//
+// GET /api/conversations/{conversation_id}/messages
+func (UnimplementedHandler) GetMessages(ctx context.Context, params GetMessagesParams) (r GetMessagesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -206,6 +332,15 @@ func (UnimplementedHandler) JoinFreeBeta(ctx context.Context) (r JoinFreeBetaRes
 	return r, ht.ErrNotImplemented
 }
 
+// ReadMessage implements readMessage operation.
+//
+// Read a message.
+//
+// POST /api/conversations/{conversation_id}/messages/{message_id}/read
+func (UnimplementedHandler) ReadMessage(ctx context.Context, params ReadMessageParams) (r ReadMessageRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // Register implements register operation.
 //
 // Register a new user.
@@ -242,6 +377,15 @@ func (UnimplementedHandler) SearchTracksViaDetails(ctx context.Context, req *Sea
 	return r, ht.ErrNotImplemented
 }
 
+// SendMessage implements sendMessage operation.
+//
+// Send a conversation message.
+//
+// POST /api/conversations/{conversation_id}/messages
+func (UnimplementedHandler) SendMessage(ctx context.Context, req *SendMessageReq, params SendMessageParams) (r SendMessageRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // SetActivity implements setActivity operation.
 //
 // Set current activity.
@@ -275,6 +419,15 @@ func (UnimplementedHandler) SetBlocked(ctx context.Context, req *BlockedActionRe
 //
 // POST /api/signin
 func (UnimplementedHandler) SignIn(ctx context.Context, req *SignInRequest) (r SignInRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// UpdateGroupRoles implements UpdateGroupRoles operation.
+//
+// Update group roles.
+//
+// PATCH /api/groups/{group_id}/roles/{user_id}
+func (UnimplementedHandler) UpdateGroupRoles(ctx context.Context, req *UpdateGroupRolesReq, params UpdateGroupRolesParams) (r UpdateGroupRolesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

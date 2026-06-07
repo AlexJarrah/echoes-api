@@ -29,6 +29,26 @@ type AddFriendApplicationJSONUnauthorized ErrorResponse
 
 func (*AddFriendApplicationJSONUnauthorized) addFriendRes() {}
 
+type AddGroupRolesApplicationJSONBadRequest ErrorResponse
+
+func (*AddGroupRolesApplicationJSONBadRequest) addGroupRolesRes() {}
+
+type AddGroupRolesApplicationJSONInternalServerError ErrorResponse
+
+func (*AddGroupRolesApplicationJSONInternalServerError) addGroupRolesRes() {}
+
+type AddGroupRolesOKApplicationJSON []GroupRole
+
+func (*AddGroupRolesOKApplicationJSON) addGroupRolesRes() {}
+
+type AddMessageReactionApplicationJSONInternalServerError ErrorResponse
+
+func (*AddMessageReactionApplicationJSONInternalServerError) addMessageReactionRes() {}
+
+type AddMessageReactionApplicationJSONUnauthorized ErrorResponse
+
+func (*AddMessageReactionApplicationJSONUnauthorized) addMessageReactionRes() {}
+
 type AddToLibraryApplicationJSONBadRequest ErrorResponse
 
 func (*AddToLibraryApplicationJSONBadRequest) addToLibraryRes() {}
@@ -642,7 +662,13 @@ func (s BadRequestTextPlain) Read(p []byte) (n int, err error) {
 }
 
 func (*BadRequestTextPlain) addFriendRes()                 {}
+func (*BadRequestTextPlain) addGroupRolesRes()             {}
 func (*BadRequestTextPlain) addToLibraryRes()              {}
+func (*BadRequestTextPlain) createGroupRes()               {}
+func (*BadRequestTextPlain) deleteGroupRes()               {}
+func (*BadRequestTextPlain) deleteMessageRes()             {}
+func (*BadRequestTextPlain) editGroupRes()                 {}
+func (*BadRequestTextPlain) editMessageRes()               {}
 func (*BadRequestTextPlain) getAlbumRes()                  {}
 func (*BadRequestTextPlain) getArtistRes()                 {}
 func (*BadRequestTextPlain) getCalendarListensRes()        {}
@@ -654,14 +680,17 @@ func (*BadRequestTextPlain) getTrackRes()                  {}
 func (*BadRequestTextPlain) getUserListenSessionsRes()     {}
 func (*BadRequestTextPlain) getUserListensByDaysRes()      {}
 func (*BadRequestTextPlain) getUserTopArtistPlayStatsRes() {}
+func (*BadRequestTextPlain) readMessageRes()               {}
 func (*BadRequestTextPlain) registerRes()                  {}
 func (*BadRequestTextPlain) removeFriendRes()              {}
 func (*BadRequestTextPlain) removeFromLibraryRes()         {}
 func (*BadRequestTextPlain) searchTracksViaDetailsRes()    {}
+func (*BadRequestTextPlain) sendMessageRes()               {}
 func (*BadRequestTextPlain) setActivityRes()               {}
 func (*BadRequestTextPlain) setBestFriendRes()             {}
 func (*BadRequestTextPlain) setBlockedRes()                {}
 func (*BadRequestTextPlain) signInRes()                    {}
+func (*BadRequestTextPlain) updateGroupRolesRes()          {}
 func (*BadRequestTextPlain) updateLibraryRes()             {}
 func (*BadRequestTextPlain) updateUserRes()                {}
 
@@ -734,6 +763,32 @@ func (s ConflictTextPlain) Read(p []byte) (n int, err error) {
 func (*ConflictTextPlain) registerRes()   {}
 func (*ConflictTextPlain) updateUserRes() {}
 
+// Ref: #/components/schemas/Conversation
+type Conversation struct {
+	ConversationID uuid.UUID `json:"conversation_id"`
+	CreatedAt      time.Time `json:"created_at"`
+}
+
+// GetConversationID returns the value of ConversationID.
+func (s *Conversation) GetConversationID() uuid.UUID {
+	return s.ConversationID
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Conversation) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// SetConversationID sets the value of ConversationID.
+func (s *Conversation) SetConversationID(val uuid.UUID) {
+	s.ConversationID = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Conversation) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
 type CookieAuth struct {
 	APIKey string
 	Roles  []string
@@ -757,6 +812,62 @@ func (s *CookieAuth) SetAPIKey(val string) {
 // SetRoles sets the value of Roles.
 func (s *CookieAuth) SetRoles(val []string) {
 	s.Roles = val
+}
+
+type CreateGroupApplicationJSONBadRequest ErrorResponse
+
+func (*CreateGroupApplicationJSONBadRequest) createGroupRes() {}
+
+type CreateGroupApplicationJSONInternalServerError ErrorResponse
+
+func (*CreateGroupApplicationJSONInternalServerError) createGroupRes() {}
+
+// Ref: #/components/schemas/CreateGroupRequest
+type CreateGroupRequest struct {
+	Name        string      `json:"name"`
+	Description OptString   `json:"description"`
+	Visibility  Visibility  `json:"visibility"`
+	Members     []uuid.UUID `json:"members"`
+}
+
+// GetName returns the value of Name.
+func (s *CreateGroupRequest) GetName() string {
+	return s.Name
+}
+
+// GetDescription returns the value of Description.
+func (s *CreateGroupRequest) GetDescription() OptString {
+	return s.Description
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *CreateGroupRequest) GetVisibility() Visibility {
+	return s.Visibility
+}
+
+// GetMembers returns the value of Members.
+func (s *CreateGroupRequest) GetMembers() []uuid.UUID {
+	return s.Members
+}
+
+// SetName sets the value of Name.
+func (s *CreateGroupRequest) SetName(val string) {
+	s.Name = val
+}
+
+// SetDescription sets the value of Description.
+func (s *CreateGroupRequest) SetDescription(val OptString) {
+	s.Description = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *CreateGroupRequest) SetVisibility(val Visibility) {
+	s.Visibility = val
+}
+
+// SetMembers sets the value of Members.
+func (s *CreateGroupRequest) SetMembers(val []uuid.UUID) {
+	s.Members = val
 }
 
 // Ref: #/components/schemas/DateTimeRange
@@ -822,6 +933,117 @@ func (s *DayListenDetails) SetSeconds(val uint64) {
 	s.Seconds = val
 }
 
+type DeleteGroupApplicationJSONBadRequest ErrorResponse
+
+func (*DeleteGroupApplicationJSONBadRequest) deleteGroupRes() {}
+
+type DeleteGroupApplicationJSONInternalServerError ErrorResponse
+
+func (*DeleteGroupApplicationJSONInternalServerError) deleteGroupRes() {}
+
+type DeleteGroupRoleApplicationJSONForbidden ErrorResponse
+
+func (*DeleteGroupRoleApplicationJSONForbidden) deleteGroupRoleRes() {}
+
+type DeleteGroupRoleApplicationJSONInternalServerError ErrorResponse
+
+func (*DeleteGroupRoleApplicationJSONInternalServerError) deleteGroupRoleRes() {}
+
+type DeleteGroupRoleApplicationJSONNotFound ErrorResponse
+
+func (*DeleteGroupRoleApplicationJSONNotFound) deleteGroupRoleRes() {}
+
+type DeleteGroupRoleApplicationJSONUnauthorized ErrorResponse
+
+func (*DeleteGroupRoleApplicationJSONUnauthorized) deleteGroupRoleRes() {}
+
+type DeleteMessageApplicationJSONBadRequest ErrorResponse
+
+func (*DeleteMessageApplicationJSONBadRequest) deleteMessageRes() {}
+
+type DeleteMessageApplicationJSONInternalServerError ErrorResponse
+
+func (*DeleteMessageApplicationJSONInternalServerError) deleteMessageRes() {}
+
+type DeleteMessageReactionApplicationJSONInternalServerError ErrorResponse
+
+func (*DeleteMessageReactionApplicationJSONInternalServerError) deleteMessageReactionRes() {}
+
+type DeleteMessageReactionApplicationJSONNotFound ErrorResponse
+
+func (*DeleteMessageReactionApplicationJSONNotFound) deleteMessageReactionRes() {}
+
+type DeleteMessageReactionApplicationJSONUnauthorized ErrorResponse
+
+func (*DeleteMessageReactionApplicationJSONUnauthorized) deleteMessageReactionRes() {}
+
+type EditGroupApplicationJSONBadRequest ErrorResponse
+
+func (*EditGroupApplicationJSONBadRequest) editGroupRes() {}
+
+type EditGroupApplicationJSONInternalServerError ErrorResponse
+
+func (*EditGroupApplicationJSONInternalServerError) editGroupRes() {}
+
+// Ref: #/components/schemas/EditGroupRequest
+type EditGroupRequest struct {
+	Name        OptString     `json:"name"`
+	Description OptString     `json:"description"`
+	Visibility  OptVisibility `json:"visibility"`
+}
+
+// GetName returns the value of Name.
+func (s *EditGroupRequest) GetName() OptString {
+	return s.Name
+}
+
+// GetDescription returns the value of Description.
+func (s *EditGroupRequest) GetDescription() OptString {
+	return s.Description
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *EditGroupRequest) GetVisibility() OptVisibility {
+	return s.Visibility
+}
+
+// SetName sets the value of Name.
+func (s *EditGroupRequest) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetDescription sets the value of Description.
+func (s *EditGroupRequest) SetDescription(val OptString) {
+	s.Description = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *EditGroupRequest) SetVisibility(val OptVisibility) {
+	s.Visibility = val
+}
+
+type EditMessageApplicationJSONBadRequest ErrorResponse
+
+func (*EditMessageApplicationJSONBadRequest) editMessageRes() {}
+
+type EditMessageApplicationJSONInternalServerError ErrorResponse
+
+func (*EditMessageApplicationJSONInternalServerError) editMessageRes() {}
+
+type EditMessageReq struct {
+	Body OptString `json:"body"`
+}
+
+// GetBody returns the value of Body.
+func (s *EditMessageReq) GetBody() OptString {
+	return s.Body
+}
+
+// SetBody sets the value of Body.
+func (s *EditMessageReq) SetBody(val OptString) {
+	s.Body = val
+}
+
 // Ref: #/components/schemas/ErrorResponse
 type ErrorResponse struct {
 	// Human-readable error message.
@@ -856,6 +1078,7 @@ func (s ForbiddenTextPlain) Read(p []byte) (n int, err error) {
 }
 
 func (*ForbiddenTextPlain) addFriendRes()             {}
+func (*ForbiddenTextPlain) deleteGroupRoleRes()       {}
 func (*ForbiddenTextPlain) getCalendarListensRes()    {}
 func (*ForbiddenTextPlain) getUserListenSessionsRes() {}
 func (*ForbiddenTextPlain) removeFriendRes()          {}
@@ -1032,6 +1255,38 @@ type GetGlobalTopTracksOKApplicationJSON []TopTrackEntry
 
 func (*GetGlobalTopTracksOKApplicationJSON) getGlobalTopTracksRes() {}
 
+type GetGroupApplicationJSONInternalServerError ErrorResponse
+
+func (*GetGroupApplicationJSONInternalServerError) getGroupRes() {}
+
+type GetGroupApplicationJSONUnauthorized ErrorResponse
+
+func (*GetGroupApplicationJSONUnauthorized) getGroupRes() {}
+
+type GetGroupRolesApplicationJSONInternalServerError ErrorResponse
+
+func (*GetGroupRolesApplicationJSONInternalServerError) getGroupRolesRes() {}
+
+type GetGroupRolesApplicationJSONUnauthorized ErrorResponse
+
+func (*GetGroupRolesApplicationJSONUnauthorized) getGroupRolesRes() {}
+
+type GetGroupRolesOKApplicationJSON []GroupRole
+
+func (*GetGroupRolesOKApplicationJSON) getGroupRolesRes() {}
+
+type GetGroupsApplicationJSONInternalServerError ErrorResponse
+
+func (*GetGroupsApplicationJSONInternalServerError) getGroupsRes() {}
+
+type GetGroupsApplicationJSONUnauthorized ErrorResponse
+
+func (*GetGroupsApplicationJSONUnauthorized) getGroupsRes() {}
+
+type GetGroupsOKApplicationJSON []GroupDetails
+
+func (*GetGroupsOKApplicationJSON) getGroupsRes() {}
+
 type GetLibraryMetadataApplicationJSONInternalServerError ErrorResponse
 
 func (*GetLibraryMetadataApplicationJSONInternalServerError) getLibraryMetadataRes() {}
@@ -1051,6 +1306,34 @@ func (*GetListenSessionsApplicationJSONInternalServerError) getListenSessionsRes
 type GetListenSessionsApplicationJSONUnauthorized ErrorResponse
 
 func (*GetListenSessionsApplicationJSONUnauthorized) getListenSessionsRes() {}
+
+type GetMessageThreadApplicationJSONInternalServerError ErrorResponse
+
+func (*GetMessageThreadApplicationJSONInternalServerError) getMessageThreadRes() {}
+
+type GetMessageThreadApplicationJSONNotFound ErrorResponse
+
+func (*GetMessageThreadApplicationJSONNotFound) getMessageThreadRes() {}
+
+type GetMessageThreadApplicationJSONUnauthorized ErrorResponse
+
+func (*GetMessageThreadApplicationJSONUnauthorized) getMessageThreadRes() {}
+
+type GetMessageThreadOKApplicationJSON []MessageDetails
+
+func (*GetMessageThreadOKApplicationJSON) getMessageThreadRes() {}
+
+type GetMessagesApplicationJSONInternalServerError ErrorResponse
+
+func (*GetMessagesApplicationJSONInternalServerError) getMessagesRes() {}
+
+type GetMessagesApplicationJSONUnauthorized ErrorResponse
+
+func (*GetMessagesApplicationJSONUnauthorized) getMessagesRes() {}
+
+type GetMessagesOKApplicationJSON []MessageDetails
+
+func (*GetMessagesOKApplicationJSON) getMessagesRes() {}
 
 type GetOpenAPIOK struct {
 	Data io.Reader
@@ -1170,6 +1453,233 @@ type GetUserTopArtistPlayStatsOKApplicationJSON []TopArtistPlayStats
 
 func (*GetUserTopArtistPlayStatsOKApplicationJSON) getUserTopArtistPlayStatsRes() {}
 
+// Ref: #/components/schemas/Group
+type Group struct {
+	GroupID        uuid.UUID      `json:"group_id"`
+	ConversationID uuid.UUID      `json:"conversation_id"`
+	Name           string         `json:"name"`
+	Description    OptNilString   `json:"description"`
+	Visibility     Visibility     `json:"visibility"`
+	CreatedAt      time.Time      `json:"created_at"`
+	UpdatedAt      OptNilDateTime `json:"updated_at"`
+}
+
+// GetGroupID returns the value of GroupID.
+func (s *Group) GetGroupID() uuid.UUID {
+	return s.GroupID
+}
+
+// GetConversationID returns the value of ConversationID.
+func (s *Group) GetConversationID() uuid.UUID {
+	return s.ConversationID
+}
+
+// GetName returns the value of Name.
+func (s *Group) GetName() string {
+	return s.Name
+}
+
+// GetDescription returns the value of Description.
+func (s *Group) GetDescription() OptNilString {
+	return s.Description
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *Group) GetVisibility() Visibility {
+	return s.Visibility
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Group) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Group) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetGroupID sets the value of GroupID.
+func (s *Group) SetGroupID(val uuid.UUID) {
+	s.GroupID = val
+}
+
+// SetConversationID sets the value of ConversationID.
+func (s *Group) SetConversationID(val uuid.UUID) {
+	s.ConversationID = val
+}
+
+// SetName sets the value of Name.
+func (s *Group) SetName(val string) {
+	s.Name = val
+}
+
+// SetDescription sets the value of Description.
+func (s *Group) SetDescription(val OptNilString) {
+	s.Description = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *Group) SetVisibility(val Visibility) {
+	s.Visibility = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Group) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Group) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*Group) createGroupRes() {}
+func (*Group) editGroupRes()   {}
+
+// Ref: #/components/schemas/GroupDetails
+type GroupDetails struct {
+	Group         Group        `json:"group"`
+	Conversation  Conversation `json:"conversation"`
+	Roles         []GroupRole  `json:"roles"`
+	LatestMessage Message      `json:"latest_message"`
+	UnreadCount   uint32       `json:"unread_count"`
+}
+
+// GetGroup returns the value of Group.
+func (s *GroupDetails) GetGroup() Group {
+	return s.Group
+}
+
+// GetConversation returns the value of Conversation.
+func (s *GroupDetails) GetConversation() Conversation {
+	return s.Conversation
+}
+
+// GetRoles returns the value of Roles.
+func (s *GroupDetails) GetRoles() []GroupRole {
+	return s.Roles
+}
+
+// GetLatestMessage returns the value of LatestMessage.
+func (s *GroupDetails) GetLatestMessage() Message {
+	return s.LatestMessage
+}
+
+// GetUnreadCount returns the value of UnreadCount.
+func (s *GroupDetails) GetUnreadCount() uint32 {
+	return s.UnreadCount
+}
+
+// SetGroup sets the value of Group.
+func (s *GroupDetails) SetGroup(val Group) {
+	s.Group = val
+}
+
+// SetConversation sets the value of Conversation.
+func (s *GroupDetails) SetConversation(val Conversation) {
+	s.Conversation = val
+}
+
+// SetRoles sets the value of Roles.
+func (s *GroupDetails) SetRoles(val []GroupRole) {
+	s.Roles = val
+}
+
+// SetLatestMessage sets the value of LatestMessage.
+func (s *GroupDetails) SetLatestMessage(val Message) {
+	s.LatestMessage = val
+}
+
+// SetUnreadCount sets the value of UnreadCount.
+func (s *GroupDetails) SetUnreadCount(val uint32) {
+	s.UnreadCount = val
+}
+
+func (*GroupDetails) getGroupRes() {}
+
+// Ref: #/components/schemas/GroupRole
+type GroupRole struct {
+	GroupID   uuid.UUID      `json:"group_id"`
+	UserID    uuid.UUID      `json:"user_id"`
+	Role      GroupRoleType  `json:"role"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt OptNilDateTime `json:"updated_at"`
+}
+
+// GetGroupID returns the value of GroupID.
+func (s *GroupRole) GetGroupID() uuid.UUID {
+	return s.GroupID
+}
+
+// GetUserID returns the value of UserID.
+func (s *GroupRole) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetRole returns the value of Role.
+func (s *GroupRole) GetRole() GroupRoleType {
+	return s.Role
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *GroupRole) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *GroupRole) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetGroupID sets the value of GroupID.
+func (s *GroupRole) SetGroupID(val uuid.UUID) {
+	s.GroupID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *GroupRole) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetRole sets the value of Role.
+func (s *GroupRole) SetRole(val GroupRoleType) {
+	s.Role = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *GroupRole) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *GroupRole) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*GroupRole) updateGroupRolesRes() {}
+
+// 0=Owner
+// 1=Moderator
+// 2=Member.
+// Ref: #/components/schemas/GroupRoleType
+type GroupRoleType uint8
+
+const (
+	GroupRoleType0 GroupRoleType = 0
+	GroupRoleType1 GroupRoleType = 1
+	GroupRoleType2 GroupRoleType = 2
+)
+
+// AllValues returns all GroupRoleType values.
+func (GroupRoleType) AllValues() []GroupRoleType {
+	return []GroupRoleType{
+		GroupRoleType0,
+		GroupRoleType1,
+		GroupRoleType2,
+	}
+}
+
 // Ref: #/components/schemas/IntegrationMetadata
 type IntegrationMetadata struct {
 	UserID    uuid.UUID           `json:"user_id"`
@@ -1254,15 +1764,29 @@ func (s InternalServerErrorTextPlain) Read(p []byte) (n int, err error) {
 }
 
 func (*InternalServerErrorTextPlain) addFriendRes()                 {}
+func (*InternalServerErrorTextPlain) addGroupRolesRes()             {}
+func (*InternalServerErrorTextPlain) addMessageReactionRes()        {}
 func (*InternalServerErrorTextPlain) addToLibraryRes()              {}
+func (*InternalServerErrorTextPlain) createGroupRes()               {}
+func (*InternalServerErrorTextPlain) deleteGroupRes()               {}
+func (*InternalServerErrorTextPlain) deleteGroupRoleRes()           {}
+func (*InternalServerErrorTextPlain) deleteMessageReactionRes()     {}
+func (*InternalServerErrorTextPlain) deleteMessageRes()             {}
+func (*InternalServerErrorTextPlain) editGroupRes()                 {}
+func (*InternalServerErrorTextPlain) editMessageRes()               {}
 func (*InternalServerErrorTextPlain) getAlbumRes()                  {}
 func (*InternalServerErrorTextPlain) getArtistRes()                 {}
 func (*InternalServerErrorTextPlain) getCalendarListensRes()        {}
 func (*InternalServerErrorTextPlain) getGlobalTopAlbumsRes()        {}
 func (*InternalServerErrorTextPlain) getGlobalTopArtistsRes()       {}
 func (*InternalServerErrorTextPlain) getGlobalTopTracksRes()        {}
+func (*InternalServerErrorTextPlain) getGroupRes()                  {}
+func (*InternalServerErrorTextPlain) getGroupRolesRes()             {}
+func (*InternalServerErrorTextPlain) getGroupsRes()                 {}
 func (*InternalServerErrorTextPlain) getLibraryMetadataRes()        {}
 func (*InternalServerErrorTextPlain) getListenSessionsRes()         {}
+func (*InternalServerErrorTextPlain) getMessageThreadRes()          {}
+func (*InternalServerErrorTextPlain) getMessagesRes()               {}
 func (*InternalServerErrorTextPlain) getRelationsDetailsRes()       {}
 func (*InternalServerErrorTextPlain) getRelationsRes()              {}
 func (*InternalServerErrorTextPlain) getTrackRes()                  {}
@@ -1271,14 +1795,17 @@ func (*InternalServerErrorTextPlain) getUserListenSessionsRes()     {}
 func (*InternalServerErrorTextPlain) getUserListensByDaysRes()      {}
 func (*InternalServerErrorTextPlain) getUserTopArtistPlayStatsRes() {}
 func (*InternalServerErrorTextPlain) joinFreeBetaRes()              {}
+func (*InternalServerErrorTextPlain) readMessageRes()               {}
 func (*InternalServerErrorTextPlain) registerRes()                  {}
 func (*InternalServerErrorTextPlain) removeFriendRes()              {}
 func (*InternalServerErrorTextPlain) removeFromLibraryRes()         {}
 func (*InternalServerErrorTextPlain) searchTracksViaDetailsRes()    {}
+func (*InternalServerErrorTextPlain) sendMessageRes()               {}
 func (*InternalServerErrorTextPlain) setActivityRes()               {}
 func (*InternalServerErrorTextPlain) setBestFriendRes()             {}
 func (*InternalServerErrorTextPlain) setBlockedRes()                {}
 func (*InternalServerErrorTextPlain) signInRes()                    {}
+func (*InternalServerErrorTextPlain) updateGroupRolesRes()          {}
 func (*InternalServerErrorTextPlain) updateLibraryRes()             {}
 func (*InternalServerErrorTextPlain) updateUserRes()                {}
 
@@ -2294,16 +2821,193 @@ func (s *ListensSessionsRequest) SetLimit(val OptInt64) {
 	s.Limit = val
 }
 
+// Ref: #/components/schemas/Message
+type Message struct {
+	MessageID      uint64    `json:"message_id"`
+	ConversationID uuid.UUID `json:"conversation_id"`
+	// Null if user is deleted.
+	UserID    OptNilUUID     `json:"user_id"`
+	Body      string         `json:"body"`
+	ParentID  OptNilUint64   `json:"parent_id"`
+	DeletedAt OptNilDateTime `json:"deleted_at"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt OptNilDateTime `json:"updated_at"`
+}
+
+// GetMessageID returns the value of MessageID.
+func (s *Message) GetMessageID() uint64 {
+	return s.MessageID
+}
+
+// GetConversationID returns the value of ConversationID.
+func (s *Message) GetConversationID() uuid.UUID {
+	return s.ConversationID
+}
+
+// GetUserID returns the value of UserID.
+func (s *Message) GetUserID() OptNilUUID {
+	return s.UserID
+}
+
+// GetBody returns the value of Body.
+func (s *Message) GetBody() string {
+	return s.Body
+}
+
+// GetParentID returns the value of ParentID.
+func (s *Message) GetParentID() OptNilUint64 {
+	return s.ParentID
+}
+
+// GetDeletedAt returns the value of DeletedAt.
+func (s *Message) GetDeletedAt() OptNilDateTime {
+	return s.DeletedAt
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Message) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Message) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetMessageID sets the value of MessageID.
+func (s *Message) SetMessageID(val uint64) {
+	s.MessageID = val
+}
+
+// SetConversationID sets the value of ConversationID.
+func (s *Message) SetConversationID(val uuid.UUID) {
+	s.ConversationID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *Message) SetUserID(val OptNilUUID) {
+	s.UserID = val
+}
+
+// SetBody sets the value of Body.
+func (s *Message) SetBody(val string) {
+	s.Body = val
+}
+
+// SetParentID sets the value of ParentID.
+func (s *Message) SetParentID(val OptNilUint64) {
+	s.ParentID = val
+}
+
+// SetDeletedAt sets the value of DeletedAt.
+func (s *Message) SetDeletedAt(val OptNilDateTime) {
+	s.DeletedAt = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Message) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Message) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*Message) editMessageRes() {}
+func (*Message) sendMessageRes() {}
+
+// Ref: #/components/schemas/MessageDetails
+type MessageDetails struct {
+	Message   Message           `json:"message"`
+	Reactions []MessageReaction `json:"reactions"`
+}
+
+// GetMessage returns the value of Message.
+func (s *MessageDetails) GetMessage() Message {
+	return s.Message
+}
+
+// GetReactions returns the value of Reactions.
+func (s *MessageDetails) GetReactions() []MessageReaction {
+	return s.Reactions
+}
+
+// SetMessage sets the value of Message.
+func (s *MessageDetails) SetMessage(val Message) {
+	s.Message = val
+}
+
+// SetReactions sets the value of Reactions.
+func (s *MessageDetails) SetReactions(val []MessageReaction) {
+	s.Reactions = val
+}
+
+// Ref: #/components/schemas/MessageReaction
+type MessageReaction struct {
+	UserID    uuid.UUID `json:"user_id"`
+	MessageID uint64    `json:"message_id"`
+	Emoji     string    `json:"emoji"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *MessageReaction) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetMessageID returns the value of MessageID.
+func (s *MessageReaction) GetMessageID() uint64 {
+	return s.MessageID
+}
+
+// GetEmoji returns the value of Emoji.
+func (s *MessageReaction) GetEmoji() string {
+	return s.Emoji
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *MessageReaction) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// SetUserID sets the value of UserID.
+func (s *MessageReaction) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetMessageID sets the value of MessageID.
+func (s *MessageReaction) SetMessageID(val uint64) {
+	s.MessageID = val
+}
+
+// SetEmoji sets the value of Emoji.
+func (s *MessageReaction) SetEmoji(val string) {
+	s.Emoji = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *MessageReaction) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+func (*MessageReaction) addMessageReactionRes() {}
+
 // Ref: #/components/responses/NoContent
 type NoContent struct{}
 
-func (*NoContent) removeFriendRes()      {}
-func (*NoContent) removeFromLibraryRes() {}
-func (*NoContent) setActivityRes()       {}
-func (*NoContent) setBestFriendRes()     {}
-func (*NoContent) setBlockedRes()        {}
-func (*NoContent) updateUserRes()        {}
-func (*NoContent) validateTokenRes()     {}
+func (*NoContent) deleteGroupRes()           {}
+func (*NoContent) deleteGroupRoleRes()       {}
+func (*NoContent) deleteMessageReactionRes() {}
+func (*NoContent) deleteMessageRes()         {}
+func (*NoContent) readMessageRes()           {}
+func (*NoContent) removeFriendRes()          {}
+func (*NoContent) removeFromLibraryRes()     {}
+func (*NoContent) setActivityRes()           {}
+func (*NoContent) setBestFriendRes()         {}
+func (*NoContent) setBlockedRes()            {}
+func (*NoContent) updateUserRes()            {}
+func (*NoContent) validateTokenRes()         {}
 
 type NotFoundTextPlain struct {
 	Data io.Reader
@@ -2320,9 +3024,12 @@ func (s NotFoundTextPlain) Read(p []byte) (n int, err error) {
 }
 
 func (*NotFoundTextPlain) addFriendRes()             {}
+func (*NotFoundTextPlain) deleteGroupRoleRes()       {}
+func (*NotFoundTextPlain) deleteMessageReactionRes() {}
 func (*NotFoundTextPlain) getAlbumRes()              {}
 func (*NotFoundTextPlain) getArtistRes()             {}
 func (*NotFoundTextPlain) getCalendarListensRes()    {}
+func (*NotFoundTextPlain) getMessageThreadRes()      {}
 func (*NotFoundTextPlain) getTrackRes()              {}
 func (*NotFoundTextPlain) getUserListenSessionsRes() {}
 
@@ -2504,6 +3211,52 @@ func (o OptDateTime) Get() (v time.Time, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptDateTime) Or(d time.Time) time.Time {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptInt returns new OptInt with value set to v.
+func NewOptInt(v int) OptInt {
+	return OptInt{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptInt is optional int.
+type OptInt struct {
+	Value int
+	Set   bool
+}
+
+// IsSet returns true if OptInt was set.
+func (o OptInt) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptInt) Reset() {
+	var v int
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptInt) SetTo(v int) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptInt) Get() (v int, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptInt) Or(d int) int {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -2980,6 +3733,69 @@ func (o OptNilUint16) Or(d uint16) uint16 {
 	return d
 }
 
+// NewOptNilUint64 returns new OptNilUint64 with value set to v.
+func NewOptNilUint64(v uint64) OptNilUint64 {
+	return OptNilUint64{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptNilUint64 is optional nullable uint64.
+type OptNilUint64 struct {
+	Value uint64
+	Set   bool
+	Null  bool
+}
+
+// IsSet returns true if OptNilUint64 was set.
+func (o OptNilUint64) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptNilUint64) Reset() {
+	var v uint64
+	o.Value = v
+	o.Set = false
+	o.Null = false
+}
+
+// SetTo sets value to v.
+func (o *OptNilUint64) SetTo(v uint64) {
+	o.Set = true
+	o.Null = false
+	o.Value = v
+}
+
+// IsNull returns true if value is Null.
+func (o OptNilUint64) IsNull() bool { return o.Null }
+
+// SetToNull sets value to null.
+func (o *OptNilUint64) SetToNull() {
+	o.Set = true
+	o.Null = true
+	var v uint64
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptNilUint64) Get() (v uint64, ok bool) {
+	if o.Null {
+		return v, false
+	}
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptNilUint64) Or(d uint64) uint64 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptRelationDetailsActivity returns new OptRelationDetailsActivity with value set to v.
 func NewOptRelationDetailsActivity(v RelationDetailsActivity) OptRelationDetailsActivity {
 	return OptRelationDetailsActivity{
@@ -3394,6 +4210,52 @@ func (o OptUint32) Or(d uint32) uint32 {
 	return d
 }
 
+// NewOptUint64 returns new OptUint64 with value set to v.
+func NewOptUint64(v uint64) OptUint64 {
+	return OptUint64{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptUint64 is optional uint64.
+type OptUint64 struct {
+	Value uint64
+	Set   bool
+}
+
+// IsSet returns true if OptUint64 was set.
+func (o OptUint64) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptUint64) Reset() {
+	var v uint64
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptUint64) SetTo(v uint64) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptUint64) Get() (v uint64, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptUint64) Or(d uint64) uint64 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptVisibility returns new OptVisibility with value set to v.
 func NewOptVisibility(v Visibility) OptVisibility {
 	return OptVisibility{
@@ -3439,6 +4301,18 @@ func (o OptVisibility) Or(d Visibility) Visibility {
 	}
 	return d
 }
+
+type ReadMessageApplicationJSONBadRequest ErrorResponse
+
+func (*ReadMessageApplicationJSONBadRequest) readMessageRes() {}
+
+type ReadMessageApplicationJSONInternalServerError ErrorResponse
+
+func (*ReadMessageApplicationJSONInternalServerError) readMessageRes() {}
+
+type ReadMessageApplicationJSONUnauthorized ErrorResponse
+
+func (*ReadMessageApplicationJSONUnauthorized) readMessageRes() {}
 
 type RegisterApplicationJSONBadRequest ErrorResponse
 
@@ -3937,6 +4811,39 @@ func (*SearchTracksViaDetailsApplicationJSONUnauthorized) searchTracksViaDetails
 type SearchTracksViaDetailsOKApplicationJSON []SearchTrackResult
 
 func (*SearchTracksViaDetailsOKApplicationJSON) searchTracksViaDetailsRes() {}
+
+type SendMessageApplicationJSONBadRequest ErrorResponse
+
+func (*SendMessageApplicationJSONBadRequest) sendMessageRes() {}
+
+type SendMessageApplicationJSONInternalServerError ErrorResponse
+
+func (*SendMessageApplicationJSONInternalServerError) sendMessageRes() {}
+
+type SendMessageReq struct {
+	Body     string       `json:"body"`
+	ParentID OptNilUint64 `json:"parent_id"`
+}
+
+// GetBody returns the value of Body.
+func (s *SendMessageReq) GetBody() string {
+	return s.Body
+}
+
+// GetParentID returns the value of ParentID.
+func (s *SendMessageReq) GetParentID() OptNilUint64 {
+	return s.ParentID
+}
+
+// SetBody sets the value of Body.
+func (s *SendMessageReq) SetBody(val string) {
+	s.Body = val
+}
+
+// SetParentID sets the value of ParentID.
+func (s *SendMessageReq) SetParentID(val OptNilUint64) {
+	s.ParentID = val
+}
 
 // Ref: #/components/schemas/Session
 type Session struct {
@@ -5062,11 +5969,19 @@ func (s UnauthorizedTextPlain) Read(p []byte) (n int, err error) {
 }
 
 func (*UnauthorizedTextPlain) addFriendRes()                 {}
+func (*UnauthorizedTextPlain) addMessageReactionRes()        {}
 func (*UnauthorizedTextPlain) addToLibraryRes()              {}
+func (*UnauthorizedTextPlain) deleteGroupRoleRes()           {}
+func (*UnauthorizedTextPlain) deleteMessageReactionRes()     {}
 func (*UnauthorizedTextPlain) getAlbumRes()                  {}
 func (*UnauthorizedTextPlain) getArtistRes()                 {}
+func (*UnauthorizedTextPlain) getGroupRes()                  {}
+func (*UnauthorizedTextPlain) getGroupRolesRes()             {}
+func (*UnauthorizedTextPlain) getGroupsRes()                 {}
 func (*UnauthorizedTextPlain) getLibraryMetadataRes()        {}
 func (*UnauthorizedTextPlain) getListenSessionsRes()         {}
+func (*UnauthorizedTextPlain) getMessageThreadRes()          {}
+func (*UnauthorizedTextPlain) getMessagesRes()               {}
 func (*UnauthorizedTextPlain) getRelationsDetailsRes()       {}
 func (*UnauthorizedTextPlain) getRelationsRes()              {}
 func (*UnauthorizedTextPlain) getTrackRes()                  {}
@@ -5076,6 +5991,7 @@ func (*UnauthorizedTextPlain) getUserListenSessionsRes()     {}
 func (*UnauthorizedTextPlain) getUserListensByDaysRes()      {}
 func (*UnauthorizedTextPlain) getUserTopArtistPlayStatsRes() {}
 func (*UnauthorizedTextPlain) joinFreeBetaRes()              {}
+func (*UnauthorizedTextPlain) readMessageRes()               {}
 func (*UnauthorizedTextPlain) removeFriendRes()              {}
 func (*UnauthorizedTextPlain) removeFromLibraryRes()         {}
 func (*UnauthorizedTextPlain) searchTracksViaDetailsRes()    {}
@@ -5085,6 +6001,28 @@ func (*UnauthorizedTextPlain) setBlockedRes()                {}
 func (*UnauthorizedTextPlain) updateLibraryRes()             {}
 func (*UnauthorizedTextPlain) updateUserRes()                {}
 func (*UnauthorizedTextPlain) validateTokenRes()             {}
+
+type UpdateGroupRolesApplicationJSONBadRequest ErrorResponse
+
+func (*UpdateGroupRolesApplicationJSONBadRequest) updateGroupRolesRes() {}
+
+type UpdateGroupRolesApplicationJSONInternalServerError ErrorResponse
+
+func (*UpdateGroupRolesApplicationJSONInternalServerError) updateGroupRolesRes() {}
+
+type UpdateGroupRolesReq struct {
+	Role GroupRoleType `json:"role"`
+}
+
+// GetRole returns the value of Role.
+func (s *UpdateGroupRolesReq) GetRole() GroupRoleType {
+	return s.Role
+}
+
+// SetRole sets the value of Role.
+func (s *UpdateGroupRolesReq) SetRole(val GroupRoleType) {
+	s.Role = val
+}
 
 type UpdateLibraryApplicationJSONBadRequest ErrorResponse
 

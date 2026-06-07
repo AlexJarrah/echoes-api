@@ -9,6 +9,31 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
+func (s AddGroupRolesOKApplicationJSON) Validate() error {
+	alias := ([]GroupRole)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	var failures []validate.FieldError
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
 func (s *AlbumPlayStats) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
@@ -151,6 +176,70 @@ func (s *ArtistPlayStats) Validate() error {
 	return nil
 }
 
+func (s *CreateGroupRequest) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Visibility.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "visibility",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.Members == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "members",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *EditGroupRequest) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if value, ok := s.Visibility.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "visibility",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
 func (s GetGlobalTopAlbumsOKApplicationJSON) Validate() error {
 	alias := ([]TopAlbumEntry)(s)
 	if alias == nil {
@@ -205,6 +294,72 @@ func (s GetGlobalTopTracksOKApplicationJSON) Validate() error {
 	}
 	if len(failures) > 0 {
 		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s GetGroupRolesOKApplicationJSON) Validate() error {
+	alias := ([]GroupRole)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	var failures []validate.FieldError
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s GetGroupsOKApplicationJSON) Validate() error {
+	alias := ([]GroupDetails)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	var failures []validate.FieldError
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s GetMessageThreadOKApplicationJSON) Validate() error {
+	alias := ([]MessageDetails)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
+func (s GetMessagesOKApplicationJSON) Validate() error {
+	alias := ([]MessageDetails)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
 	}
 	return nil
 }
@@ -315,6 +470,116 @@ func (s GetUserTopArtistPlayStatsOKApplicationJSON) Validate() error {
 		return &validate.Error{Fields: failures}
 	}
 	return nil
+}
+
+func (s *Group) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Visibility.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "visibility",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *GroupDetails) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Group.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "group",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.Roles == nil {
+			return errors.New("nil is invalid value")
+		}
+		var failures []validate.FieldError
+		for i, elem := range s.Roles {
+			if err := func() error {
+				if err := elem.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				failures = append(failures, validate.FieldError{
+					Name:  fmt.Sprintf("[%d]", i),
+					Error: err,
+				})
+			}
+		}
+		if len(failures) > 0 {
+			return &validate.Error{Fields: failures}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "roles",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *GroupRole) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Role.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "role",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s GroupRoleType) Validate() error {
+	switch s {
+	case 0:
+		return nil
+	case 1:
+		return nil
+	case 2:
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
 }
 
 func (s *IntegrationMetadata) Validate() error {
@@ -1059,6 +1324,29 @@ func (s *TopTrackEntry) Validate() error {
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
 			Name:  "artists",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *UpdateGroupRolesReq) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if err := s.Role.Validate(); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "role",
 			Error: err,
 		})
 	}

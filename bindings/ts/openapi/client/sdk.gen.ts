@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetOpenApiData, GetOpenApiResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksViaDetailsData, SearchTracksViaDetailsErrors, SearchTracksViaDetailsResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -461,4 +461,249 @@ export const getGlobalTopArtists = <ThrowOnError extends boolean = false>(option
         'Content-Type': 'application/json',
         ...options?.headers
     }
+});
+
+/**
+ * Get groups visible to the user.
+ */
+export const getGroups = <ThrowOnError extends boolean = false>(options?: Options<GetGroupsData, ThrowOnError>): RequestResult<GetGroupsResponses, GetGroupsErrors, ThrowOnError> => (options?.client ?? client).get<GetGroupsResponses, GetGroupsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups',
+    ...options
+});
+
+/**
+ * Create a new group as owner.
+ */
+export const createGroup = <ThrowOnError extends boolean = false>(options: Options<CreateGroupData, ThrowOnError>): RequestResult<CreateGroupResponses, CreateGroupErrors, ThrowOnError> => (options.client ?? client).post<CreateGroupResponses, CreateGroupErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete a group if owned by the user.
+ */
+export const deleteGroup = <ThrowOnError extends boolean = false>(options: Options<DeleteGroupData, ThrowOnError>): RequestResult<DeleteGroupResponses, DeleteGroupErrors, ThrowOnError> => (options.client ?? client).delete<DeleteGroupResponses, DeleteGroupErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}',
+    ...options
+});
+
+/**
+ * Get group.
+ */
+export const getGroup = <ThrowOnError extends boolean = false>(options: Options<GetGroupData, ThrowOnError>): RequestResult<GetGroupResponses, GetGroupErrors, ThrowOnError> => (options.client ?? client).get<GetGroupResponses, GetGroupErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}',
+    ...options
+});
+
+/**
+ * Edit a group.
+ */
+export const editGroup = <ThrowOnError extends boolean = false>(options: Options<EditGroupData, ThrowOnError>): RequestResult<EditGroupResponses, EditGroupErrors, ThrowOnError> => (options.client ?? client).patch<EditGroupResponses, EditGroupErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get group roles.
+ */
+export const getGroupRoles = <ThrowOnError extends boolean = false>(options: Options<GetGroupRolesData, ThrowOnError>): RequestResult<GetGroupRolesResponses, GetGroupRolesErrors, ThrowOnError> => (options.client ?? client).get<GetGroupRolesResponses, GetGroupRolesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles',
+    ...options
+});
+
+/**
+ * Add group roles.
+ */
+export const addGroupRoles = <ThrowOnError extends boolean = false>(options: Options<AddGroupRolesData, ThrowOnError>): RequestResult<AddGroupRolesResponses, AddGroupRolesErrors, ThrowOnError> => (options.client ?? client).post<AddGroupRolesResponses, AddGroupRolesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Remove a user from a group.
+ */
+export const deleteGroupRole = <ThrowOnError extends boolean = false>(options: Options<DeleteGroupRoleData, ThrowOnError>): RequestResult<DeleteGroupRoleResponses, DeleteGroupRoleErrors, ThrowOnError> => (options.client ?? client).delete<DeleteGroupRoleResponses, DeleteGroupRoleErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles/{user_id}',
+    ...options
+});
+
+/**
+ * Update group roles.
+ */
+export const updateGroupRoles = <ThrowOnError extends boolean = false>(options: Options<UpdateGroupRolesData, ThrowOnError>): RequestResult<UpdateGroupRolesResponses, UpdateGroupRolesErrors, ThrowOnError> => (options.client ?? client).patch<UpdateGroupRolesResponses, UpdateGroupRolesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles/{user_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get conversation messages.
+ */
+export const getMessages = <ThrowOnError extends boolean = false>(options: Options<GetMessagesData, ThrowOnError>): RequestResult<GetMessagesResponses, GetMessagesErrors, ThrowOnError> => (options.client ?? client).get<GetMessagesResponses, GetMessagesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages',
+    ...options
+});
+
+/**
+ * Send a conversation message.
+ */
+export const sendMessage = <ThrowOnError extends boolean = false>(options: Options<SendMessageData, ThrowOnError>): RequestResult<SendMessageResponses, SendMessageErrors, ThrowOnError> => (options.client ?? client).post<SendMessageResponses, SendMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete a message.
+ */
+export const deleteMessage = <ThrowOnError extends boolean = false>(options: Options<DeleteMessageData, ThrowOnError>): RequestResult<DeleteMessageResponses, DeleteMessageErrors, ThrowOnError> => (options.client ?? client).delete<DeleteMessageResponses, DeleteMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}',
+    ...options
+});
+
+/**
+ * Edit a message.
+ */
+export const editMessage = <ThrowOnError extends boolean = false>(options: Options<EditMessageData, ThrowOnError>): RequestResult<EditMessageResponses, EditMessageErrors, ThrowOnError> => (options.client ?? client).patch<EditMessageResponses, EditMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Read a message.
+ */
+export const readMessage = <ThrowOnError extends boolean = false>(options: Options<ReadMessageData, ThrowOnError>): RequestResult<ReadMessageResponses, ReadMessageErrors, ThrowOnError> => (options.client ?? client).post<ReadMessageResponses, ReadMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/read',
+    ...options
+});
+
+/**
+ * Get message thread.
+ */
+export const getMessageThread = <ThrowOnError extends boolean = false>(options: Options<GetMessageThreadData, ThrowOnError>): RequestResult<GetMessageThreadResponses, GetMessageThreadErrors, ThrowOnError> => (options.client ?? client).get<GetMessageThreadResponses, GetMessageThreadErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/thread',
+    ...options
+});
+
+/**
+ * Remove a reaction from a message.
+ */
+export const deleteMessageReaction = <ThrowOnError extends boolean = false>(options: Options<DeleteMessageReactionData, ThrowOnError>): RequestResult<DeleteMessageReactionResponses, DeleteMessageReactionErrors, ThrowOnError> => (options.client ?? client).delete<DeleteMessageReactionResponses, DeleteMessageReactionErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}',
+    ...options
+});
+
+/**
+ * Add a reaction to a message.
+ */
+export const addMessageReaction = <ThrowOnError extends boolean = false>(options: Options<AddMessageReactionData, ThrowOnError>): RequestResult<AddMessageReactionResponses, AddMessageReactionErrors, ThrowOnError> => (options.client ?? client).put<AddMessageReactionResponses, AddMessageReactionErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}',
+    ...options
 });

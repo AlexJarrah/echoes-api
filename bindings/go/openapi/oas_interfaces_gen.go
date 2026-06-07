@@ -5,8 +5,44 @@ type AddFriendRes interface {
 	addFriendRes()
 }
 
+type AddGroupRolesRes interface {
+	addGroupRolesRes()
+}
+
+type AddMessageReactionRes interface {
+	addMessageReactionRes()
+}
+
 type AddToLibraryRes interface {
 	addToLibraryRes()
+}
+
+type CreateGroupRes interface {
+	createGroupRes()
+}
+
+type DeleteGroupRes interface {
+	deleteGroupRes()
+}
+
+type DeleteGroupRoleRes interface {
+	deleteGroupRoleRes()
+}
+
+type DeleteMessageReactionRes interface {
+	deleteMessageReactionRes()
+}
+
+type DeleteMessageRes interface {
+	deleteMessageRes()
+}
+
+type EditGroupRes interface {
+	editGroupRes()
+}
+
+type EditMessageRes interface {
+	editMessageRes()
 }
 
 type GetAlbumRes interface {
@@ -33,12 +69,32 @@ type GetGlobalTopTracksRes interface {
 	getGlobalTopTracksRes()
 }
 
+type GetGroupRes interface {
+	getGroupRes()
+}
+
+type GetGroupRolesRes interface {
+	getGroupRolesRes()
+}
+
+type GetGroupsRes interface {
+	getGroupsRes()
+}
+
 type GetLibraryMetadataRes interface {
 	getLibraryMetadataRes()
 }
 
 type GetListenSessionsRes interface {
 	getListenSessionsRes()
+}
+
+type GetMessageThreadRes interface {
+	getMessageThreadRes()
+}
+
+type GetMessagesRes interface {
+	getMessagesRes()
 }
 
 type GetRelationsDetailsRes interface {
@@ -77,6 +133,10 @@ type JoinFreeBetaRes interface {
 	joinFreeBetaRes()
 }
 
+type ReadMessageRes interface {
+	readMessageRes()
+}
+
 type RegisterRes interface {
 	registerRes()
 }
@@ -93,6 +153,10 @@ type SearchTracksViaDetailsRes interface {
 	searchTracksViaDetailsRes()
 }
 
+type SendMessageRes interface {
+	sendMessageRes()
+}
+
 type SetActivityRes interface {
 	setActivityRes()
 }
@@ -107,6 +171,10 @@ type SetBlockedRes interface {
 
 type SignInRes interface {
 	signInRes()
+}
+
+type UpdateGroupRolesRes interface {
+	updateGroupRolesRes()
 }
 
 type UpdateLibraryRes interface {

@@ -195,6 +195,27 @@ export type Group = {
     updated_at?: string | null;
 };
 
+export type GroupDetails = {
+    group: Group;
+    conversation: Conversation;
+    roles: Array<GroupRole>;
+    latest_message: Message;
+    unread_count: number;
+};
+
+export type CreateGroupRequest = {
+    name: string;
+    description?: string;
+    visibility: Visibility;
+    members: Array<string>;
+};
+
+export type EditGroupRequest = {
+    name?: string;
+    description?: string;
+    visibility?: Visibility;
+};
+
 export type GroupRole = {
     group_id: string;
     user_id: string;
@@ -210,10 +231,16 @@ export type Message = {
      * Null if user is deleted.
      */
     user_id?: string | null;
+    body: string;
     parent_id?: number | null;
     deleted_at?: string | null;
     created_at: string;
     updated_at?: string | null;
+};
+
+export type MessageDetails = {
+    message: Message;
+    reactions?: Array<MessageReaction>;
 };
 
 export type GroupAsset = {
@@ -226,7 +253,7 @@ export type GroupAsset = {
 };
 
 export type MessageAsset = {
-    message_id: string;
+    message_id: number;
     asset_id: string;
     /**
      * Lexicographically sortable string
@@ -243,7 +270,7 @@ export type MessageReaction = {
 
 export type ConversationRead = {
     user_id: string;
-    message_id?: number;
+    conversation_id: string;
     latest_message_id: number;
     read_at: string;
 };
@@ -1839,3 +1866,569 @@ export type GetGlobalTopArtistsResponses = {
 };
 
 export type GetGlobalTopArtistsResponse = GetGlobalTopArtistsResponses[keyof GetGlobalTopArtistsResponses];
+
+export type GetGroupsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/groups';
+};
+
+export type GetGroupsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGroupsError = GetGroupsErrors[keyof GetGroupsErrors];
+
+export type GetGroupsResponses = {
+    /**
+     * Groups retrieved successfully.
+     */
+    200: Array<GroupDetails>;
+};
+
+export type GetGroupsResponse = GetGroupsResponses[keyof GetGroupsResponses];
+
+export type CreateGroupData = {
+    body: CreateGroupRequest;
+    path?: never;
+    query?: never;
+    url: '/api/groups';
+};
+
+export type CreateGroupErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type CreateGroupError = CreateGroupErrors[keyof CreateGroupErrors];
+
+export type CreateGroupResponses = {
+    /**
+     * Group created successfully.
+     */
+    200: Group;
+};
+
+export type CreateGroupResponse = CreateGroupResponses[keyof CreateGroupResponses];
+
+export type DeleteGroupData = {
+    body?: never;
+    path: {
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}';
+};
+
+export type DeleteGroupErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteGroupError = DeleteGroupErrors[keyof DeleteGroupErrors];
+
+export type DeleteGroupResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteGroupResponse = DeleteGroupResponses[keyof DeleteGroupResponses];
+
+export type GetGroupData = {
+    body?: never;
+    path: {
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}';
+};
+
+export type GetGroupErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGroupError = GetGroupErrors[keyof GetGroupErrors];
+
+export type GetGroupResponses = {
+    /**
+     * Group retrieved successfully.
+     */
+    200: GroupDetails;
+};
+
+export type GetGroupResponse = GetGroupResponses[keyof GetGroupResponses];
+
+export type EditGroupData = {
+    body: EditGroupRequest;
+    path: {
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}';
+};
+
+export type EditGroupErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditGroupError = EditGroupErrors[keyof EditGroupErrors];
+
+export type EditGroupResponses = {
+    /**
+     * Group edited successfully.
+     */
+    200: Group;
+};
+
+export type EditGroupResponse = EditGroupResponses[keyof EditGroupResponses];
+
+export type GetGroupRolesData = {
+    body?: never;
+    path: {
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}/roles';
+};
+
+export type GetGroupRolesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGroupRolesError = GetGroupRolesErrors[keyof GetGroupRolesErrors];
+
+export type GetGroupRolesResponses = {
+    /**
+     * Group roles retrieved successfully.
+     */
+    200: Array<GroupRole>;
+};
+
+export type GetGroupRolesResponse = GetGroupRolesResponses[keyof GetGroupRolesResponses];
+
+export type AddGroupRolesData = {
+    body: Array<GroupRole>;
+    path: {
+        group_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}/roles';
+};
+
+export type AddGroupRolesErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type AddGroupRolesError = AddGroupRolesErrors[keyof AddGroupRolesErrors];
+
+export type AddGroupRolesResponses = {
+    /**
+     * Group roles added successfully.
+     */
+    200: Array<GroupRole>;
+};
+
+export type AddGroupRolesResponse = AddGroupRolesResponses[keyof AddGroupRolesResponses];
+
+export type DeleteGroupRoleData = {
+    body?: never;
+    path: {
+        group_id: string;
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}/roles/{user_id}';
+};
+
+export type DeleteGroupRoleErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteGroupRoleError = DeleteGroupRoleErrors[keyof DeleteGroupRoleErrors];
+
+export type DeleteGroupRoleResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteGroupRoleResponse = DeleteGroupRoleResponses[keyof DeleteGroupRoleResponses];
+
+export type UpdateGroupRolesData = {
+    body: {
+        role: GroupRoleType;
+    };
+    path: {
+        group_id: string;
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}/roles/{user_id}';
+};
+
+export type UpdateGroupRolesErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type UpdateGroupRolesError = UpdateGroupRolesErrors[keyof UpdateGroupRolesErrors];
+
+export type UpdateGroupRolesResponses = {
+    /**
+     * Group roles updated successfully.
+     */
+    200: GroupRole;
+};
+
+export type UpdateGroupRolesResponse = UpdateGroupRolesResponses[keyof UpdateGroupRolesResponses];
+
+export type GetMessagesData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+    };
+    query?: {
+        before?: number;
+        limit?: number;
+    };
+    url: '/api/conversations/{conversation_id}/messages';
+};
+
+export type GetMessagesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetMessagesError = GetMessagesErrors[keyof GetMessagesErrors];
+
+export type GetMessagesResponses = {
+    /**
+     * Messages retrieved successfully.
+     */
+    200: Array<MessageDetails>;
+};
+
+export type GetMessagesResponse = GetMessagesResponses[keyof GetMessagesResponses];
+
+export type SendMessageData = {
+    body: {
+        body: string;
+        parent_id?: number | null;
+    };
+    path: {
+        conversation_id: string;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages';
+};
+
+export type SendMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SendMessageError = SendMessageErrors[keyof SendMessageErrors];
+
+export type SendMessageResponses = {
+    /**
+     * Message sent successfully.
+     */
+    200: Message;
+};
+
+export type SendMessageResponse = SendMessageResponses[keyof SendMessageResponses];
+
+export type DeleteMessageData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}';
+};
+
+export type DeleteMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteMessageError = DeleteMessageErrors[keyof DeleteMessageErrors];
+
+export type DeleteMessageResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteMessageResponse = DeleteMessageResponses[keyof DeleteMessageResponses];
+
+export type EditMessageData = {
+    body: {
+        body?: string;
+    };
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}';
+};
+
+export type EditMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditMessageError = EditMessageErrors[keyof EditMessageErrors];
+
+export type EditMessageResponses = {
+    /**
+     * Message edited successfully.
+     */
+    200: Message;
+};
+
+export type EditMessageResponse = EditMessageResponses[keyof EditMessageResponses];
+
+export type ReadMessageData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/read';
+};
+
+export type ReadMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ReadMessageError = ReadMessageErrors[keyof ReadMessageErrors];
+
+export type ReadMessageResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type ReadMessageResponse = ReadMessageResponses[keyof ReadMessageResponses];
+
+export type GetMessageThreadData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: {
+        before?: number;
+        limit?: number;
+    };
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/thread';
+};
+
+export type GetMessageThreadErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetMessageThreadError = GetMessageThreadErrors[keyof GetMessageThreadErrors];
+
+export type GetMessageThreadResponses = {
+    /**
+     * Thread retrieved successfully.
+     */
+    200: Array<MessageDetails>;
+};
+
+export type GetMessageThreadResponse = GetMessageThreadResponses[keyof GetMessageThreadResponses];
+
+export type DeleteMessageReactionData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+        emoji: string;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}';
+};
+
+export type DeleteMessageReactionErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteMessageReactionError = DeleteMessageReactionErrors[keyof DeleteMessageReactionErrors];
+
+export type DeleteMessageReactionResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteMessageReactionResponse = DeleteMessageReactionResponses[keyof DeleteMessageReactionResponses];
+
+export type AddMessageReactionData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+        emoji: string;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}';
+};
+
+export type AddMessageReactionErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type AddMessageReactionError = AddMessageReactionErrors[keyof AddMessageReactionErrors];
+
+export type AddMessageReactionResponses = {
+    /**
+     * Reaction added successfully.
+     */
+    200: MessageReaction;
+};
+
+export type AddMessageReactionResponse = AddMessageReactionResponses[keyof AddMessageReactionResponses];

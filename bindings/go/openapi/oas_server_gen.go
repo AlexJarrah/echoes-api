@@ -14,12 +14,66 @@ type Handler interface {
 	//
 	// POST /api/add-friend
 	AddFriend(ctx context.Context, req *FriendActionRequest) (AddFriendRes, error)
+	// AddGroupRoles implements AddGroupRoles operation.
+	//
+	// Add group roles.
+	//
+	// POST /api/groups/{group_id}/roles
+	AddGroupRoles(ctx context.Context, req []GroupRole, params AddGroupRolesParams) (AddGroupRolesRes, error)
+	// AddMessageReaction implements addMessageReaction operation.
+	//
+	// Add a reaction to a message.
+	//
+	// PUT /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+	AddMessageReaction(ctx context.Context, params AddMessageReactionParams) (AddMessageReactionRes, error)
 	// AddToLibrary implements addToLibrary operation.
 	//
 	// Add items to library.
 	//
 	// POST /api/library/add
 	AddToLibrary(ctx context.Context, req *LibraryAddRequest) (AddToLibraryRes, error)
+	// CreateGroup implements createGroup operation.
+	//
+	// Create a new group as owner.
+	//
+	// POST /api/groups
+	CreateGroup(ctx context.Context, req *CreateGroupRequest) (CreateGroupRes, error)
+	// DeleteGroup implements deleteGroup operation.
+	//
+	// Delete a group if owned by the user.
+	//
+	// DELETE /api/groups/{group_id}
+	DeleteGroup(ctx context.Context, params DeleteGroupParams) (DeleteGroupRes, error)
+	// DeleteGroupRole implements deleteGroupRole operation.
+	//
+	// Remove a user from a group.
+	//
+	// DELETE /api/groups/{group_id}/roles/{user_id}
+	DeleteGroupRole(ctx context.Context, params DeleteGroupRoleParams) (DeleteGroupRoleRes, error)
+	// DeleteMessage implements deleteMessage operation.
+	//
+	// Delete a message.
+	//
+	// DELETE /api/conversations/{conversation_id}/messages/{message_id}
+	DeleteMessage(ctx context.Context, params DeleteMessageParams) (DeleteMessageRes, error)
+	// DeleteMessageReaction implements deleteMessageReaction operation.
+	//
+	// Remove a reaction from a message.
+	//
+	// DELETE /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
+	DeleteMessageReaction(ctx context.Context, params DeleteMessageReactionParams) (DeleteMessageReactionRes, error)
+	// EditGroup implements editGroup operation.
+	//
+	// Edit a group.
+	//
+	// PATCH /api/groups/{group_id}
+	EditGroup(ctx context.Context, req *EditGroupRequest, params EditGroupParams) (EditGroupRes, error)
+	// EditMessage implements editMessage operation.
+	//
+	// Edit a message.
+	//
+	// PATCH /api/conversations/{conversation_id}/messages/{message_id}
+	EditMessage(ctx context.Context, req *EditMessageReq, params EditMessageParams) (EditMessageRes, error)
 	// GetAlbum implements getAlbum operation.
 	//
 	// Get album details.
@@ -66,6 +120,24 @@ type Handler interface {
 	//
 	// POST /api/statistics/global/top/tracks
 	GetGlobalTopTracks(ctx context.Context, req OptStatisticsQuery) (GetGlobalTopTracksRes, error)
+	// GetGroup implements getGroup operation.
+	//
+	// Get group.
+	//
+	// GET /api/groups/{group_id}
+	GetGroup(ctx context.Context, params GetGroupParams) (GetGroupRes, error)
+	// GetGroupRoles implements getGroupRoles operation.
+	//
+	// Get group roles.
+	//
+	// GET /api/groups/{group_id}/roles
+	GetGroupRoles(ctx context.Context, params GetGroupRolesParams) (GetGroupRolesRes, error)
+	// GetGroups implements getGroups operation.
+	//
+	// Get groups visible to the user.
+	//
+	// GET /api/groups
+	GetGroups(ctx context.Context) (GetGroupsRes, error)
 	// GetLibraryMetadata implements getLibraryMetadata operation.
 	//
 	// Get library metadata.
@@ -78,6 +150,18 @@ type Handler interface {
 	//
 	// POST /api/listens/sessions
 	GetListenSessions(ctx context.Context, req *ListensSessionsRequest) (GetListenSessionsRes, error)
+	// GetMessageThread implements getMessageThread operation.
+	//
+	// Get message thread.
+	//
+	// GET /api/conversations/{conversation_id}/messages/{message_id}/thread
+	GetMessageThread(ctx context.Context, params GetMessageThreadParams) (GetMessageThreadRes, error)
+	// GetMessages implements getMessages operation.
+	//
+	// Get conversation messages.
+	//
+	// GET /api/conversations/{conversation_id}/messages
+	GetMessages(ctx context.Context, params GetMessagesParams) (GetMessagesRes, error)
 	// GetOpenAPI implements getOpenAPI operation.
 	//
 	// Get OpenAPI schema.
@@ -138,6 +222,12 @@ type Handler interface {
 	//
 	// POST /api/join-free-beta
 	JoinFreeBeta(ctx context.Context) (JoinFreeBetaRes, error)
+	// ReadMessage implements readMessage operation.
+	//
+	// Read a message.
+	//
+	// POST /api/conversations/{conversation_id}/messages/{message_id}/read
+	ReadMessage(ctx context.Context, params ReadMessageParams) (ReadMessageRes, error)
 	// Register implements register operation.
 	//
 	// Register a new user.
@@ -162,6 +252,12 @@ type Handler interface {
 	//
 	// POST /api/search-tracks-via-details
 	SearchTracksViaDetails(ctx context.Context, req *SearchTracksRequest) (SearchTracksViaDetailsRes, error)
+	// SendMessage implements sendMessage operation.
+	//
+	// Send a conversation message.
+	//
+	// POST /api/conversations/{conversation_id}/messages
+	SendMessage(ctx context.Context, req *SendMessageReq, params SendMessageParams) (SendMessageRes, error)
 	// SetActivity implements setActivity operation.
 	//
 	// Set current activity.
@@ -186,6 +282,12 @@ type Handler interface {
 	//
 	// POST /api/signin
 	SignIn(ctx context.Context, req *SignInRequest) (SignInRes, error)
+	// UpdateGroupRoles implements UpdateGroupRoles operation.
+	//
+	// Update group roles.
+	//
+	// PATCH /api/groups/{group_id}/roles/{user_id}
+	UpdateGroupRoles(ctx context.Context, req *UpdateGroupRolesReq, params UpdateGroupRolesParams) (UpdateGroupRolesRes, error)
 	// UpdateLibrary implements updateLibrary operation.
 	//
 	// Update items in library.

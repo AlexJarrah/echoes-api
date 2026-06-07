@@ -476,6 +476,58 @@ components:
           format: date-time
           nullable: true
 
+    GroupDetails:
+      type: object
+      required:
+        - group
+        - conversation
+        - roles
+        - latest_message
+        - unread_count
+      properties:
+        group:
+          $ref: "#/components/schemas/Group"
+        conversation:
+          $ref: "#/components/schemas/Conversation"
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/GroupRole"
+        latest_message:
+          $ref: "#/components/schemas/Message"
+        unread_count:
+          type: integer
+          format: uint32
+
+    CreateGroupRequest:
+      type: object
+      required:
+        - name
+        - visibility
+        - members
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        visibility:
+          $ref: "#/components/schemas/Visibility"
+        members:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    EditGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        visibility:
+          $ref: "#/components/schemas/Visibility"
+
     GroupRole:
       type: object
       required:
@@ -519,6 +571,8 @@ components:
           format: uuid
           nullable: true
           description: Null if user is deleted.
+        body:
+          type: string
         parent_id:
           type: integer
           format: uint64
@@ -534,6 +588,18 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    MessageDetails:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          $ref: "#/components/schemas/Message"
+        reactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/MessageReaction"
 
     GroupAsset:
       type: object
@@ -560,8 +626,8 @@ components:
         - position
       properties:
         message_id:
-          type: string
-          format: uuid
+          type: integer
+          format: uint64
         asset_id:
           type: string
           format: uuid
@@ -600,9 +666,9 @@ components:
         user_id:
           type: string
           format: uuid
-        message_id:
-          type: integer
-          format: uint64
+        conversation_id:
+          type: string
+          format: uuid
         latest_message_id:
           type: integer
           format: uint64
@@ -2598,5 +2664,575 @@ paths:
                   $ref: "#/components/schemas/TopArtistEntry"
         "400":
           $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/groups:
+    get:
+      summary: Get groups visible to the user.
+      operationId: getGroups
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Groups retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new group as owner.
+      operationId: createGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGroupRequest"
+      responses:
+        "200":
+          description: Group created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/groups/{group_id}:
+    get:
+      summary: Get group.
+      operationId: getGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Group retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      summary: Edit a group.
+      operationId: editGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditGroupRequest"
+      responses:
+        "200":
+          description: Group edited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete a group if owned by the user.
+      operationId: deleteGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/groups/{group_id}/roles:
+    get:
+      summary: Get group roles.
+      operationId: getGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Group roles retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupRole"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Add group roles.
+      operationId: AddGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/GroupRole"
+      responses:
+        "200":
+          description: Group roles added successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupRole"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/groups/{group_id}/roles/{user_id}:
+    patch:
+      summary: Update group roles.
+      operationId: UpdateGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                role:
+                  $ref: "#/components/schemas/GroupRoleType"
+      responses:
+        "200":
+          description: Group roles updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupRole"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Remove a user from a group.
+      operationId: deleteGroupRole
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/conversations/{conversation_id}/messages:
+    get:
+      summary: Get conversation messages.
+      operationId: getMessages
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        "200":
+          description: Messages retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Send a conversation message.
+      operationId: sendMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - body
+              properties:
+                body:
+                  type: string
+                parent_id:
+                  type: integer
+                  format: uint64
+                  nullable: true
+      responses:
+        "200":
+          description: Message sent successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/conversations/{conversation_id}/messages/{message_id}:
+    patch:
+      summary: Edit a message.
+      operationId: editMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+      responses:
+        "200":
+          description: Message edited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete a message.
+      operationId: deleteMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/conversations/{conversation_id}/messages/{message_id}/read:
+    post:
+      summary: Read a message.
+      operationId: readMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/conversations/{conversation_id}/messages/{message_id}/thread:
+    get:
+      summary: Get message thread.
+      operationId: getMessageThread
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        "200":
+          description: Thread retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
+    put:
+      summary: Add a reaction to a message.
+      operationId: addMessageReaction
+      tags:
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: emoji
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Reaction added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageReaction"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Remove a reaction from a message.
+      operationId: deleteMessageReaction
+      tags:
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: emoji
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"`
