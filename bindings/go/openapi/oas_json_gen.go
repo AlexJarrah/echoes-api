@@ -10858,41 +10858,6 @@ func (s *OptDateTime) UnmarshalJSON(data []byte) error {
 	return s.Decode(d, json.DecodeDateTime)
 }
 
-// Encode encodes int32 as json.
-func (o OptInt32) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	e.Int32(int32(o.Value))
-}
-
-// Decode decodes int32 from json.
-func (o *OptInt32) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptInt32 to nil")
-	}
-	o.Set = true
-	v, err := d.Int32()
-	if err != nil {
-		return err
-	}
-	o.Value = int32(v)
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptInt32) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptInt32) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
 // Encode encodes int64 as json.
 func (o OptInt64) Encode(e *jx.Encoder) {
 	if !o.Set {
@@ -13760,7 +13725,7 @@ func (s *Session) Encode(e *jx.Encoder) {
 func (s *Session) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("id")
-		e.Int32(s.ID)
+		e.UInt32(s.ID)
 	}
 	{
 		e.FieldStart("start")
@@ -13820,8 +13785,8 @@ func (s *Session) Decode(d *jx.Decoder) error {
 		case "id":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				v, err := d.Int32()
-				s.ID = int32(v)
+				v, err := d.UInt32()
+				s.ID = uint32(v)
 				if err != nil {
 					return err
 				}
@@ -14334,7 +14299,7 @@ func (s *SessionListen) Encode(e *jx.Encoder) {
 func (s *SessionListen) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("id")
-		e.Int32(s.ID)
+		e.UInt32(s.ID)
 	}
 	{
 		e.FieldStart("track")
@@ -14369,8 +14334,8 @@ func (s *SessionListen) Decode(d *jx.Decoder) error {
 		case "id":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				v, err := d.Int32()
-				s.ID = int32(v)
+				v, err := d.UInt32()
+				s.ID = uint32(v)
 				if err != nil {
 					return err
 				}

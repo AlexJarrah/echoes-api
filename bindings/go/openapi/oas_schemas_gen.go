@@ -3263,52 +3263,6 @@ func (o OptInt) Or(d int) int {
 	return d
 }
 
-// NewOptInt32 returns new OptInt32 with value set to v.
-func NewOptInt32(v int32) OptInt32 {
-	return OptInt32{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptInt32 is optional int32.
-type OptInt32 struct {
-	Value int32
-	Set   bool
-}
-
-// IsSet returns true if OptInt32 was set.
-func (o OptInt32) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptInt32) Reset() {
-	var v int32
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptInt32) SetTo(v int32) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptInt32) Get() (v int32, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptInt32) Or(d int32) int32 {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
 // NewOptInt64 returns new OptInt64 with value set to v.
 func NewOptInt64(v int64) OptInt64 {
 	return OptInt64{
@@ -4848,7 +4802,7 @@ func (s *SendMessageReq) SetParentID(val OptNilUint64) {
 // Ref: #/components/schemas/Session
 type Session struct {
 	// Unique identifier for this listening session.
-	ID int32 `json:"id"`
+	ID uint32 `json:"id"`
 	// Timestamp when the session started.
 	Start time.Time `json:"start"`
 	// Timestamp when the session ended.
@@ -4864,7 +4818,7 @@ type Session struct {
 }
 
 // GetID returns the value of ID.
-func (s *Session) GetID() int32 {
+func (s *Session) GetID() uint32 {
 	return s.ID
 }
 
@@ -4899,7 +4853,7 @@ func (s *Session) GetPartial() OptNilBool {
 }
 
 // SetID sets the value of ID.
-func (s *Session) SetID(val int32) {
+func (s *Session) SetID(val uint32) {
 	s.ID = val
 }
 
@@ -5032,7 +4986,7 @@ func (s *SessionDay) SetSessions(val []Session) {
 // Ref: #/components/schemas/SessionListen
 type SessionListen struct {
 	// Unique identifier for this listen event.
-	ID int32 `json:"id"`
+	ID uint32 `json:"id"`
 	// UUID of the track listened to.
 	Track uuid.UUID `json:"track"`
 	// Timestamp when playback started.
@@ -5042,7 +4996,7 @@ type SessionListen struct {
 }
 
 // GetID returns the value of ID.
-func (s *SessionListen) GetID() int32 {
+func (s *SessionListen) GetID() uint32 {
 	return s.ID
 }
 
@@ -5062,7 +5016,7 @@ func (s *SessionListen) GetEnd() time.Time {
 }
 
 // SetID sets the value of ID.
-func (s *SessionListen) SetID(val int32) {
+func (s *SessionListen) SetID(val uint32) {
 	s.ID = val
 }
 
@@ -5363,7 +5317,7 @@ type StatisticsQuery struct {
 	// End timestamp for the time range.
 	End OptDateTime `json:"end"`
 	// Maximum number of results to return.
-	Limit OptInt32 `json:"limit"`
+	Limit OptUint32 `json:"limit"`
 }
 
 // GetStart returns the value of Start.
@@ -5377,7 +5331,7 @@ func (s *StatisticsQuery) GetEnd() OptDateTime {
 }
 
 // GetLimit returns the value of Limit.
-func (s *StatisticsQuery) GetLimit() OptInt32 {
+func (s *StatisticsQuery) GetLimit() OptUint32 {
 	return s.Limit
 }
 
@@ -5392,7 +5346,7 @@ func (s *StatisticsQuery) SetEnd(val OptDateTime) {
 }
 
 // SetLimit sets the value of Limit.
-func (s *StatisticsQuery) SetLimit(val OptInt32) {
+func (s *StatisticsQuery) SetLimit(val OptUint32) {
 	s.Limit = val
 }
 

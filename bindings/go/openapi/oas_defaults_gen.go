@@ -81,7 +81,7 @@ func (s *ListensSessionsRequest) setDefaults() {
 // setDefaults set default value of fields.
 func (s *StatisticsQuery) setDefaults() {
 	{
-		val := int32(100)
+		val := uint32(100)
 		s.Limit.SetTo(val)
 	}
 }

@@ -1401,7 +1401,7 @@ components:
       properties:
         id:
           type: integer
-          format: int32
+          format: uint32
           description: Unique identifier for this listen event.
         track:
           type: string
@@ -1426,7 +1426,7 @@ components:
       properties:
         id:
           type: integer
-          format: int32
+          format: uint32
           description: Unique identifier for this listening session.
         start:
           type: string
@@ -1728,7 +1728,7 @@ components:
           description: End timestamp for the time range
         limit:
           type: integer
-          format: int32
+          format: uint32
           default: 100
           maximum: 10000
           description: Maximum number of results to return

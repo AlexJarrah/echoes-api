@@ -1362,7 +1362,7 @@ export interface components {
         };
         SessionListen: {
             /**
-             * Format: int32
+             * Format: uint32
              * @description Unique identifier for this listen event.
              */
             id: number;
@@ -1384,7 +1384,7 @@ export interface components {
         };
         Session: {
             /**
-             * Format: int32
+             * Format: uint32
              * @description Unique identifier for this listening session.
              */
             id: number;
@@ -1580,7 +1580,7 @@ export interface components {
              */
             end?: string;
             /**
-             * Format: int32
+             * Format: uint32
              * @description Maximum number of results to return
              * @default 100
              */
