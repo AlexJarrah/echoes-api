@@ -1,10 +1,14 @@
 package schemas
 
 const OpenAPI = `openapi: 3.0.0
+
 info:
   title: Echoes
   description: HTTP API
   version: 1.0.0
+  license:
+    name: Proprietary
+
 servers:
   - url: https://echoes.la
     description: Production server.
