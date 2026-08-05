@@ -1,0 +1,45 @@
+RelationDetails:
+  type: object
+  required:
+    - user_id
+    - name
+    - handle
+    - visibility
+    - relation
+  properties:
+    user_id:
+      type: string
+      format: uuid
+    name:
+      type: string
+    visibility:
+      $ref: "#/components/schemas/Visibility"
+    handle:
+      type: string
+    relation:
+      $ref: "#/components/schemas/UserRelation"
+    activity:
+      type: object
+      required:
+        - listens
+      properties:
+        listens:
+          type: array
+          items:
+            $ref: "#/components/schemas/Listen"
+    statistics:
+      type: object
+      required:
+        - year_listens
+        - year_seconds
+        - listening_streak
+      properties:
+        year_listens:
+          type: integer
+          format: uint64
+        year_seconds:
+          type: integer
+          format: uint64
+        listening_streak:
+          type: integer
+          format: uint16

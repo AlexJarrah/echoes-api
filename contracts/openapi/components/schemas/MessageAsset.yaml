@@ -1,0 +1,16 @@
+MessageAsset:
+  type: object
+  required:
+    - message_id
+    - asset_id
+    - position
+  properties:
+    message_id:
+      type: integer
+      format: uint64
+    asset_id:
+      type: string
+      format: uuid
+    position:
+      type: string
+      description: Lexicographically sortable string

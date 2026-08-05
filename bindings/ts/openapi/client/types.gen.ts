@@ -4,71 +4,12 @@ export type ClientOptions = {
     baseUrl: 'https://echoes.la' | (string & {});
 };
 
-/**
- * 0=Public: visible to everyone
- * 1=Friends: visible to the user's friends
- * 2=BestFriends: visible to the user's best friends
- * 3=Private: visible to only the user
- *
- */
-export type Visibility = 0 | 1 | 2 | 3;
-
-/**
- * 0=API: listen was added via API
- * 1=App: listen was added via an official client application
- * 2=Spotify: listen was imported from Spotify
- * 3=AppleMusic: listen was imported from Apple Music
- * 4=Last: listen was imported from Last
- * 5=YouTube: listen was imported from YouTube
- *
- */
-export type ListenMethod = 0 | 1 | 2 | 3 | 4 | 5;
-
-/**
- * 0=Google
- * 1=Spotify
- * 2=Last
- *
- */
-export type IntegrationProvider = 0 | 1 | 2;
-
-/**
- * 0=Friend: users are friends
- * 1=BestFriend: source user set target user as a best friend
- * 2=OutgoingRequest: source user has an outgoing friend request
- * 3=IncomingRequest: source user has an incoming friend request
- * 4=BlockSent: source user has blocked target user
- * 5=BlockReceived: target user has blocked source user
- *
- */
-export type UserRelation = 0 | 1 | 2 | 3 | 4 | 5;
-
-/**
- * 0=Owner
- * 1=Moderator
- * 2=Member
- *
- */
-export type GroupRoleType = 0 | 1 | 2;
-
-export type User = {
-    user_id: string;
-    handle: string;
-    name: string;
-    email: string;
-    visibility: Visibility;
-    subscription_expiration: string;
-    created_at: string;
-    updated_at?: string | null;
-};
-
-export type Track = {
-    track_id: string;
+export type Album = {
+    album_id: string;
     user_id?: string | null;
+    base_album_id?: string | null;
     name: string;
-    seconds?: number | null;
-    lyrics?: string | null;
-    explicit?: boolean | null;
+    release_date?: string | null;
     musicbrainz_id?: string | null;
     spotify_url?: string | null;
     apple_music_url?: string | null;
@@ -76,6 +17,34 @@ export type Track = {
     youtube_music_url?: string | null;
     created_at: string;
     updated_at?: string | null;
+};
+
+export type AlbumArtist = {
+    album_id: string;
+    artist_id: string;
+};
+
+export type AlbumAsset = {
+    album_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+};
+
+export type AlbumPlayStats = {
+    album: Album;
+    assets: Array<AlbumAsset>;
+    play_count: number;
+    play_duration: number;
+};
+
+export type AlbumTrack = {
+    album_id: string;
+    track_id: string;
+    disc_number?: number | null;
+    track_number?: number | null;
 };
 
 export type Artist = {
@@ -92,56 +61,6 @@ export type Artist = {
     updated_at?: string | null;
 };
 
-export type Album = {
-    album_id: string;
-    user_id?: string | null;
-    base_album_id?: string | null;
-    name: string;
-    release_date?: string | null;
-    musicbrainz_id?: string | null;
-    spotify_url?: string | null;
-    apple_music_url?: string | null;
-    tidal_url?: string | null;
-    youtube_music_url?: string | null;
-    created_at: string;
-    updated_at?: string | null;
-};
-
-export type Listen = {
-    listen_id: number;
-    user_id: string;
-    track_id: string;
-    seconds: number;
-    method: ListenMethod;
-    created_at: string;
-    updated_at?: string | null;
-};
-
-export type Asset = {
-    asset_id: string;
-    mime_type: string;
-    created_at: string;
-    updated_at: string | null;
-};
-
-export type UserAsset = {
-    user_id: string;
-    asset_id: string;
-    /**
-     * Lexicographically sortable string
-     */
-    position: string;
-};
-
-export type AlbumAsset = {
-    album_id: string;
-    asset_id: string;
-    /**
-     * Lexicographically sortable string
-     */
-    position: string;
-};
-
 export type ArtistAsset = {
     artist_id: string;
     asset_id: string;
@@ -151,27 +70,52 @@ export type ArtistAsset = {
     position: string;
 };
 
-export type RelationDetails = {
-    user_id: string;
-    name: string;
-    visibility: Visibility;
-    handle: string;
-    relation: UserRelation;
-    activity?: {
-        listens: Array<Listen>;
-    };
-    statistics?: {
-        year_listens: number;
-        year_seconds: number;
-        listening_streak: number;
-    };
+export type ArtistPlayStatisticsQuery = {
+    /**
+     * Start timestamp for the time range, defaults to one year ago.
+     */
+    start?: string;
+    /**
+     * Start timestamp for the time range, defaults to current time.
+     */
+    end?: string;
+    /**
+     * Maximum number of artists to return
+     */
+    artist_limit?: number;
+    /**
+     * Maximum number of tracks per artist to return
+     */
+    track_limit?: number;
+    /**
+     * Maximum number of albums per artist to return
+     */
+    album_limit?: number;
+    artist_offset?: number;
 };
 
-export type Relation = {
-    source_id: string;
-    target_id: string;
-    relation: UserRelation;
-    updated_at?: string | null;
+export type ArtistPlayStats = {
+    artist: Artist;
+    assets: Array<ArtistAsset>;
+    play_count: number;
+    play_duration: number;
+};
+
+export type Asset = {
+    asset_id: string;
+    mime_type: string;
+    created_at: string;
+    updated_at: string | null;
+};
+
+export type BestFriendActionRequest = {
+    id: string;
+    best_friend: boolean;
+};
+
+export type BlockedActionRequest = {
+    id: string;
+    blocked: boolean;
 };
 
 export type Conversation = {
@@ -185,22 +129,11 @@ export type ConversationParticipant = {
     created_at: string;
 };
 
-export type Group = {
-    group_id: string;
+export type ConversationRead = {
+    user_id: string;
     conversation_id: string;
-    name: string;
-    description?: string | null;
-    visibility: Visibility;
-    created_at: string;
-    updated_at?: string | null;
-};
-
-export type GroupDetails = {
-    group: Group;
-    conversation: Conversation;
-    roles: Array<GroupRole>;
-    latest_message: Message;
-    unread_count: number;
+    latest_message_id: number;
+    read_at: string;
 };
 
 export type CreateGroupRequest = {
@@ -210,37 +143,52 @@ export type CreateGroupRequest = {
     members: Array<string>;
 };
 
+export type DateTimeRange = {
+    start: string;
+    end: string;
+};
+
+export type DayListenDetails = {
+    date: string;
+    play_count: number;
+    seconds: number;
+};
+
 export type EditGroupRequest = {
     name?: string;
     description?: string;
     visibility?: Visibility;
 };
 
-export type GroupRole = {
-    group_id: string;
-    user_id: string;
-    role: GroupRoleType;
-    created_at: string;
-    updated_at?: string | null;
-};
-
-export type Message = {
-    message_id: number;
-    conversation_id: string;
+export type ErrorResponse = {
     /**
-     * Null if user is deleted.
+     * Human-readable error message
      */
-    user_id?: string | null;
-    body: string;
-    parent_id?: number | null;
-    deleted_at?: string | null;
-    created_at: string;
-    updated_at?: string | null;
+    message: string;
 };
 
-export type MessageDetails = {
-    message: Message;
-    reactions?: Array<MessageReaction>;
+/**
+ * Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user.
+ */
+export type FriendActionRequest = {
+    /**
+     * Target user's UUID. Optional if 'handle' is provided.
+     */
+    id?: string | null;
+    /**
+     * Target user's handle. Optional if 'id' is provided.
+     */
+    handle?: string | null;
+};
+
+export type Group = {
+    group_id: string;
+    conversation_id: string;
+    name: string;
+    description?: string | null;
+    visibility: Visibility;
+    created_at: string;
+    updated_at?: string | null;
 };
 
 export type GroupAsset = {
@@ -252,28 +200,29 @@ export type GroupAsset = {
     position: string;
 };
 
-export type MessageAsset = {
-    message_id: number;
-    asset_id: string;
-    /**
-     * Lexicographically sortable string
-     */
-    position: string;
+export type GroupDetails = {
+    group: Group;
+    conversation: Conversation;
+    roles: Array<GroupRole>;
+    latest_message: Message;
+    unread_count: number;
 };
 
-export type MessageReaction = {
+export type GroupRole = {
+    group_id: string;
     user_id: string;
-    message_id: number;
-    emoji: string;
+    role: GroupRoleType;
     created_at: string;
+    updated_at?: string | null;
 };
 
-export type ConversationRead = {
-    user_id: string;
-    conversation_id: string;
-    latest_message_id: number;
-    read_at: string;
-};
+/**
+ * 0=Owner
+ * 1=Moderator
+ * 2=Member
+ *
+ */
+export type GroupRoleType = 0 | 1 | 2;
 
 export type Integration = {
     user_id: string;
@@ -290,57 +239,16 @@ export type IntegrationMetadata = {
     updated_at?: string | null;
 };
 
-export type RegisterRequest = {
-    /**
-     * 2+ Unicode letters, spaces allowed
-     */
-    name: string;
-    email: string;
-    /**
-     * 8+ characters, must contain uppercase, lowercase, digit, and special character
-     */
-    password: string;
-};
+/**
+ * 0=Google
+ * 1=Spotify
+ * 2=Last
+ *
+ */
+export type IntegrationProvider = 0 | 1 | 2;
 
-export type SignInRequest = {
-    email: string;
-    password: string;
-};
-
-export type UpdateUserRequest = {
-    handle?: string | null;
-    name?: string | null;
-    email?: string | null;
-    password?: string | null;
-    visibility?: Visibility;
-};
-
-export type LibraryMetadataArtist = {
-    id: string;
-    name: string;
-};
-
-export type LibraryMetadataAlbum = {
-    id: string;
-    name: string;
-};
-
-export type LibraryMetadataTrack = {
-    id: string;
-    name: string;
-    seconds?: number | null;
-    album_ids?: Array<string>;
-    artist_ids?: Array<string>;
-};
-
-export type LibraryMetadataResponse = {
-    artists?: Array<LibraryMetadataArtist>;
-    albums?: Array<LibraryMetadataAlbum>;
-    tracks?: Array<LibraryMetadataTrack>;
-};
-
-export type LibraryAddTrack = {
-    track: Track;
+export type LibraryAddAlbum = {
+    album: Album;
     /**
      * Client-provided reference ID for correlation in responses.
      */
@@ -349,6 +257,11 @@ export type LibraryAddTrack = {
      * If true, skip deduplication and always create a new entity.
      */
     force_add?: boolean;
+};
+
+export type LibraryAddAlbumTrack = AlbumTrack & {
+    album_reference_id: number;
+    track_reference_id: number;
 };
 
 export type LibraryAddArtist = {
@@ -363,16 +276,14 @@ export type LibraryAddArtist = {
     force_add?: boolean;
 };
 
-export type LibraryAddAlbum = {
-    album: Album;
-    /**
-     * Client-provided reference ID for correlation in responses.
-     */
+export type LibraryAddId = {
+    id?: string;
     reference_id?: number;
-    /**
-     * If true, skip deduplication and always create a new entity.
-     */
-    force_add?: boolean;
+};
+
+export type LibraryAddKv = {
+    key: LibraryAddId;
+    value: LibraryAddId;
 };
 
 export type LibraryAddListen = {
@@ -387,33 +298,6 @@ export type LibraryAddListen = {
     force_add?: boolean;
 };
 
-export type LibraryAddKv = {
-    key: LibraryAddId;
-    value: LibraryAddId;
-};
-
-export type LibraryAddId = {
-    id?: string;
-    reference_id?: number;
-};
-
-export type AlbumTrack = {
-    album_id: string;
-    track_id: string;
-    disc_number?: number | null;
-    track_number?: number | null;
-};
-
-export type TrackArtist = {
-    track_id: string;
-    artist_id: string;
-};
-
-export type AlbumArtist = {
-    album_id: string;
-    artist_id: string;
-};
-
 export type LibraryAddRequest = {
     tracks?: Array<LibraryAddTrack>;
     artists?: Array<LibraryAddArtist>;
@@ -425,9 +309,12 @@ export type LibraryAddRequest = {
     album_tracks?: Array<LibraryAddAlbumTrack>;
 };
 
-export type LibraryAddAlbumTrack = AlbumTrack & {
-    album_reference_id: number;
-    track_reference_id: number;
+export type LibraryAddResponse = {
+    artists?: Array<LibraryAddResult>;
+    albums?: Array<LibraryAddResult>;
+    tracks?: Array<LibraryAddResult>;
+    listens?: Array<LibraryAddResult>;
+    errors?: Array<string>;
 };
 
 export type LibraryAddResult = {
@@ -445,12 +332,47 @@ export type LibraryAddResult = {
     created: boolean;
 };
 
-export type LibraryAddResponse = {
-    artists?: Array<LibraryAddResult>;
-    albums?: Array<LibraryAddResult>;
-    tracks?: Array<LibraryAddResult>;
-    listens?: Array<LibraryAddResult>;
-    errors?: Array<string>;
+export type LibraryAddTrack = {
+    track: Track;
+    /**
+     * Client-provided reference ID for correlation in responses.
+     */
+    reference_id?: number;
+    /**
+     * If true, skip deduplication and always create a new entity.
+     */
+    force_add?: boolean;
+};
+
+export type LibraryMetadataAlbum = {
+    id: string;
+    name: string;
+};
+
+export type LibraryMetadataArtist = {
+    id: string;
+    name: string;
+};
+
+export type LibraryMetadataResponse = {
+    artists?: Array<LibraryMetadataArtist>;
+    albums?: Array<LibraryMetadataAlbum>;
+    tracks?: Array<LibraryMetadataTrack>;
+};
+
+export type LibraryMetadataTrack = {
+    id: string;
+    name: string;
+    seconds?: number | null;
+    album_ids?: Array<string>;
+    artist_ids?: Array<string>;
+};
+
+export type LibraryRemoveRequest = {
+    track_ids?: Array<string>;
+    album_ids?: Array<string>;
+    artist_ids?: Array<string>;
+    listen_ids?: Array<number>;
 };
 
 export type LibraryUpdateRequest = {
@@ -472,12 +394,26 @@ export type LibraryUpdateResponse = {
     errors?: Array<string>;
 };
 
-export type LibraryRemoveRequest = {
-    track_ids?: Array<string>;
-    album_ids?: Array<string>;
-    artist_ids?: Array<string>;
-    listen_ids?: Array<number>;
+export type Listen = {
+    listen_id: number;
+    user_id: string;
+    track_id: string;
+    seconds: number;
+    method: ListenMethod;
+    created_at: string;
+    updated_at?: string | null;
 };
+
+/**
+ * 0=API: listen was added via API
+ * 1=App: listen was added via an official client application
+ * 2=Spotify: listen was imported from Spotify
+ * 3=AppleMusic: listen was imported from Apple Music
+ * 4=Last: listen was imported from Last
+ * 5=YouTube: listen was imported from YouTube
+ *
+ */
+export type ListenMethod = 0 | 1 | 2 | 3 | 4 | 5;
 
 export type ListensSessionsRequest = {
     /**
@@ -498,105 +434,88 @@ export type ListensSessionsRequest = {
     limit?: number;
 };
 
-export type TopEntityPlays = {
-    play_count: number;
+export type Message = {
+    message_id: number;
+    conversation_id: string;
     /**
-     * Play duration in seconds
+     * Null if user is deleted.
      */
-    duration: number;
+    user_id?: string | null;
+    body: string;
+    parent_id?: number | null;
+    deleted_at?: string | null;
+    created_at: string;
+    updated_at?: string | null;
 };
 
-/**
- * Values change in percentage.
- */
-export type TopEntityChange = {
-    play_count: number;
+export type MessageAsset = {
+    message_id: number;
+    asset_id: string;
     /**
-     * Play duration in seconds
+     * Lexicographically sortable string
      */
-    duration: number;
+    position: string;
 };
 
-export type TopAlbumEntry = {
-    id: string;
-    rank: number;
-    album: Album;
-    artists: Array<Artist>;
-    current: TopEntityPlays;
-    previous?: TopEntityPlays;
-    change?: TopEntityChange;
+export type MessageDetails = {
+    message: Message;
+    reactions?: Array<MessageReaction>;
 };
 
-export type TopTrackEntry = {
-    id: string;
-    rank: number;
-    track: Track;
-    album: Album;
-    artists: Array<Artist>;
-    current: TopEntityPlays;
-    previous?: TopEntityPlays;
-    change?: TopEntityChange;
+export type MessageReaction = {
+    user_id: string;
+    message_id: number;
+    emoji: string;
+    created_at: string;
 };
 
-export type TopArtistEntry = {
-    id: string;
-    rank: number;
-    artist?: Artist;
-    current: TopEntityPlays;
-    previous?: TopEntityPlays;
-    change?: TopEntityChange;
-};
-
-export type DayListenDetails = {
-    date: string;
-    play_count: number;
-    seconds: number;
-};
-
-export type TopArtistPlayStats = {
-    rank: number;
-    artist: ArtistPlayStats;
-    top_tracks: Array<TrackPlayStats>;
-    top_albums: Array<AlbumPlayStats>;
-};
-
-export type TrackPlayStats = {
-    track: Track;
-    play_count: number;
-    play_duration: number;
-};
-
-export type ArtistPlayStats = {
-    artist: Artist;
-    assets: Array<ArtistAsset>;
-    play_count: number;
-    play_duration: number;
-};
-
-export type AlbumPlayStats = {
-    album: Album;
-    assets: Array<AlbumAsset>;
-    play_count: number;
-    play_duration: number;
-};
-
-export type SessionListen = {
+export type RegisterRequest = {
     /**
-     * Unique identifier for this listen event.
+     * 2+ Unicode letters, spaces allowed
      */
-    id: number;
+    name: string;
+    email: string;
     /**
-     * UUID of the track listened to.
+     * 8+ characters, must contain uppercase, lowercase, digit, and special character
      */
-    track: string;
+    password: string;
+};
+
+export type Relation = {
+    source_id: string;
+    target_id: string;
+    relation: UserRelation;
+    updated_at?: string | null;
+};
+
+export type RelationDetails = {
+    user_id: string;
+    name: string;
+    visibility: Visibility;
+    handle: string;
+    relation: UserRelation;
+    activity?: {
+        listens: Array<Listen>;
+    };
+    statistics?: {
+        year_listens: number;
+        year_seconds: number;
+        listening_streak: number;
+    };
+};
+
+export type SearchTrackResult = Track & {
     /**
-     * Timestamp when playback started.
+     * Confidence score (0-100)
      */
-    start: string;
-    /**
-     * Timestamp when playback ended.
-     */
-    end: string;
+    confidence: number;
+};
+
+export type SearchTracksRequest = {
+    track_name: string;
+    artist_names?: Array<string>;
+    album_name?: string;
+    seconds?: number;
 };
 
 export type Session = {
@@ -630,40 +549,6 @@ export type Session = {
     partial?: boolean | null;
 };
 
-export type SessionDay = {
-    /**
-     * Calendar date for this group of sessions.
-     */
-    date: string;
-    /**
-     * Sessions for this day, ordered newest first.
-     */
-    sessions: Array<Session>;
-};
-
-export type SessionTrack = {
-    /**
-     * Track UUID.
-     */
-    id: string;
-    /**
-     * Track name.
-     */
-    name: string;
-    /**
-     * List of artist UUIDs for this track.
-     */
-    artists?: Array<string>;
-    /**
-     * Album UUID, if available.
-     */
-    album?: string | null;
-    /**
-     * Whether the track has explicit content.
-     */
-    explicit?: boolean | null;
-};
-
 export type SessionAlbum = {
     /**
      * Album UUID.
@@ -688,6 +573,59 @@ export type SessionArtist = {
      * Artist name.
      */
     name: string;
+};
+
+export type SessionDay = {
+    /**
+     * Calendar date for this group of sessions.
+     */
+    date: string;
+    /**
+     * Sessions for this day, ordered newest first.
+     */
+    sessions: Array<Session>;
+};
+
+export type SessionListen = {
+    /**
+     * Unique identifier for this listen event.
+     */
+    id: number;
+    /**
+     * UUID of the track listened to.
+     */
+    track: string;
+    /**
+     * Timestamp when playback started.
+     */
+    start: string;
+    /**
+     * Timestamp when playback ended.
+     */
+    end: string;
+};
+
+export type SessionTrack = {
+    /**
+     * Track UUID.
+     */
+    id: string;
+    /**
+     * Track name.
+     */
+    name: string;
+    /**
+     * List of artist UUIDs for this track.
+     */
+    artists?: Array<string>;
+    /**
+     * Album UUID, if available.
+     */
+    album?: string | null;
+    /**
+     * Whether the track has explicit content.
+     */
+    explicit?: boolean | null;
 };
 
 export type SessionsResponse = {
@@ -736,71 +674,9 @@ export type SetActivityItem = {
     end_timestamp?: string;
 };
 
-export type SearchTracksRequest = {
-    track_name: string;
-    artist_names?: Array<string>;
-    album_name?: string;
-    seconds?: number;
-};
-
-export type SearchTrackResult = Track & {
-    /**
-     * Confidence score (0-100)
-     */
-    confidence: number;
-};
-
-/**
- * Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user.
- */
-export type FriendActionRequest = {
-    /**
-     * Target user's UUID. Optional if 'handle' is provided.
-     */
-    id?: string | null;
-    /**
-     * Target user's handle. Optional if 'id' is provided.
-     */
-    handle?: string | null;
-};
-
-export type BlockedActionRequest = {
-    id: string;
-    blocked: boolean;
-};
-
-export type BestFriendActionRequest = {
-    id: string;
-    best_friend: boolean;
-};
-
-export type DateTimeRange = {
-    start: string;
-    end: string;
-};
-
-export type ArtistPlayStatisticsQuery = {
-    /**
-     * Start timestamp for the time range, defaults to one year ago.
-     */
-    start?: string;
-    /**
-     * Start timestamp for the time range, defaults to current time.
-     */
-    end?: string;
-    /**
-     * Maximum number of artists to return
-     */
-    artist_limit?: number;
-    /**
-     * Maximum number of tracks per artist to return
-     */
-    track_limit?: number;
-    /**
-     * Maximum number of albums per artist to return
-     */
-    album_limit?: number;
-    artist_offset?: number;
+export type SignInRequest = {
+    email: string;
+    password: string;
 };
 
 export type StatisticsQuery = {
@@ -818,194 +694,136 @@ export type StatisticsQuery = {
     limit?: number;
 };
 
-export type ErrorResponse = {
-    /**
-     * Human-readable error message
-     */
-    message: string;
+export type TopAlbumEntry = {
+    id: string;
+    rank: number;
+    album: Album;
+    artists: Array<Artist>;
+    current: TopEntityPlays;
+    previous?: TopEntityPlays;
+    change?: TopEntityChange;
 };
 
-export type GetOpenApiData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/openapi.yaml';
+export type TopArtistEntry = {
+    id: string;
+    rank: number;
+    artist?: Artist;
+    current: TopEntityPlays;
+    previous?: TopEntityPlays;
+    change?: TopEntityChange;
 };
 
-export type GetOpenApiResponses = {
-    /**
-     * Top artists returned successfully
-     */
-    200: string;
+export type TopArtistPlayStats = {
+    rank: number;
+    artist: ArtistPlayStats;
+    top_tracks: Array<TrackPlayStats>;
+    top_albums: Array<AlbumPlayStats>;
 };
 
-export type GetOpenApiResponse = GetOpenApiResponses[keyof GetOpenApiResponses];
-
-export type GetAsyncApiData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/asyncapi.yaml';
+/**
+ * Values change in percentage.
+ */
+export type TopEntityChange = {
+    play_count: number;
+    /**
+     * Play duration in seconds
+     */
+    duration: number;
 };
 
-export type GetAsyncApiResponses = {
+export type TopEntityPlays = {
+    play_count: number;
     /**
-     * Top artists returned successfully
+     * Play duration in seconds
      */
-    200: string;
+    duration: number;
 };
 
-export type GetAsyncApiResponse = GetAsyncApiResponses[keyof GetAsyncApiResponses];
-
-export type GetTrackData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/tracks/{id}';
+export type TopTrackEntry = {
+    id: string;
+    rank: number;
+    track: Track;
+    album: Album;
+    artists: Array<Artist>;
+    current: TopEntityPlays;
+    previous?: TopEntityPlays;
+    change?: TopEntityChange;
 };
 
-export type GetTrackErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
+export type Track = {
+    track_id: string;
+    user_id?: string | null;
+    name: string;
+    seconds?: number | null;
+    lyrics?: string | null;
+    explicit?: boolean | null;
+    musicbrainz_id?: string | null;
+    spotify_url?: string | null;
+    apple_music_url?: string | null;
+    tidal_url?: string | null;
+    youtube_music_url?: string | null;
+    created_at: string;
+    updated_at?: string | null;
 };
 
-export type GetTrackError = GetTrackErrors[keyof GetTrackErrors];
-
-export type GetTrackResponses = {
-    /**
-     * Track details
-     */
-    200: Track;
+export type TrackArtist = {
+    track_id: string;
+    artist_id: string;
 };
 
-export type GetTrackResponse = GetTrackResponses[keyof GetTrackResponses];
-
-export type GetArtistData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/artists/{id}';
+export type TrackPlayStats = {
+    track: Track;
+    play_count: number;
+    play_duration: number;
 };
 
-export type GetArtistErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
+export type UpdateUserRequest = {
+    handle?: string | null;
+    name?: string | null;
+    email?: string | null;
+    password?: string | null;
+    visibility?: Visibility;
 };
 
-export type GetArtistError = GetArtistErrors[keyof GetArtistErrors];
-
-export type GetArtistResponses = {
-    /**
-     * Artist details
-     */
-    200: Artist;
+export type User = {
+    user_id: string;
+    handle: string;
+    name: string;
+    email: string;
+    visibility: Visibility;
+    subscription_expiration: string;
+    created_at: string;
+    updated_at?: string | null;
 };
 
-export type GetArtistResponse = GetArtistResponses[keyof GetArtistResponses];
-
-export type GetAlbumData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/albums/{id}';
+export type UserAsset = {
+    user_id: string;
+    asset_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
 };
 
-export type GetAlbumErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
+/**
+ * 0=Friend: users are friends
+ * 1=BestFriend: source user set target user as a best friend
+ * 2=OutgoingRequest: source user has an outgoing friend request
+ * 3=IncomingRequest: source user has an incoming friend request
+ * 4=BlockSent: source user has blocked target user
+ * 5=BlockReceived: target user has blocked source user
+ *
+ */
+export type UserRelation = 0 | 1 | 2 | 3 | 4 | 5;
 
-export type GetAlbumError = GetAlbumErrors[keyof GetAlbumErrors];
-
-export type GetAlbumResponses = {
-    /**
-     * Album details
-     */
-    200: Album;
-};
-
-export type GetAlbumResponse = GetAlbumResponses[keyof GetAlbumResponses];
-
-export type GetListenSessionsData = {
-    body: ListensSessionsRequest;
-    path?: never;
-    query?: never;
-    url: '/api/listens/sessions';
-};
-
-export type GetListenSessionsErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetListenSessionsError = GetListenSessionsErrors[keyof GetListenSessionsErrors];
-
-export type GetListenSessionsResponses = {
-    /**
-     * Listen sessions
-     */
-    200: SessionsResponse;
-};
-
-export type GetListenSessionsResponse = GetListenSessionsResponses[keyof GetListenSessionsResponses];
+/**
+ * 0=Public: visible to everyone
+ * 1=Friends: visible to the user's friends
+ * 2=BestFriends: visible to the user's best friends
+ * 3=Private: visible to only the user
+ *
+ */
+export type Visibility = 0 | 1 | 2 | 3;
 
 export type GetUserListenSessionsData = {
     body: ListensSessionsRequest;
@@ -1050,458 +868,6 @@ export type GetUserListenSessionsResponses = {
 
 export type GetUserListenSessionsResponse = GetUserListenSessionsResponses[keyof GetUserListenSessionsResponses];
 
-export type GetLibraryMetadataData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/library/get-metadata';
-};
-
-export type GetLibraryMetadataErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetLibraryMetadataError = GetLibraryMetadataErrors[keyof GetLibraryMetadataErrors];
-
-export type GetLibraryMetadataResponses = {
-    /**
-     * Library metadata
-     */
-    200: LibraryMetadataResponse;
-};
-
-export type GetLibraryMetadataResponse = GetLibraryMetadataResponses[keyof GetLibraryMetadataResponses];
-
-export type AddToLibraryData = {
-    body: LibraryAddRequest;
-    path?: never;
-    query?: never;
-    url: '/api/library/add';
-};
-
-export type AddToLibraryErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type AddToLibraryError = AddToLibraryErrors[keyof AddToLibraryErrors];
-
-export type AddToLibraryResponses = {
-    /**
-     * Items added
-     */
-    200: LibraryAddResponse;
-};
-
-export type AddToLibraryResponse = AddToLibraryResponses[keyof AddToLibraryResponses];
-
-export type UpdateLibraryData = {
-    body: LibraryUpdateRequest;
-    path?: never;
-    query?: never;
-    url: '/api/library/update';
-};
-
-export type UpdateLibraryErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type UpdateLibraryError = UpdateLibraryErrors[keyof UpdateLibraryErrors];
-
-export type UpdateLibraryResponses = {
-    /**
-     * Items updated
-     */
-    200: LibraryUpdateResponse;
-};
-
-export type UpdateLibraryResponse = UpdateLibraryResponses[keyof UpdateLibraryResponses];
-
-export type RemoveFromLibraryData = {
-    body: LibraryRemoveRequest;
-    path?: never;
-    query?: never;
-    url: '/api/library/remove';
-};
-
-export type RemoveFromLibraryErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type RemoveFromLibraryError = RemoveFromLibraryErrors[keyof RemoveFromLibraryErrors];
-
-export type RemoveFromLibraryResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type RemoveFromLibraryResponse = RemoveFromLibraryResponses[keyof RemoveFromLibraryResponses];
-
-export type SetActivityData = {
-    body: Array<SetActivityItem>;
-    path?: never;
-    query?: never;
-    url: '/api/set-activity';
-};
-
-export type SetActivityErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type SetActivityError = SetActivityErrors[keyof SetActivityErrors];
-
-export type SetActivityResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type SetActivityResponse = SetActivityResponses[keyof SetActivityResponses];
-
-export type SearchTracksViaDetailsData = {
-    body: SearchTracksRequest;
-    path?: never;
-    query?: never;
-    url: '/api/search-tracks-via-details';
-};
-
-export type SearchTracksViaDetailsErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type SearchTracksViaDetailsError = SearchTracksViaDetailsErrors[keyof SearchTracksViaDetailsErrors];
-
-export type SearchTracksViaDetailsResponses = {
-    /**
-     * Search results
-     */
-    200: Array<SearchTrackResult>;
-};
-
-export type SearchTracksViaDetailsResponse = SearchTracksViaDetailsResponses[keyof SearchTracksViaDetailsResponses];
-
-export type GetCalendarListensData = {
-    body?: never;
-    path: {
-        /**
-         * The user whose calendar to retrieve
-         */
-        user_id: string;
-    };
-    query?: {
-        /**
-         * The requesting user's ID (the viewer). Required if target user's visibility is not public.
-         */
-        auth_id?: string;
-        /**
-         * HMAC token for authentication. Required if target user's visibility is not public.
-         */
-        token?: string;
-    };
-    url: '/api/{user_id}/calendar/listens';
-};
-
-export type GetCalendarListensErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Forbidden
-     */
-    403: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetCalendarListensError = GetCalendarListensErrors[keyof GetCalendarListensErrors];
-
-export type GetCalendarListensResponses = {
-    /**
-     * Calendar ICS file
-     */
-    200: string;
-};
-
-export type GetCalendarListensResponse = GetCalendarListensResponses[keyof GetCalendarListensResponses];
-
-export type ValidateTokenData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/validate';
-};
-
-export type ValidateTokenErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-};
-
-export type ValidateTokenError = ValidateTokenErrors[keyof ValidateTokenErrors];
-
-export type ValidateTokenResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type ValidateTokenResponse = ValidateTokenResponses[keyof ValidateTokenResponses];
-
-export type RegisterData = {
-    body: RegisterRequest;
-    path?: never;
-    query?: never;
-    url: '/api/register';
-};
-
-export type RegisterErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Conflict
-     */
-    409: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type RegisterError = RegisterErrors[keyof RegisterErrors];
-
-export type RegisterResponses = {
-    /**
-     * User created successfully
-     */
-    200: User;
-};
-
-export type RegisterResponse = RegisterResponses[keyof RegisterResponses];
-
-export type SignInData = {
-    body: SignInRequest;
-    path?: never;
-    query?: never;
-    url: '/api/signin';
-};
-
-export type SignInErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type SignInError = SignInErrors[keyof SignInErrors];
-
-export type SignInResponses = {
-    /**
-     * Sign in successful
-     */
-    200: User;
-};
-
-export type SignInResponse = SignInResponses[keyof SignInResponses];
-
-export type UpdateUserData = {
-    body: UpdateUserRequest;
-    path?: never;
-    query?: never;
-    url: '/api/user/update';
-};
-
-export type UpdateUserErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Conflict
-     */
-    409: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type UpdateUserError = UpdateUserErrors[keyof UpdateUserErrors];
-
-export type UpdateUserResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type UpdateUserResponse = UpdateUserResponses[keyof UpdateUserResponses];
-
-export type GetUserDetailsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/user/details';
-};
-
-export type GetUserDetailsErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-};
-
-export type GetUserDetailsError = GetUserDetailsErrors[keyof GetUserDetailsErrors];
-
-export type GetUserDetailsResponses = {
-    /**
-     * User details
-     */
-    200: User;
-};
-
-export type GetUserDetailsResponse = GetUserDetailsResponses[keyof GetUserDetailsResponses];
-
-export type GetUserIntegrationsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/user/integrations';
-};
-
-export type GetUserIntegrationsErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetUserIntegrationsError = GetUserIntegrationsErrors[keyof GetUserIntegrationsErrors];
-
-export type GetUserIntegrationsResponses = {
-    /**
-     * User integration details
-     */
-    200: Array<IntegrationMetadata>;
-};
-
-export type GetUserIntegrationsResponse = GetUserIntegrationsResponses[keyof GetUserIntegrationsResponses];
-
-export type JoinFreeBetaData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/join-free-beta';
-};
-
-export type JoinFreeBetaErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type JoinFreeBetaError = JoinFreeBetaErrors[keyof JoinFreeBetaErrors];
-
-export type JoinFreeBetaResponses = {
-    /**
-     * Beta joined successfully
-     */
-    204: void;
-};
-
-export type JoinFreeBetaResponse = JoinFreeBetaResponses[keyof JoinFreeBetaResponses];
-
 export type AddFriendData = {
     body: FriendActionRequest;
     path?: never;
@@ -1543,20 +909,374 @@ export type AddFriendResponses = {
 
 export type AddFriendResponse = AddFriendResponses[keyof AddFriendResponses];
 
-export type RemoveFriendData = {
-    body: {
+export type GetAlbumData = {
+    body?: never;
+    path: {
         id: string;
     };
-    path?: never;
     query?: never;
-    url: '/api/remove-friend';
+    url: '/api/albums/{id}';
 };
 
-export type RemoveFriendErrors = {
+export type GetAlbumErrors = {
     /**
      * Bad request
      */
     400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetAlbumError = GetAlbumErrors[keyof GetAlbumErrors];
+
+export type GetAlbumResponses = {
+    /**
+     * Album details
+     */
+    200: Album;
+};
+
+export type GetAlbumResponse = GetAlbumResponses[keyof GetAlbumResponses];
+
+export type GetArtistData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/artists/{id}';
+};
+
+export type GetArtistErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetArtistError = GetArtistErrors[keyof GetArtistErrors];
+
+export type GetArtistResponses = {
+    /**
+     * Artist details
+     */
+    200: Artist;
+};
+
+export type GetArtistResponse = GetArtistResponses[keyof GetArtistResponses];
+
+export type DeleteMessageReactionData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+        emoji: string;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}';
+};
+
+export type DeleteMessageReactionErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteMessageReactionError = DeleteMessageReactionErrors[keyof DeleteMessageReactionErrors];
+
+export type DeleteMessageReactionResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteMessageReactionResponse = DeleteMessageReactionResponses[keyof DeleteMessageReactionResponses];
+
+export type AddMessageReactionData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+        emoji: string;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}';
+};
+
+export type AddMessageReactionErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type AddMessageReactionError = AddMessageReactionErrors[keyof AddMessageReactionErrors];
+
+export type AddMessageReactionResponses = {
+    /**
+     * Reaction added successfully.
+     */
+    200: MessageReaction;
+};
+
+export type AddMessageReactionResponse = AddMessageReactionResponses[keyof AddMessageReactionResponses];
+
+export type ReadMessageData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/read';
+};
+
+export type ReadMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ReadMessageError = ReadMessageErrors[keyof ReadMessageErrors];
+
+export type ReadMessageResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type ReadMessageResponse = ReadMessageResponses[keyof ReadMessageResponses];
+
+export type GetMessageThreadData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: {
+        before?: number;
+        limit?: number;
+    };
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/thread';
+};
+
+export type GetMessageThreadErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetMessageThreadError = GetMessageThreadErrors[keyof GetMessageThreadErrors];
+
+export type GetMessageThreadResponses = {
+    /**
+     * Thread retrieved successfully.
+     */
+    200: Array<MessageDetails>;
+};
+
+export type GetMessageThreadResponse = GetMessageThreadResponses[keyof GetMessageThreadResponses];
+
+export type DeleteMessageData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}';
+};
+
+export type DeleteMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteMessageError = DeleteMessageErrors[keyof DeleteMessageErrors];
+
+export type DeleteMessageResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteMessageResponse = DeleteMessageResponses[keyof DeleteMessageResponses];
+
+export type EditMessageData = {
+    body: {
+        body?: string;
+    };
+    path: {
+        conversation_id: string;
+        message_id: number;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages/{message_id}';
+};
+
+export type EditMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditMessageError = EditMessageErrors[keyof EditMessageErrors];
+
+export type EditMessageResponses = {
+    /**
+     * Message edited successfully.
+     */
+    200: Message;
+};
+
+export type EditMessageResponse = EditMessageResponses[keyof EditMessageResponses];
+
+export type GetMessagesData = {
+    body?: never;
+    path: {
+        conversation_id: string;
+    };
+    query?: {
+        before?: number;
+        limit?: number;
+    };
+    url: '/api/conversations/{conversation_id}/messages';
+};
+
+export type GetMessagesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetMessagesError = GetMessagesErrors[keyof GetMessagesErrors];
+
+export type GetMessagesResponses = {
+    /**
+     * Messages retrieved successfully.
+     */
+    200: Array<MessageDetails>;
+};
+
+export type GetMessagesResponse = GetMessagesResponses[keyof GetMessagesResponses];
+
+export type SendMessageData = {
+    body: {
+        body: string;
+        parent_id?: number | null;
+    };
+    path: {
+        conversation_id: string;
+    };
+    query?: never;
+    url: '/api/conversations/{conversation_id}/messages';
+};
+
+export type SendMessageErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SendMessageError = SendMessageErrors[keyof SendMessageErrors];
+
+export type SendMessageResponses = {
+    /**
+     * Message sent successfully.
+     */
+    200: Message;
+};
+
+export type SendMessageResponse = SendMessageResponses[keyof SendMessageResponses];
+
+export type DeleteGroupRoleData = {
+    body?: never;
+    path: {
+        group_id: string;
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/groups/{group_id}/roles/{user_id}';
+};
+
+export type DeleteGroupRoleErrors = {
     /**
      * Unauthorized
      */
@@ -1566,104 +1286,70 @@ export type RemoveFriendErrors = {
      */
     403: ErrorResponse;
     /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
      * Internal server error
      */
     500: ErrorResponse;
 };
 
-export type RemoveFriendError = RemoveFriendErrors[keyof RemoveFriendErrors];
+export type DeleteGroupRoleError = DeleteGroupRoleErrors[keyof DeleteGroupRoleErrors];
 
-export type RemoveFriendResponses = {
+export type DeleteGroupRoleResponses = {
     /**
      * No content
      */
     204: void;
 };
 
-export type RemoveFriendResponse = RemoveFriendResponses[keyof RemoveFriendResponses];
+export type DeleteGroupRoleResponse = DeleteGroupRoleResponses[keyof DeleteGroupRoleResponses];
 
-export type SetBlockedData = {
-    body: BlockedActionRequest;
-    path?: never;
+export type UpdateGroupRolesData = {
+    body: {
+        role: GroupRoleType;
+    };
+    path: {
+        group_id: string;
+        user_id: string;
+    };
     query?: never;
-    url: '/api/set-blocked';
+    url: '/api/groups/{group_id}/roles/{user_id}';
 };
 
-export type SetBlockedErrors = {
+export type UpdateGroupRolesErrors = {
     /**
      * Bad request
      */
     400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Forbidden
-     */
-    403: ErrorResponse;
     /**
      * Internal server error
      */
     500: ErrorResponse;
 };
 
-export type SetBlockedError = SetBlockedErrors[keyof SetBlockedErrors];
+export type UpdateGroupRolesError = UpdateGroupRolesErrors[keyof UpdateGroupRolesErrors];
 
-export type SetBlockedResponses = {
+export type UpdateGroupRolesResponses = {
     /**
-     * No content
+     * Group roles updated successfully.
      */
-    204: void;
+    200: GroupRole;
 };
 
-export type SetBlockedResponse = SetBlockedResponses[keyof SetBlockedResponses];
+export type UpdateGroupRolesResponse = UpdateGroupRolesResponses[keyof UpdateGroupRolesResponses];
 
-export type SetBestFriendData = {
-    body: BestFriendActionRequest;
-    path?: never;
-    query?: never;
-    url: '/api/set-best-friend';
-};
-
-export type SetBestFriendErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Forbidden
-     */
-    403: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type SetBestFriendError = SetBestFriendErrors[keyof SetBestFriendErrors];
-
-export type SetBestFriendResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type SetBestFriendResponse = SetBestFriendResponses[keyof SetBestFriendResponses];
-
-export type GetRelationsData = {
+export type GetGroupRolesData = {
     body?: never;
-    path?: never;
+    path: {
+        group_id: string;
+    };
     query?: never;
-    url: '/api/relations';
+    url: '/api/groups/{group_id}/roles';
 };
 
-export type GetRelationsErrors = {
+export type GetGroupRolesErrors = {
     /**
      * Unauthorized
      */
@@ -1674,120 +1360,27 @@ export type GetRelationsErrors = {
     500: ErrorResponse;
 };
 
-export type GetRelationsError = GetRelationsErrors[keyof GetRelationsErrors];
+export type GetGroupRolesError = GetGroupRolesErrors[keyof GetGroupRolesErrors];
 
-export type GetRelationsResponses = {
+export type GetGroupRolesResponses = {
     /**
-     * User relations
+     * Group roles retrieved successfully.
      */
-    200: Array<Relation>;
+    200: Array<GroupRole>;
 };
 
-export type GetRelationsResponse = GetRelationsResponses[keyof GetRelationsResponses];
+export type GetGroupRolesResponse = GetGroupRolesResponses[keyof GetGroupRolesResponses];
 
-export type GetRelationsDetailsData = {
-    body?: never;
-    path?: never;
+export type AddGroupRolesData = {
+    body: Array<GroupRole>;
+    path: {
+        group_id: string;
+    };
     query?: never;
-    url: '/api/relations/details';
+    url: '/api/groups/{group_id}/roles';
 };
 
-export type GetRelationsDetailsErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetRelationsDetailsError = GetRelationsDetailsErrors[keyof GetRelationsDetailsErrors];
-
-export type GetRelationsDetailsResponses = {
-    /**
-     * Relations details retrieved successfully
-     */
-    200: Array<RelationDetails>;
-};
-
-export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
-
-export type GetUserListensByDaysData = {
-    body: DateTimeRange;
-    path?: never;
-    query?: never;
-    url: '/api/statistics/user/listens/days';
-};
-
-export type GetUserListensByDaysErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetUserListensByDaysError = GetUserListensByDaysErrors[keyof GetUserListensByDaysErrors];
-
-export type GetUserListensByDaysResponses = {
-    /**
-     * Successfully retrieved listening information by day
-     */
-    200: Array<DayListenDetails>;
-};
-
-export type GetUserListensByDaysResponse = GetUserListensByDaysResponses[keyof GetUserListensByDaysResponses];
-
-export type GetUserTopArtistPlayStatsData = {
-    body?: ArtistPlayStatisticsQuery;
-    path?: never;
-    query?: never;
-    url: '/api/statistics/user/top/artist-plays';
-};
-
-export type GetUserTopArtistPlayStatsErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetUserTopArtistPlayStatsError = GetUserTopArtistPlayStatsErrors[keyof GetUserTopArtistPlayStatsErrors];
-
-export type GetUserTopArtistPlayStatsResponses = {
-    /**
-     * Top artist plays returned successfully
-     */
-    200: Array<TopArtistPlayStats>;
-};
-
-export type GetUserTopArtistPlayStatsResponse = GetUserTopArtistPlayStatsResponses[keyof GetUserTopArtistPlayStatsResponses];
-
-export type GetGlobalTopAlbumsData = {
-    body?: StatisticsQuery;
-    path?: never;
-    query?: never;
-    url: '/api/statistics/global/top/albums';
-};
-
-export type GetGlobalTopAlbumsErrors = {
+export type AddGroupRolesErrors = {
     /**
      * Bad request
      */
@@ -1798,132 +1391,16 @@ export type GetGlobalTopAlbumsErrors = {
     500: ErrorResponse;
 };
 
-export type GetGlobalTopAlbumsError = GetGlobalTopAlbumsErrors[keyof GetGlobalTopAlbumsErrors];
+export type AddGroupRolesError = AddGroupRolesErrors[keyof AddGroupRolesErrors];
 
-export type GetGlobalTopAlbumsResponses = {
+export type AddGroupRolesResponses = {
     /**
-     * Top albums returned successfully
+     * Group roles added successfully.
      */
-    200: Array<TopAlbumEntry>;
+    200: Array<GroupRole>;
 };
 
-export type GetGlobalTopAlbumsResponse = GetGlobalTopAlbumsResponses[keyof GetGlobalTopAlbumsResponses];
-
-export type GetGlobalTopTracksData = {
-    body?: StatisticsQuery;
-    path?: never;
-    query?: never;
-    url: '/api/statistics/global/top/tracks';
-};
-
-export type GetGlobalTopTracksErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetGlobalTopTracksError = GetGlobalTopTracksErrors[keyof GetGlobalTopTracksErrors];
-
-export type GetGlobalTopTracksResponses = {
-    /**
-     * Top tracks returned successfully
-     */
-    200: Array<TopTrackEntry>;
-};
-
-export type GetGlobalTopTracksResponse = GetGlobalTopTracksResponses[keyof GetGlobalTopTracksResponses];
-
-export type GetGlobalTopArtistsData = {
-    body?: StatisticsQuery;
-    path?: never;
-    query?: never;
-    url: '/api/statistics/global/top/artists';
-};
-
-export type GetGlobalTopArtistsErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetGlobalTopArtistsError = GetGlobalTopArtistsErrors[keyof GetGlobalTopArtistsErrors];
-
-export type GetGlobalTopArtistsResponses = {
-    /**
-     * Top artists returned successfully
-     */
-    200: Array<TopArtistEntry>;
-};
-
-export type GetGlobalTopArtistsResponse = GetGlobalTopArtistsResponses[keyof GetGlobalTopArtistsResponses];
-
-export type GetGroupsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/groups';
-};
-
-export type GetGroupsErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetGroupsError = GetGroupsErrors[keyof GetGroupsErrors];
-
-export type GetGroupsResponses = {
-    /**
-     * Groups retrieved successfully.
-     */
-    200: Array<GroupDetails>;
-};
-
-export type GetGroupsResponse = GetGroupsResponses[keyof GetGroupsResponses];
-
-export type CreateGroupData = {
-    body: CreateGroupRequest;
-    path?: never;
-    query?: never;
-    url: '/api/groups';
-};
-
-export type CreateGroupErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type CreateGroupError = CreateGroupErrors[keyof CreateGroupErrors];
-
-export type CreateGroupResponses = {
-    /**
-     * Group created successfully.
-     */
-    200: Group;
-};
-
-export type CreateGroupResponse = CreateGroupResponses[keyof CreateGroupResponses];
+export type AddGroupRolesResponse = AddGroupRolesResponses[keyof AddGroupRolesResponses];
 
 export type DeleteGroupData = {
     body?: never;
@@ -2018,16 +1495,14 @@ export type EditGroupResponses = {
 
 export type EditGroupResponse = EditGroupResponses[keyof EditGroupResponses];
 
-export type GetGroupRolesData = {
+export type GetGroupsData = {
     body?: never;
-    path: {
-        group_id: string;
-    };
+    path?: never;
     query?: never;
-    url: '/api/groups/{group_id}/roles';
+    url: '/api/groups';
 };
 
-export type GetGroupRolesErrors = {
+export type GetGroupsErrors = {
     /**
      * Unauthorized
      */
@@ -2038,27 +1513,25 @@ export type GetGroupRolesErrors = {
     500: ErrorResponse;
 };
 
-export type GetGroupRolesError = GetGroupRolesErrors[keyof GetGroupRolesErrors];
+export type GetGroupsError = GetGroupsErrors[keyof GetGroupsErrors];
 
-export type GetGroupRolesResponses = {
+export type GetGroupsResponses = {
     /**
-     * Group roles retrieved successfully.
+     * Groups retrieved successfully.
      */
-    200: Array<GroupRole>;
+    200: Array<GroupDetails>;
 };
 
-export type GetGroupRolesResponse = GetGroupRolesResponses[keyof GetGroupRolesResponses];
+export type GetGroupsResponse = GetGroupsResponses[keyof GetGroupsResponses];
 
-export type AddGroupRolesData = {
-    body: Array<GroupRole>;
-    path: {
-        group_id: string;
-    };
+export type CreateGroupData = {
+    body: CreateGroupRequest;
+    path?: never;
     query?: never;
-    url: '/api/groups/{group_id}/roles';
+    url: '/api/groups';
 };
 
-export type AddGroupRolesErrors = {
+export type CreateGroupErrors = {
     /**
      * Bad request
      */
@@ -2069,32 +1542,840 @@ export type AddGroupRolesErrors = {
     500: ErrorResponse;
 };
 
-export type AddGroupRolesError = AddGroupRolesErrors[keyof AddGroupRolesErrors];
+export type CreateGroupError = CreateGroupErrors[keyof CreateGroupErrors];
 
-export type AddGroupRolesResponses = {
+export type CreateGroupResponses = {
     /**
-     * Group roles added successfully.
+     * Group created successfully.
      */
-    200: Array<GroupRole>;
+    200: Group;
 };
 
-export type AddGroupRolesResponse = AddGroupRolesResponses[keyof AddGroupRolesResponses];
+export type CreateGroupResponse = CreateGroupResponses[keyof CreateGroupResponses];
 
-export type DeleteGroupRoleData = {
+export type JoinFreeBetaData = {
     body?: never;
-    path: {
-        group_id: string;
-        user_id: string;
-    };
+    path?: never;
     query?: never;
-    url: '/api/groups/{group_id}/roles/{user_id}';
+    url: '/api/join-free-beta';
 };
 
-export type DeleteGroupRoleErrors = {
+export type JoinFreeBetaErrors = {
     /**
      * Unauthorized
      */
     401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type JoinFreeBetaError = JoinFreeBetaErrors[keyof JoinFreeBetaErrors];
+
+export type JoinFreeBetaResponses = {
+    /**
+     * Beta joined successfully
+     */
+    204: void;
+};
+
+export type JoinFreeBetaResponse = JoinFreeBetaResponses[keyof JoinFreeBetaResponses];
+
+export type AddToLibraryData = {
+    body: LibraryAddRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/add';
+};
+
+export type AddToLibraryErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type AddToLibraryError = AddToLibraryErrors[keyof AddToLibraryErrors];
+
+export type AddToLibraryResponses = {
+    /**
+     * Items added
+     */
+    200: LibraryAddResponse;
+};
+
+export type AddToLibraryResponse = AddToLibraryResponses[keyof AddToLibraryResponses];
+
+export type GetLibraryMetadataData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/library/get-metadata';
+};
+
+export type GetLibraryMetadataErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLibraryMetadataError = GetLibraryMetadataErrors[keyof GetLibraryMetadataErrors];
+
+export type GetLibraryMetadataResponses = {
+    /**
+     * Library metadata
+     */
+    200: LibraryMetadataResponse;
+};
+
+export type GetLibraryMetadataResponse = GetLibraryMetadataResponses[keyof GetLibraryMetadataResponses];
+
+export type RemoveFromLibraryData = {
+    body: LibraryRemoveRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/remove';
+};
+
+export type RemoveFromLibraryErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type RemoveFromLibraryError = RemoveFromLibraryErrors[keyof RemoveFromLibraryErrors];
+
+export type RemoveFromLibraryResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type RemoveFromLibraryResponse = RemoveFromLibraryResponses[keyof RemoveFromLibraryResponses];
+
+export type UpdateLibraryData = {
+    body: LibraryUpdateRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/update';
+};
+
+export type UpdateLibraryErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type UpdateLibraryError = UpdateLibraryErrors[keyof UpdateLibraryErrors];
+
+export type UpdateLibraryResponses = {
+    /**
+     * Items updated
+     */
+    200: LibraryUpdateResponse;
+};
+
+export type UpdateLibraryResponse = UpdateLibraryResponses[keyof UpdateLibraryResponses];
+
+export type GetListenSessionsData = {
+    body: ListensSessionsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/listens/sessions';
+};
+
+export type GetListenSessionsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetListenSessionsError = GetListenSessionsErrors[keyof GetListenSessionsErrors];
+
+export type GetListenSessionsResponses = {
+    /**
+     * Listen sessions
+     */
+    200: SessionsResponse;
+};
+
+export type GetListenSessionsResponse = GetListenSessionsResponses[keyof GetListenSessionsResponses];
+
+export type RegisterData = {
+    body: RegisterRequest;
+    path?: never;
+    query?: never;
+    url: '/api/register';
+};
+
+export type RegisterErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type RegisterError = RegisterErrors[keyof RegisterErrors];
+
+export type RegisterResponses = {
+    /**
+     * User created successfully
+     */
+    200: User;
+};
+
+export type RegisterResponse = RegisterResponses[keyof RegisterResponses];
+
+export type GetRelationsDetailsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/relations/details';
+};
+
+export type GetRelationsDetailsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetRelationsDetailsError = GetRelationsDetailsErrors[keyof GetRelationsDetailsErrors];
+
+export type GetRelationsDetailsResponses = {
+    /**
+     * Relations details retrieved successfully
+     */
+    200: Array<RelationDetails>;
+};
+
+export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
+
+export type GetRelationsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/relations';
+};
+
+export type GetRelationsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetRelationsError = GetRelationsErrors[keyof GetRelationsErrors];
+
+export type GetRelationsResponses = {
+    /**
+     * User relations
+     */
+    200: Array<Relation>;
+};
+
+export type GetRelationsResponse = GetRelationsResponses[keyof GetRelationsResponses];
+
+export type RemoveFriendData = {
+    body: {
+        id: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/api/remove-friend';
+};
+
+export type RemoveFriendErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type RemoveFriendError = RemoveFriendErrors[keyof RemoveFriendErrors];
+
+export type RemoveFriendResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type RemoveFriendResponse = RemoveFriendResponses[keyof RemoveFriendResponses];
+
+export type SearchTracksViaDetailsData = {
+    body: SearchTracksRequest;
+    path?: never;
+    query?: never;
+    url: '/api/search-tracks-via-details';
+};
+
+export type SearchTracksViaDetailsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SearchTracksViaDetailsError = SearchTracksViaDetailsErrors[keyof SearchTracksViaDetailsErrors];
+
+export type SearchTracksViaDetailsResponses = {
+    /**
+     * Search results
+     */
+    200: Array<SearchTrackResult>;
+};
+
+export type SearchTracksViaDetailsResponse = SearchTracksViaDetailsResponses[keyof SearchTracksViaDetailsResponses];
+
+export type SetActivityData = {
+    body: Array<SetActivityItem>;
+    path?: never;
+    query?: never;
+    url: '/api/set-activity';
+};
+
+export type SetActivityErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SetActivityError = SetActivityErrors[keyof SetActivityErrors];
+
+export type SetActivityResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type SetActivityResponse = SetActivityResponses[keyof SetActivityResponses];
+
+export type SetBestFriendData = {
+    body: BestFriendActionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/set-best-friend';
+};
+
+export type SetBestFriendErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SetBestFriendError = SetBestFriendErrors[keyof SetBestFriendErrors];
+
+export type SetBestFriendResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type SetBestFriendResponse = SetBestFriendResponses[keyof SetBestFriendResponses];
+
+export type SetBlockedData = {
+    body: BlockedActionRequest;
+    path?: never;
+    query?: never;
+    url: '/api/set-blocked';
+};
+
+export type SetBlockedErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SetBlockedError = SetBlockedErrors[keyof SetBlockedErrors];
+
+export type SetBlockedResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type SetBlockedResponse = SetBlockedResponses[keyof SetBlockedResponses];
+
+export type SignInData = {
+    body: SignInRequest;
+    path?: never;
+    query?: never;
+    url: '/api/signin';
+};
+
+export type SignInErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SignInError = SignInErrors[keyof SignInErrors];
+
+export type SignInResponses = {
+    /**
+     * Sign in successful
+     */
+    200: User;
+};
+
+export type SignInResponse = SignInResponses[keyof SignInResponses];
+
+export type GetGlobalTopAlbumsData = {
+    body?: StatisticsQuery;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/global/top/albums';
+};
+
+export type GetGlobalTopAlbumsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGlobalTopAlbumsError = GetGlobalTopAlbumsErrors[keyof GetGlobalTopAlbumsErrors];
+
+export type GetGlobalTopAlbumsResponses = {
+    /**
+     * Top albums returned successfully
+     */
+    200: Array<TopAlbumEntry>;
+};
+
+export type GetGlobalTopAlbumsResponse = GetGlobalTopAlbumsResponses[keyof GetGlobalTopAlbumsResponses];
+
+export type GetGlobalTopArtistsData = {
+    body?: StatisticsQuery;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/global/top/artists';
+};
+
+export type GetGlobalTopArtistsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGlobalTopArtistsError = GetGlobalTopArtistsErrors[keyof GetGlobalTopArtistsErrors];
+
+export type GetGlobalTopArtistsResponses = {
+    /**
+     * Top artists returned successfully
+     */
+    200: Array<TopArtistEntry>;
+};
+
+export type GetGlobalTopArtistsResponse = GetGlobalTopArtistsResponses[keyof GetGlobalTopArtistsResponses];
+
+export type GetGlobalTopTracksData = {
+    body?: StatisticsQuery;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/global/top/tracks';
+};
+
+export type GetGlobalTopTracksErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetGlobalTopTracksError = GetGlobalTopTracksErrors[keyof GetGlobalTopTracksErrors];
+
+export type GetGlobalTopTracksResponses = {
+    /**
+     * Top tracks returned successfully
+     */
+    200: Array<TopTrackEntry>;
+};
+
+export type GetGlobalTopTracksResponse = GetGlobalTopTracksResponses[keyof GetGlobalTopTracksResponses];
+
+export type GetUserListensByDaysData = {
+    body: DateTimeRange;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/user/listens/days';
+};
+
+export type GetUserListensByDaysErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserListensByDaysError = GetUserListensByDaysErrors[keyof GetUserListensByDaysErrors];
+
+export type GetUserListensByDaysResponses = {
+    /**
+     * Successfully retrieved listening information by day
+     */
+    200: Array<DayListenDetails>;
+};
+
+export type GetUserListensByDaysResponse = GetUserListensByDaysResponses[keyof GetUserListensByDaysResponses];
+
+export type GetUserTopArtistPlayStatsData = {
+    body?: ArtistPlayStatisticsQuery;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/user/top/artist-plays';
+};
+
+export type GetUserTopArtistPlayStatsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserTopArtistPlayStatsError = GetUserTopArtistPlayStatsErrors[keyof GetUserTopArtistPlayStatsErrors];
+
+export type GetUserTopArtistPlayStatsResponses = {
+    /**
+     * Top artist plays returned successfully
+     */
+    200: Array<TopArtistPlayStats>;
+};
+
+export type GetUserTopArtistPlayStatsResponse = GetUserTopArtistPlayStatsResponses[keyof GetUserTopArtistPlayStatsResponses];
+
+export type GetTrackData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/tracks/{id}';
+};
+
+export type GetTrackErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetTrackError = GetTrackErrors[keyof GetTrackErrors];
+
+export type GetTrackResponses = {
+    /**
+     * Track details
+     */
+    200: Track;
+};
+
+export type GetTrackResponse = GetTrackResponses[keyof GetTrackResponses];
+
+export type GetUserDetailsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/details';
+};
+
+export type GetUserDetailsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+};
+
+export type GetUserDetailsError = GetUserDetailsErrors[keyof GetUserDetailsErrors];
+
+export type GetUserDetailsResponses = {
+    /**
+     * User details
+     */
+    200: User;
+};
+
+export type GetUserDetailsResponse = GetUserDetailsResponses[keyof GetUserDetailsResponses];
+
+export type GetUserIntegrationsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/integrations';
+};
+
+export type GetUserIntegrationsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserIntegrationsError = GetUserIntegrationsErrors[keyof GetUserIntegrationsErrors];
+
+export type GetUserIntegrationsResponses = {
+    /**
+     * User integration details
+     */
+    200: Array<IntegrationMetadata>;
+};
+
+export type GetUserIntegrationsResponse = GetUserIntegrationsResponses[keyof GetUserIntegrationsResponses];
+
+export type UpdateUserData = {
+    body: UpdateUserRequest;
+    path?: never;
+    query?: never;
+    url: '/api/user/update';
+};
+
+export type UpdateUserErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type UpdateUserError = UpdateUserErrors[keyof UpdateUserErrors];
+
+export type UpdateUserResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type UpdateUserResponse = UpdateUserResponses[keyof UpdateUserResponses];
+
+export type ValidateTokenData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/validate';
+};
+
+export type ValidateTokenErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+};
+
+export type ValidateTokenError = ValidateTokenErrors[keyof ValidateTokenErrors];
+
+export type ValidateTokenResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type ValidateTokenResponse = ValidateTokenResponses[keyof ValidateTokenResponses];
+
+export type GetCalendarListensData = {
+    body?: never;
+    path: {
+        /**
+         * The user whose calendar to retrieve
+         */
+        user_id: string;
+    };
+    query?: {
+        /**
+         * The requesting user's ID (the viewer). Required if target user's visibility is not public.
+         */
+        auth_id?: string;
+        /**
+         * HMAC token for authentication. Required if target user's visibility is not public.
+         */
+        token?: string;
+    };
+    url: '/api/{user_id}/calendar/listens';
+};
+
+export type GetCalendarListensErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
     /**
      * Forbidden
      */
@@ -2109,326 +2390,45 @@ export type DeleteGroupRoleErrors = {
     500: ErrorResponse;
 };
 
-export type DeleteGroupRoleError = DeleteGroupRoleErrors[keyof DeleteGroupRoleErrors];
+export type GetCalendarListensError = GetCalendarListensErrors[keyof GetCalendarListensErrors];
 
-export type DeleteGroupRoleResponses = {
+export type GetCalendarListensResponses = {
     /**
-     * No content
+     * Calendar ICS file
      */
-    204: void;
+    200: string;
 };
 
-export type DeleteGroupRoleResponse = DeleteGroupRoleResponses[keyof DeleteGroupRoleResponses];
+export type GetCalendarListensResponse = GetCalendarListensResponses[keyof GetCalendarListensResponses];
 
-export type UpdateGroupRolesData = {
-    body: {
-        role: GroupRoleType;
-    };
-    path: {
-        group_id: string;
-        user_id: string;
-    };
-    query?: never;
-    url: '/api/groups/{group_id}/roles/{user_id}';
-};
-
-export type UpdateGroupRolesErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type UpdateGroupRolesError = UpdateGroupRolesErrors[keyof UpdateGroupRolesErrors];
-
-export type UpdateGroupRolesResponses = {
-    /**
-     * Group roles updated successfully.
-     */
-    200: GroupRole;
-};
-
-export type UpdateGroupRolesResponse = UpdateGroupRolesResponses[keyof UpdateGroupRolesResponses];
-
-export type GetMessagesData = {
+export type GetAsyncApiData = {
     body?: never;
-    path: {
-        conversation_id: string;
-    };
-    query?: {
-        before?: number;
-        limit?: number;
-    };
-    url: '/api/conversations/{conversation_id}/messages';
-};
-
-export type GetMessagesErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetMessagesError = GetMessagesErrors[keyof GetMessagesErrors];
-
-export type GetMessagesResponses = {
-    /**
-     * Messages retrieved successfully.
-     */
-    200: Array<MessageDetails>;
-};
-
-export type GetMessagesResponse = GetMessagesResponses[keyof GetMessagesResponses];
-
-export type SendMessageData = {
-    body: {
-        body: string;
-        parent_id?: number | null;
-    };
-    path: {
-        conversation_id: string;
-    };
+    path?: never;
     query?: never;
-    url: '/api/conversations/{conversation_id}/messages';
+    url: '/asyncapi.yaml';
 };
 
-export type SendMessageErrors = {
+export type GetAsyncApiResponses = {
     /**
-     * Bad request
+     * Top artists returned successfully
      */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
+    200: string;
 };
 
-export type SendMessageError = SendMessageErrors[keyof SendMessageErrors];
+export type GetAsyncApiResponse = GetAsyncApiResponses[keyof GetAsyncApiResponses];
 
-export type SendMessageResponses = {
-    /**
-     * Message sent successfully.
-     */
-    200: Message;
-};
-
-export type SendMessageResponse = SendMessageResponses[keyof SendMessageResponses];
-
-export type DeleteMessageData = {
+export type GetOpenApiData = {
     body?: never;
-    path: {
-        conversation_id: string;
-        message_id: number;
-    };
+    path?: never;
     query?: never;
-    url: '/api/conversations/{conversation_id}/messages/{message_id}';
+    url: '/openapi.yaml';
 };
 
-export type DeleteMessageErrors = {
+export type GetOpenApiResponses = {
     /**
-     * Bad request
+     * Top artists returned successfully
      */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
+    200: string;
 };
 
-export type DeleteMessageError = DeleteMessageErrors[keyof DeleteMessageErrors];
-
-export type DeleteMessageResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type DeleteMessageResponse = DeleteMessageResponses[keyof DeleteMessageResponses];
-
-export type EditMessageData = {
-    body: {
-        body?: string;
-    };
-    path: {
-        conversation_id: string;
-        message_id: number;
-    };
-    query?: never;
-    url: '/api/conversations/{conversation_id}/messages/{message_id}';
-};
-
-export type EditMessageErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type EditMessageError = EditMessageErrors[keyof EditMessageErrors];
-
-export type EditMessageResponses = {
-    /**
-     * Message edited successfully.
-     */
-    200: Message;
-};
-
-export type EditMessageResponse = EditMessageResponses[keyof EditMessageResponses];
-
-export type ReadMessageData = {
-    body?: never;
-    path: {
-        conversation_id: string;
-        message_id: number;
-    };
-    query?: never;
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/read';
-};
-
-export type ReadMessageErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type ReadMessageError = ReadMessageErrors[keyof ReadMessageErrors];
-
-export type ReadMessageResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type ReadMessageResponse = ReadMessageResponses[keyof ReadMessageResponses];
-
-export type GetMessageThreadData = {
-    body?: never;
-    path: {
-        conversation_id: string;
-        message_id: number;
-    };
-    query?: {
-        before?: number;
-        limit?: number;
-    };
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/thread';
-};
-
-export type GetMessageThreadErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetMessageThreadError = GetMessageThreadErrors[keyof GetMessageThreadErrors];
-
-export type GetMessageThreadResponses = {
-    /**
-     * Thread retrieved successfully.
-     */
-    200: Array<MessageDetails>;
-};
-
-export type GetMessageThreadResponse = GetMessageThreadResponses[keyof GetMessageThreadResponses];
-
-export type DeleteMessageReactionData = {
-    body?: never;
-    path: {
-        conversation_id: string;
-        message_id: number;
-        emoji: string;
-    };
-    query?: never;
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}';
-};
-
-export type DeleteMessageReactionErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type DeleteMessageReactionError = DeleteMessageReactionErrors[keyof DeleteMessageReactionErrors];
-
-export type DeleteMessageReactionResponses = {
-    /**
-     * No content
-     */
-    204: void;
-};
-
-export type DeleteMessageReactionResponse = DeleteMessageReactionResponses[keyof DeleteMessageReactionResponses];
-
-export type AddMessageReactionData = {
-    body?: never;
-    path: {
-        conversation_id: string;
-        message_id: number;
-        emoji: string;
-    };
-    query?: never;
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}';
-};
-
-export type AddMessageReactionErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type AddMessageReactionError = AddMessageReactionErrors[keyof AddMessageReactionErrors];
-
-export type AddMessageReactionResponses = {
-    /**
-     * Reaction added successfully.
-     */
-    200: MessageReaction;
-};
-
-export type AddMessageReactionResponse = AddMessageReactionResponses[keyof AddMessageReactionResponses];
+export type GetOpenApiResponse = GetOpenApiResponses[keyof GetOpenApiResponses];

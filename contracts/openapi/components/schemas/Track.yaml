@@ -1,0 +1,49 @@
+Track:
+  type: object
+  required:
+    - track_id
+    - name
+    - created_at
+  properties:
+    track_id:
+      type: string
+      format: uuid
+    user_id:
+      type: string
+      format: uuid
+      nullable: true
+    name:
+      type: string
+    seconds:
+      type: integer
+      format: uint16
+      nullable: true
+    lyrics:
+      type: string
+      nullable: true
+    explicit:
+      type: boolean
+      nullable: true
+    musicbrainz_id:
+      type: string
+      format: uuid
+      nullable: true
+    spotify_url:
+      type: string
+      nullable: true
+    apple_music_url:
+      type: string
+      nullable: true
+    tidal_url:
+      type: string
+      nullable: true
+    youtube_music_url:
+      type: string
+      nullable: true
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

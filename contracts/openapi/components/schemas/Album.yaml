@@ -1,0 +1,47 @@
+Album:
+  type: object
+  required:
+    - album_id
+    - name
+    - created_at
+  properties:
+    album_id:
+      type: string
+      format: uuid
+    user_id:
+      type: string
+      format: uuid
+      nullable: true
+    base_album_id:
+      type: string
+      format: uuid
+      nullable: true
+    name:
+      type: string
+    release_date:
+      type: string
+      format: date-time
+      nullable: true
+    musicbrainz_id:
+      type: string
+      format: uuid
+      nullable: true
+    spotify_url:
+      type: string
+      nullable: true
+    apple_music_url:
+      type: string
+      nullable: true
+    tidal_url:
+      type: string
+      nullable: true
+    youtube_music_url:
+      type: string
+      nullable: true
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

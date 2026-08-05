@@ -1,0 +1,19 @@
+Relation:
+  type: object
+  required:
+    - source_id
+    - target_id
+    - relation
+  properties:
+    source_id:
+      type: string
+      format: uuid
+    target_id:
+      type: string
+      format: uuid
+    relation:
+      $ref: "#/components/schemas/UserRelation"
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

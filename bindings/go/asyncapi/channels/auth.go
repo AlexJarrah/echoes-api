@@ -107,7 +107,7 @@ type AuthEnvelopeMarshalerWs interface {
 	MarshalAuthWs(envelope ws.EnvelopeWriter) error
 }
 
-func (c AuthWs) SealClientMessage(
+func (c AuthWs) SealRequest(
 	envelope ws.EnvelopeWriter,
 	message AuthEnvelopeMarshalerWs,
 ) error {
@@ -118,20 +118,20 @@ func (c AuthWs) SealClientMessage(
 	return nil
 }
 
-func (c AuthWs) PublishClientMessage(
+func (c AuthWs) PublishRequest(
 	ctx context.Context,
 
 	message AuthEnvelopeMarshalerWs,
 ) error {
 	envelope := ws.NewEnvelopeOut(nil)
-	if err := c.SealClientMessage(envelope, message); err != nil {
+	if err := c.SealRequest(envelope, message); err != nil {
 		return err
 	}
 
 	envelope.SetOpCode(byte(ws2.OpBinary))
 	return c.Publish(ctx, envelope)
 }
-func (c AuthWs) SealServerMessage(
+func (c AuthWs) SealResponse(
 	envelope ws.EnvelopeWriter,
 	message AuthEnvelopeMarshalerWs,
 ) error {
@@ -142,13 +142,13 @@ func (c AuthWs) SealServerMessage(
 	return nil
 }
 
-func (c AuthWs) PublishServerMessage(
+func (c AuthWs) PublishResponse(
 	ctx context.Context,
 
 	message AuthEnvelopeMarshalerWs,
 ) error {
 	envelope := ws.NewEnvelopeOut(nil)
-	if err := c.SealServerMessage(envelope, message); err != nil {
+	if err := c.SealResponse(envelope, message); err != nil {
 		return err
 	}
 
@@ -168,23 +168,23 @@ type AuthEnvelopeUnmarshalerWs interface {
 	UnmarshalAuthWs(envelope ws.EnvelopeReader) error
 }
 
-func (c AuthWs) UnsealClientMessage(
+func (c AuthWs) UnsealRequest(
 	envelope ws.EnvelopeReader,
 	message AuthEnvelopeUnmarshalerWs,
 ) error {
 	return message.UnmarshalAuthWs(envelope)
 }
 
-func (c AuthWs) SubscribeClientMessage(
+func (c AuthWs) SubscribeRequest(
 	ctx context.Context,
-	cb func(message messages.ClientMessageReceiver),
+	cb func(message messages.RequestReceiver),
 ) (err error) {
 	subCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
 	subErr := c.Subscribe(subCtx, func(envelope ws.EnvelopeReader) {
-		message := new(messages.ClientMessageIn)
-		if err2 := c.UnsealClientMessage(envelope, message); err2 != nil {
+		message := new(messages.RequestIn)
+		if err2 := c.UnsealRequest(envelope, message); err2 != nil {
 			err = fmt.Errorf("%w: %w", run.ErrUnsealEnvelope, err2)
 			cancel()
 			return
@@ -196,23 +196,23 @@ func (c AuthWs) SubscribeClientMessage(
 	}
 	return subErr
 }
-func (c AuthWs) UnsealServerMessage(
+func (c AuthWs) UnsealResponse(
 	envelope ws.EnvelopeReader,
 	message AuthEnvelopeUnmarshalerWs,
 ) error {
 	return message.UnmarshalAuthWs(envelope)
 }
 
-func (c AuthWs) SubscribeServerMessage(
+func (c AuthWs) SubscribeResponse(
 	ctx context.Context,
-	cb func(message messages.ServerMessageReceiver),
+	cb func(message messages.ResponseReceiver),
 ) (err error) {
 	subCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
 	subErr := c.Subscribe(subCtx, func(envelope ws.EnvelopeReader) {
-		message := new(messages.ServerMessageIn)
-		if err2 := c.UnsealServerMessage(envelope, message); err2 != nil {
+		message := new(messages.ResponseIn)
+		if err2 := c.UnsealResponse(envelope, message); err2 != nil {
 			err = fmt.Errorf("%w: %w", run.ErrUnsealEnvelope, err2)
 			cancel()
 			return

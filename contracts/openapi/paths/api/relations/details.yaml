@@ -1,0 +1,21 @@
+/api/relations/details:
+    get:
+      summary: Get user relations with visible activity details
+      operationId: getRelationsDetails
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Relations details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RelationDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

@@ -1,0 +1,11 @@
+/asyncapi.yaml:
+    get:
+      summary: Get AsyncAPI schema.
+      operationId: getAsyncAPI
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string

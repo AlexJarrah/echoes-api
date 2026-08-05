@@ -1,0 +1,12 @@
+TrackArtist:
+  type: object
+  required:
+    - track_id
+    - artist_id
+  properties:
+    track_id:
+      type: string
+      format: uuid
+    artist_id:
+      type: string
+      format: uuid

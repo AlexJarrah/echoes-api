@@ -1,106 +1,1498 @@
 package schemas
 
 const OpenAPI = `openapi: 3.0.0
-
 info:
   title: Echoes
   description: HTTP API
   version: 1.0.0
   license:
     name: Proprietary
-
 servers:
   - url: https://echoes.la
     description: Production server.
     x-ogen-server-name: Production
-
+paths:
+  /api/@{handle}/listens/sessions:
+    post:
+      summary: Get listen sessions for another user
+      operationId: getUserListenSessions
+      tags:
+        - Listens
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: handle
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListensSessionsRequest'
+      responses:
+        '200':
+          description: Listen sessions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/add-friend:
+    post:
+      summary: Add a friend
+      operationId: addFriend
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendActionRequest'
+      responses:
+        '200':
+          description: Friend relation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/albums/{id}:
+    get:
+      summary: Get album details
+      operationId: getAlbum
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Album details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Album'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/artists/{id}:
+    get:
+      summary: Get artist details
+      operationId: getArtist
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Artist details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
+    put:
+      summary: Add a reaction to a message.
+      operationId: addMessageReaction
+      tags:
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: emoji
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reaction added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageReaction'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remove a reaction from a message.
+      operationId: deleteMessageReaction
+      tags:
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: emoji
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/conversations/{conversation_id}/messages/{message_id}/read:
+    post:
+      summary: Read a message.
+      operationId: readMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/conversations/{conversation_id}/messages/{message_id}/thread:
+    get:
+      summary: Get message thread.
+      operationId: getMessageThread
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        '200':
+          description: Thread retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessageDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/conversations/{conversation_id}/messages/{message_id}:
+    patch:
+      summary: Edit a message.
+      operationId: editMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+      responses:
+        '200':
+          description: Message edited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete a message.
+      operationId: deleteMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/conversations/{conversation_id}/messages:
+    get:
+      summary: Get conversation messages.
+      operationId: getMessages
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        '200':
+          description: Messages retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessageDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Send a conversation message.
+      operationId: sendMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - body
+              properties:
+                body:
+                  type: string
+                parent_id:
+                  type: integer
+                  format: uint64
+                  nullable: true
+      responses:
+        '200':
+          description: Message sent successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/groups/{group_id}/roles/{user_id}:
+    patch:
+      summary: Update group roles.
+      operationId: UpdateGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                role:
+                  $ref: '#/components/schemas/GroupRoleType'
+      responses:
+        '200':
+          description: Group roles updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remove a user from a group.
+      operationId: deleteGroupRole
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/groups/{group_id}/roles:
+    get:
+      summary: Get group roles.
+      operationId: getGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Group roles retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupRole'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Add group roles.
+      operationId: AddGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/GroupRole'
+      responses:
+        '200':
+          description: Group roles added successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/groups/{group_id}:
+    get:
+      summary: Get group.
+      operationId: getGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Group retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      summary: Edit a group.
+      operationId: editGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditGroupRequest'
+      responses:
+        '200':
+          description: Group edited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete a group if owned by the user.
+      operationId: deleteGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/groups:
+    get:
+      summary: Get groups visible to the user.
+      operationId: getGroups
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: Groups retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Create a new group as owner.
+      operationId: createGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequest'
+      responses:
+        '200':
+          description: Group created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/join-free-beta:
+    post:
+      summary: Join free beta
+      operationId: joinFreeBeta
+      tags:
+        - Subscription
+      security:
+        - CookieAuth: []
+      responses:
+        '204':
+          description: Beta joined successfully
+          headers:
+            Hx-Location:
+              schema:
+                type: string
+              description: Redirect location
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/library/add:
+    post:
+      summary: Add items to library
+      operationId: addToLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LibraryAddRequest'
+      responses:
+        '200':
+          description: Items added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryAddResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/library/get-metadata:
+    get:
+      summary: Get library metadata
+      operationId: getLibraryMetadata
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: Library metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryMetadataResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/library/remove:
+    post:
+      summary: Remove items from library
+      operationId: removeFromLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LibraryRemoveRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/library/update:
+    post:
+      summary: Update items in library
+      operationId: updateLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LibraryUpdateRequest'
+      responses:
+        '200':
+          description: Items updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/listens/sessions:
+    post:
+      summary: Get recent listening sessions
+      operationId: getListenSessions
+      tags:
+        - Listens
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListensSessionsRequest'
+      responses:
+        '200':
+          description: Listen sessions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/register:
+    post:
+      summary: Register a new user
+      operationId: register
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: User created successfully
+          headers:
+            Hx-Location:
+              schema:
+                type: string
+              description: Redirect location
+            Set-Cookie:
+              schema:
+                type: string
+              description: Authentication cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/relations/details:
+    get:
+      summary: Get user relations with visible activity details
+      operationId: getRelationsDetails
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: Relations details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelationDetails'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/relations:
+    get:
+      summary: Get user relations
+      operationId: getRelations
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: User relations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Relation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/remove-friend:
+    post:
+      summary: Remove a friend
+      operationId: removeFriend
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/search-tracks-via-details:
+    post:
+      summary: Search tracks via details
+      operationId: searchTracksViaDetails
+      tags:
+        - Search
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchTracksRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchTrackResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/set-activity:
+    post:
+      summary: Set current activity
+      operationId: setActivity
+      tags:
+        - Activity
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SetActivityItem'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/set-best-friend:
+    post:
+      summary: Set or unset best friend
+      operationId: setBestFriend
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BestFriendActionRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/set-blocked:
+    post:
+      summary: Block or unblock a user
+      operationId: setBlocked
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockedActionRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/signin:
+    post:
+      summary: Sign in with email and password
+      operationId: signIn
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+      responses:
+        '200':
+          description: Sign in successful
+          headers:
+            Hx-Location:
+              schema:
+                type: string
+              description: Redirect location
+            Set-Cookie:
+              schema:
+                type: string
+              description: Authentication cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/statistics/global/top/albums:
+    post:
+      summary: Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopAlbums
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatisticsQuery'
+      responses:
+        '200':
+          description: Top albums returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopAlbumEntry'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/statistics/global/top/artists:
+    post:
+      summary: Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopArtists
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatisticsQuery'
+      responses:
+        '200':
+          description: Top artists returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopArtistEntry'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/statistics/global/top/tracks:
+    post:
+      summary: Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopTracks
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatisticsQuery'
+      responses:
+        '200':
+          description: Top tracks returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopTrackEntry'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/statistics/user/listens/days:
+    post:
+      summary: Get user's listening information for the specified time range.
+      operationId: getUserListensByDays
+      tags:
+        - Statistics
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DateTimeRange'
+      responses:
+        '200':
+          description: Successfully retrieved listening information by day
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DayListenDetails'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/statistics/user/top/artist-plays:
+    post:
+      summary: Get user's top artists with each artist's top tracks and albums.
+      operationId: getUserTopArtistPlayStats
+      tags:
+        - Statistics
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistPlayStatisticsQuery'
+      responses:
+        '200':
+          description: Top artist plays returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopArtistPlayStats'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/tracks/{id}:
+    get:
+      summary: Get track details
+      operationId: getTrack
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Track details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Track'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/user/details:
+    get:
+      summary: Get current user details
+      operationId: getUserDetails
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/user/integrations:
+    get:
+      summary: Get user integration details
+      operationId: getUserIntegrations
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          description: User integration details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegrationMetadata'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/user/update:
+    post:
+      summary: Update user profile
+      operationId: updateUser
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/validate:
+    get:
+      summary: Validate authentication token
+      operationId: validateToken
+      tags:
+        - Authentication
+      security:
+        - CookieAuth: []
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/{user_id}/calendar/listens:
+    get:
+      summary: Get calendar listens for user (ICS feed)
+      operationId: getCalendarListens
+      description: Serves listening history as an ICS feed. Access respects requested user's privacy settings. If requested user's privacy is not public, auth and token params are required.
+      tags:
+        - Listens
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user whose calendar to retrieve
+          schema:
+            type: string
+            format: uuid
+        - name: auth_id
+          in: query
+          description: The requesting user's ID (the viewer). Required if target user's visibility is not public.
+          schema:
+            type: string
+            format: uuid
+        - name: token
+          in: query
+          description: HMAC token for authentication. Required if target user's visibility is not public.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Calendar ICS file
+          headers:
+            Content-Disposition:
+              required: true
+              schema:
+                type: string
+          content:
+            text/calendar; charset=utf-8:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /asyncapi.yaml:
+    get:
+      summary: Get AsyncAPI schema.
+      operationId: getAsyncAPI
+      responses:
+        '200':
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+  /openapi.yaml:
+    get:
+      summary: Get OpenAPI schema.
+      operationId: getOpenAPI
+      responses:
+        '200':
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string
 components:
-  securitySchemes:
-    CookieAuth:
-      type: apiKey
-      in: cookie
-      name: auth_token
-      description: JWT token
-
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+        text/plain:
+          schema:
+            type: string
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+        text/plain:
+          schema:
+            type: string
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+        text/plain:
+          schema:
+            type: string
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+        text/plain:
+          schema:
+            type: string
+    NoContent:
+      description: No content
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+        text/plain:
+          schema:
+            type: string
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+        text/plain:
+          schema:
+            type: string
   schemas:
-    Visibility:
-      type: integer
-      format: uint8
-      enum: [0, 1, 2, 3]
-      description: |
-        0=Public: visible to everyone
-        1=Friends: visible to the user's friends
-        2=BestFriends: visible to the user's best friends
-        3=Private: visible to only the user
-
-    ListenMethod:
-      type: integer
-      format: uint8
-      enum: [0, 1, 2, 3, 4, 5]
-      description: |
-        0=API: listen was added via API
-        1=App: listen was added via an official client application
-        2=Spotify: listen was imported from Spotify
-        3=AppleMusic: listen was imported from Apple Music
-        4=Last: listen was imported from Last
-        5=YouTube: listen was imported from YouTube
-
-    IntegrationProvider:
-      type: integer
-      format: uint8
-      enum: [0, 1, 2]
-      description: |
-        0=Google
-        1=Spotify
-        2=Last
-
-    UserRelation:
-      type: integer
-      format: uint8
-      enum: [0, 1, 2, 3, 4, 5]
-      description: |
-        0=Friend: users are friends
-        1=BestFriend: source user set target user as a best friend
-        2=OutgoingRequest: source user has an outgoing friend request
-        3=IncomingRequest: source user has an incoming friend request
-        4=BlockSent: source user has blocked target user
-        5=BlockReceived: target user has blocked source user
-
-    GroupRoleType:
-      type: integer
-      format: uint8
-      enum: [0, 1, 2]
-      description: |
-        0=Owner
-        1=Moderator
-        2=Member
-
-    User:
+    Album:
       type: object
       required:
-        - user_id
-        - handle
+        - album_id
         - name
-        - email
-        - visibility
-        - subscription_expiration
         - created_at
       properties:
+        album_id:
+          type: string
+          format: uuid
         user_id:
           type: string
           format: uuid
-        handle:
+          nullable: true
+        base_album_id:
           type: string
+          format: uuid
+          nullable: true
         name:
           type: string
-        email:
-          type: string
-          format: email
-        visibility:
-          $ref: "#/components/schemas/Visibility"
-        subscription_expiration:
+        release_date:
           type: string
           format: date-time
+          nullable: true
+        musicbrainz_id:
+          type: string
+          format: uuid
+          nullable: true
+        spotify_url:
+          type: string
+          nullable: true
+        apple_music_url:
+          type: string
+          nullable: true
+        tidal_url:
+          type: string
+          nullable: true
+        youtube_music_url:
+          type: string
+          nullable: true
         created_at:
           type: string
           format: date-time
@@ -108,7 +1500,1428 @@ components:
           type: string
           format: date-time
           nullable: true
-
+    AlbumArtist:
+      type: object
+      required:
+        - album_id
+        - artist_id
+      properties:
+        album_id:
+          type: string
+          format: uuid
+        artist_id:
+          type: string
+          format: uuid
+    AlbumAsset:
+      type: object
+      required:
+        - album_id
+        - asset_id
+        - position
+      properties:
+        album_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+    AlbumPlayStats:
+      type: object
+      required:
+        - album
+        - assets
+        - play_count
+        - play_duration
+      properties:
+        album:
+          $ref: '#/components/schemas/Album'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumAsset'
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
+    AlbumTrack:
+      type: object
+      required:
+        - album_id
+        - track_id
+      properties:
+        album_id:
+          type: string
+          format: uuid
+        track_id:
+          type: string
+          format: uuid
+        disc_number:
+          type: integer
+          format: int8
+          nullable: true
+        track_number:
+          type: integer
+          format: int8
+          nullable: true
+    Artist:
+      type: object
+      required:
+        - artist_id
+        - name
+        - created_at
+      properties:
+        artist_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          type: string
+        bio:
+          type: string
+          nullable: true
+        musicbrainz_id:
+          type: string
+          format: uuid
+          nullable: true
+        spotify_url:
+          type: string
+          nullable: true
+        apple_music_url:
+          type: string
+          nullable: true
+        tidal_url:
+          type: string
+          nullable: true
+        youtube_music_url:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    ArtistAsset:
+      type: object
+      required:
+        - artist_id
+        - asset_id
+        - position
+      properties:
+        artist_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+    ArtistPlayStatisticsQuery:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start timestamp for the time range, defaults to one year ago.
+        end:
+          type: string
+          format: date-time
+          description: Start timestamp for the time range, defaults to current time.
+        artist_limit:
+          type: integer
+          format: uint32
+          default: 10
+          maximum: 30
+          description: Maximum number of artists to return
+        track_limit:
+          type: integer
+          format: uint32
+          default: 3
+          maximum: 10
+          description: Maximum number of tracks per artist to return
+        album_limit:
+          type: integer
+          format: uint32
+          default: 1
+          maximum: 10
+          description: Maximum number of albums per artist to return
+        artist_offset:
+          type: integer
+          format: uint32
+          default: 0
+    ArtistPlayStats:
+      type: object
+      required:
+        - artist
+        - assets
+        - play_count
+        - play_duration
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistAsset'
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
+    Asset:
+      type: object
+      required:
+        - asset_id
+        - mime_type
+        - created_at
+        - updated_at
+      properties:
+        asset_id:
+          type: string
+          format: uuid
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    BestFriendActionRequest:
+      type: object
+      required:
+        - id
+        - best_friend
+      properties:
+        id:
+          type: string
+          format: uuid
+        best_friend:
+          type: boolean
+    BlockedActionRequest:
+      type: object
+      required:
+        - id
+        - blocked
+      properties:
+        id:
+          type: string
+          format: uuid
+        blocked:
+          type: boolean
+    Conversation:
+      type: object
+      required:
+        - conversation_id
+        - created_at
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+    ConversationParticipant:
+      type: object
+      required:
+        - conversation_id
+        - user_id
+        - created_at
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+    ConversationRead:
+      type: object
+      required:
+        - user_id
+        - conversation_id
+        - latest_message_id
+        - read_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        conversation_id:
+          type: string
+          format: uuid
+        latest_message_id:
+          type: integer
+          format: uint64
+        read_at:
+          type: string
+          format: date-time
+    CreateGroupRequest:
+      type: object
+      required:
+        - name
+        - visibility
+        - members
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+        members:
+          type: array
+          items:
+            type: string
+            format: uuid
+    DateTimeRange:
+      type: object
+      required:
+        - start
+        - end
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+    DayListenDetails:
+      type: object
+      required:
+        - date
+        - play_count
+        - seconds
+      properties:
+        date:
+          type: string
+          format: date
+        play_count:
+          type: integer
+          format: uint16
+        seconds:
+          type: integer
+          format: uint64
+    EditGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Human-readable error message
+    FriendActionRequest:
+      type: object
+      description: Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user.
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Target user's UUID. Optional if 'handle' is provided.
+        handle:
+          type: string
+          nullable: true
+          description: Target user's handle. Optional if 'id' is provided.
+    Group:
+      type: object
+      required:
+        - group_id
+        - conversation_id
+        - name
+        - visibility
+        - created_at
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        conversation_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    GroupAsset:
+      type: object
+      required:
+        - group_id
+        - asset_id
+        - position
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+    GroupDetails:
+      type: object
+      required:
+        - group
+        - conversation
+        - roles
+        - latest_message
+        - unread_count
+      properties:
+        group:
+          $ref: '#/components/schemas/Group'
+        conversation:
+          $ref: '#/components/schemas/Conversation'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupRole'
+        latest_message:
+          $ref: '#/components/schemas/Message'
+        unread_count:
+          type: integer
+          format: uint32
+    GroupRole:
+      type: object
+      required:
+        - group_id
+        - user_id
+        - role
+        - created_at
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/GroupRoleType'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    GroupRoleType:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+      description: |
+        0=Owner
+        1=Moderator
+        2=Member
+    Integration:
+      type: object
+      required:
+        - user_id
+        - provider
+        - details
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        provider:
+          $ref: '#/components/schemas/IntegrationProvider'
+        details:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    IntegrationMetadata:
+      type: object
+      required:
+        - user_id
+        - provider
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        provider:
+          $ref: '#/components/schemas/IntegrationProvider'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    IntegrationProvider:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+      description: |
+        0=Google
+        1=Spotify
+        2=Last
+    LibraryAddAlbum:
+      type: object
+      required:
+        - album
+      properties:
+        album:
+          $ref: '#/components/schemas/Album'
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+    LibraryAddAlbumTrack:
+      allOf:
+        - $ref: '#/components/schemas/AlbumTrack'
+        - type: object
+          required:
+            - album_reference_id
+            - track_reference_id
+          properties:
+            album_reference_id:
+              type: integer
+              format: int64
+            track_reference_id:
+              type: integer
+              format: int64
+    LibraryAddArtist:
+      type: object
+      required:
+        - artist
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+    LibraryAddID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        reference_id:
+          type: integer
+          format: int64
+    LibraryAddKV:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          $ref: '#/components/schemas/LibraryAddID'
+        value:
+          $ref: '#/components/schemas/LibraryAddID'
+    LibraryAddListen:
+      type: object
+      required:
+        - listen
+      properties:
+        listen:
+          $ref: '#/components/schemas/Listen'
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+    LibraryAddRequest:
+      type: object
+      minProperties: 1
+      properties:
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddTrack'
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddArtist'
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddAlbum'
+        listens:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddListen'
+        track_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddKV'
+        album_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddKV'
+        listen_tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddKV'
+        album_tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddAlbumTrack'
+    LibraryAddResponse:
+      type: object
+      properties:
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddResult'
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddResult'
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddResult'
+        listens:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryAddResult'
+        errors:
+          type: array
+          items:
+            type: string
+    LibraryAddResult:
+      type: object
+      required:
+        - id
+        - created
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID of the created or resolved entity.
+        reference_id:
+          type: integer
+          format: int64
+          description: Reference ID provided in the request, echoed back for client correlation.
+        created:
+          type: boolean
+          description: True if a new entity was created, false if an existing entity was resolved.
+    LibraryAddTrack:
+      type: object
+      required:
+        - track
+      properties:
+        track:
+          $ref: '#/components/schemas/Track'
+        reference_id:
+          type: integer
+          format: int64
+          description: Client-provided reference ID for correlation in responses.
+        force_add:
+          type: boolean
+          default: false
+          description: If true, skip deduplication and always create a new entity.
+    LibraryMetadataAlbum:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LibraryMetadataArtist:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    LibraryMetadataResponse:
+      type: object
+      properties:
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryMetadataArtist'
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryMetadataAlbum'
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LibraryMetadataTrack'
+    LibraryMetadataTrack:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        seconds:
+          type: integer
+          format: uint16
+          nullable: true
+        album_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        artist_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+    LibraryRemoveRequest:
+      type: object
+      properties:
+        track_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        album_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        artist_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        listen_ids:
+          type: array
+          items:
+            type: integer
+            format: uint64
+    LibraryUpdateRequest:
+      type: object
+      properties:
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Track'
+          default: []
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+          default: []
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/Album'
+          default: []
+        track_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackArtist'
+          default: []
+        album_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumArtist'
+          default: []
+        album_tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumTrack'
+          default: []
+        append_track_artists:
+          type: boolean
+          default: false
+        append_album_artists:
+          type: boolean
+          default: false
+        append_album_tracks:
+          type: boolean
+          default: false
+    LibraryUpdateResponse:
+      type: object
+      properties:
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/Album'
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Track'
+        errors:
+          type: array
+          items:
+            type: string
+    Listen:
+      type: object
+      required:
+        - listen_id
+        - user_id
+        - track_id
+        - seconds
+        - method
+        - created_at
+      properties:
+        listen_id:
+          type: integer
+          format: uint64
+        user_id:
+          type: string
+          format: uuid
+        track_id:
+          type: string
+          format: uuid
+        seconds:
+          type: integer
+          format: uint16
+        method:
+          $ref: '#/components/schemas/ListenMethod'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    ListenMethod:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      description: |
+        0=API: listen was added via API
+        1=App: listen was added via an official client application
+        2=Spotify: listen was imported from Spotify
+        3=AppleMusic: listen was imported from Apple Music
+        4=Last: listen was imported from Last
+        5=YouTube: listen was imported from YouTube
+    ListensSessionsRequest:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start of time range filter.
+        end:
+          type: string
+          format: date-time
+          description: End of time range filter.
+        minimum:
+          type: integer
+          format: int64
+          description: Minimum amount of listens to be fetched. The start parameter's value may not be respected to achieve this.
+        limit:
+          type: integer
+          format: int64
+          maximum: 1000
+          default: 1000
+          description: Maximum amount of listens to be fetched.
+    Message:
+      type: object
+      required:
+        - message_id
+        - conversation_id
+        - body
+        - created_at
+      properties:
+        message_id:
+          type: integer
+          format: uint64
+        conversation_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Null if user is deleted.
+        body:
+          type: string
+        parent_id:
+          type: integer
+          format: uint64
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    MessageAsset:
+      type: object
+      required:
+        - message_id
+        - asset_id
+        - position
+      properties:
+        message_id:
+          type: integer
+          format: uint64
+        asset_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          description: Lexicographically sortable string
+    MessageDetails:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          $ref: '#/components/schemas/Message'
+        reactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageReaction'
+    MessageReaction:
+      type: object
+      required:
+        - user_id
+        - message_id
+        - emoji
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        message_id:
+          type: integer
+          format: uint64
+        emoji:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    RegisterRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          description: 2+ Unicode letters, spaces allowed
+          pattern: ^\p{L}{2,}( \p{L}+)*$
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          description: 8+ characters, must contain uppercase, lowercase, digit, and special character
+    Relation:
+      type: object
+      required:
+        - source_id
+        - target_id
+        - relation
+      properties:
+        source_id:
+          type: string
+          format: uuid
+        target_id:
+          type: string
+          format: uuid
+        relation:
+          $ref: '#/components/schemas/UserRelation'
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    RelationDetails:
+      type: object
+      required:
+        - user_id
+        - name
+        - handle
+        - visibility
+        - relation
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+        handle:
+          type: string
+        relation:
+          $ref: '#/components/schemas/UserRelation'
+        activity:
+          type: object
+          required:
+            - listens
+          properties:
+            listens:
+              type: array
+              items:
+                $ref: '#/components/schemas/Listen'
+        statistics:
+          type: object
+          required:
+            - year_listens
+            - year_seconds
+            - listening_streak
+          properties:
+            year_listens:
+              type: integer
+              format: uint64
+            year_seconds:
+              type: integer
+              format: uint64
+            listening_streak:
+              type: integer
+              format: uint16
+    SearchTrackResult:
+      allOf:
+        - $ref: '#/components/schemas/Track'
+        - type: object
+          required:
+            - confidence
+          properties:
+            confidence:
+              type: integer
+              description: Confidence score (0-100)
+              minimum: 0
+              maximum: 100
+    SearchTracksRequest:
+      type: object
+      required:
+        - track_name
+      properties:
+        track_name:
+          type: string
+        artist_names:
+          type: array
+          items:
+            type: string
+        album_name:
+          type: string
+        seconds:
+          type: integer
+          format: uint16
+    Session:
+      type: object
+      required:
+        - id
+        - start
+        - end
+        - listens
+      properties:
+        id:
+          type: integer
+          format: uint32
+          description: Unique identifier for this listening session.
+        start:
+          type: string
+          format: date-time
+          description: Timestamp when the session started.
+        end:
+          type: string
+          format: date-time
+          description: Timestamp when the session ended.
+        listens:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionListen'
+          description: List of listens in this session, ordered chronologically.
+        top_artist:
+          type: string
+          format: uuid
+          nullable: true
+          description: UUID of the most-listened artist in this session.
+        top_album:
+          type: string
+          format: uuid
+          nullable: true
+          description: UUID of the most-listened album in this session.
+        partial:
+          type: boolean
+          nullable: true
+          description: True if this session is incomplete (cut off by pagination limit).
+    SessionAlbum:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Album UUID.
+        name:
+          type: string
+          description: Album name.
+        asset_url:
+          type: string
+          description: URL to the album cover asset.
+    SessionArtist:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Artist UUID.
+        name:
+          type: string
+          description: Artist name.
+    SessionDay:
+      type: object
+      required:
+        - date
+        - sessions
+      properties:
+        date:
+          type: string
+          format: date
+          description: Calendar date for this group of sessions.
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+          description: Sessions for this day, ordered newest first.
+    SessionListen:
+      type: object
+      required:
+        - id
+        - track
+        - start
+        - end
+      properties:
+        id:
+          type: integer
+          format: uint32
+          description: Unique identifier for this listen event.
+        track:
+          type: string
+          format: uuid
+          description: UUID of the track listened to.
+        start:
+          type: string
+          format: date-time
+          description: Timestamp when playback started.
+        end:
+          type: string
+          format: date-time
+          description: Timestamp when playback ended.
+    SessionTrack:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Track UUID.
+        name:
+          type: string
+          description: Track name.
+        artists:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of artist UUIDs for this track.
+        album:
+          type: string
+          format: uuid
+          nullable: true
+          description: Album UUID, if available.
+        explicit:
+          type: boolean
+          nullable: true
+          description: Whether the track has explicit content.
+    SessionsResponse:
+      type: object
+      required:
+        - days
+        - tracks
+        - albums
+        - artists
+      properties:
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionDay'
+          description: Days containing sessions, ordered newest first.
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionTrack'
+          description: Deduplicated track metadata referenced by sessions.
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionAlbum'
+          description: Deduplicated album metadata referenced by sessions.
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionArtist'
+          description: Deduplicated artist metadata referenced by sessions.
+    SetActivityItem:
+      type: object
+      required:
+        - session_id
+        - track_id
+        - active
+        - position
+      properties:
+        session_id:
+          type: string
+          description: Unique identifier for the listening session, typically a UUID or random string used to group related activities.
+        track_id:
+          type: string
+          format: uuid
+          description: UUID of the track being played.
+        active:
+          type: boolean
+          description: Whether the user is currently playing this track (true) or has stopped/paused (false).
+        position:
+          type: integer
+          format: int64
+          description: Current playback position in seconds from the start of the track.
+        start_timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when playback of this track started.
+        end_timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when playback of this track is expected to end (for background playback estimation).
+    SignInRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    StatisticsQuery:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Start timestamp for the time range
+        end:
+          type: string
+          format: date-time
+          description: End timestamp for the time range
+        limit:
+          type: integer
+          format: uint32
+          default: 100
+          maximum: 10000
+          description: Maximum number of results to return
+    TopAlbumEntry:
+      type: object
+      required:
+        - id
+        - rank
+        - album
+        - artists
+        - current
+      properties:
+        id:
+          type: string
+          format: uuid
+        rank:
+          type: integer
+          format: uint
+        album:
+          $ref: '#/components/schemas/Album'
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+        current:
+          $ref: '#/components/schemas/TopEntityPlays'
+        previous:
+          $ref: '#/components/schemas/TopEntityPlays'
+        change:
+          $ref: '#/components/schemas/TopEntityChange'
+    TopArtistEntry:
+      type: object
+      required:
+        - id
+        - rank
+        - artists
+        - current
+      properties:
+        id:
+          type: string
+          format: uuid
+        rank:
+          type: integer
+          format: uint
+        artist:
+          $ref: '#/components/schemas/Artist'
+        current:
+          $ref: '#/components/schemas/TopEntityPlays'
+        previous:
+          $ref: '#/components/schemas/TopEntityPlays'
+        change:
+          $ref: '#/components/schemas/TopEntityChange'
+    TopArtistPlayStats:
+      type: object
+      required:
+        - rank
+        - artist
+        - top_tracks
+        - top_albums
+      properties:
+        rank:
+          type: integer
+          format: uint
+        artist:
+          $ref: '#/components/schemas/ArtistPlayStats'
+        top_tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackPlayStats'
+        top_albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumPlayStats'
+    TopEntityChange:
+      type: object
+      required:
+        - play_count
+        - duration
+      description: Values change in percentage.
+      properties:
+        play_count:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+          format: int64
+          description: Play duration in seconds
+    TopEntityPlays:
+      type: object
+      required:
+        - play_count
+        - duration
+      properties:
+        play_count:
+          type: integer
+          format: uint64
+        duration:
+          type: integer
+          format: uint64
+          description: Play duration in seconds
+    TopTrackEntry:
+      type: object
+      required:
+        - id
+        - rank
+        - track
+        - album
+        - artists
+        - current
+      properties:
+        id:
+          type: string
+          format: uuid
+        rank:
+          type: integer
+          format: uint
+        track:
+          $ref: '#/components/schemas/Track'
+        album:
+          $ref: '#/components/schemas/Album'
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+        current:
+          $ref: '#/components/schemas/TopEntityPlays'
+        previous:
+          $ref: '#/components/schemas/TopEntityPlays'
+        change:
+          $ref: '#/components/schemas/TopEntityChange'
     Track:
       type: object
       required:
@@ -158,143 +2971,82 @@ components:
           type: string
           format: date-time
           nullable: true
-
-    Artist:
+    TrackArtist:
       type: object
       required:
-        - artist_id
-        - name
-        - created_at
-      properties:
-        artist_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-          nullable: true
-        name:
-          type: string
-        bio:
-          type: string
-          nullable: true
-        musicbrainz_id:
-          type: string
-          format: uuid
-          nullable: true
-        spotify_url:
-          type: string
-          nullable: true
-        apple_music_url:
-          type: string
-          nullable: true
-        tidal_url:
-          type: string
-          nullable: true
-        youtube_music_url:
-          type: string
-          nullable: true
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    Album:
-      type: object
-      required:
-        - album_id
-        - name
-        - created_at
-      properties:
-        album_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-          nullable: true
-        base_album_id:
-          type: string
-          format: uuid
-          nullable: true
-        name:
-          type: string
-        release_date:
-          type: string
-          format: date-time
-          nullable: true
-        musicbrainz_id:
-          type: string
-          format: uuid
-          nullable: true
-        spotify_url:
-          type: string
-          nullable: true
-        apple_music_url:
-          type: string
-          nullable: true
-        tidal_url:
-          type: string
-          nullable: true
-        youtube_music_url:
-          type: string
-          nullable: true
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    Listen:
-      type: object
-      required:
-        - listen_id
-        - user_id
         - track_id
-        - seconds
-        - method
-        - created_at
+        - artist_id
       properties:
-        listen_id:
-          type: integer
-          format: uint64
-        user_id:
-          type: string
-          format: uuid
         track_id:
           type: string
           format: uuid
-        seconds:
-          type: integer
-          format: uint16
-        method:
-          $ref: "#/components/schemas/ListenMethod"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    Asset:
-      type: object
-      required:
-        - asset_id
-        - mime_type
-        - created_at
-        - updated_at
-      properties:
-        asset_id:
+        artist_id:
           type: string
           format: uuid
-        mime_type:
+    TrackPlayStats:
+      type: object
+      required:
+        - track
+        - play_count
+        - play_duration
+      properties:
+        track:
+          $ref: '#/components/schemas/Track'
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
+    UpdateUserRequest:
+      type: object
+      properties:
+        handle:
           type: string
+          minLength: 4
+          maxLength: 15
+          pattern: ^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$
+          nullable: true
+        name:
+          type: string
+          pattern: ^\p{L}{2,}( \p{L}+)*$
+          nullable: true
+        email:
+          type: string
+          format: email
+          nullable: true
+        password:
+          type: string
+          minLength: 8
+          nullable: true
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+    User:
+      type: object
+      required:
+        - user_id
+        - handle
+        - name
+        - email
+        - visibility
+        - subscription_expiration
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        handle:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+        subscription_expiration:
+          type: string
+          format: date-time
         created_at:
           type: string
           format: date-time
@@ -302,7 +3054,6 @@ components:
           type: string
           format: date-time
           nullable: true
-
     UserAsset:
       type: object
       required:
@@ -319,2924 +3070,39 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
-
-    AlbumAsset:
-      type: object
-      required:
-        - album_id
-        - asset_id
-        - position
-      properties:
-        album_id:
-          type: string
-          format: uuid
-        asset_id:
-          type: string
-          format: uuid
-        position:
-          type: string
-          description: Lexicographically sortable string
-
-    ArtistAsset:
-      type: object
-      required:
-        - artist_id
-        - asset_id
-        - position
-      properties:
-        artist_id:
-          type: string
-          format: uuid
-        asset_id:
-          type: string
-          format: uuid
-        position:
-          type: string
-          description: Lexicographically sortable string
-
-    RelationDetails:
-      type: object
-      required:
-        - user_id
-        - name
-        - handle
-        - visibility
-        - relation
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        visibility:
-          $ref: "#/components/schemas/Visibility"
-        handle:
-          type: string
-        relation:
-          $ref: "#/components/schemas/UserRelation"
-        activity:
-          type: object
-          required:
-            - listens
-          properties:
-            listens:
-              type: array
-              items:
-                $ref: "#/components/schemas/Listen"
-        statistics:
-          type: object
-          required:
-            - year_listens
-            - year_seconds
-            - listening_streak
-          properties:
-            year_listens:
-              type: integer
-              format: uint64
-            year_seconds:
-              type: integer
-              format: uint64
-            listening_streak:
-              type: integer
-              format: uint16
-
-    Relation:
-      type: object
-      required:
-        - source_id
-        - target_id
-        - relation
-      properties:
-        source_id:
-          type: string
-          format: uuid
-        target_id:
-          type: string
-          format: uuid
-        relation:
-          $ref: "#/components/schemas/UserRelation"
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    Conversation:
-      type: object
-      required:
-        - conversation_id
-        - created_at
-      properties:
-        conversation_id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-
-    ConversationParticipant:
-      type: object
-      required:
-        - conversation_id
-        - user_id
-        - created_at
-      properties:
-        conversation_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        created_at:
-          type: string
-          format: date-time
-
-    Group:
-      type: object
-      required:
-        - group_id
-        - conversation_id
-        - name
-        - visibility
-        - created_at
-      properties:
-        group_id:
-          type: string
-          format: uuid
-        conversation_id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-          nullable: true
-        visibility:
-          $ref: "#/components/schemas/Visibility"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    GroupDetails:
-      type: object
-      required:
-        - group
-        - conversation
-        - roles
-        - latest_message
-        - unread_count
-      properties:
-        group:
-          $ref: "#/components/schemas/Group"
-        conversation:
-          $ref: "#/components/schemas/Conversation"
-        roles:
-          type: array
-          items:
-            $ref: "#/components/schemas/GroupRole"
-        latest_message:
-          $ref: "#/components/schemas/Message"
-        unread_count:
-          type: integer
-          format: uint32
-
-    CreateGroupRequest:
-      type: object
-      required:
-        - name
-        - visibility
-        - members
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        visibility:
-          $ref: "#/components/schemas/Visibility"
-        members:
-          type: array
-          items:
-            type: string
-            format: uuid
-
-    EditGroupRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        visibility:
-          $ref: "#/components/schemas/Visibility"
-
-    GroupRole:
-      type: object
-      required:
-        - group_id
-        - user_id
-        - role
-        - created_at
-      properties:
-        group_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-        role:
-          $ref: "#/components/schemas/GroupRoleType"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    Message:
-      type: object
-      required:
-        - message_id
-        - conversation_id
-        - body
-        - created_at
-      properties:
-        message_id:
-          type: integer
-          format: uint64
-        conversation_id:
-          type: string
-          format: uuid
-        user_id:
-          type: string
-          format: uuid
-          nullable: true
-          description: Null if user is deleted.
-        body:
-          type: string
-        parent_id:
-          type: integer
-          format: uint64
-          nullable: true
-        deleted_at:
-          type: string
-          format: date-time
-          nullable: true
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    MessageDetails:
-      type: object
-      required:
-        - message
-      properties:
-        message:
-          $ref: "#/components/schemas/Message"
-        reactions:
-          type: array
-          items:
-            $ref: "#/components/schemas/MessageReaction"
-
-    GroupAsset:
-      type: object
-      required:
-        - group_id
-        - asset_id
-        - position
-      properties:
-        group_id:
-          type: string
-          format: uuid
-        asset_id:
-          type: string
-          format: uuid
-        position:
-          type: string
-          description: Lexicographically sortable string
-
-    MessageAsset:
-      type: object
-      required:
-        - message_id
-        - asset_id
-        - position
-      properties:
-        message_id:
-          type: integer
-          format: uint64
-        asset_id:
-          type: string
-          format: uuid
-        position:
-          type: string
-          description: Lexicographically sortable string
-
-    MessageReaction:
-      type: object
-      required:
-        - user_id
-        - message_id
-        - emoji
-        - created_at
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        message_id:
-          type: integer
-          format: uint64
-        emoji:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-
-    ConversationRead:
-      type: object
-      required:
-        - user_id
-        - conversation_id
-        - latest_message_id
-        - read_at
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        conversation_id:
-          type: string
-          format: uuid
-        latest_message_id:
-          type: integer
-          format: uint64
-        read_at:
-          type: string
-          format: date-time
-
-    Integration:
-      type: object
-      required:
-        - user_id
-        - provider
-        - details
-        - created_at
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        provider:
-          $ref: "#/components/schemas/IntegrationProvider"
-        details:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    IntegrationMetadata:
-      type: object
-      required:
-        - user_id
-        - provider
-        - created_at
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        provider:
-          $ref: "#/components/schemas/IntegrationProvider"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          nullable: true
-
-    RegisterRequest:
-      type: object
-      required:
-        - name
-        - email
-        - password
-      properties:
-        name:
-          type: string
-          description: 2+ Unicode letters, spaces allowed
-          pattern: '^\p{L}{2,}( \p{L}+)*$'
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-          minLength: 8
-          description:
-            8+ characters, must contain uppercase, lowercase, digit, and
-            special character
-
-    SignInRequest:
-      type: object
-      required:
-        - email
-        - password
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-
-    UpdateUserRequest:
-      type: object
-      properties:
-        handle:
-          type: string
-          minLength: 4
-          maxLength: 15
-          pattern: "^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$"
-          nullable: true
-        name:
-          type: string
-          pattern: '^\p{L}{2,}( \p{L}+)*$'
-          nullable: true
-        email:
-          type: string
-          format: email
-          nullable: true
-        password:
-          type: string
-          minLength: 8
-          nullable: true
-        visibility:
-          $ref: "#/components/schemas/Visibility"
-
-    LibraryMetadataArtist:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-
-    LibraryMetadataAlbum:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-
-    LibraryMetadataTrack:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        seconds:
-          type: integer
-          format: uint16
-          nullable: true
-        album_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        artist_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-
-    LibraryMetadataResponse:
-      type: object
-      properties:
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryMetadataArtist"
-        albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryMetadataAlbum"
-        tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryMetadataTrack"
-
-    LibraryAddTrack:
-      type: object
-      required:
-        - track
-      properties:
-        track:
-          $ref: "#/components/schemas/Track"
-        reference_id:
-          type: integer
-          format: int64
-          description: Client-provided reference ID for correlation in responses.
-        force_add:
-          type: boolean
-          default: false
-          description: If true, skip deduplication and always create a new entity.
-
-    LibraryAddArtist:
-      type: object
-      required:
-        - artist
-      properties:
-        artist:
-          $ref: "#/components/schemas/Artist"
-        reference_id:
-          type: integer
-          format: int64
-          description: Client-provided reference ID for correlation in responses.
-        force_add:
-          type: boolean
-          default: false
-          description: If true, skip deduplication and always create a new entity.
-
-    LibraryAddAlbum:
-      type: object
-      required:
-        - album
-      properties:
-        album:
-          $ref: "#/components/schemas/Album"
-        reference_id:
-          type: integer
-          format: int64
-          description: Client-provided reference ID for correlation in responses.
-        force_add:
-          type: boolean
-          default: false
-          description: If true, skip deduplication and always create a new entity.
-
-    LibraryAddListen:
-      type: object
-      required:
-        - listen
-      properties:
-        listen:
-          $ref: "#/components/schemas/Listen"
-        reference_id:
-          type: integer
-          format: int64
-          description: Client-provided reference ID for correlation in responses.
-        force_add:
-          type: boolean
-          default: false
-          description: If true, skip deduplication and always create a new entity.
-
-    LibraryAddKV:
-      type: object
-      required:
-        - key
-        - value
-      properties:
-        key:
-          $ref: "#/components/schemas/LibraryAddID"
-        value:
-          $ref: "#/components/schemas/LibraryAddID"
-
-    LibraryAddID:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        reference_id:
-          type: integer
-          format: int64
-
-    AlbumTrack:
-      type: object
-      required:
-        - album_id
-        - track_id
-      properties:
-        album_id:
-          type: string
-          format: uuid
-        track_id:
-          type: string
-          format: uuid
-        disc_number:
-          type: integer
-          format: int8
-          nullable: true
-        track_number:
-          type: integer
-          format: int8
-          nullable: true
-
-    TrackArtist:
-      type: object
-      required:
-        - track_id
-        - artist_id
-      properties:
-        track_id:
-          type: string
-          format: uuid
-        artist_id:
-          type: string
-          format: uuid
-
-    AlbumArtist:
-      type: object
-      required:
-        - album_id
-        - artist_id
-      properties:
-        album_id:
-          type: string
-          format: uuid
-        artist_id:
-          type: string
-          format: uuid
-
-    LibraryAddRequest:
-      type: object
-      minProperties: 1
-      properties:
-        tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddTrack"
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddArtist"
-        albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddAlbum"
-        listens:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddListen"
-        track_artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddKV"
-        album_artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddKV"
-        listen_tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddKV"
-        album_tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddAlbumTrack"
-
-    LibraryAddAlbumTrack:
-      allOf:
-        - $ref: "#/components/schemas/AlbumTrack"
-        - type: object
-          required:
-            - album_reference_id
-            - track_reference_id
-          properties:
-            album_reference_id:
-              type: integer
-              format: int64
-            track_reference_id:
-              type: integer
-              format: int64
-
-    LibraryAddResult:
-      type: object
-      required:
-        - id
-        - created
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: UUID of the created or resolved entity.
-        reference_id:
-          type: integer
-          format: int64
-          description:
-            Reference ID provided in the request, echoed back for client
-            correlation.
-        created:
-          type: boolean
-          description:
-            True if a new entity was created, false if an existing entity was
-            resolved.
-
-    LibraryAddResponse:
-      type: object
-      properties:
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddResult"
-        albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddResult"
-        tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddResult"
-        listens:
-          type: array
-          items:
-            $ref: "#/components/schemas/LibraryAddResult"
-        errors:
-          type: array
-          items:
-            type: string
-
-    LibraryUpdateRequest:
-      type: object
-      properties:
-        tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/Track"
-          default: []
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/Artist"
-          default: []
-        albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/Album"
-          default: []
-        track_artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/TrackArtist"
-          default: []
-        album_artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/AlbumArtist"
-          default: []
-        album_tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/AlbumTrack"
-          default: []
-        append_track_artists:
-          type: boolean
-          default: false
-        append_album_artists:
-          type: boolean
-          default: false
-        append_album_tracks:
-          type: boolean
-          default: false
-
-    LibraryUpdateResponse:
-      type: object
-      properties:
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/Artist"
-        albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/Album"
-        tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/Track"
-        errors:
-          type: array
-          items:
-            type: string
-
-    LibraryRemoveRequest:
-      type: object
-      properties:
-        track_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        album_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        artist_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        listen_ids:
-          type: array
-          items:
-            type: integer
-            format: uint64
-
-    ListensSessionsRequest:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          description: Start of time range filter.
-        end:
-          type: string
-          format: date-time
-          description: End of time range filter.
-        minimum:
-          type: integer
-          format: int64
-          description:
-            Minimum amount of listens to be fetched. The start parameter's
-            value may not be respected to achieve this.
-        limit:
-          type: integer
-          format: int64
-          maximum: 1000
-          default: 1000
-          description: Maximum amount of listens to be fetched.
-
-    TopEntityPlays:
-      type: object
-      required:
-        - play_count
-        - duration
-      properties:
-        play_count:
-          type: integer
-          format: uint64
-        duration:
-          type: integer
-          format: uint64
-          description: Play duration in seconds
-
-    TopEntityChange:
-      type: object
-      required:
-        - play_count
-        - duration
-      description: Values change in percentage.
-      properties:
-        play_count:
-          type: integer
-          format: int64
-        duration:
-          type: integer
-          format: int64
-          description: Play duration in seconds
-
-    TopAlbumEntry:
-      type: object
-      required:
-        - id
-        - rank
-        - album
-        - artists
-        - current
-      properties:
-        id:
-          type: string
-          format: uuid
-        rank:
-          type: integer
-          format: uint
-        album:
-          $ref: "#/components/schemas/Album"
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/Artist"
-        current:
-          $ref: "#/components/schemas/TopEntityPlays"
-        previous:
-          $ref: "#/components/schemas/TopEntityPlays"
-        change:
-          $ref: "#/components/schemas/TopEntityChange"
-
-    TopTrackEntry:
-      type: object
-      required:
-        - id
-        - rank
-        - track
-        - album
-        - artists
-        - current
-      properties:
-        id:
-          type: string
-          format: uuid
-        rank:
-          type: integer
-          format: uint
-        track:
-          $ref: "#/components/schemas/Track"
-        album:
-          $ref: "#/components/schemas/Album"
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/Artist"
-        current:
-          $ref: "#/components/schemas/TopEntityPlays"
-        previous:
-          $ref: "#/components/schemas/TopEntityPlays"
-        change:
-          $ref: "#/components/schemas/TopEntityChange"
-
-    TopArtistEntry:
-      type: object
-      required:
-        - id
-        - rank
-        - artists
-        - current
-      properties:
-        id:
-          type: string
-          format: uuid
-        rank:
-          type: integer
-          format: uint
-        artist:
-          $ref: "#/components/schemas/Artist"
-        current:
-          $ref: "#/components/schemas/TopEntityPlays"
-        previous:
-          $ref: "#/components/schemas/TopEntityPlays"
-        change:
-          $ref: "#/components/schemas/TopEntityChange"
-
-    DayListenDetails:
-      type: object
-      required:
-        - date
-        - play_count
-        - seconds
-      properties:
-        date:
-          type: string
-          format: date
-        play_count:
-          type: integer
-          format: uint16
-        seconds:
-          type: integer
-          format: uint64
-
-    TopArtistPlayStats:
-      type: object
-      required:
-        - rank
-        - artist
-        - top_tracks
-        - top_albums
-      properties:
-        rank:
-          type: integer
-          format: uint
-        artist:
-          $ref: "#/components/schemas/ArtistPlayStats"
-        top_tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/TrackPlayStats"
-        top_albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/AlbumPlayStats"
-
-    TrackPlayStats:
-      type: object
-      required:
-        - track
-        - play_count
-        - play_duration
-      properties:
-        track:
-          $ref: "#/components/schemas/Track"
-        play_count:
-          type: integer
-          format: uint64
-        play_duration:
-          type: integer
-          format: uint64
-
-    ArtistPlayStats:
-      type: object
-      required:
-        - artist
-        - assets
-        - play_count
-        - play_duration
-      properties:
-        artist:
-          $ref: "#/components/schemas/Artist"
-        assets:
-          type: array
-          items:
-            $ref: "#/components/schemas/ArtistAsset"
-        play_count:
-          type: integer
-          format: uint64
-        play_duration:
-          type: integer
-          format: uint64
-
-    AlbumPlayStats:
-      type: object
-      required:
-        - album
-        - assets
-        - play_count
-        - play_duration
-      properties:
-        album:
-          $ref: "#/components/schemas/Album"
-        assets:
-          type: array
-          items:
-            $ref: "#/components/schemas/AlbumAsset"
-        play_count:
-          type: integer
-          format: uint64
-        play_duration:
-          type: integer
-          format: uint64
-
-    SessionListen:
-      type: object
-      required:
-        - id
-        - track
-        - start
-        - end
-      properties:
-        id:
-          type: integer
-          format: uint32
-          description: Unique identifier for this listen event.
-        track:
-          type: string
-          format: uuid
-          description: UUID of the track listened to.
-        start:
-          type: string
-          format: date-time
-          description: Timestamp when playback started.
-        end:
-          type: string
-          format: date-time
-          description: Timestamp when playback ended.
-
-    Session:
-      type: object
-      required:
-        - id
-        - start
-        - end
-        - listens
-      properties:
-        id:
-          type: integer
-          format: uint32
-          description: Unique identifier for this listening session.
-        start:
-          type: string
-          format: date-time
-          description: Timestamp when the session started.
-        end:
-          type: string
-          format: date-time
-          description: Timestamp when the session ended.
-        listens:
-          type: array
-          items:
-            $ref: "#/components/schemas/SessionListen"
-          description: List of listens in this session, ordered chronologically.
-        top_artist:
-          type: string
-          format: uuid
-          nullable: true
-          description: UUID of the most-listened artist in this session.
-        top_album:
-          type: string
-          format: uuid
-          nullable: true
-          description: UUID of the most-listened album in this session.
-        partial:
-          type: boolean
-          nullable: true
-          description: True if this session is incomplete (cut off by pagination limit).
-
-    SessionDay:
-      type: object
-      required:
-        - date
-        - sessions
-      properties:
-        date:
-          type: string
-          format: date
-          description: Calendar date for this group of sessions.
-        sessions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Session"
-          description: Sessions for this day, ordered newest first.
-
-    SessionTrack:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Track UUID.
-        name:
-          type: string
-          description: Track name.
-        artists:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: List of artist UUIDs for this track.
-        album:
-          type: string
-          format: uuid
-          nullable: true
-          description: Album UUID, if available.
-        explicit:
-          type: boolean
-          nullable: true
-          description: Whether the track has explicit content.
-
-    SessionAlbum:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Album UUID.
-        name:
-          type: string
-          description: Album name.
-        asset_url:
-          type: string
-          description: URL to the album cover asset.
-
-    SessionArtist:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Artist UUID.
-        name:
-          type: string
-          description: Artist name.
-
-    SessionsResponse:
-      type: object
-      required:
-        - days
-        - tracks
-        - albums
-        - artists
-      properties:
-        days:
-          type: array
-          items:
-            $ref: "#/components/schemas/SessionDay"
-          description: Days containing sessions, ordered newest first.
-        tracks:
-          type: array
-          items:
-            $ref: "#/components/schemas/SessionTrack"
-          description: Deduplicated track metadata referenced by sessions.
-        albums:
-          type: array
-          items:
-            $ref: "#/components/schemas/SessionAlbum"
-          description: Deduplicated album metadata referenced by sessions.
-        artists:
-          type: array
-          items:
-            $ref: "#/components/schemas/SessionArtist"
-          description: Deduplicated artist metadata referenced by sessions.
-
-    SetActivityItem:
-      type: object
-      required:
-        - session_id
-        - track_id
-        - active
-        - position
-      properties:
-        session_id:
-          type: string
-          description:
-            Unique identifier for the listening session, typically a UUID or
-            random string used to group related activities.
-        track_id:
-          type: string
-          format: uuid
-          description: UUID of the track being played.
-        active:
-          type: boolean
-          description:
-            Whether the user is currently playing this track (true) or has
-            stopped/paused (false).
-        position:
-          type: integer
-          format: int64
-          description: Current playback position in seconds from the start of the track.
-        start_timestamp:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when playback of this track started.
-        end_timestamp:
-          type: string
-          format: date-time
-          description:
-            ISO 8601 timestamp when playback of this track is expected to end
-            (for background playback estimation).
-
-    SearchTracksRequest:
-      type: object
-      required:
-        - track_name
-      properties:
-        track_name:
-          type: string
-        artist_names:
-          type: array
-          items:
-            type: string
-        album_name:
-          type: string
-        seconds:
-          type: integer
-          format: uint16
-
-    SearchTrackResult:
-      allOf:
-        - $ref: "#/components/schemas/Track"
-        - type: object
-          required:
-            - confidence
-          properties:
-            confidence:
-              type: integer
-              description: Confidence score (0-100)
-              minimum: 0
-              maximum: 100
-
-    FriendActionRequest:
-      type: object
-      description:
-        Request body for friend actions. At least one of 'id' or 'handle'
-        must be provided to identify the target user.
-      properties:
-        id:
-          type: string
-          format: uuid
-          nullable: true
-          description: Target user's UUID. Optional if 'handle' is provided.
-        handle:
-          type: string
-          nullable: true
-          description: Target user's handle. Optional if 'id' is provided.
-
-    BlockedActionRequest:
-      type: object
-      required:
-        - id
-        - blocked
-      properties:
-        id:
-          type: string
-          format: uuid
-        blocked:
-          type: boolean
-
-    BestFriendActionRequest:
-      type: object
-      required:
-        - id
-        - best_friend
-      properties:
-        id:
-          type: string
-          format: uuid
-        best_friend:
-          type: boolean
-
-    DateTimeRange:
-      type: object
-      required:
-        - start
-        - end
-      properties:
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-
-    ArtistPlayStatisticsQuery:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          description: Start timestamp for the time range, defaults to one year ago.
-        end:
-          type: string
-          format: date-time
-          description: Start timestamp for the time range, defaults to current time.
-        artist_limit:
-          type: integer
-          format: uint32
-          default: 10
-          maximum: 30
-          description: Maximum number of artists to return
-        track_limit:
-          type: integer
-          format: uint32
-          default: 3
-          maximum: 10
-          description: Maximum number of tracks per artist to return
-        album_limit:
-          type: integer
-          format: uint32
-          default: 1
-          maximum: 10
-          description: Maximum number of albums per artist to return
-        artist_offset:
-          type: integer
-          format: uint32
-          default: 0
-
-    StatisticsQuery:
-      type: object
-      properties:
-        start:
-          type: string
-          format: date-time
-          description: Start timestamp for the time range
-        end:
-          type: string
-          format: date-time
-          description: End timestamp for the time range
-        limit:
-          type: integer
-          format: uint32
-          default: 100
-          maximum: 10000
-          description: Maximum number of results to return
-
-    ErrorResponse:
-      type: object
-      required:
-        - message
-      properties:
-        message:
-          type: string
-          description: Human-readable error message
-
-  responses:
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
-    Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
-    Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
-    NotFound:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
-    NoContent:
-      description: No content
-
-paths:
-  /openapi.yaml:
-    get:
-      summary: Get OpenAPI schema.
-      operationId: getOpenAPI
-      responses:
-        "200":
-          description: Top artists returned successfully
-          content:
-            text/plain:
-              schema:
-                type: string
-
-  /asyncapi.yaml:
-    get:
-      summary: Get AsyncAPI schema.
-      operationId: getAsyncAPI
-      responses:
-        "200":
-          description: Top artists returned successfully
-          content:
-            text/plain:
-              schema:
-                type: string
-
-  /api/tracks/{id}:
-    get:
-      summary: Get track details
-      operationId: getTrack
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Track details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Track"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/artists/{id}:
-    get:
-      summary: Get artist details
-      operationId: getArtist
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Artist details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Artist"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/albums/{id}:
-    get:
-      summary: Get album details
-      operationId: getAlbum
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Album details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Album"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/listens/sessions:
-    post:
-      summary: Get recent listening sessions
-      operationId: getListenSessions
-      tags:
-        - Listens
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ListensSessionsRequest"
-      responses:
-        "200":
-          description: Listen sessions
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SessionsResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/@{handle}/listens/sessions:
-    post:
-      summary: Get listen sessions for another user
-      operationId: getUserListenSessions
-      tags:
-        - Listens
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: handle
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ListensSessionsRequest"
-      responses:
-        "200":
-          description: Listen sessions
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SessionsResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/library/get-metadata:
-    get:
-      summary: Get library metadata
-      operationId: getLibraryMetadata
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: Library metadata
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LibraryMetadataResponse"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/library/add:
-    post:
-      summary: Add items to library
-      operationId: addToLibrary
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LibraryAddRequest"
-      responses:
-        "200":
-          description: Items added
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LibraryAddResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/library/update:
-    post:
-      summary: Update items in library
-      operationId: updateLibrary
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LibraryUpdateRequest"
-      responses:
-        "200":
-          description: Items updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LibraryUpdateResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/library/remove:
-    post:
-      summary: Remove items from library
-      operationId: removeFromLibrary
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LibraryRemoveRequest"
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/set-activity:
-    post:
-      summary: Set current activity
-      operationId: setActivity
-      tags:
-        - Activity
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/SetActivityItem"
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/search-tracks-via-details:
-    post:
-      summary: Search tracks via details
-      operationId: searchTracksViaDetails
-      tags:
-        - Search
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SearchTracksRequest"
-      responses:
-        "200":
-          description: Search results
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SearchTrackResult"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/{user_id}/calendar/listens:
-    get:
-      summary: Get calendar listens for user (ICS feed)
-      operationId: getCalendarListens
-      description:
-        Serves listening history as an ICS feed. Access respects requested
-        user's privacy settings. If requested user's privacy is not public, auth
-        and token params are required.
-      tags:
-        - Listens
-      parameters:
-        - name: user_id
-          in: path
-          required: true
-          description: The user whose calendar to retrieve
-          schema:
-            type: string
-            format: uuid
-        - name: auth_id
-          in: query
-          description:
-            The requesting user's ID (the viewer). Required if target user's
-            visibility is not public.
-          schema:
-            type: string
-            format: uuid
-        - name: token
-          in: query
-          description:
-            HMAC token for authentication. Required if target user's visibility
-            is not public.
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Calendar ICS file
-          headers:
-            Content-Disposition:
-              required: true
-              schema:
-                type: string
-          content:
-            "text/calendar; charset=utf-8":
-              schema:
-                type: string
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/validate:
-    get:
-      summary: Validate authentication token
-      operationId: validateToken
-      tags:
-        - Authentication
-      security:
-        - CookieAuth: []
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-
-  /api/register:
-    post:
-      summary: Register a new user
-      operationId: register
-      tags:
-        - Authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterRequest"
-      responses:
-        "200":
-          description: User created successfully
-          headers:
-            Hx-Location:
-              schema:
-                type: string
-              description: Redirect location
-            Set-Cookie:
-              schema:
-                type: string
-              description: Authentication cookie
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "409":
-          $ref: "#/components/responses/Conflict"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/signin:
-    post:
-      summary: Sign in with email and password
-      operationId: signIn
-      tags:
-        - Authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SignInRequest"
-      responses:
-        "200":
-          description: Sign in successful
-          headers:
-            Hx-Location:
-              schema:
-                type: string
-              description: Redirect location
-            Set-Cookie:
-              schema:
-                type: string
-              description: Authentication cookie
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/user/update:
-    post:
-      summary: Update user profile
-      operationId: updateUser
-      tags:
-        - User
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateUserRequest"
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/Conflict"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/user/details:
-    get:
-      summary: Get current user details
-      operationId: getUserDetails
-      tags:
-        - User
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: User details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-
-  /api/user/integrations:
-    get:
-      summary: Get user integration details
-      operationId: getUserIntegrations
-      tags:
-        - User
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: User integration details
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/IntegrationMetadata"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/join-free-beta:
-    post:
-      summary: Join free beta
-      operationId: joinFreeBeta
-      tags:
-        - Subscription
-      security:
-        - CookieAuth: []
-      responses:
-        "204":
-          description: Beta joined successfully
-          headers:
-            Hx-Location:
-              schema:
-                type: string
-              description: Redirect location
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/add-friend:
-    post:
-      summary: Add a friend
-      operationId: addFriend
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FriendActionRequest"
-      responses:
-        "200":
-          description: Friend relation created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Relation"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/remove-friend:
-    post:
-      summary: Remove a friend
-      operationId: removeFriend
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: string
-                  format: uuid
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/set-blocked:
-    post:
-      summary: Block or unblock a user
-      operationId: setBlocked
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/BlockedActionRequest"
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/set-best-friend:
-    post:
-      summary: Set or unset best friend
-      operationId: setBestFriend
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/BestFriendActionRequest"
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/relations:
-    get:
-      summary: Get user relations
-      operationId: getRelations
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: User relations
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Relation"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/relations/details:
-    get:
-      summary: Get user relations with visible activity details
-      operationId: getRelationsDetails
-      tags:
-        - Relations
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: Relations details retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/RelationDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/statistics/user/listens/days:
-    post:
-      summary: Get user's listening information for the specified time range.
-      operationId: getUserListensByDays
-      tags:
-        - Statistics
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/DateTimeRange"
-      responses:
-        "200":
-          description: Successfully retrieved listening information by day
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DayListenDetails"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/statistics/user/top/artist-plays:
-    post:
-      summary: Get user's top artists with each artist's top tracks and albums.
-      operationId: getUserTopArtistPlayStats
-      tags:
-        - Statistics
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ArtistPlayStatisticsQuery"
-      responses:
-        "200":
-          description: Top artist plays returned successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TopArtistPlayStats"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/statistics/global/top/albums:
-    post:
-      summary:
-        Get global top albums in the specified time range. Time range values
-        default to the range of the previous full week starting on Friday.
-      operationId: getGlobalTopAlbums
-      tags:
-        - Statistics
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StatisticsQuery"
-      responses:
-        "200":
-          description: Top albums returned successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TopAlbumEntry"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/statistics/global/top/tracks:
-    post:
-      summary:
-        Get global top tracks in the specified time range. Time range values
-        default to the range of the previous full week starting on Friday.
-      operationId: getGlobalTopTracks
-      tags:
-        - Statistics
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StatisticsQuery"
-      responses:
-        "200":
-          description: Top tracks returned successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TopTrackEntry"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/statistics/global/top/artists:
-    post:
-      summary:
-        Get global top artists in the specified time range. Time range values
-        default to the range of the previous full week starting on Friday.
-      operationId: getGlobalTopArtists
-      tags:
-        - Statistics
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/StatisticsQuery"
-      responses:
-        "200":
-          description: Top artists returned successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TopArtistEntry"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/groups:
-    get:
-      summary: Get groups visible to the user.
-      operationId: getGroups
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: Groups retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GroupDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    post:
-      summary: Create a new group as owner.
-      operationId: createGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateGroupRequest"
-      responses:
-        "200":
-          description: Group created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/groups/{group_id}:
-    get:
-      summary: Get group.
-      operationId: getGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Group retrieved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GroupDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    patch:
-      summary: Edit a group.
-      operationId: editGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/EditGroupRequest"
-      responses:
-        "200":
-          description: Group edited successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Delete a group if owned by the user.
-      operationId: deleteGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/groups/{group_id}/roles:
-    get:
-      summary: Get group roles.
-      operationId: getGroupRoles
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Group roles retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GroupRole"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    post:
-      summary: Add group roles.
-      operationId: AddGroupRoles
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/GroupRole"
-      responses:
-        "200":
-          description: Group roles added successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GroupRole"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/groups/{group_id}/roles/{user_id}:
-    patch:
-      summary: Update group roles.
-      operationId: UpdateGroupRoles
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - role
-              properties:
-                role:
-                  $ref: "#/components/schemas/GroupRoleType"
-      responses:
-        "200":
-          description: Group roles updated successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GroupRole"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Remove a user from a group.
-      operationId: deleteGroupRole
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/conversations/{conversation_id}/messages:
-    get:
-      summary: Get conversation messages.
-      operationId: getMessages
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: before
-          in: query
-          schema:
-            type: integer
-            format: uint64
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            default: 50
-            maximum: 100
-      responses:
-        "200":
-          description: Messages retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/MessageDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    post:
-      summary: Send a conversation message.
-      operationId: sendMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - body
-              properties:
-                body:
-                  type: string
-                parent_id:
-                  type: integer
-                  format: uint64
-                  nullable: true
-      responses:
-        "200":
-          description: Message sent successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/conversations/{conversation_id}/messages/{message_id}:
-    patch:
-      summary: Edit a message.
-      operationId: editMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                body:
-                  type: string
-      responses:
-        "200":
-          description: Message edited successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Delete a message.
-      operationId: deleteMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/conversations/{conversation_id}/messages/{message_id}/read:
-    post:
-      summary: Read a message.
-      operationId: readMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/conversations/{conversation_id}/messages/{message_id}/thread:
-    get:
-      summary: Get message thread.
-      operationId: getMessageThread
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-        - name: before
-          in: query
-          schema:
-            type: integer
-            format: uint64
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            default: 50
-            maximum: 100
-      responses:
-        "200":
-          description: Thread retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/MessageDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
-    put:
-      summary: Add a reaction to a message.
-      operationId: addMessageReaction
-      tags:
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-        - name: emoji
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Reaction added successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MessageReaction"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Remove a reaction from a message.
-      operationId: deleteMessageReaction
-      tags:
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-        - name: emoji
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"`
+    UserRelation:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      description: |
+        0=Friend: users are friends
+        1=BestFriend: source user set target user as a best friend
+        2=OutgoingRequest: source user has an outgoing friend request
+        3=IncomingRequest: source user has an incoming friend request
+        4=BlockSent: source user has blocked target user
+        5=BlockReceived: target user has blocked source user
+    Visibility:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+      description: |
+        0=Public: visible to everyone
+        1=Friends: visible to the user's friends
+        2=BestFriends: visible to the user's best friends
+        3=Private: visible to only the user
+  securitySchemes:
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: auth_token
+      description: JWT token`

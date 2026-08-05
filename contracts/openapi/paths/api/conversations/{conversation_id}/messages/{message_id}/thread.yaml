@@ -1,0 +1,48 @@
+/api/conversations/{conversation_id}/messages/{message_id}/thread:
+    get:
+      summary: Get message thread.
+      operationId: getMessageThread
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        "200":
+          description: Thread retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

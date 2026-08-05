@@ -1,0 +1,74 @@
+/api/groups/{group_id}/roles/{user_id}:
+    patch:
+      summary: Update group roles.
+      operationId: UpdateGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                role:
+                  $ref: "#/components/schemas/GroupRoleType"
+      responses:
+        "200":
+          description: Group roles updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupRole"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Remove a user from a group.
+      operationId: deleteGroupRole
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

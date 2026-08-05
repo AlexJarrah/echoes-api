@@ -1,0 +1,12 @@
+AlbumArtist:
+  type: object
+  required:
+    - album_id
+    - artist_id
+  properties:
+    album_id:
+      type: string
+      format: uuid
+    artist_id:
+      type: string
+      format: uuid

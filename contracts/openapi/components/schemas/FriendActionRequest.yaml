@@ -1,0 +1,15 @@
+FriendActionRequest:
+  type: object
+  description:
+    Request body for friend actions. At least one of 'id' or 'handle'
+    must be provided to identify the target user.
+  properties:
+    id:
+      type: string
+      format: uuid
+      nullable: true
+      description: Target user's UUID. Optional if 'handle' is provided.
+    handle:
+      type: string
+      nullable: true
+      description: Target user's handle. Optional if 'id' is provided.

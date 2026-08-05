@@ -1,0 +1,31 @@
+Listen:
+  type: object
+  required:
+    - listen_id
+    - user_id
+    - track_id
+    - seconds
+    - method
+    - created_at
+  properties:
+    listen_id:
+      type: integer
+      format: uint64
+    user_id:
+      type: string
+      format: uuid
+    track_id:
+      type: string
+      format: uuid
+    seconds:
+      type: integer
+      format: uint16
+    method:
+      $ref: "#/components/schemas/ListenMethod"
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

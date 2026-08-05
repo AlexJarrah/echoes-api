@@ -1,0 +1,16 @@
+AlbumAsset:
+  type: object
+  required:
+    - album_id
+    - asset_id
+    - position
+  properties:
+    album_id:
+      type: string
+      format: uuid
+    asset_id:
+      type: string
+      format: uuid
+    position:
+      type: string
+      description: Lexicographically sortable string

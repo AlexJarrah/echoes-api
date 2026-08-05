@@ -1,0 +1,8 @@
+IntegrationProvider:
+  type: integer
+  format: uint8
+  enum: [0, 1, 2]
+  description: |
+    0=Google
+    1=Spotify
+    2=Last

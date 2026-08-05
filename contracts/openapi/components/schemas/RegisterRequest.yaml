@@ -1,0 +1,20 @@
+RegisterRequest:
+  type: object
+  required:
+    - name
+    - email
+    - password
+  properties:
+    name:
+      type: string
+      description: 2+ Unicode letters, spaces allowed
+      pattern: '^\p{L}{2,}( \p{L}+)*$'
+    email:
+      type: string
+      format: email
+    password:
+      type: string
+      minLength: 8
+      description:
+        8+ characters, must contain uppercase, lowercase, digit, and
+        special character

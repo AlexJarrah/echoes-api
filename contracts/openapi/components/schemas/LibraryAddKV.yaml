@@ -1,0 +1,10 @@
+LibraryAddKV:
+  type: object
+  required:
+    - key
+    - value
+  properties:
+    key:
+      $ref: "#/components/schemas/LibraryAddID"
+    value:
+      $ref: "#/components/schemas/LibraryAddID"

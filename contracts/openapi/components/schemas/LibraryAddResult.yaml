@@ -1,0 +1,21 @@
+LibraryAddResult:
+  type: object
+  required:
+    - id
+    - created
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: UUID of the created or resolved entity.
+    reference_id:
+      type: integer
+      format: int64
+      description:
+        Reference ID provided in the request, echoed back for client
+        correlation.
+    created:
+      type: boolean
+      description:
+        True if a new entity was created, false if an existing entity was
+        resolved.

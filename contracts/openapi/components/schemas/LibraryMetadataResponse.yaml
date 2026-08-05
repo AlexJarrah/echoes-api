@@ -1,0 +1,15 @@
+LibraryMetadataResponse:
+  type: object
+  properties:
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryMetadataArtist"
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryMetadataAlbum"
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryMetadataTrack"

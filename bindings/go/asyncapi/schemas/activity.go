@@ -15,7 +15,12 @@ type Activity struct {
 	// TrackName--Track title.
 	TrackName *string `json:"track_name"`
 	// Artists--Credited track artists.
-	Artists *[]Artist `json:"artists"`
+	Artists *[]struct {
+		// ID--Artist ID.
+		ID *uuid.UUID `json:"id"`
+		// Name--Artist name.
+		Name *string `json:"name"`
+	} `json:"artists"`
 	// AlbumName--Album name.
 	AlbumName string `json:"album_name"`
 	// AlbumAssetURL--Album cover URL.

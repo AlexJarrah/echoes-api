@@ -1,0 +1,21 @@
+TopArtistPlayStats:
+  type: object
+  required:
+    - rank
+    - artist
+    - top_tracks
+    - top_albums
+  properties:
+    rank:
+      type: integer
+      format: uint
+    artist:
+      $ref: "#/components/schemas/ArtistPlayStats"
+    top_tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/TrackPlayStats"
+    top_albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/AlbumPlayStats"

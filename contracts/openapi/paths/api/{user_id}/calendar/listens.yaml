@@ -1,0 +1,53 @@
+/api/{user_id}/calendar/listens:
+    get:
+      summary: Get calendar listens for user (ICS feed)
+      operationId: getCalendarListens
+      description:
+        Serves listening history as an ICS feed. Access respects requested
+        user's privacy settings. If requested user's privacy is not public, auth
+        and token params are required.
+      tags:
+        - Listens
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user whose calendar to retrieve
+          schema:
+            type: string
+            format: uuid
+        - name: auth_id
+          in: query
+          description:
+            The requesting user's ID (the viewer). Required if target user's
+            visibility is not public.
+          schema:
+            type: string
+            format: uuid
+        - name: token
+          in: query
+          description:
+            HMAC token for authentication. Required if target user's visibility
+            is not public.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Calendar ICS file
+          headers:
+            Content-Disposition:
+              required: true
+              schema:
+                type: string
+          content:
+            "text/calendar; charset=utf-8":
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

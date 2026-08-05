@@ -1,0 +1,16 @@
+DayListenDetails:
+  type: object
+  required:
+    - date
+    - play_count
+    - seconds
+  properties:
+    date:
+      type: string
+      format: date
+    play_count:
+      type: integer
+      format: uint16
+    seconds:
+      type: integer
+      format: uint64

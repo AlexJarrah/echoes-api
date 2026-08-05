@@ -1,0 +1,15 @@
+SessionDay:
+  type: object
+  required:
+    - date
+    - sessions
+  properties:
+    date:
+      type: string
+      format: date
+      description: Calendar date for this group of sessions.
+    sessions:
+      type: array
+      items:
+        $ref: "#/components/schemas/Session"
+      description: Sessions for this day, ordered newest first.

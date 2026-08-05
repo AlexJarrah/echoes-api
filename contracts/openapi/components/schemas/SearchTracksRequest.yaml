@@ -1,0 +1,16 @@
+SearchTracksRequest:
+  type: object
+  required:
+    - track_name
+  properties:
+    track_name:
+      type: string
+    artist_names:
+      type: array
+      items:
+        type: string
+    album_name:
+      type: string
+    seconds:
+      type: integer
+      format: uint16

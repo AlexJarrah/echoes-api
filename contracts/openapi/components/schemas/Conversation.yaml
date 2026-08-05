@@ -1,0 +1,12 @@
+Conversation:
+  type: object
+  required:
+    - conversation_id
+    - created_at
+  properties:
+    conversation_id:
+      type: string
+      format: uuid
+    created_at:
+      type: string
+      format: date-time

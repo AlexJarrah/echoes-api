@@ -1,0 +1,19 @@
+/api/library/get-metadata:
+    get:
+      summary: Get library metadata
+      operationId: getLibraryMetadata
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Library metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryMetadataResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

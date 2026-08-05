@@ -1,0 +1,22 @@
+GroupDetails:
+  type: object
+  required:
+    - group
+    - conversation
+    - roles
+    - latest_message
+    - unread_count
+  properties:
+    group:
+      $ref: "#/components/schemas/Group"
+    conversation:
+      $ref: "#/components/schemas/Conversation"
+    roles:
+      type: array
+      items:
+        $ref: "#/components/schemas/GroupRole"
+    latest_message:
+      $ref: "#/components/schemas/Message"
+    unread_count:
+      type: integer
+      format: uint32

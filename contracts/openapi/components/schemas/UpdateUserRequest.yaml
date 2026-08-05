@@ -1,0 +1,23 @@
+UpdateUserRequest:
+  type: object
+  properties:
+    handle:
+      type: string
+      minLength: 4
+      maxLength: 15
+      pattern: "^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$"
+      nullable: true
+    name:
+      type: string
+      pattern: '^\p{L}{2,}( \p{L}+)*$'
+      nullable: true
+    email:
+      type: string
+      format: email
+      nullable: true
+    password:
+      type: string
+      minLength: 8
+      nullable: true
+    visibility:
+      $ref: "#/components/schemas/Visibility"

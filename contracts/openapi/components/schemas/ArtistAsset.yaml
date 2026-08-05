@@ -1,0 +1,16 @@
+ArtistAsset:
+  type: object
+  required:
+    - artist_id
+    - asset_id
+    - position
+  properties:
+    artist_id:
+      type: string
+      format: uuid
+    asset_id:
+      type: string
+      format: uuid
+    position:
+      type: string
+      description: Lexicographically sortable string

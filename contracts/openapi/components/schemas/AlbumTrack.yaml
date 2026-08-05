@@ -1,0 +1,20 @@
+AlbumTrack:
+  type: object
+  required:
+    - album_id
+    - track_id
+  properties:
+    album_id:
+      type: string
+      format: uuid
+    track_id:
+      type: string
+      format: uuid
+    disc_number:
+      type: integer
+      format: int8
+      nullable: true
+    track_number:
+      type: integer
+      format: int8
+      nullable: true

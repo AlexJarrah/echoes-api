@@ -41,11 +41,11 @@ func OpenRequestAuthenticationWs(
 type RequestAuthenticationChannelWs interface {
 	Close() error
 
-	SealClientMessage(ws.EnvelopeWriter, channels.AuthEnvelopeMarshalerWs) error
-	PublishClientMessage(context.Context, channels.AuthEnvelopeMarshalerWs) error
+	SealRequest(ws.EnvelopeWriter, channels.AuthEnvelopeMarshalerWs) error
+	PublishRequest(context.Context, channels.AuthEnvelopeMarshalerWs) error
 
-	UnsealClientMessage(ws.EnvelopeReader, channels.AuthEnvelopeUnmarshalerWs) error
-	SubscribeClientMessage(context.Context, func(messages.ClientMessageReceiver)) error
+	UnsealRequest(ws.EnvelopeReader, channels.AuthEnvelopeUnmarshalerWs) error
+	SubscribeRequest(context.Context, func(messages.RequestReceiver)) error
 }
 
 type RequestAuthenticationWs struct {
@@ -56,17 +56,17 @@ func (c RequestAuthenticationWs) Close() error {
 	return c.Channel.Close()
 }
 
-func (o RequestAuthenticationWs) SealClientMessage(
+func (o RequestAuthenticationWs) SealRequest(
 	envelope ws.EnvelopeWriter,
 	message channels.AuthEnvelopeMarshalerWs,
 ) error {
-	return o.Channel.SealClientMessage(envelope, message)
+	return o.Channel.SealRequest(envelope, message)
 }
 
-func (o RequestAuthenticationWs) PublishClientMessage(
+func (o RequestAuthenticationWs) PublishRequest(
 	ctx context.Context,
 
 	message channels.AuthEnvelopeMarshalerWs,
 ) error {
-	return o.Channel.PublishClientMessage(ctx, message)
+	return o.Channel.PublishRequest(ctx, message)
 }

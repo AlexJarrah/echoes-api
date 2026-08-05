@@ -1,0 +1,15 @@
+LibraryAddArtist:
+  type: object
+  required:
+    - artist
+  properties:
+    artist:
+      $ref: "#/components/schemas/Artist"
+    reference_id:
+      type: integer
+      format: int64
+      description: Client-provided reference ID for correlation in responses.
+    force_add:
+      type: boolean
+      default: false
+      description: If true, skip deduplication and always create a new entity.

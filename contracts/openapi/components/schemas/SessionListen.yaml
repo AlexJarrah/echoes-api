@@ -1,0 +1,24 @@
+SessionListen:
+  type: object
+  required:
+    - id
+    - track
+    - start
+    - end
+  properties:
+    id:
+      type: integer
+      format: uint32
+      description: Unique identifier for this listen event.
+    track:
+      type: string
+      format: uuid
+      description: UUID of the track listened to.
+    start:
+      type: string
+      format: date-time
+      description: Timestamp when playback started.
+    end:
+      type: string
+      format: date-time
+      description: Timestamp when playback ended.

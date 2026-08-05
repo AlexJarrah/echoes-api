@@ -1,0 +1,28 @@
+SessionTrack:
+  type: object
+  required:
+    - id
+    - name
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: Track UUID.
+    name:
+      type: string
+      description: Track name.
+    artists:
+      type: array
+      items:
+        type: string
+        format: uuid
+      description: List of artist UUIDs for this track.
+    album:
+      type: string
+      format: uuid
+      nullable: true
+      description: Album UUID, if available.
+    explicit:
+      type: boolean
+      nullable: true
+      description: Whether the track has explicit content.

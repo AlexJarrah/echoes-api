@@ -1,0 +1,20 @@
+AlbumPlayStats:
+  type: object
+  required:
+    - album
+    - assets
+    - play_count
+    - play_duration
+  properties:
+    album:
+      $ref: "#/components/schemas/Album"
+    assets:
+      type: array
+      items:
+        $ref: "#/components/schemas/AlbumAsset"
+    play_count:
+      type: integer
+      format: uint64
+    play_duration:
+      type: integer
+      format: uint64

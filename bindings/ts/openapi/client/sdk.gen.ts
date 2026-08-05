@@ -19,72 +19,6 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Get OpenAPI schema.
- */
-export const getOpenApi = <ThrowOnError extends boolean = false>(options?: Options<GetOpenApiData, ThrowOnError>): RequestResult<GetOpenApiResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetOpenApiResponses, unknown, ThrowOnError>({ url: '/openapi.yaml', ...options });
-
-/**
- * Get AsyncAPI schema.
- */
-export const getAsyncApi = <ThrowOnError extends boolean = false>(options?: Options<GetAsyncApiData, ThrowOnError>): RequestResult<GetAsyncApiResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAsyncApiResponses, unknown, ThrowOnError>({ url: '/asyncapi.yaml', ...options });
-
-/**
- * Get track details
- */
-export const getTrack = <ThrowOnError extends boolean = false>(options: Options<GetTrackData, ThrowOnError>): RequestResult<GetTrackResponses, GetTrackErrors, ThrowOnError> => (options.client ?? client).get<GetTrackResponses, GetTrackErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/tracks/{id}',
-    ...options
-});
-
-/**
- * Get artist details
- */
-export const getArtist = <ThrowOnError extends boolean = false>(options: Options<GetArtistData, ThrowOnError>): RequestResult<GetArtistResponses, GetArtistErrors, ThrowOnError> => (options.client ?? client).get<GetArtistResponses, GetArtistErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/artists/{id}',
-    ...options
-});
-
-/**
- * Get album details
- */
-export const getAlbum = <ThrowOnError extends boolean = false>(options: Options<GetAlbumData, ThrowOnError>): RequestResult<GetAlbumResponses, GetAlbumErrors, ThrowOnError> => (options.client ?? client).get<GetAlbumResponses, GetAlbumErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/albums/{id}',
-    ...options
-});
-
-/**
- * Get recent listening sessions
- */
-export const getListenSessions = <ThrowOnError extends boolean = false>(options: Options<GetListenSessionsData, ThrowOnError>): RequestResult<GetListenSessionsResponses, GetListenSessionsErrors, ThrowOnError> => (options.client ?? client).post<GetListenSessionsResponses, GetListenSessionsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/listens/sessions',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
  * Get listen sessions for another user
  */
 export const getUserListenSessions = <ThrowOnError extends boolean = false>(options: Options<GetUserListenSessionsData, ThrowOnError>): RequestResult<GetUserListenSessionsResponses, GetUserListenSessionsErrors, ThrowOnError> => (options.client ?? client).post<GetUserListenSessionsResponses, GetUserListenSessionsErrors, ThrowOnError>({
@@ -99,204 +33,6 @@ export const getUserListenSessions = <ThrowOnError extends boolean = false>(opti
         'Content-Type': 'application/json',
         ...options.headers
     }
-});
-
-/**
- * Get library metadata
- */
-export const getLibraryMetadata = <ThrowOnError extends boolean = false>(options?: Options<GetLibraryMetadataData, ThrowOnError>): RequestResult<GetLibraryMetadataResponses, GetLibraryMetadataErrors, ThrowOnError> => (options?.client ?? client).get<GetLibraryMetadataResponses, GetLibraryMetadataErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/library/get-metadata',
-    ...options
-});
-
-/**
- * Add items to library
- */
-export const addToLibrary = <ThrowOnError extends boolean = false>(options: Options<AddToLibraryData, ThrowOnError>): RequestResult<AddToLibraryResponses, AddToLibraryErrors, ThrowOnError> => (options.client ?? client).post<AddToLibraryResponses, AddToLibraryErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/library/add',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Update items in library
- */
-export const updateLibrary = <ThrowOnError extends boolean = false>(options: Options<UpdateLibraryData, ThrowOnError>): RequestResult<UpdateLibraryResponses, UpdateLibraryErrors, ThrowOnError> => (options.client ?? client).post<UpdateLibraryResponses, UpdateLibraryErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/library/update',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Remove items from library
- */
-export const removeFromLibrary = <ThrowOnError extends boolean = false>(options: Options<RemoveFromLibraryData, ThrowOnError>): RequestResult<RemoveFromLibraryResponses, RemoveFromLibraryErrors, ThrowOnError> => (options.client ?? client).post<RemoveFromLibraryResponses, RemoveFromLibraryErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/library/remove',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Set current activity
- */
-export const setActivity = <ThrowOnError extends boolean = false>(options: Options<SetActivityData, ThrowOnError>): RequestResult<SetActivityResponses, SetActivityErrors, ThrowOnError> => (options.client ?? client).post<SetActivityResponses, SetActivityErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/set-activity',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Search tracks via details
- */
-export const searchTracksViaDetails = <ThrowOnError extends boolean = false>(options: Options<SearchTracksViaDetailsData, ThrowOnError>): RequestResult<SearchTracksViaDetailsResponses, SearchTracksViaDetailsErrors, ThrowOnError> => (options.client ?? client).post<SearchTracksViaDetailsResponses, SearchTracksViaDetailsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/search-tracks-via-details',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Get calendar listens for user (ICS feed)
- *
- * Serves listening history as an ICS feed. Access respects requested user's privacy settings. If requested user's privacy is not public, auth and token params are required.
- */
-export const getCalendarListens = <ThrowOnError extends boolean = false>(options: Options<GetCalendarListensData, ThrowOnError>): RequestResult<GetCalendarListensResponses, GetCalendarListensErrors, ThrowOnError> => (options.client ?? client).get<GetCalendarListensResponses, GetCalendarListensErrors, ThrowOnError>({ url: '/api/{user_id}/calendar/listens', ...options });
-
-/**
- * Validate authentication token
- */
-export const validateToken = <ThrowOnError extends boolean = false>(options?: Options<ValidateTokenData, ThrowOnError>): RequestResult<ValidateTokenResponses, ValidateTokenErrors, ThrowOnError> => (options?.client ?? client).get<ValidateTokenResponses, ValidateTokenErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/validate',
-    ...options
-});
-
-/**
- * Register a new user
- */
-export const register = <ThrowOnError extends boolean = false>(options: Options<RegisterData, ThrowOnError>): RequestResult<RegisterResponses, RegisterErrors, ThrowOnError> => (options.client ?? client).post<RegisterResponses, RegisterErrors, ThrowOnError>({
-    url: '/api/register',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Sign in with email and password
- */
-export const signIn = <ThrowOnError extends boolean = false>(options: Options<SignInData, ThrowOnError>): RequestResult<SignInResponses, SignInErrors, ThrowOnError> => (options.client ?? client).post<SignInResponses, SignInErrors, ThrowOnError>({
-    url: '/api/signin',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Update user profile
- */
-export const updateUser = <ThrowOnError extends boolean = false>(options: Options<UpdateUserData, ThrowOnError>): RequestResult<UpdateUserResponses, UpdateUserErrors, ThrowOnError> => (options.client ?? client).post<UpdateUserResponses, UpdateUserErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/user/update',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Get current user details
- */
-export const getUserDetails = <ThrowOnError extends boolean = false>(options?: Options<GetUserDetailsData, ThrowOnError>): RequestResult<GetUserDetailsResponses, GetUserDetailsErrors, ThrowOnError> => (options?.client ?? client).get<GetUserDetailsResponses, GetUserDetailsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/user/details',
-    ...options
-});
-
-/**
- * Get user integration details
- */
-export const getUserIntegrations = <ThrowOnError extends boolean = false>(options?: Options<GetUserIntegrationsData, ThrowOnError>): RequestResult<GetUserIntegrationsResponses, GetUserIntegrationsErrors, ThrowOnError> => (options?.client ?? client).get<GetUserIntegrationsResponses, GetUserIntegrationsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/user/integrations',
-    ...options
-});
-
-/**
- * Join free beta
- */
-export const joinFreeBeta = <ThrowOnError extends boolean = false>(options?: Options<JoinFreeBetaData, ThrowOnError>): RequestResult<JoinFreeBetaResponses, JoinFreeBetaErrors, ThrowOnError> => (options?.client ?? client).post<JoinFreeBetaResponses, JoinFreeBetaErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/join-free-beta',
-    ...options
 });
 
 /**
@@ -317,92 +53,106 @@ export const addFriend = <ThrowOnError extends boolean = false>(options: Options
 });
 
 /**
- * Remove a friend
+ * Get album details
  */
-export const removeFriend = <ThrowOnError extends boolean = false>(options: Options<RemoveFriendData, ThrowOnError>): RequestResult<RemoveFriendResponses, RemoveFriendErrors, ThrowOnError> => (options.client ?? client).post<RemoveFriendResponses, RemoveFriendErrors, ThrowOnError>({
+export const getAlbum = <ThrowOnError extends boolean = false>(options: Options<GetAlbumData, ThrowOnError>): RequestResult<GetAlbumResponses, GetAlbumErrors, ThrowOnError> => (options.client ?? client).get<GetAlbumResponses, GetAlbumErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/remove-friend',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Block or unblock a user
- */
-export const setBlocked = <ThrowOnError extends boolean = false>(options: Options<SetBlockedData, ThrowOnError>): RequestResult<SetBlockedResponses, SetBlockedErrors, ThrowOnError> => (options.client ?? client).post<SetBlockedResponses, SetBlockedErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/set-blocked',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Set or unset best friend
- */
-export const setBestFriend = <ThrowOnError extends boolean = false>(options: Options<SetBestFriendData, ThrowOnError>): RequestResult<SetBestFriendResponses, SetBestFriendErrors, ThrowOnError> => (options.client ?? client).post<SetBestFriendResponses, SetBestFriendErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/set-best-friend',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Get user relations
- */
-export const getRelations = <ThrowOnError extends boolean = false>(options?: Options<GetRelationsData, ThrowOnError>): RequestResult<GetRelationsResponses, GetRelationsErrors, ThrowOnError> => (options?.client ?? client).get<GetRelationsResponses, GetRelationsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/relations',
+    url: '/api/albums/{id}',
     ...options
 });
 
 /**
- * Get user relations with visible activity details
+ * Get artist details
  */
-export const getRelationsDetails = <ThrowOnError extends boolean = false>(options?: Options<GetRelationsDetailsData, ThrowOnError>): RequestResult<GetRelationsDetailsResponses, GetRelationsDetailsErrors, ThrowOnError> => (options?.client ?? client).get<GetRelationsDetailsResponses, GetRelationsDetailsErrors, ThrowOnError>({
+export const getArtist = <ThrowOnError extends boolean = false>(options: Options<GetArtistData, ThrowOnError>): RequestResult<GetArtistResponses, GetArtistErrors, ThrowOnError> => (options.client ?? client).get<GetArtistResponses, GetArtistErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/relations/details',
+    url: '/api/artists/{id}',
     ...options
 });
 
 /**
- * Get user's listening information for the specified time range.
+ * Remove a reaction from a message.
  */
-export const getUserListensByDays = <ThrowOnError extends boolean = false>(options: Options<GetUserListensByDaysData, ThrowOnError>): RequestResult<GetUserListensByDaysResponses, GetUserListensByDaysErrors, ThrowOnError> => (options.client ?? client).post<GetUserListensByDaysResponses, GetUserListensByDaysErrors, ThrowOnError>({
+export const deleteMessageReaction = <ThrowOnError extends boolean = false>(options: Options<DeleteMessageReactionData, ThrowOnError>): RequestResult<DeleteMessageReactionResponses, DeleteMessageReactionErrors, ThrowOnError> => (options.client ?? client).delete<DeleteMessageReactionResponses, DeleteMessageReactionErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/statistics/user/listens/days',
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}',
+    ...options
+});
+
+/**
+ * Add a reaction to a message.
+ */
+export const addMessageReaction = <ThrowOnError extends boolean = false>(options: Options<AddMessageReactionData, ThrowOnError>): RequestResult<AddMessageReactionResponses, AddMessageReactionErrors, ThrowOnError> => (options.client ?? client).put<AddMessageReactionResponses, AddMessageReactionErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}',
+    ...options
+});
+
+/**
+ * Read a message.
+ */
+export const readMessage = <ThrowOnError extends boolean = false>(options: Options<ReadMessageData, ThrowOnError>): RequestResult<ReadMessageResponses, ReadMessageErrors, ThrowOnError> => (options.client ?? client).post<ReadMessageResponses, ReadMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/read',
+    ...options
+});
+
+/**
+ * Get message thread.
+ */
+export const getMessageThread = <ThrowOnError extends boolean = false>(options: Options<GetMessageThreadData, ThrowOnError>): RequestResult<GetMessageThreadResponses, GetMessageThreadErrors, ThrowOnError> => (options.client ?? client).get<GetMessageThreadResponses, GetMessageThreadErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}/thread',
+    ...options
+});
+
+/**
+ * Delete a message.
+ */
+export const deleteMessage = <ThrowOnError extends boolean = false>(options: Options<DeleteMessageData, ThrowOnError>): RequestResult<DeleteMessageResponses, DeleteMessageErrors, ThrowOnError> => (options.client ?? client).delete<DeleteMessageResponses, DeleteMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}',
+    ...options
+});
+
+/**
+ * Edit a message.
+ */
+export const editMessage = <ThrowOnError extends boolean = false>(options: Options<EditMessageData, ThrowOnError>): RequestResult<EditMessageResponses, EditMessageErrors, ThrowOnError> => (options.client ?? client).patch<EditMessageResponses, EditMessageErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/conversations/{conversation_id}/messages/{message_id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -411,81 +161,88 @@ export const getUserListensByDays = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
- * Get user's top artists with each artist's top tracks and albums.
+ * Get conversation messages.
  */
-export const getUserTopArtistPlayStats = <ThrowOnError extends boolean = false>(options?: Options<GetUserTopArtistPlayStatsData, ThrowOnError>): RequestResult<GetUserTopArtistPlayStatsResponses, GetUserTopArtistPlayStatsErrors, ThrowOnError> => (options?.client ?? client).post<GetUserTopArtistPlayStatsResponses, GetUserTopArtistPlayStatsErrors, ThrowOnError>({
+export const getMessages = <ThrowOnError extends boolean = false>(options: Options<GetMessagesData, ThrowOnError>): RequestResult<GetMessagesResponses, GetMessagesErrors, ThrowOnError> => (options.client ?? client).get<GetMessagesResponses, GetMessagesErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/statistics/user/top/artist-plays',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
- */
-export const getGlobalTopAlbums = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopAlbumsData, ThrowOnError>): RequestResult<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError> => (options?.client ?? client).post<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError>({
-    url: '/api/statistics/global/top/albums',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
- */
-export const getGlobalTopTracks = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopTracksData, ThrowOnError>): RequestResult<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError> => (options?.client ?? client).post<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError>({
-    url: '/api/statistics/global/top/tracks',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
- */
-export const getGlobalTopArtists = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopArtistsData, ThrowOnError>): RequestResult<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError> => (options?.client ?? client).post<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError>({
-    url: '/api/statistics/global/top/artists',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Get groups visible to the user.
- */
-export const getGroups = <ThrowOnError extends boolean = false>(options?: Options<GetGroupsData, ThrowOnError>): RequestResult<GetGroupsResponses, GetGroupsErrors, ThrowOnError> => (options?.client ?? client).get<GetGroupsResponses, GetGroupsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/groups',
+    url: '/api/conversations/{conversation_id}/messages',
     ...options
 });
 
 /**
- * Create a new group as owner.
+ * Send a conversation message.
  */
-export const createGroup = <ThrowOnError extends boolean = false>(options: Options<CreateGroupData, ThrowOnError>): RequestResult<CreateGroupResponses, CreateGroupErrors, ThrowOnError> => (options.client ?? client).post<CreateGroupResponses, CreateGroupErrors, ThrowOnError>({
+export const sendMessage = <ThrowOnError extends boolean = false>(options: Options<SendMessageData, ThrowOnError>): RequestResult<SendMessageResponses, SendMessageErrors, ThrowOnError> => (options.client ?? client).post<SendMessageResponses, SendMessageErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/groups',
+    url: '/api/conversations/{conversation_id}/messages',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Remove a user from a group.
+ */
+export const deleteGroupRole = <ThrowOnError extends boolean = false>(options: Options<DeleteGroupRoleData, ThrowOnError>): RequestResult<DeleteGroupRoleResponses, DeleteGroupRoleErrors, ThrowOnError> => (options.client ?? client).delete<DeleteGroupRoleResponses, DeleteGroupRoleErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles/{user_id}',
+    ...options
+});
+
+/**
+ * Update group roles.
+ */
+export const updateGroupRoles = <ThrowOnError extends boolean = false>(options: Options<UpdateGroupRolesData, ThrowOnError>): RequestResult<UpdateGroupRolesResponses, UpdateGroupRolesErrors, ThrowOnError> => (options.client ?? client).patch<UpdateGroupRolesResponses, UpdateGroupRolesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles/{user_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get group roles.
+ */
+export const getGroupRoles = <ThrowOnError extends boolean = false>(options: Options<GetGroupRolesData, ThrowOnError>): RequestResult<GetGroupRolesResponses, GetGroupRolesErrors, ThrowOnError> => (options.client ?? client).get<GetGroupRolesResponses, GetGroupRolesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles',
+    ...options
+});
+
+/**
+ * Add group roles.
+ */
+export const addGroupRoles = <ThrowOnError extends boolean = false>(options: Options<AddGroupRolesData, ThrowOnError>): RequestResult<AddGroupRolesResponses, AddGroupRolesErrors, ThrowOnError> => (options.client ?? client).post<AddGroupRolesResponses, AddGroupRolesErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/groups/{group_id}/roles',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -537,28 +294,28 @@ export const editGroup = <ThrowOnError extends boolean = false>(options: Options
 });
 
 /**
- * Get group roles.
+ * Get groups visible to the user.
  */
-export const getGroupRoles = <ThrowOnError extends boolean = false>(options: Options<GetGroupRolesData, ThrowOnError>): RequestResult<GetGroupRolesResponses, GetGroupRolesErrors, ThrowOnError> => (options.client ?? client).get<GetGroupRolesResponses, GetGroupRolesErrors, ThrowOnError>({
+export const getGroups = <ThrowOnError extends boolean = false>(options?: Options<GetGroupsData, ThrowOnError>): RequestResult<GetGroupsResponses, GetGroupsErrors, ThrowOnError> => (options?.client ?? client).get<GetGroupsResponses, GetGroupsErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/groups/{group_id}/roles',
+    url: '/api/groups',
     ...options
 });
 
 /**
- * Add group roles.
+ * Create a new group as owner.
  */
-export const addGroupRoles = <ThrowOnError extends boolean = false>(options: Options<AddGroupRolesData, ThrowOnError>): RequestResult<AddGroupRolesResponses, AddGroupRolesErrors, ThrowOnError> => (options.client ?? client).post<AddGroupRolesResponses, AddGroupRolesErrors, ThrowOnError>({
+export const createGroup = <ThrowOnError extends boolean = false>(options: Options<CreateGroupData, ThrowOnError>): RequestResult<CreateGroupResponses, CreateGroupErrors, ThrowOnError> => (options.client ?? client).post<CreateGroupResponses, CreateGroupErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/groups/{group_id}/roles',
+    url: '/api/groups',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -567,28 +324,28 @@ export const addGroupRoles = <ThrowOnError extends boolean = false>(options: Opt
 });
 
 /**
- * Remove a user from a group.
+ * Join free beta
  */
-export const deleteGroupRole = <ThrowOnError extends boolean = false>(options: Options<DeleteGroupRoleData, ThrowOnError>): RequestResult<DeleteGroupRoleResponses, DeleteGroupRoleErrors, ThrowOnError> => (options.client ?? client).delete<DeleteGroupRoleResponses, DeleteGroupRoleErrors, ThrowOnError>({
+export const joinFreeBeta = <ThrowOnError extends boolean = false>(options?: Options<JoinFreeBetaData, ThrowOnError>): RequestResult<JoinFreeBetaResponses, JoinFreeBetaErrors, ThrowOnError> => (options?.client ?? client).post<JoinFreeBetaResponses, JoinFreeBetaErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/groups/{group_id}/roles/{user_id}',
+    url: '/api/join-free-beta',
     ...options
 });
 
 /**
- * Update group roles.
+ * Add items to library
  */
-export const updateGroupRoles = <ThrowOnError extends boolean = false>(options: Options<UpdateGroupRolesData, ThrowOnError>): RequestResult<UpdateGroupRolesResponses, UpdateGroupRolesErrors, ThrowOnError> => (options.client ?? client).patch<UpdateGroupRolesResponses, UpdateGroupRolesErrors, ThrowOnError>({
+export const addToLibrary = <ThrowOnError extends boolean = false>(options: Options<AddToLibraryData, ThrowOnError>): RequestResult<AddToLibraryResponses, AddToLibraryErrors, ThrowOnError> => (options.client ?? client).post<AddToLibraryResponses, AddToLibraryErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/groups/{group_id}/roles/{user_id}',
+    url: '/api/library/add',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -597,28 +354,28 @@ export const updateGroupRoles = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Get conversation messages.
+ * Get library metadata
  */
-export const getMessages = <ThrowOnError extends boolean = false>(options: Options<GetMessagesData, ThrowOnError>): RequestResult<GetMessagesResponses, GetMessagesErrors, ThrowOnError> => (options.client ?? client).get<GetMessagesResponses, GetMessagesErrors, ThrowOnError>({
+export const getLibraryMetadata = <ThrowOnError extends boolean = false>(options?: Options<GetLibraryMetadataData, ThrowOnError>): RequestResult<GetLibraryMetadataResponses, GetLibraryMetadataErrors, ThrowOnError> => (options?.client ?? client).get<GetLibraryMetadataResponses, GetLibraryMetadataErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages',
+    url: '/api/library/get-metadata',
     ...options
 });
 
 /**
- * Send a conversation message.
+ * Remove items from library
  */
-export const sendMessage = <ThrowOnError extends boolean = false>(options: Options<SendMessageData, ThrowOnError>): RequestResult<SendMessageResponses, SendMessageErrors, ThrowOnError> => (options.client ?? client).post<SendMessageResponses, SendMessageErrors, ThrowOnError>({
+export const removeFromLibrary = <ThrowOnError extends boolean = false>(options: Options<RemoveFromLibraryData, ThrowOnError>): RequestResult<RemoveFromLibraryResponses, RemoveFromLibraryErrors, ThrowOnError> => (options.client ?? client).post<RemoveFromLibraryResponses, RemoveFromLibraryErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages',
+    url: '/api/library/remove',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -627,28 +384,15 @@ export const sendMessage = <ThrowOnError extends boolean = false>(options: Optio
 });
 
 /**
- * Delete a message.
+ * Update items in library
  */
-export const deleteMessage = <ThrowOnError extends boolean = false>(options: Options<DeleteMessageData, ThrowOnError>): RequestResult<DeleteMessageResponses, DeleteMessageErrors, ThrowOnError> => (options.client ?? client).delete<DeleteMessageResponses, DeleteMessageErrors, ThrowOnError>({
+export const updateLibrary = <ThrowOnError extends boolean = false>(options: Options<UpdateLibraryData, ThrowOnError>): RequestResult<UpdateLibraryResponses, UpdateLibraryErrors, ThrowOnError> => (options.client ?? client).post<UpdateLibraryResponses, UpdateLibraryErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages/{message_id}',
-    ...options
-});
-
-/**
- * Edit a message.
- */
-export const editMessage = <ThrowOnError extends boolean = false>(options: Options<EditMessageData, ThrowOnError>): RequestResult<EditMessageResponses, EditMessageErrors, ThrowOnError> => (options.client ?? client).patch<EditMessageResponses, EditMessageErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/conversations/{conversation_id}/messages/{message_id}',
+    url: '/api/library/update',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -657,53 +401,309 @@ export const editMessage = <ThrowOnError extends boolean = false>(options: Optio
 });
 
 /**
- * Read a message.
+ * Get recent listening sessions
  */
-export const readMessage = <ThrowOnError extends boolean = false>(options: Options<ReadMessageData, ThrowOnError>): RequestResult<ReadMessageResponses, ReadMessageErrors, ThrowOnError> => (options.client ?? client).post<ReadMessageResponses, ReadMessageErrors, ThrowOnError>({
+export const getListenSessions = <ThrowOnError extends boolean = false>(options: Options<GetListenSessionsData, ThrowOnError>): RequestResult<GetListenSessionsResponses, GetListenSessionsErrors, ThrowOnError> => (options.client ?? client).post<GetListenSessionsResponses, GetListenSessionsErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/read',
+    url: '/api/listens/sessions',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Register a new user
+ */
+export const register = <ThrowOnError extends boolean = false>(options: Options<RegisterData, ThrowOnError>): RequestResult<RegisterResponses, RegisterErrors, ThrowOnError> => (options.client ?? client).post<RegisterResponses, RegisterErrors, ThrowOnError>({
+    url: '/api/register',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get user relations with visible activity details
+ */
+export const getRelationsDetails = <ThrowOnError extends boolean = false>(options?: Options<GetRelationsDetailsData, ThrowOnError>): RequestResult<GetRelationsDetailsResponses, GetRelationsDetailsErrors, ThrowOnError> => (options?.client ?? client).get<GetRelationsDetailsResponses, GetRelationsDetailsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/relations/details',
     ...options
 });
 
 /**
- * Get message thread.
+ * Get user relations
  */
-export const getMessageThread = <ThrowOnError extends boolean = false>(options: Options<GetMessageThreadData, ThrowOnError>): RequestResult<GetMessageThreadResponses, GetMessageThreadErrors, ThrowOnError> => (options.client ?? client).get<GetMessageThreadResponses, GetMessageThreadErrors, ThrowOnError>({
+export const getRelations = <ThrowOnError extends boolean = false>(options?: Options<GetRelationsData, ThrowOnError>): RequestResult<GetRelationsResponses, GetRelationsErrors, ThrowOnError> => (options?.client ?? client).get<GetRelationsResponses, GetRelationsErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/thread',
+    url: '/api/relations',
     ...options
 });
 
 /**
- * Remove a reaction from a message.
+ * Remove a friend
  */
-export const deleteMessageReaction = <ThrowOnError extends boolean = false>(options: Options<DeleteMessageReactionData, ThrowOnError>): RequestResult<DeleteMessageReactionResponses, DeleteMessageReactionErrors, ThrowOnError> => (options.client ?? client).delete<DeleteMessageReactionResponses, DeleteMessageReactionErrors, ThrowOnError>({
+export const removeFriend = <ThrowOnError extends boolean = false>(options: Options<RemoveFriendData, ThrowOnError>): RequestResult<RemoveFriendResponses, RemoveFriendErrors, ThrowOnError> => (options.client ?? client).post<RemoveFriendResponses, RemoveFriendErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}',
+    url: '/api/remove-friend',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Search tracks via details
+ */
+export const searchTracksViaDetails = <ThrowOnError extends boolean = false>(options: Options<SearchTracksViaDetailsData, ThrowOnError>): RequestResult<SearchTracksViaDetailsResponses, SearchTracksViaDetailsErrors, ThrowOnError> => (options.client ?? client).post<SearchTracksViaDetailsResponses, SearchTracksViaDetailsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/search-tracks-via-details',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Set current activity
+ */
+export const setActivity = <ThrowOnError extends boolean = false>(options: Options<SetActivityData, ThrowOnError>): RequestResult<SetActivityResponses, SetActivityErrors, ThrowOnError> => (options.client ?? client).post<SetActivityResponses, SetActivityErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/set-activity',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Set or unset best friend
+ */
+export const setBestFriend = <ThrowOnError extends boolean = false>(options: Options<SetBestFriendData, ThrowOnError>): RequestResult<SetBestFriendResponses, SetBestFriendErrors, ThrowOnError> => (options.client ?? client).post<SetBestFriendResponses, SetBestFriendErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/set-best-friend',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Block or unblock a user
+ */
+export const setBlocked = <ThrowOnError extends boolean = false>(options: Options<SetBlockedData, ThrowOnError>): RequestResult<SetBlockedResponses, SetBlockedErrors, ThrowOnError> => (options.client ?? client).post<SetBlockedResponses, SetBlockedErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/set-blocked',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Sign in with email and password
+ */
+export const signIn = <ThrowOnError extends boolean = false>(options: Options<SignInData, ThrowOnError>): RequestResult<SignInResponses, SignInErrors, ThrowOnError> => (options.client ?? client).post<SignInResponses, SignInErrors, ThrowOnError>({
+    url: '/api/signin',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+ */
+export const getGlobalTopAlbums = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopAlbumsData, ThrowOnError>): RequestResult<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError> => (options?.client ?? client).post<GetGlobalTopAlbumsResponses, GetGlobalTopAlbumsErrors, ThrowOnError>({
+    url: '/api/statistics/global/top/albums',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+ */
+export const getGlobalTopArtists = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopArtistsData, ThrowOnError>): RequestResult<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError> => (options?.client ?? client).post<GetGlobalTopArtistsResponses, GetGlobalTopArtistsErrors, ThrowOnError>({
+    url: '/api/statistics/global/top/artists',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday.
+ */
+export const getGlobalTopTracks = <ThrowOnError extends boolean = false>(options?: Options<GetGlobalTopTracksData, ThrowOnError>): RequestResult<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError> => (options?.client ?? client).post<GetGlobalTopTracksResponses, GetGlobalTopTracksErrors, ThrowOnError>({
+    url: '/api/statistics/global/top/tracks',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Get user's listening information for the specified time range.
+ */
+export const getUserListensByDays = <ThrowOnError extends boolean = false>(options: Options<GetUserListensByDaysData, ThrowOnError>): RequestResult<GetUserListensByDaysResponses, GetUserListensByDaysErrors, ThrowOnError> => (options.client ?? client).post<GetUserListensByDaysResponses, GetUserListensByDaysErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/statistics/user/listens/days',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get user's top artists with each artist's top tracks and albums.
+ */
+export const getUserTopArtistPlayStats = <ThrowOnError extends boolean = false>(options?: Options<GetUserTopArtistPlayStatsData, ThrowOnError>): RequestResult<GetUserTopArtistPlayStatsResponses, GetUserTopArtistPlayStatsErrors, ThrowOnError> => (options?.client ?? client).post<GetUserTopArtistPlayStatsResponses, GetUserTopArtistPlayStatsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/statistics/user/top/artist-plays',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Get track details
+ */
+export const getTrack = <ThrowOnError extends boolean = false>(options: Options<GetTrackData, ThrowOnError>): RequestResult<GetTrackResponses, GetTrackErrors, ThrowOnError> => (options.client ?? client).get<GetTrackResponses, GetTrackErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/tracks/{id}',
     ...options
 });
 
 /**
- * Add a reaction to a message.
+ * Get current user details
  */
-export const addMessageReaction = <ThrowOnError extends boolean = false>(options: Options<AddMessageReactionData, ThrowOnError>): RequestResult<AddMessageReactionResponses, AddMessageReactionErrors, ThrowOnError> => (options.client ?? client).put<AddMessageReactionResponses, AddMessageReactionErrors, ThrowOnError>({
+export const getUserDetails = <ThrowOnError extends boolean = false>(options?: Options<GetUserDetailsData, ThrowOnError>): RequestResult<GetUserDetailsResponses, GetUserDetailsErrors, ThrowOnError> => (options?.client ?? client).get<GetUserDetailsResponses, GetUserDetailsErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}',
+    url: '/api/user/details',
     ...options
 });
+
+/**
+ * Get user integration details
+ */
+export const getUserIntegrations = <ThrowOnError extends boolean = false>(options?: Options<GetUserIntegrationsData, ThrowOnError>): RequestResult<GetUserIntegrationsResponses, GetUserIntegrationsErrors, ThrowOnError> => (options?.client ?? client).get<GetUserIntegrationsResponses, GetUserIntegrationsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/user/integrations',
+    ...options
+});
+
+/**
+ * Update user profile
+ */
+export const updateUser = <ThrowOnError extends boolean = false>(options: Options<UpdateUserData, ThrowOnError>): RequestResult<UpdateUserResponses, UpdateUserErrors, ThrowOnError> => (options.client ?? client).post<UpdateUserResponses, UpdateUserErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/user/update',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Validate authentication token
+ */
+export const validateToken = <ThrowOnError extends boolean = false>(options?: Options<ValidateTokenData, ThrowOnError>): RequestResult<ValidateTokenResponses, ValidateTokenErrors, ThrowOnError> => (options?.client ?? client).get<ValidateTokenResponses, ValidateTokenErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/validate',
+    ...options
+});
+
+/**
+ * Get calendar listens for user (ICS feed)
+ *
+ * Serves listening history as an ICS feed. Access respects requested user's privacy settings. If requested user's privacy is not public, auth and token params are required.
+ */
+export const getCalendarListens = <ThrowOnError extends boolean = false>(options: Options<GetCalendarListensData, ThrowOnError>): RequestResult<GetCalendarListensResponses, GetCalendarListensErrors, ThrowOnError> => (options.client ?? client).get<GetCalendarListensResponses, GetCalendarListensErrors, ThrowOnError>({ url: '/api/{user_id}/calendar/listens', ...options });
+
+/**
+ * Get AsyncAPI schema.
+ */
+export const getAsyncApi = <ThrowOnError extends boolean = false>(options?: Options<GetAsyncApiData, ThrowOnError>): RequestResult<GetAsyncApiResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAsyncApiResponses, unknown, ThrowOnError>({ url: '/asyncapi.yaml', ...options });
+
+/**
+ * Get OpenAPI schema.
+ */
+export const getOpenApi = <ThrowOnError extends boolean = false>(options?: Options<GetOpenApiData, ThrowOnError>): RequestResult<GetOpenApiResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetOpenApiResponses, unknown, ThrowOnError>({ url: '/openapi.yaml', ...options });

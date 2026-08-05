@@ -1,0 +1,11 @@
+MessageDetails:
+  type: object
+  required:
+    - message
+  properties:
+    message:
+      $ref: "#/components/schemas/Message"
+    reactions:
+      type: array
+      items:
+        $ref: "#/components/schemas/MessageReaction"

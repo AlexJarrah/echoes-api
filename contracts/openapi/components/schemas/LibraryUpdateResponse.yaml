@@ -1,0 +1,19 @@
+LibraryUpdateResponse:
+  type: object
+  properties:
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/Artist"
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/Album"
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/Track"
+    errors:
+      type: array
+      items:
+        type: string

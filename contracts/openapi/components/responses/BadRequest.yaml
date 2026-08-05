@@ -1,0 +1,9 @@
+BadRequest:
+  description: Bad request
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/ErrorResponse"
+    text/plain:
+      schema:
+        type: string

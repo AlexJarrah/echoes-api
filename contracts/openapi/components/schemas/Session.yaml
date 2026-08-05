@@ -1,0 +1,39 @@
+Session:
+  type: object
+  required:
+    - id
+    - start
+    - end
+    - listens
+  properties:
+    id:
+      type: integer
+      format: uint32
+      description: Unique identifier for this listening session.
+    start:
+      type: string
+      format: date-time
+      description: Timestamp when the session started.
+    end:
+      type: string
+      format: date-time
+      description: Timestamp when the session ended.
+    listens:
+      type: array
+      items:
+        $ref: "#/components/schemas/SessionListen"
+      description: List of listens in this session, ordered chronologically.
+    top_artist:
+      type: string
+      format: uuid
+      nullable: true
+      description: UUID of the most-listened artist in this session.
+    top_album:
+      type: string
+      format: uuid
+      nullable: true
+      description: UUID of the most-listened album in this session.
+    partial:
+      type: boolean
+      nullable: true
+      description: True if this session is incomplete (cut off by pagination limit).

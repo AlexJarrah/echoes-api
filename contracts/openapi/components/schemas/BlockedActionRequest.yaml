@@ -1,0 +1,11 @@
+BlockedActionRequest:
+  type: object
+  required:
+    - id
+    - blocked
+  properties:
+    id:
+      type: string
+      format: uuid
+    blocked:
+      type: boolean

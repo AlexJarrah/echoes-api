@@ -1,0 +1,16 @@
+UserAsset:
+  type: object
+  required:
+    - user_id
+    - asset_id
+    - position
+  properties:
+    user_id:
+      type: string
+      format: uuid
+    asset_id:
+      type: string
+      format: uuid
+    position:
+      type: string
+      description: Lexicographically sortable string

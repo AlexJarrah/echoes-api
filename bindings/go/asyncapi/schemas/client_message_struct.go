@@ -8,11 +8,15 @@ import (
 
 type ClientMessageStruct struct {
 	// ID--Unique correlation ID. Echoed in server responses.
-	ID   *uuid.UUID       `json:"id"`
-	Type *ClientEventType `json:"type"`
+	ID *uuid.UUID `json:"id"`
+	/*
+	Type--0 - AuthenticationRequest: initiate device authentication
+	1 - ActivitySubscription: set user activity subscription
+	*/
+	Type *int `json:"type"`
 	// Data--Payload varies by type.
 	Data struct {
 		any
-		*Subscription
+		*ComponentsSchemasClientMessageStructPropertiesDataOneOf1
 	} `json:"data"`
 }

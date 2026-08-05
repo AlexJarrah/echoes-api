@@ -1,0 +1,27 @@
+/api/library/add:
+    post:
+      summary: Add items to library
+      operationId: addToLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryAddRequest"
+      responses:
+        "200":
+          description: Items added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryAddResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

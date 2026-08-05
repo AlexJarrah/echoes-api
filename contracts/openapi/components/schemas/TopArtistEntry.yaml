@@ -1,0 +1,22 @@
+TopArtistEntry:
+  type: object
+  required:
+    - id
+    - rank
+    - artists
+    - current
+  properties:
+    id:
+      type: string
+      format: uuid
+    rank:
+      type: integer
+      format: uint
+    artist:
+      $ref: "#/components/schemas/Artist"
+    current:
+      $ref: "#/components/schemas/TopEntityPlays"
+    previous:
+      $ref: "#/components/schemas/TopEntityPlays"
+    change:
+      $ref: "#/components/schemas/TopEntityChange"

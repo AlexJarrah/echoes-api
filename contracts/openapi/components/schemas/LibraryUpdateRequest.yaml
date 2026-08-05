@@ -1,0 +1,42 @@
+LibraryUpdateRequest:
+  type: object
+  properties:
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/Track"
+      default: []
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/Artist"
+      default: []
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/Album"
+      default: []
+    track_artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/TrackArtist"
+      default: []
+    album_artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/AlbumArtist"
+      default: []
+    album_tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/AlbumTrack"
+      default: []
+    append_track_artists:
+      type: boolean
+      default: false
+    append_album_artists:
+      type: boolean
+      default: false
+    append_album_tracks:
+      type: boolean
+      default: false

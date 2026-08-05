@@ -1,0 +1,16 @@
+GroupAsset:
+  type: object
+  required:
+    - group_id
+    - asset_id
+    - position
+  properties:
+    group_id:
+      type: string
+      format: uuid
+    asset_id:
+      type: string
+      format: uuid
+    position:
+      type: string
+      description: Lexicographically sortable string

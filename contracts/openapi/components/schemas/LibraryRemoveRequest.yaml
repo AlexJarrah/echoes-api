@@ -1,0 +1,23 @@
+LibraryRemoveRequest:
+  type: object
+  properties:
+    track_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+    album_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+    artist_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+    listen_ids:
+      type: array
+      items:
+        type: integer
+        format: uint64

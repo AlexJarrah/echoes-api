@@ -41,11 +41,11 @@ func OpenReceiveAuthResponseWs(
 type ReceiveAuthResponseChannelWs interface {
 	Close() error
 
-	SealServerMessage(ws.EnvelopeWriter, channels.AuthEnvelopeMarshalerWs) error
-	PublishServerMessage(context.Context, channels.AuthEnvelopeMarshalerWs) error
+	SealResponse(ws.EnvelopeWriter, channels.AuthEnvelopeMarshalerWs) error
+	PublishResponse(context.Context, channels.AuthEnvelopeMarshalerWs) error
 
-	UnsealServerMessage(ws.EnvelopeReader, channels.AuthEnvelopeUnmarshalerWs) error
-	SubscribeServerMessage(context.Context, func(messages.ServerMessageReceiver)) error
+	UnsealResponse(ws.EnvelopeReader, channels.AuthEnvelopeUnmarshalerWs) error
+	SubscribeResponse(context.Context, func(messages.ResponseReceiver)) error
 }
 
 type ReceiveAuthResponseWs struct {
@@ -56,16 +56,16 @@ func (c ReceiveAuthResponseWs) Close() error {
 	return c.Channel.Close()
 }
 
-func (o ReceiveAuthResponseWs) UnsealServerMessage(
+func (o ReceiveAuthResponseWs) UnsealResponse(
 	envelope ws.EnvelopeReader,
 	message channels.AuthEnvelopeUnmarshalerWs,
 ) error {
-	return o.Channel.UnsealServerMessage(envelope, message)
+	return o.Channel.UnsealResponse(envelope, message)
 }
 
-func (o ReceiveAuthResponseWs) SubscribeServerMessage(
+func (o ReceiveAuthResponseWs) SubscribeResponse(
 	ctx context.Context,
-	cb func(message messages.ServerMessageReceiver),
+	cb func(message messages.ResponseReceiver),
 ) (err error) {
-	return o.Channel.SubscribeServerMessage(ctx, cb)
+	return o.Channel.SubscribeResponse(ctx, cb)
 }

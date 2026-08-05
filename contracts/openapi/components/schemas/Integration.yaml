@@ -1,0 +1,22 @@
+Integration:
+  type: object
+  required:
+    - user_id
+    - provider
+    - details
+    - created_at
+  properties:
+    user_id:
+      type: string
+      format: uuid
+    provider:
+      $ref: "#/components/schemas/IntegrationProvider"
+    details:
+      type: string
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

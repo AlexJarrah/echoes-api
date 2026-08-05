@@ -1,0 +1,5 @@
+CookieAuth:
+  type: apiKey
+  in: cookie
+  name: auth_token
+  description: JWT token

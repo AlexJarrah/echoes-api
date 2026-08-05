@@ -8,12 +8,17 @@ import (
 
 type ServerMessageStruct struct {
 	// ID--Correlation ID from the originating request.
-	ID   *uuid.UUID       `json:"id"`
-	Type *ServerEventType `json:"type"`
+	ID *uuid.UUID `json:"id"`
+	/*
+	Type--0 - ActivityData: user activity snapshot
+	1 - AuthenticationURL: one-time authentication URL
+	2 - Authentication: session token
+	*/
+	Type *int `json:"type"`
 	// Data--Payload varies by type.
 	Data *struct {
-		*ActivityData
-		*AuthURL
-		*AuthToken
+		*ComponentsSchemasServerMessageStructPropertiesDataOneOf0
+		*ComponentsSchemasServerMessageStructPropertiesDataOneOf1
+		*ComponentsSchemasServerMessageStructPropertiesDataOneOf2
 	} `json:"data"`
 }

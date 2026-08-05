@@ -1,0 +1,23 @@
+ListensSessionsRequest:
+  type: object
+  properties:
+    start:
+      type: string
+      format: date-time
+      description: Start of time range filter.
+    end:
+      type: string
+      format: date-time
+      description: End of time range filter.
+    minimum:
+      type: integer
+      format: int64
+      description:
+        Minimum amount of listens to be fetched. The start parameter's
+        value may not be respected to achieve this.
+    limit:
+      type: integer
+      format: int64
+      maximum: 1000
+      default: 1000
+      description: Maximum amount of listens to be fetched.

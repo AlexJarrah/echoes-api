@@ -1,0 +1,9 @@
+LibraryAddID:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+    reference_id:
+      type: integer
+      format: int64

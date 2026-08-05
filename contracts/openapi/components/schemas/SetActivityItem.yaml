@@ -1,0 +1,36 @@
+SetActivityItem:
+  type: object
+  required:
+    - session_id
+    - track_id
+    - active
+    - position
+  properties:
+    session_id:
+      type: string
+      description:
+        Unique identifier for the listening session, typically a UUID or
+        random string used to group related activities.
+    track_id:
+      type: string
+      format: uuid
+      description: UUID of the track being played.
+    active:
+      type: boolean
+      description:
+        Whether the user is currently playing this track (true) or has
+        stopped/paused (false).
+    position:
+      type: integer
+      format: int64
+      description: Current playback position in seconds from the start of the track.
+    start_timestamp:
+      type: string
+      format: date-time
+      description: ISO 8601 timestamp when playback of this track started.
+    end_timestamp:
+      type: string
+      format: date-time
+      description:
+        ISO 8601 timestamp when playback of this track is expected to end
+        (for background playback estimation).

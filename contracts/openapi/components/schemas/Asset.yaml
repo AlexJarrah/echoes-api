@@ -1,0 +1,20 @@
+Asset:
+  type: object
+  required:
+    - asset_id
+    - mime_type
+    - created_at
+    - updated_at
+  properties:
+    asset_id:
+      type: string
+      format: uuid
+    mime_type:
+      type: string
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

@@ -4,49 +4,49 @@
  */
 
 export interface paths {
-    "/openapi.yaml": {
+    "/api/@{handle}/listens/sessions": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get OpenAPI schema. */
-        get: operations["getOpenAPI"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get listen sessions for another user */
+        post: operations["getUserListenSessions"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/asyncapi.yaml": {
+    "/api/add-friend": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get AsyncAPI schema. */
-        get: operations["getAsyncAPI"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Add a friend */
+        post: operations["addFriend"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/tracks/{id}": {
+    "/api/albums/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get track details */
-        get: operations["getTrack"];
+        /** Get album details */
+        get: operations["getAlbum"];
         put?: never;
         post?: never;
         delete?: never;
@@ -72,15 +72,50 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/albums/{id}": {
+    "/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get album details */
-        get: operations["getAlbum"];
+        get?: never;
+        /** Add a reaction to a message. */
+        put: operations["addMessageReaction"];
+        post?: never;
+        /** Remove a reaction from a message. */
+        delete: operations["deleteMessageReaction"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages/{message_id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Read a message. */
+        post: operations["readMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages/{message_id}/thread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get message thread. */
+        get: operations["getMessageThread"];
         put?: never;
         post?: never;
         delete?: never;
@@ -89,7 +124,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/listens/sessions": {
+    "/api/conversations/{conversation_id}/messages/{message_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -97,50 +132,35 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
-        /** Get recent listening sessions */
-        post: operations["getListenSessions"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/@{handle}/listens/sessions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Get listen sessions for another user */
-        post: operations["getUserListenSessions"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/library/get-metadata": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get library metadata */
-        get: operations["getLibraryMetadata"];
         put?: never;
         post?: never;
+        /** Delete a message. */
+        delete: operations["deleteMessage"];
+        options?: never;
+        head?: never;
+        /** Edit a message. */
+        patch: operations["editMessage"];
+        trace?: never;
+    };
+    "/api/conversations/{conversation_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get conversation messages. */
+        get: operations["getMessages"];
+        put?: never;
+        /** Send a conversation message. */
+        post: operations["sendMessage"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/library/add": {
+    "/api/groups/{group_id}/roles/{user_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -148,199 +168,65 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
-        /** Add items to library */
-        post: operations["addToLibrary"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/library/update": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Update items in library */
-        post: operations["updateLibrary"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/library/remove": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Remove items from library */
-        post: operations["removeFromLibrary"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/set-activity": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Set current activity */
-        post: operations["setActivity"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/search-tracks-via-details": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Search tracks via details */
-        post: operations["searchTracksViaDetails"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/{user_id}/calendar/listens": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get calendar listens for user (ICS feed)
-         * @description Serves listening history as an ICS feed. Access respects requested user's privacy settings. If requested user's privacy is not public, auth and token params are required.
-         */
-        get: operations["getCalendarListens"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Remove a user from a group. */
+        delete: operations["deleteGroupRole"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Update group roles. */
+        patch: operations["UpdateGroupRoles"];
         trace?: never;
     };
-    "/api/validate": {
+    "/api/groups/{group_id}/roles": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Validate authentication token */
-        get: operations["validateToken"];
+        /** Get group roles. */
+        get: operations["getGroupRoles"];
+        put?: never;
+        /** Add group roles. */
+        post: operations["AddGroupRoles"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/groups/{group_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get group. */
+        get: operations["getGroup"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Delete a group if owned by the user. */
+        delete: operations["deleteGroup"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Edit a group. */
+        patch: operations["editGroup"];
         trace?: never;
     };
-    "/api/register": {
+    "/api/groups": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get groups visible to the user. */
+        get: operations["getGroups"];
         put?: never;
-        /** Register a new user */
-        post: operations["register"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/signin": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sign in with email and password */
-        post: operations["signIn"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/user/update": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Update user profile */
-        post: operations["updateUser"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/user/details": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get current user details */
-        get: operations["getUserDetails"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/user/integrations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get user integration details */
-        get: operations["getUserIntegrations"];
-        put?: never;
-        post?: never;
+        /** Create a new group as owner. */
+        post: operations["createGroup"];
         delete?: never;
         options?: never;
         head?: never;
@@ -364,7 +250,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/add-friend": {
+    "/api/library/add": {
         parameters: {
             query?: never;
             header?: never;
@@ -373,32 +259,32 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Add a friend */
-        post: operations["addFriend"];
+        /** Add items to library */
+        post: operations["addToLibrary"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/remove-friend": {
+    "/api/library/get-metadata": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get library metadata */
+        get: operations["getLibraryMetadata"];
         put?: never;
-        /** Remove a friend */
-        post: operations["removeFriend"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/set-blocked": {
+    "/api/library/remove": {
         parameters: {
             query?: never;
             header?: never;
@@ -407,15 +293,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Block or unblock a user */
-        post: operations["setBlocked"];
+        /** Remove items from library */
+        post: operations["removeFromLibrary"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/set-best-friend": {
+    "/api/library/update": {
         parameters: {
             query?: never;
             header?: never;
@@ -424,8 +310,59 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Set or unset best friend */
-        post: operations["setBestFriend"];
+        /** Update items in library */
+        post: operations["updateLibrary"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/listens/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get recent listening sessions */
+        post: operations["getListenSessions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a new user */
+        post: operations["register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/relations/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user relations with visible activity details */
+        get: operations["getRelationsDetails"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -449,17 +386,153 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/relations/details": {
+    "/api/remove-friend": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get user relations with visible activity details */
-        get: operations["getRelationsDetails"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Remove a friend */
+        post: operations["removeFriend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/search-tracks-via-details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Search tracks via details */
+        post: operations["searchTracksViaDetails"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/set-activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set current activity */
+        post: operations["setActivity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/set-best-friend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set or unset best friend */
+        post: operations["setBestFriend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/set-blocked": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Block or unblock a user */
+        post: operations["setBlocked"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/signin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign in with email and password */
+        post: operations["signIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/statistics/global/top/albums": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
+        post: operations["getGlobalTopAlbums"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/statistics/global/top/artists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
+        post: operations["getGlobalTopArtists"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/statistics/global/top/tracks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
+        post: operations["getGlobalTopTracks"];
         delete?: never;
         options?: never;
         head?: never;
@@ -500,192 +573,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/statistics/global/top/albums": {
+    "/api/tracks/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
-        /** Get global top albums in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
-        post: operations["getGlobalTopAlbums"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/statistics/global/top/tracks": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Get global top tracks in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
-        post: operations["getGlobalTopTracks"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/statistics/global/top/artists": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Get global top artists in the specified time range. Time range values default to the range of the previous full week starting on Friday. */
-        post: operations["getGlobalTopArtists"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/groups": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get groups visible to the user. */
-        get: operations["getGroups"];
-        put?: never;
-        /** Create a new group as owner. */
-        post: operations["createGroup"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/groups/{group_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get group. */
-        get: operations["getGroup"];
-        put?: never;
-        post?: never;
-        /** Delete a group if owned by the user. */
-        delete: operations["deleteGroup"];
-        options?: never;
-        head?: never;
-        /** Edit a group. */
-        patch: operations["editGroup"];
-        trace?: never;
-    };
-    "/api/groups/{group_id}/roles": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get group roles. */
-        get: operations["getGroupRoles"];
-        put?: never;
-        /** Add group roles. */
-        post: operations["AddGroupRoles"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/groups/{group_id}/roles/{user_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Remove a user from a group. */
-        delete: operations["deleteGroupRole"];
-        options?: never;
-        head?: never;
-        /** Update group roles. */
-        patch: operations["UpdateGroupRoles"];
-        trace?: never;
-    };
-    "/api/conversations/{conversation_id}/messages": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get conversation messages. */
-        get: operations["getMessages"];
-        put?: never;
-        /** Send a conversation message. */
-        post: operations["sendMessage"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/conversations/{conversation_id}/messages/{message_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Delete a message. */
-        delete: operations["deleteMessage"];
-        options?: never;
-        head?: never;
-        /** Edit a message. */
-        patch: operations["editMessage"];
-        trace?: never;
-    };
-    "/api/conversations/{conversation_id}/messages/{message_id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Read a message. */
-        post: operations["readMessage"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/conversations/{conversation_id}/messages/{message_id}/thread": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get message thread. */
-        get: operations["getMessageThread"];
+        /** Get track details */
+        get: operations["getTrack"];
         put?: never;
         post?: never;
         delete?: never;
@@ -694,7 +590,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}": {
+    "/api/user/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get current user details */
+        get: operations["getUserDetails"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/integrations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user integration details */
+        get: operations["getUserIntegrations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/update": {
         parameters: {
             query?: never;
             header?: never;
@@ -702,11 +632,81 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Add a reaction to a message. */
-        put: operations["addMessageReaction"];
+        put?: never;
+        /** Update user profile */
+        post: operations["updateUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Validate authentication token */
+        get: operations["validateToken"];
+        put?: never;
         post?: never;
-        /** Remove a reaction from a message. */
-        delete: operations["deleteMessageReaction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/{user_id}/calendar/listens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get calendar listens for user (ICS feed)
+         * @description Serves listening history as an ICS feed. Access respects requested user's privacy settings. If requested user's privacy is not public, auth and token params are required.
+         */
+        get: operations["getCalendarListens"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/asyncapi.yaml": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get AsyncAPI schema. */
+        get: operations["getAsyncAPI"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/openapi.yaml": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get OpenAPI schema. */
+        get: operations["getOpenAPI"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -716,107 +716,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /**
-         * Format: uint8
-         * @description 0=Public: visible to everyone
-         *     1=Friends: visible to the user's friends
-         *     2=BestFriends: visible to the user's best friends
-         *     3=Private: visible to only the user
-         * @enum {integer}
-         */
-        Visibility: 0 | 1 | 2 | 3;
-        /**
-         * Format: uint8
-         * @description 0=API: listen was added via API
-         *     1=App: listen was added via an official client application
-         *     2=Spotify: listen was imported from Spotify
-         *     3=AppleMusic: listen was imported from Apple Music
-         *     4=Last: listen was imported from Last
-         *     5=YouTube: listen was imported from YouTube
-         * @enum {integer}
-         */
-        ListenMethod: 0 | 1 | 2 | 3 | 4 | 5;
-        /**
-         * Format: uint8
-         * @description 0=Google
-         *     1=Spotify
-         *     2=Last
-         * @enum {integer}
-         */
-        IntegrationProvider: 0 | 1 | 2;
-        /**
-         * Format: uint8
-         * @description 0=Friend: users are friends
-         *     1=BestFriend: source user set target user as a best friend
-         *     2=OutgoingRequest: source user has an outgoing friend request
-         *     3=IncomingRequest: source user has an incoming friend request
-         *     4=BlockSent: source user has blocked target user
-         *     5=BlockReceived: target user has blocked source user
-         * @enum {integer}
-         */
-        UserRelation: 0 | 1 | 2 | 3 | 4 | 5;
-        /**
-         * Format: uint8
-         * @description 0=Owner
-         *     1=Moderator
-         *     2=Member
-         * @enum {integer}
-         */
-        GroupRoleType: 0 | 1 | 2;
-        User: {
-            /** Format: uuid */
-            user_id: string;
-            handle: string;
-            name: string;
-            /** Format: email */
-            email: string;
-            visibility: components["schemas"]["Visibility"];
-            /** Format: date-time */
-            subscription_expiration: string;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at?: string | null;
-        };
-        Track: {
-            /** Format: uuid */
-            track_id: string;
-            /** Format: uuid */
-            user_id?: string | null;
-            name: string;
-            /** Format: uint16 */
-            seconds?: number | null;
-            lyrics?: string | null;
-            explicit?: boolean | null;
-            /** Format: uuid */
-            musicbrainz_id?: string | null;
-            spotify_url?: string | null;
-            apple_music_url?: string | null;
-            tidal_url?: string | null;
-            youtube_music_url?: string | null;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at?: string | null;
-        };
-        Artist: {
-            /** Format: uuid */
-            artist_id: string;
-            /** Format: uuid */
-            user_id?: string | null;
-            name: string;
-            bio?: string | null;
-            /** Format: uuid */
-            musicbrainz_id?: string | null;
-            spotify_url?: string | null;
-            apple_music_url?: string | null;
-            tidal_url?: string | null;
-            youtube_music_url?: string | null;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at?: string | null;
-        };
         Album: {
             /** Format: uuid */
             album_id: string;
@@ -838,20 +737,106 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
-        Listen: {
-            /** Format: uint64 */
-            listen_id: number;
+        AlbumArtist: {
             /** Format: uuid */
-            user_id: string;
+            album_id: string;
+            /** Format: uuid */
+            artist_id: string;
+        };
+        AlbumAsset: {
+            /** Format: uuid */
+            album_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
+        AlbumPlayStats: {
+            album: components["schemas"]["Album"];
+            assets: components["schemas"]["AlbumAsset"][];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
+        };
+        AlbumTrack: {
+            /** Format: uuid */
+            album_id: string;
             /** Format: uuid */
             track_id: string;
-            /** Format: uint16 */
-            seconds: number;
-            method: components["schemas"]["ListenMethod"];
+            /** Format: int8 */
+            disc_number?: number | null;
+            /** Format: int8 */
+            track_number?: number | null;
+        };
+        Artist: {
+            /** Format: uuid */
+            artist_id: string;
+            /** Format: uuid */
+            user_id?: string | null;
+            name: string;
+            bio?: string | null;
+            /** Format: uuid */
+            musicbrainz_id?: string | null;
+            spotify_url?: string | null;
+            apple_music_url?: string | null;
+            tidal_url?: string | null;
+            youtube_music_url?: string | null;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at?: string | null;
+        };
+        ArtistAsset: {
+            /** Format: uuid */
+            artist_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
+        ArtistPlayStatisticsQuery: {
+            /**
+             * Format: date-time
+             * @description Start timestamp for the time range, defaults to one year ago.
+             */
+            start?: string;
+            /**
+             * Format: date-time
+             * @description Start timestamp for the time range, defaults to current time.
+             */
+            end?: string;
+            /**
+             * Format: uint32
+             * @description Maximum number of artists to return
+             * @default 10
+             */
+            artist_limit: number;
+            /**
+             * Format: uint32
+             * @description Maximum number of tracks per artist to return
+             * @default 3
+             */
+            track_limit: number;
+            /**
+             * Format: uint32
+             * @description Maximum number of albums per artist to return
+             * @default 1
+             */
+            album_limit: number;
+            /**
+             * Format: uint32
+             * @default 0
+             */
+            artist_offset: number;
+        };
+        ArtistPlayStats: {
+            artist: components["schemas"]["Artist"];
+            assets: components["schemas"]["ArtistAsset"][];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
         };
         Asset: {
             /** Format: uuid */
@@ -862,57 +847,15 @@ export interface components {
             /** Format: date-time */
             updated_at: string | null;
         };
-        UserAsset: {
+        BestFriendActionRequest: {
             /** Format: uuid */
-            user_id: string;
-            /** Format: uuid */
-            asset_id: string;
-            /** @description Lexicographically sortable string */
-            position: string;
+            id: string;
+            best_friend: boolean;
         };
-        AlbumAsset: {
+        BlockedActionRequest: {
             /** Format: uuid */
-            album_id: string;
-            /** Format: uuid */
-            asset_id: string;
-            /** @description Lexicographically sortable string */
-            position: string;
-        };
-        ArtistAsset: {
-            /** Format: uuid */
-            artist_id: string;
-            /** Format: uuid */
-            asset_id: string;
-            /** @description Lexicographically sortable string */
-            position: string;
-        };
-        RelationDetails: {
-            /** Format: uuid */
-            user_id: string;
-            name: string;
-            visibility: components["schemas"]["Visibility"];
-            handle: string;
-            relation: components["schemas"]["UserRelation"];
-            activity?: {
-                listens: components["schemas"]["Listen"][];
-            };
-            statistics?: {
-                /** Format: uint64 */
-                year_listens: number;
-                /** Format: uint64 */
-                year_seconds: number;
-                /** Format: uint16 */
-                listening_streak: number;
-            };
-        };
-        Relation: {
-            /** Format: uuid */
-            source_id: string;
-            /** Format: uuid */
-            target_id: string;
-            relation: components["schemas"]["UserRelation"];
-            /** Format: date-time */
-            updated_at?: string | null;
+            id: string;
+            blocked: boolean;
         };
         Conversation: {
             /** Format: uuid */
@@ -928,6 +871,55 @@ export interface components {
             /** Format: date-time */
             created_at: string;
         };
+        ConversationRead: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uuid */
+            conversation_id: string;
+            /** Format: uint64 */
+            latest_message_id: number;
+            /** Format: date-time */
+            read_at: string;
+        };
+        CreateGroupRequest: {
+            name: string;
+            description?: string;
+            visibility: components["schemas"]["Visibility"];
+            members: string[];
+        };
+        DateTimeRange: {
+            /** Format: date-time */
+            start: string;
+            /** Format: date-time */
+            end: string;
+        };
+        DayListenDetails: {
+            /** Format: date */
+            date: string;
+            /** Format: uint16 */
+            play_count: number;
+            /** Format: uint64 */
+            seconds: number;
+        };
+        EditGroupRequest: {
+            name?: string;
+            description?: string;
+            visibility?: components["schemas"]["Visibility"];
+        };
+        ErrorResponse: {
+            /** @description Human-readable error message */
+            message: string;
+        };
+        /** @description Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user. */
+        FriendActionRequest: {
+            /**
+             * Format: uuid
+             * @description Target user's UUID. Optional if 'handle' is provided.
+             */
+            id?: string | null;
+            /** @description Target user's handle. Optional if 'id' is provided. */
+            handle?: string | null;
+        };
         Group: {
             /** Format: uuid */
             group_id: string;
@@ -941,6 +933,14 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
+        GroupAsset: {
+            /** Format: uuid */
+            group_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
         GroupDetails: {
             group: components["schemas"]["Group"];
             conversation: components["schemas"]["Conversation"];
@@ -948,17 +948,6 @@ export interface components {
             latest_message: components["schemas"]["Message"];
             /** Format: uint32 */
             unread_count: number;
-        };
-        CreateGroupRequest: {
-            name: string;
-            description?: string;
-            visibility: components["schemas"]["Visibility"];
-            members: string[];
-        };
-        EditGroupRequest: {
-            name?: string;
-            description?: string;
-            visibility?: components["schemas"]["Visibility"];
         };
         GroupRole: {
             /** Format: uuid */
@@ -971,65 +960,14 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
-        Message: {
-            /** Format: uint64 */
-            message_id: number;
-            /** Format: uuid */
-            conversation_id: string;
-            /**
-             * Format: uuid
-             * @description Null if user is deleted.
-             */
-            user_id?: string | null;
-            body: string;
-            /** Format: uint64 */
-            parent_id?: number | null;
-            /** Format: date-time */
-            deleted_at?: string | null;
-            /** Format: date-time */
-            created_at: string;
-            /** Format: date-time */
-            updated_at?: string | null;
-        };
-        MessageDetails: {
-            message: components["schemas"]["Message"];
-            reactions?: components["schemas"]["MessageReaction"][];
-        };
-        GroupAsset: {
-            /** Format: uuid */
-            group_id: string;
-            /** Format: uuid */
-            asset_id: string;
-            /** @description Lexicographically sortable string */
-            position: string;
-        };
-        MessageAsset: {
-            /** Format: uint64 */
-            message_id: number;
-            /** Format: uuid */
-            asset_id: string;
-            /** @description Lexicographically sortable string */
-            position: string;
-        };
-        MessageReaction: {
-            /** Format: uuid */
-            user_id: string;
-            /** Format: uint64 */
-            message_id: number;
-            emoji: string;
-            /** Format: date-time */
-            created_at: string;
-        };
-        ConversationRead: {
-            /** Format: uuid */
-            user_id: string;
-            /** Format: uuid */
-            conversation_id: string;
-            /** Format: uint64 */
-            latest_message_id: number;
-            /** Format: date-time */
-            read_at: string;
-        };
+        /**
+         * Format: uint8
+         * @description 0=Owner
+         *     1=Moderator
+         *     2=Member
+         * @enum {integer}
+         */
+        GroupRoleType: 0 | 1 | 2;
         Integration: {
             /** Format: uuid */
             user_id: string;
@@ -1049,53 +987,16 @@ export interface components {
             /** Format: date-time */
             updated_at?: string | null;
         };
-        RegisterRequest: {
-            /** @description 2+ Unicode letters, spaces allowed */
-            name: string;
-            /** Format: email */
-            email: string;
-            /** @description 8+ characters, must contain uppercase, lowercase, digit, and special character */
-            password: string;
-        };
-        SignInRequest: {
-            /** Format: email */
-            email: string;
-            password: string;
-        };
-        UpdateUserRequest: {
-            handle?: string | null;
-            name?: string | null;
-            /** Format: email */
-            email?: string | null;
-            password?: string | null;
-            visibility?: components["schemas"]["Visibility"];
-        };
-        LibraryMetadataArtist: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-        };
-        LibraryMetadataAlbum: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-        };
-        LibraryMetadataTrack: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-            /** Format: uint16 */
-            seconds?: number | null;
-            album_ids?: string[];
-            artist_ids?: string[];
-        };
-        LibraryMetadataResponse: {
-            artists?: components["schemas"]["LibraryMetadataArtist"][];
-            albums?: components["schemas"]["LibraryMetadataAlbum"][];
-            tracks?: components["schemas"]["LibraryMetadataTrack"][];
-        };
-        LibraryAddTrack: {
-            track: components["schemas"]["Track"];
+        /**
+         * Format: uint8
+         * @description 0=Google
+         *     1=Spotify
+         *     2=Last
+         * @enum {integer}
+         */
+        IntegrationProvider: 0 | 1 | 2;
+        LibraryAddAlbum: {
+            album: components["schemas"]["Album"];
             /**
              * Format: int64
              * @description Client-provided reference ID for correlation in responses.
@@ -1106,6 +1007,12 @@ export interface components {
              * @default false
              */
             force_add: boolean;
+        };
+        LibraryAddAlbumTrack: components["schemas"]["AlbumTrack"] & {
+            /** Format: int64 */
+            album_reference_id: number;
+            /** Format: int64 */
+            track_reference_id: number;
         };
         LibraryAddArtist: {
             artist: components["schemas"]["Artist"];
@@ -1120,18 +1027,15 @@ export interface components {
              */
             force_add: boolean;
         };
-        LibraryAddAlbum: {
-            album: components["schemas"]["Album"];
-            /**
-             * Format: int64
-             * @description Client-provided reference ID for correlation in responses.
-             */
+        LibraryAddID: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: int64 */
             reference_id?: number;
-            /**
-             * @description If true, skip deduplication and always create a new entity.
-             * @default false
-             */
-            force_add: boolean;
+        };
+        LibraryAddKV: {
+            key: components["schemas"]["LibraryAddID"];
+            value: components["schemas"]["LibraryAddID"];
         };
         LibraryAddListen: {
             listen: components["schemas"]["Listen"];
@@ -1146,38 +1050,6 @@ export interface components {
              */
             force_add: boolean;
         };
-        LibraryAddKV: {
-            key: components["schemas"]["LibraryAddID"];
-            value: components["schemas"]["LibraryAddID"];
-        };
-        LibraryAddID: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: int64 */
-            reference_id?: number;
-        };
-        AlbumTrack: {
-            /** Format: uuid */
-            album_id: string;
-            /** Format: uuid */
-            track_id: string;
-            /** Format: int8 */
-            disc_number?: number | null;
-            /** Format: int8 */
-            track_number?: number | null;
-        };
-        TrackArtist: {
-            /** Format: uuid */
-            track_id: string;
-            /** Format: uuid */
-            artist_id: string;
-        };
-        AlbumArtist: {
-            /** Format: uuid */
-            album_id: string;
-            /** Format: uuid */
-            artist_id: string;
-        };
         LibraryAddRequest: {
             tracks?: components["schemas"]["LibraryAddTrack"][];
             artists?: components["schemas"]["LibraryAddArtist"][];
@@ -1188,11 +1060,12 @@ export interface components {
             listen_tracks?: components["schemas"]["LibraryAddKV"][];
             album_tracks?: components["schemas"]["LibraryAddAlbumTrack"][];
         };
-        LibraryAddAlbumTrack: components["schemas"]["AlbumTrack"] & {
-            /** Format: int64 */
-            album_reference_id: number;
-            /** Format: int64 */
-            track_reference_id: number;
+        LibraryAddResponse: {
+            artists?: components["schemas"]["LibraryAddResult"][];
+            albums?: components["schemas"]["LibraryAddResult"][];
+            tracks?: components["schemas"]["LibraryAddResult"][];
+            listens?: components["schemas"]["LibraryAddResult"][];
+            errors?: string[];
         };
         LibraryAddResult: {
             /**
@@ -1208,12 +1081,48 @@ export interface components {
             /** @description True if a new entity was created, false if an existing entity was resolved. */
             created: boolean;
         };
-        LibraryAddResponse: {
-            artists?: components["schemas"]["LibraryAddResult"][];
-            albums?: components["schemas"]["LibraryAddResult"][];
-            tracks?: components["schemas"]["LibraryAddResult"][];
-            listens?: components["schemas"]["LibraryAddResult"][];
-            errors?: string[];
+        LibraryAddTrack: {
+            track: components["schemas"]["Track"];
+            /**
+             * Format: int64
+             * @description Client-provided reference ID for correlation in responses.
+             */
+            reference_id?: number;
+            /**
+             * @description If true, skip deduplication and always create a new entity.
+             * @default false
+             */
+            force_add: boolean;
+        };
+        LibraryMetadataAlbum: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        LibraryMetadataArtist: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        LibraryMetadataResponse: {
+            artists?: components["schemas"]["LibraryMetadataArtist"][];
+            albums?: components["schemas"]["LibraryMetadataAlbum"][];
+            tracks?: components["schemas"]["LibraryMetadataTrack"][];
+        };
+        LibraryMetadataTrack: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: uint16 */
+            seconds?: number | null;
+            album_ids?: string[];
+            artist_ids?: string[];
+        };
+        LibraryRemoveRequest: {
+            track_ids?: string[];
+            album_ids?: string[];
+            artist_ids?: string[];
+            listen_ids?: number[];
         };
         LibraryUpdateRequest: {
             /** @default [] */
@@ -1241,12 +1150,32 @@ export interface components {
             tracks?: components["schemas"]["Track"][];
             errors?: string[];
         };
-        LibraryRemoveRequest: {
-            track_ids?: string[];
-            album_ids?: string[];
-            artist_ids?: string[];
-            listen_ids?: number[];
+        Listen: {
+            /** Format: uint64 */
+            listen_id: number;
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uuid */
+            track_id: string;
+            /** Format: uint16 */
+            seconds: number;
+            method: components["schemas"]["ListenMethod"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
         };
+        /**
+         * Format: uint8
+         * @description 0=API: listen was added via API
+         *     1=App: listen was added via an official client application
+         *     2=Spotify: listen was imported from Spotify
+         *     3=AppleMusic: listen was imported from Apple Music
+         *     4=Last: listen was imported from Last
+         *     5=YouTube: listen was imported from YouTube
+         * @enum {integer}
+         */
+        ListenMethod: 0 | 1 | 2 | 3 | 4 | 5;
         ListensSessionsRequest: {
             /**
              * Format: date-time
@@ -1270,117 +1199,93 @@ export interface components {
              */
             limit: number;
         };
-        TopEntityPlays: {
+        Message: {
             /** Format: uint64 */
-            play_count: number;
-            /**
-             * Format: uint64
-             * @description Play duration in seconds
-             */
-            duration: number;
-        };
-        /** @description Values change in percentage. */
-        TopEntityChange: {
-            /** Format: int64 */
-            play_count: number;
-            /**
-             * Format: int64
-             * @description Play duration in seconds
-             */
-            duration: number;
-        };
-        TopAlbumEntry: {
+            message_id: number;
             /** Format: uuid */
-            id: string;
-            /** Format: uint */
-            rank: number;
-            album: components["schemas"]["Album"];
-            artists: components["schemas"]["Artist"][];
-            current: components["schemas"]["TopEntityPlays"];
-            previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityChange"];
-        };
-        TopTrackEntry: {
-            /** Format: uuid */
-            id: string;
-            /** Format: uint */
-            rank: number;
-            track: components["schemas"]["Track"];
-            album: components["schemas"]["Album"];
-            artists: components["schemas"]["Artist"][];
-            current: components["schemas"]["TopEntityPlays"];
-            previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityChange"];
-        };
-        TopArtistEntry: {
-            /** Format: uuid */
-            id: string;
-            /** Format: uint */
-            rank: number;
-            artist?: components["schemas"]["Artist"];
-            current: components["schemas"]["TopEntityPlays"];
-            previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityChange"];
-        };
-        DayListenDetails: {
-            /** Format: date */
-            date: string;
-            /** Format: uint16 */
-            play_count: number;
-            /** Format: uint64 */
-            seconds: number;
-        };
-        TopArtistPlayStats: {
-            /** Format: uint */
-            rank: number;
-            artist: components["schemas"]["ArtistPlayStats"];
-            top_tracks: components["schemas"]["TrackPlayStats"][];
-            top_albums: components["schemas"]["AlbumPlayStats"][];
-        };
-        TrackPlayStats: {
-            track: components["schemas"]["Track"];
-            /** Format: uint64 */
-            play_count: number;
-            /** Format: uint64 */
-            play_duration: number;
-        };
-        ArtistPlayStats: {
-            artist: components["schemas"]["Artist"];
-            assets: components["schemas"]["ArtistAsset"][];
-            /** Format: uint64 */
-            play_count: number;
-            /** Format: uint64 */
-            play_duration: number;
-        };
-        AlbumPlayStats: {
-            album: components["schemas"]["Album"];
-            assets: components["schemas"]["AlbumAsset"][];
-            /** Format: uint64 */
-            play_count: number;
-            /** Format: uint64 */
-            play_duration: number;
-        };
-        SessionListen: {
-            /**
-             * Format: uint32
-             * @description Unique identifier for this listen event.
-             */
-            id: number;
+            conversation_id: string;
             /**
              * Format: uuid
-             * @description UUID of the track listened to.
+             * @description Null if user is deleted.
              */
-            track: string;
-            /**
-             * Format: date-time
-             * @description Timestamp when playback started.
-             */
-            start: string;
-            /**
-             * Format: date-time
-             * @description Timestamp when playback ended.
-             */
-            end: string;
+            user_id?: string | null;
+            body: string;
+            /** Format: uint64 */
+            parent_id?: number | null;
+            /** Format: date-time */
+            deleted_at?: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        MessageAsset: {
+            /** Format: uint64 */
+            message_id: number;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
+        MessageDetails: {
+            message: components["schemas"]["Message"];
+            reactions?: components["schemas"]["MessageReaction"][];
+        };
+        MessageReaction: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uint64 */
+            message_id: number;
+            emoji: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        RegisterRequest: {
+            /** @description 2+ Unicode letters, spaces allowed */
+            name: string;
+            /** Format: email */
+            email: string;
+            /** @description 8+ characters, must contain uppercase, lowercase, digit, and special character */
+            password: string;
+        };
+        Relation: {
+            /** Format: uuid */
+            source_id: string;
+            /** Format: uuid */
+            target_id: string;
+            relation: components["schemas"]["UserRelation"];
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        RelationDetails: {
+            /** Format: uuid */
+            user_id: string;
+            name: string;
+            visibility: components["schemas"]["Visibility"];
+            handle: string;
+            relation: components["schemas"]["UserRelation"];
+            activity?: {
+                listens: components["schemas"]["Listen"][];
+            };
+            statistics?: {
+                /** Format: uint64 */
+                year_listens: number;
+                /** Format: uint64 */
+                year_seconds: number;
+                /** Format: uint16 */
+                listening_streak: number;
+            };
+        };
+        SearchTrackResult: components["schemas"]["Track"] & {
+            /** @description Confidence score (0-100) */
+            confidence: number;
+        };
+        SearchTracksRequest: {
+            track_name: string;
+            artist_names?: string[];
+            album_name?: string;
+            /** Format: uint16 */
+            seconds?: number;
         };
         Session: {
             /**
@@ -1413,33 +1318,6 @@ export interface components {
             /** @description True if this session is incomplete (cut off by pagination limit). */
             partial?: boolean | null;
         };
-        SessionDay: {
-            /**
-             * Format: date
-             * @description Calendar date for this group of sessions.
-             */
-            date: string;
-            /** @description Sessions for this day, ordered newest first. */
-            sessions: components["schemas"]["Session"][];
-        };
-        SessionTrack: {
-            /**
-             * Format: uuid
-             * @description Track UUID.
-             */
-            id: string;
-            /** @description Track name. */
-            name: string;
-            /** @description List of artist UUIDs for this track. */
-            artists?: string[];
-            /**
-             * Format: uuid
-             * @description Album UUID, if available.
-             */
-            album?: string | null;
-            /** @description Whether the track has explicit content. */
-            explicit?: boolean | null;
-        };
         SessionAlbum: {
             /**
              * Format: uuid
@@ -1459,6 +1337,55 @@ export interface components {
             id: string;
             /** @description Artist name. */
             name: string;
+        };
+        SessionDay: {
+            /**
+             * Format: date
+             * @description Calendar date for this group of sessions.
+             */
+            date: string;
+            /** @description Sessions for this day, ordered newest first. */
+            sessions: components["schemas"]["Session"][];
+        };
+        SessionListen: {
+            /**
+             * Format: uint32
+             * @description Unique identifier for this listen event.
+             */
+            id: number;
+            /**
+             * Format: uuid
+             * @description UUID of the track listened to.
+             */
+            track: string;
+            /**
+             * Format: date-time
+             * @description Timestamp when playback started.
+             */
+            start: string;
+            /**
+             * Format: date-time
+             * @description Timestamp when playback ended.
+             */
+            end: string;
+        };
+        SessionTrack: {
+            /**
+             * Format: uuid
+             * @description Track UUID.
+             */
+            id: string;
+            /** @description Track name. */
+            name: string;
+            /** @description List of artist UUIDs for this track. */
+            artists?: string[];
+            /**
+             * Format: uuid
+             * @description Album UUID, if available.
+             */
+            album?: string | null;
+            /** @description Whether the track has explicit content. */
+            explicit?: boolean | null;
         };
         SessionsResponse: {
             /** @description Days containing sessions, ordered newest first. */
@@ -1496,77 +1423,10 @@ export interface components {
              */
             end_timestamp?: string;
         };
-        SearchTracksRequest: {
-            track_name: string;
-            artist_names?: string[];
-            album_name?: string;
-            /** Format: uint16 */
-            seconds?: number;
-        };
-        SearchTrackResult: components["schemas"]["Track"] & {
-            /** @description Confidence score (0-100) */
-            confidence: number;
-        };
-        /** @description Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user. */
-        FriendActionRequest: {
-            /**
-             * Format: uuid
-             * @description Target user's UUID. Optional if 'handle' is provided.
-             */
-            id?: string | null;
-            /** @description Target user's handle. Optional if 'id' is provided. */
-            handle?: string | null;
-        };
-        BlockedActionRequest: {
-            /** Format: uuid */
-            id: string;
-            blocked: boolean;
-        };
-        BestFriendActionRequest: {
-            /** Format: uuid */
-            id: string;
-            best_friend: boolean;
-        };
-        DateTimeRange: {
-            /** Format: date-time */
-            start: string;
-            /** Format: date-time */
-            end: string;
-        };
-        ArtistPlayStatisticsQuery: {
-            /**
-             * Format: date-time
-             * @description Start timestamp for the time range, defaults to one year ago.
-             */
-            start?: string;
-            /**
-             * Format: date-time
-             * @description Start timestamp for the time range, defaults to current time.
-             */
-            end?: string;
-            /**
-             * Format: uint32
-             * @description Maximum number of artists to return
-             * @default 10
-             */
-            artist_limit: number;
-            /**
-             * Format: uint32
-             * @description Maximum number of tracks per artist to return
-             * @default 3
-             */
-            track_limit: number;
-            /**
-             * Format: uint32
-             * @description Maximum number of albums per artist to return
-             * @default 1
-             */
-            album_limit: number;
-            /**
-             * Format: uint32
-             * @default 0
-             */
-            artist_offset: number;
+        SignInRequest: {
+            /** Format: email */
+            email: string;
+            password: string;
         };
         StatisticsQuery: {
             /**
@@ -1586,10 +1446,150 @@ export interface components {
              */
             limit: number;
         };
-        ErrorResponse: {
-            /** @description Human-readable error message */
-            message: string;
+        TopAlbumEntry: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uint */
+            rank: number;
+            album: components["schemas"]["Album"];
+            artists: components["schemas"]["Artist"][];
+            current: components["schemas"]["TopEntityPlays"];
+            previous?: components["schemas"]["TopEntityPlays"];
+            change?: components["schemas"]["TopEntityChange"];
         };
+        TopArtistEntry: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uint */
+            rank: number;
+            artist?: components["schemas"]["Artist"];
+            current: components["schemas"]["TopEntityPlays"];
+            previous?: components["schemas"]["TopEntityPlays"];
+            change?: components["schemas"]["TopEntityChange"];
+        };
+        TopArtistPlayStats: {
+            /** Format: uint */
+            rank: number;
+            artist: components["schemas"]["ArtistPlayStats"];
+            top_tracks: components["schemas"]["TrackPlayStats"][];
+            top_albums: components["schemas"]["AlbumPlayStats"][];
+        };
+        /** @description Values change in percentage. */
+        TopEntityChange: {
+            /** Format: int64 */
+            play_count: number;
+            /**
+             * Format: int64
+             * @description Play duration in seconds
+             */
+            duration: number;
+        };
+        TopEntityPlays: {
+            /** Format: uint64 */
+            play_count: number;
+            /**
+             * Format: uint64
+             * @description Play duration in seconds
+             */
+            duration: number;
+        };
+        TopTrackEntry: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uint */
+            rank: number;
+            track: components["schemas"]["Track"];
+            album: components["schemas"]["Album"];
+            artists: components["schemas"]["Artist"][];
+            current: components["schemas"]["TopEntityPlays"];
+            previous?: components["schemas"]["TopEntityPlays"];
+            change?: components["schemas"]["TopEntityChange"];
+        };
+        Track: {
+            /** Format: uuid */
+            track_id: string;
+            /** Format: uuid */
+            user_id?: string | null;
+            name: string;
+            /** Format: uint16 */
+            seconds?: number | null;
+            lyrics?: string | null;
+            explicit?: boolean | null;
+            /** Format: uuid */
+            musicbrainz_id?: string | null;
+            spotify_url?: string | null;
+            apple_music_url?: string | null;
+            tidal_url?: string | null;
+            youtube_music_url?: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        TrackArtist: {
+            /** Format: uuid */
+            track_id: string;
+            /** Format: uuid */
+            artist_id: string;
+        };
+        TrackPlayStats: {
+            track: components["schemas"]["Track"];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
+        };
+        UpdateUserRequest: {
+            handle?: string | null;
+            name?: string | null;
+            /** Format: email */
+            email?: string | null;
+            password?: string | null;
+            visibility?: components["schemas"]["Visibility"];
+        };
+        User: {
+            /** Format: uuid */
+            user_id: string;
+            handle: string;
+            name: string;
+            /** Format: email */
+            email: string;
+            visibility: components["schemas"]["Visibility"];
+            /** Format: date-time */
+            subscription_expiration: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        UserAsset: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uuid */
+            asset_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+        };
+        /**
+         * Format: uint8
+         * @description 0=Friend: users are friends
+         *     1=BestFriend: source user set target user as a best friend
+         *     2=OutgoingRequest: source user has an outgoing friend request
+         *     3=IncomingRequest: source user has an incoming friend request
+         *     4=BlockSent: source user has blocked target user
+         *     5=BlockReceived: target user has blocked source user
+         * @enum {integer}
+         */
+        UserRelation: 0 | 1 | 2 | 3 | 4 | 5;
+        /**
+         * Format: uint8
+         * @description 0=Public: visible to everyone
+         *     1=Friends: visible to the user's friends
+         *     2=BestFriends: visible to the user's best friends
+         *     3=Private: visible to only the user
+         * @enum {integer}
+         */
+        Visibility: 0 | 1 | 2 | 3;
     };
     responses: {
         /** @description Bad request */
@@ -1602,8 +1602,8 @@ export interface components {
                 "text/plain": string;
             };
         };
-        /** @description Unauthorized */
-        Unauthorized: {
+        /** @description Conflict */
+        Conflict: {
             headers: {
                 [name: string]: unknown;
             };
@@ -1614,26 +1614,6 @@ export interface components {
         };
         /** @description Forbidden */
         Forbidden: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
-            };
-        };
-        /** @description Not found */
-        NotFound: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
-            };
-        };
-        /** @description Conflict */
-        Conflict: {
             headers: {
                 [name: string]: unknown;
             };
@@ -1659,6 +1639,26 @@ export interface components {
             };
             content?: never;
         };
+        /** @description Not found */
+        NotFound: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+                "text/plain": string;
+            };
+        };
+        /** @description Unauthorized */
+        Unauthorized: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+                "text/plain": string;
+            };
+        };
     };
     parameters: never;
     requestBodies: never;
@@ -1667,47 +1667,67 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    getOpenAPI: {
+    getUserListenSessions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                handle: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListensSessionsRequest"];
+            };
+        };
+        responses: {
+            /** @description Listen sessions */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    addFriend: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FriendActionRequest"];
+            };
+        };
         responses: {
-            /** @description Top artists returned successfully */
+            /** @description Friend relation created */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "text/plain": string;
+                    "application/json": components["schemas"]["Relation"];
                 };
             };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
         };
     };
-    getAsyncAPI: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Top artists returned successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": string;
-                };
-            };
-        };
-    };
-    getTrack: {
+    getAlbum: {
         parameters: {
             query?: never;
             header?: never;
@@ -1718,13 +1738,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Track details */
+            /** @description Album details */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Track"];
+                    "application/json": components["schemas"]["Album"];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -1759,178 +1779,62 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    getAlbum: {
+    addMessageReaction: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                conversation_id: string;
+                message_id: number;
+                emoji: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Album details */
+            /** @description Reaction added successfully. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Album"];
+                    "application/json": components["schemas"]["MessageReaction"];
                 };
             };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            404: components["responses"]["NotFound"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getListenSessions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ListensSessionsRequest"];
-            };
-        };
-        responses: {
-            /** @description Listen sessions */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SessionsResponse"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    getUserListenSessions: {
+    deleteMessageReaction: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                handle: string;
+                conversation_id: string;
+                message_id: number;
+                emoji: string;
             };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ListensSessionsRequest"];
-            };
-        };
-        responses: {
-            /** @description Listen sessions */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SessionsResponse"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            403: components["responses"]["Forbidden"];
-            404: components["responses"]["NotFound"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getLibraryMetadata: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Library metadata */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LibraryMetadataResponse"];
-                };
-            };
+            204: components["responses"]["NoContent"];
             401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    addToLibrary: {
+    readMessage: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LibraryAddRequest"];
-            };
-        };
-        responses: {
-            /** @description Items added */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LibraryAddResponse"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    updateLibrary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LibraryUpdateRequest"];
-            };
-        };
-        responses: {
-            /** @description Items updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LibraryUpdateResponse"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    removeFromLibrary: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LibraryRemoveRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             204: components["responses"]["NoContent"];
             400: components["responses"]["BadRequest"];
@@ -1938,554 +1842,238 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    setActivity: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SetActivityItem"][];
-            };
-        };
-        responses: {
-            204: components["responses"]["NoContent"];
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    searchTracksViaDetails: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SearchTracksRequest"];
-            };
-        };
-        responses: {
-            /** @description Search results */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SearchTrackResult"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getCalendarListens: {
+    getMessageThread: {
         parameters: {
             query?: {
-                /** @description The requesting user's ID (the viewer). Required if target user's visibility is not public. */
-                auth_id?: string;
-                /** @description HMAC token for authentication. Required if target user's visibility is not public. */
-                token?: string;
+                before?: number;
+                limit?: number;
             };
             header?: never;
             path: {
-                /** @description The user whose calendar to retrieve */
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Thread retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+                message_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Message edited successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getMessages: {
+        parameters: {
+            query?: {
+                before?: number;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Messages retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    sendMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body: string;
+                    /** Format: uint64 */
+                    parent_id?: number | null;
+                };
+            };
+        };
+        responses: {
+            /** @description Message sent successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteGroupRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
                 user_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Calendar ICS file */
-            200: {
-                headers: {
-                    "Content-Disposition": string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/calendar; charset=utf-8": string;
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            403: components["responses"]["Forbidden"];
-            404: components["responses"]["NotFound"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    validateToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
             204: components["responses"]["NoContent"];
-            401: components["responses"]["Unauthorized"];
-        };
-    };
-    register: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RegisterRequest"];
-            };
-        };
-        responses: {
-            /** @description User created successfully */
-            200: {
-                headers: {
-                    /** @description Redirect location */
-                    "Hx-Location"?: string;
-                    /** @description Authentication cookie */
-                    "Set-Cookie"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["User"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            409: components["responses"]["Conflict"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    signIn: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SignInRequest"];
-            };
-        };
-        responses: {
-            /** @description Sign in successful */
-            200: {
-                headers: {
-                    /** @description Redirect location */
-                    "Hx-Location"?: string;
-                    /** @description Authentication cookie */
-                    "Set-Cookie"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["User"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    updateUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateUserRequest"];
-            };
-        };
-        responses: {
-            204: components["responses"]["NoContent"];
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            409: components["responses"]["Conflict"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getUserDetails: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description User details */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["User"];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-        };
-    };
-    getUserIntegrations: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description User integration details */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["IntegrationMetadata"][];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    joinFreeBeta: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Beta joined successfully */
-            204: {
-                headers: {
-                    /** @description Redirect location */
-                    "Hx-Location"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    addFriend: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FriendActionRequest"];
-            };
-        };
-        responses: {
-            /** @description Friend relation created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Relation"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    removeFriend: {
+    UpdateGroupRoles: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                group_id: string;
+                user_id: string;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
                 "application/json": {
-                    /** Format: uuid */
-                    id: string;
+                    role: components["schemas"]["GroupRoleType"];
                 };
             };
         };
         responses: {
-            204: components["responses"]["NoContent"];
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            403: components["responses"]["Forbidden"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    setBlocked: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BlockedActionRequest"];
+            /** @description Group roles updated successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRole"];
+                };
             };
-        };
-        responses: {
-            204: components["responses"]["NoContent"];
             400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            403: components["responses"]["Forbidden"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    setBestFriend: {
+    getGroupRoles: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BestFriendActionRequest"];
+            path: {
+                group_id: string;
             };
-        };
-        responses: {
-            204: components["responses"]["NoContent"];
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            403: components["responses"]["Forbidden"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getRelations: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description User relations */
+            /** @description Group roles retrieved successfully. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Relation"][];
+                    "application/json": components["schemas"]["GroupRole"][];
                 };
             };
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    getRelationsDetails: {
+    AddGroupRoles: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Relations details retrieved successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["RelationDetails"][];
-                };
+            path: {
+                group_id: string;
             };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getUserListensByDays: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["DateTimeRange"];
+                "application/json": components["schemas"]["GroupRole"][];
             };
         };
         responses: {
-            /** @description Successfully retrieved listening information by day */
+            /** @description Group roles added successfully. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DayListenDetails"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getUserTopArtistPlayStats: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["ArtistPlayStatisticsQuery"];
-            };
-        };
-        responses: {
-            /** @description Top artist plays returned successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TopArtistPlayStats"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getGlobalTopAlbums: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["StatisticsQuery"];
-            };
-        };
-        responses: {
-            /** @description Top albums returned successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TopAlbumEntry"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getGlobalTopTracks: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["StatisticsQuery"];
-            };
-        };
-        responses: {
-            /** @description Top tracks returned successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TopTrackEntry"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getGlobalTopArtists: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["StatisticsQuery"];
-            };
-        };
-        responses: {
-            /** @description Top artists returned successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TopArtistEntry"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getGroups: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Groups retrieved successfully. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["GroupDetails"][];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    createGroup: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateGroupRequest"];
-            };
-        };
-        responses: {
-            /** @description Group created successfully. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Group"];
+                    "application/json": components["schemas"]["GroupRole"][];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -2560,305 +2148,717 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    getGroupRoles: {
+    getGroups: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                group_id: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Group roles retrieved successfully. */
+            /** @description Groups retrieved successfully. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GroupRole"][];
+                    "application/json": components["schemas"]["GroupDetails"][];
                 };
             };
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    AddGroupRoles: {
+    createGroup: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                group_id: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GroupRole"][];
+                "application/json": components["schemas"]["CreateGroupRequest"];
             };
         };
         responses: {
-            /** @description Group roles added successfully. */
+            /** @description Group created successfully. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GroupRole"][];
+                    "application/json": components["schemas"]["Group"];
                 };
             };
             400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    deleteGroupRole: {
+    joinFreeBeta: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Beta joined successfully */
+            204: {
+                headers: {
+                    /** @description Redirect location */
+                    "Hx-Location"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    addToLibrary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryAddRequest"];
+            };
+        };
+        responses: {
+            /** @description Items added */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryAddResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getLibraryMetadata: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Library metadata */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryMetadataResponse"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    removeFromLibrary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryRemoveRequest"];
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    updateLibrary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Items updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryUpdateResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getListenSessions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListensSessionsRequest"];
+            };
+        };
+        responses: {
+            /** @description Listen sessions */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterRequest"];
+            };
+        };
+        responses: {
+            /** @description User created successfully */
+            200: {
+                headers: {
+                    /** @description Redirect location */
+                    "Hx-Location"?: string;
+                    /** @description Authentication cookie */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getRelationsDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Relations details retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RelationDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getRelations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User relations */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Relation"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    removeFriend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    id: string;
+                };
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    searchTracksViaDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SearchTracksRequest"];
+            };
+        };
+        responses: {
+            /** @description Search results */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchTrackResult"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    setActivity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetActivityItem"][];
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    setBestFriend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BestFriendActionRequest"];
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    setBlocked: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BlockedActionRequest"];
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    signIn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SignInRequest"];
+            };
+        };
+        responses: {
+            /** @description Sign in successful */
+            200: {
+                headers: {
+                    /** @description Redirect location */
+                    "Hx-Location"?: string;
+                    /** @description Authentication cookie */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getGlobalTopAlbums: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
+        responses: {
+            /** @description Top albums returned successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopAlbumEntry"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getGlobalTopArtists: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
+        responses: {
+            /** @description Top artists returned successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopArtistEntry"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getGlobalTopTracks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
+        responses: {
+            /** @description Top tracks returned successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopTrackEntry"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserListensByDays: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DateTimeRange"];
+            };
+        };
+        responses: {
+            /** @description Successfully retrieved listening information by day */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayListenDetails"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserTopArtistPlayStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ArtistPlayStatisticsQuery"];
+            };
+        };
+        responses: {
+            /** @description Top artist plays returned successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopArtistPlayStats"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getTrack: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                group_id: string;
-                user_id: string;
+                id: string;
             };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Track details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Track"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    getUserIntegrations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User integration details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IntegrationMetadata"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    updateUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserRequest"];
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    validateToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
             204: components["responses"]["NoContent"];
             401: components["responses"]["Unauthorized"];
+        };
+    };
+    getCalendarListens: {
+        parameters: {
+            query?: {
+                /** @description The requesting user's ID (the viewer). Required if target user's visibility is not public. */
+                auth_id?: string;
+                /** @description HMAC token for authentication. Required if target user's visibility is not public. */
+                token?: string;
+            };
+            header?: never;
+            path: {
+                /** @description The user whose calendar to retrieve */
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Calendar ICS file */
+            200: {
+                headers: {
+                    "Content-Disposition": string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/calendar; charset=utf-8": string;
+                };
+            };
+            400: components["responses"]["BadRequest"];
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    UpdateGroupRoles: {
+    getAsyncAPI: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                group_id: string;
-                user_id: string;
-            };
+            path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": {
-                    role: components["schemas"]["GroupRoleType"];
-                };
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Group roles updated successfully. */
+            /** @description Top artists returned successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GroupRole"];
+                    "text/plain": string;
                 };
             };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
         };
     };
-    getMessages: {
+    getOpenAPI: {
         parameters: {
-            query?: {
-                before?: number;
-                limit?: number;
-            };
+            query?: never;
             header?: never;
-            path: {
-                conversation_id: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Messages retrieved successfully. */
+            /** @description Top artists returned successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MessageDetails"][];
+                    "text/plain": string;
                 };
             };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    sendMessage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                conversation_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": {
-                    body: string;
-                    /** Format: uint64 */
-                    parent_id?: number | null;
-                };
-            };
-        };
-        responses: {
-            /** @description Message sent successfully. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Message"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    deleteMessage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                conversation_id: string;
-                message_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: components["responses"]["NoContent"];
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    editMessage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                conversation_id: string;
-                message_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": {
-                    body?: string;
-                };
-            };
-        };
-        responses: {
-            /** @description Message edited successfully. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Message"];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    readMessage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                conversation_id: string;
-                message_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: components["responses"]["NoContent"];
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    getMessageThread: {
-        parameters: {
-            query?: {
-                before?: number;
-                limit?: number;
-            };
-            header?: never;
-            path: {
-                conversation_id: string;
-                message_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Thread retrieved successfully. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MessageDetails"][];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            404: components["responses"]["NotFound"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    addMessageReaction: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                conversation_id: string;
-                message_id: number;
-                emoji: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Reaction added successfully. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["MessageReaction"];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    deleteMessageReaction: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                conversation_id: string;
-                message_id: number;
-                emoji: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: components["responses"]["NoContent"];
-            401: components["responses"]["Unauthorized"];
-            404: components["responses"]["NotFound"];
-            500: components["responses"]["InternalServerError"];
         };
     };
 }

@@ -1,0 +1,23 @@
+GroupRole:
+  type: object
+  required:
+    - group_id
+    - user_id
+    - role
+    - created_at
+  properties:
+    group_id:
+      type: string
+      format: uuid
+    user_id:
+      type: string
+      format: uuid
+    role:
+      $ref: "#/components/schemas/GroupRoleType"
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

@@ -1,0 +1,23 @@
+LibraryAddResponse:
+  type: object
+  properties:
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddResult"
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddResult"
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddResult"
+    listens:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddResult"
+    errors:
+      type: array
+      items:
+        type: string

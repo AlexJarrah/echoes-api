@@ -1,0 +1,36 @@
+LibraryAddRequest:
+  type: object
+  minProperties: 1
+  properties:
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddTrack"
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddArtist"
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddAlbum"
+    listens:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddListen"
+    track_artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddKV"
+    album_artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddKV"
+    listen_tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddKV"
+    album_tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/LibraryAddAlbumTrack"

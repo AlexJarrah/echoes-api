@@ -1,0 +1,11 @@
+BestFriendActionRequest:
+  type: object
+  required:
+    - id
+    - best_friend
+  properties:
+    id:
+      type: string
+      format: uuid
+    best_friend:
+      type: boolean

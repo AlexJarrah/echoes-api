@@ -1,0 +1,29 @@
+Group:
+  type: object
+  required:
+    - group_id
+    - conversation_id
+    - name
+    - visibility
+    - created_at
+  properties:
+    group_id:
+      type: string
+      format: uuid
+    conversation_id:
+      type: string
+      format: uuid
+    name:
+      type: string
+    description:
+      type: string
+      nullable: true
+    visibility:
+      $ref: "#/components/schemas/Visibility"
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

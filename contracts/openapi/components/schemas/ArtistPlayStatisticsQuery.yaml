@@ -1,0 +1,33 @@
+ArtistPlayStatisticsQuery:
+  type: object
+  properties:
+    start:
+      type: string
+      format: date-time
+      description: Start timestamp for the time range, defaults to one year ago.
+    end:
+      type: string
+      format: date-time
+      description: Start timestamp for the time range, defaults to current time.
+    artist_limit:
+      type: integer
+      format: uint32
+      default: 10
+      maximum: 30
+      description: Maximum number of artists to return
+    track_limit:
+      type: integer
+      format: uint32
+      default: 3
+      maximum: 10
+      description: Maximum number of tracks per artist to return
+    album_limit:
+      type: integer
+      format: uint32
+      default: 1
+      maximum: 10
+      description: Maximum number of albums per artist to return
+    artist_offset:
+      type: integer
+      format: uint32
+      default: 0

@@ -1,0 +1,11 @@
+/openapi.yaml:
+    get:
+      summary: Get OpenAPI schema.
+      operationId: getOpenAPI
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string

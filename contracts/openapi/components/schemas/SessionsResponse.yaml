@@ -1,0 +1,28 @@
+SessionsResponse:
+  type: object
+  required:
+    - days
+    - tracks
+    - albums
+    - artists
+  properties:
+    days:
+      type: array
+      items:
+        $ref: "#/components/schemas/SessionDay"
+      description: Days containing sessions, ordered newest first.
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/SessionTrack"
+      description: Deduplicated track metadata referenced by sessions.
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/SessionAlbum"
+      description: Deduplicated album metadata referenced by sessions.
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/SessionArtist"
+      description: Deduplicated artist metadata referenced by sessions.

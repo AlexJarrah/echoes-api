@@ -1,0 +1,13 @@
+SessionArtist:
+  type: object
+  required:
+    - id
+    - name
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: Artist UUID.
+    name:
+      type: string
+      description: Artist name.

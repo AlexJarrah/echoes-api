@@ -47,11 +47,11 @@ func OpenReceiveActivityWs(
 type ReceiveActivityChannelWs interface {
 	Close() error
 
-	SealServerMessage(ws.EnvelopeWriter, channels.EventsEnvelopeMarshalerWs) error
-	PublishServerMessage(context.Context, channels.EventsEnvelopeMarshalerWs) error
+	SealActivity(ws.EnvelopeWriter, channels.EventsEnvelopeMarshalerWs) error
+	PublishActivity(context.Context, channels.EventsEnvelopeMarshalerWs) error
 
-	UnsealServerMessage(ws.EnvelopeReader, channels.EventsEnvelopeUnmarshalerWs) error
-	SubscribeServerMessage(context.Context, func(messages.ServerMessageReceiver)) error
+	UnsealActivity(ws.EnvelopeReader, channels.EventsEnvelopeUnmarshalerWs) error
+	SubscribeActivity(context.Context, func(messages.ActivityReceiver)) error
 }
 
 type ReceiveActivityWs struct {
@@ -62,16 +62,16 @@ func (c ReceiveActivityWs) Close() error {
 	return c.Channel.Close()
 }
 
-func (o ReceiveActivityWs) UnsealServerMessage(
+func (o ReceiveActivityWs) UnsealActivity(
 	envelope ws.EnvelopeReader,
 	message channels.EventsEnvelopeUnmarshalerWs,
 ) error {
-	return o.Channel.UnsealServerMessage(envelope, message)
+	return o.Channel.UnsealActivity(envelope, message)
 }
 
-func (o ReceiveActivityWs) SubscribeServerMessage(
+func (o ReceiveActivityWs) SubscribeActivity(
 	ctx context.Context,
-	cb func(message messages.ServerMessageReceiver),
+	cb func(message messages.ActivityReceiver),
 ) (err error) {
-	return o.Channel.SubscribeServerMessage(ctx, cb)
+	return o.Channel.SubscribeActivity(ctx, cb)
 }

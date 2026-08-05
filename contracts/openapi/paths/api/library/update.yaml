@@ -1,0 +1,27 @@
+/api/library/update:
+    post:
+      summary: Update items in library
+      operationId: updateLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryUpdateRequest"
+      responses:
+        "200":
+          description: Items updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryUpdateResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

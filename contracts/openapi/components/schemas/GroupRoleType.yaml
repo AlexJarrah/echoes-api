@@ -1,0 +1,8 @@
+GroupRoleType:
+  type: integer
+  format: uint8
+  enum: [0, 1, 2]
+  description: |
+    0=Owner
+    1=Moderator
+    2=Member

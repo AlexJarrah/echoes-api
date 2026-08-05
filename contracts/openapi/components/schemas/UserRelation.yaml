@@ -1,0 +1,11 @@
+UserRelation:
+  type: integer
+  format: uint8
+  enum: [0, 1, 2, 3, 4, 5]
+  description: |
+    0=Friend: users are friends
+    1=BestFriend: source user set target user as a best friend
+    2=OutgoingRequest: source user has an outgoing friend request
+    3=IncomingRequest: source user has an incoming friend request
+    4=BlockSent: source user has blocked target user
+    5=BlockReceived: target user has blocked source user

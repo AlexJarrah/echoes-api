@@ -1,0 +1,25 @@
+LibraryMetadataTrack:
+  type: object
+  required:
+    - id
+    - name
+  properties:
+    id:
+      type: string
+      format: uuid
+    name:
+      type: string
+    seconds:
+      type: integer
+      format: uint16
+      nullable: true
+    album_ids:
+      type: array
+      items:
+        type: string
+        format: uuid
+    artist_ids:
+      type: array
+      items:
+        type: string
+        format: uuid

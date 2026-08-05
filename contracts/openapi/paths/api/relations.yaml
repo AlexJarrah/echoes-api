@@ -1,0 +1,21 @@
+/api/relations:
+    get:
+      summary: Get user relations
+      operationId: getRelations
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: User relations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Relation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"

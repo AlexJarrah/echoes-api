@@ -1,0 +1,19 @@
+MessageReaction:
+  type: object
+  required:
+    - user_id
+    - message_id
+    - emoji
+    - created_at
+  properties:
+    user_id:
+      type: string
+      format: uuid
+    message_id:
+      type: integer
+      format: uint64
+    emoji:
+      type: string
+    created_at:
+      type: string
+      format: date-time

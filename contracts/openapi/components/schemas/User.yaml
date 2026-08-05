@@ -1,0 +1,33 @@
+User:
+  type: object
+  required:
+    - user_id
+    - handle
+    - name
+    - email
+    - visibility
+    - subscription_expiration
+    - created_at
+  properties:
+    user_id:
+      type: string
+      format: uuid
+    handle:
+      type: string
+    name:
+      type: string
+    email:
+      type: string
+      format: email
+    visibility:
+      $ref: "#/components/schemas/Visibility"
+    subscription_expiration:
+      type: string
+      format: date-time
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

@@ -1,0 +1,20 @@
+ArtistPlayStats:
+  type: object
+  required:
+    - artist
+    - assets
+    - play_count
+    - play_duration
+  properties:
+    artist:
+      $ref: "#/components/schemas/Artist"
+    assets:
+      type: array
+      items:
+        $ref: "#/components/schemas/ArtistAsset"
+    play_count:
+      type: integer
+      format: uint64
+    play_duration:
+      type: integer
+      format: uint64

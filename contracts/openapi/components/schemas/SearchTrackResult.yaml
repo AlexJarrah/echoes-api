@@ -1,0 +1,12 @@
+SearchTrackResult:
+  allOf:
+    - $ref: "#/components/schemas/Track"
+    - type: object
+      required:
+        - confidence
+      properties:
+        confidence:
+          type: integer
+          description: Confidence score (0-100)
+          minimum: 0
+          maximum: 100
