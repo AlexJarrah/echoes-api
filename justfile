@@ -15,15 +15,16 @@ asyncapi_bundle := absolute_path(bundles / "asyncapi.yaml")
 _default:
     @just --list --unsorted
 
-# Generate all bindings
+# Generate all bindings & documentation
 generate: clean schemas bundle docs go ts
 
+# Generate OpenAPI schema
 schemas:
   python3 {{generation / "schemas/generate_openapi.py"}} \
     "$(dirname {{openapi_schema}})/openapi_template.yaml" \
     {{openapi_schema}}
 
-# Validate OpenAPI & AsyncAPI contracts
+# Validate API contracts
 validate:
     redocly lint {{openapi_schema}}
     asyncapi validate {{asyncapi_schema}}
@@ -51,6 +52,7 @@ docs: bundle
 # Generate Go bindings
 go: go-openapi go-asyncapi go-schemas
 
+# Generate Go OpenAPI bindings
 go-openapi: bundle
     mkdir -p {{bindings}}/go/openapi
     (cd {{bindings}}/go && go install tool)
@@ -60,6 +62,7 @@ go-openapi: bundle
          --config {{generation}}/go/ogen.yml \
          {{openapi_bundle}}
 
+# Generate Go AsyncAPI bindings
 go-asyncapi: bundle
     mkdir -p {{bindings}}/go/asyncapi
     (cd {{bindings}}/go && go install tool)
@@ -67,6 +70,7 @@ go-asyncapi: bundle
       --target-dir {{bindings}}/go/asyncapi/ \
       -M gitlab.com/AlexJarrah/echoes-api/bindings/go/asyncapi
 
+# Generate Go schema constants
 go-schemas: bundle
     mkdir -p {{bindings}}/go/schemas
     printf 'package schemas\n\nconst OpenAPI = `%s`\n' \
@@ -80,21 +84,26 @@ go-schemas: bundle
 # Generate TypeScript bindings
 ts: ts-openapi ts-asyncapi
 
+# Generate TypeScript OpenAPI bindings
 ts-openapi: ts-openapi-types ts-openapi-client
 
+# Generate TypeScript AsyncAPI bindings
 ts-asyncapi: ts-asyncapi-types
 
+# Generate TypeScript OpenAPI types
 ts-openapi-types: bundle
     mkdir -p {{bindings}}/ts/openapi
     npx openapi-typescript {{openapi_bundle}} \
         -o {{bindings}}/ts/openapi/openapi-typescript.d.ts
 
+# Generate TypeScript OpenAPI client
 ts-openapi-client: bundle
     mkdir -p {{bindings}}/ts/openapi/client
     npx @hey-api/openapi-ts -i {{openapi_bundle}} \
                             -o {{bindings}}/ts/openapi/client \
                             --plugins "@hey-api/client-fetch"
 
+# Generate TypeScript AsyncAPI types
 ts-asyncapi-types: bundle
     mkdir -p {{bindings}}/ts/asyncapi/types
     npx @asyncapi/cli generate models typescript \

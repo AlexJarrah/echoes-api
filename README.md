@@ -1,14 +1,14 @@
 # Echoes API
 
-API contracts & generated bindings.
+Echoes API contracts, documentation, and generated bindings.
 
 ## Structure
 
 ```
-bindings/    # Generated bindings
-contracts/   # OpenAPI & AsyncAPI schemas
-docs/        # Generated documentation
-generation/  # Templatess & configs
+bindings/    # Language bindings
+contracts/   # API contracts
+docs/        # ocumentation
+generation/  # Generation utilities
 ```
 
 ## Requirements
@@ -22,8 +22,22 @@ generation/  # Templatess & configs
 ## Usage
 
 ```bash
-just           # List all actions
-just generate  # Generate all bindings and docs
-just validate  # Validate API contracts
-just clean     # Remove generated files
+$ just
+Available recipes:
+    generate          # Generate all bindings & documentation
+    schemas           # Generate OpenAPI schema
+    validate          # Validate API contracts
+    bundle            # Bundle split contracts
+    clean             # Remove generated bindings
+    docs              # Generate documentation
+    go                # Generate Go bindings
+    go-openapi        # Generate Go OpenAPI bindings
+    go-asyncapi       # Generate Go AsyncAPI bindings
+    go-schemas        # Generate Go schema constants
+    ts                # Generate TypeScript bindings
+    ts-openapi        # Generate TypeScript OpenAPI bindings
+    ts-asyncapi       # Generate TypeScript AsyncAPI bindings
+    ts-openapi-types  # Generate TypeScript OpenAPI types
+    ts-openapi-client # Generate TypeScript OpenAPI client
+    ts-asyncapi-types # Generate TypeScript AsyncAPI types
 ```
