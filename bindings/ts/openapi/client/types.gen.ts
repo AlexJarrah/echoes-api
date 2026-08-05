@@ -168,7 +168,9 @@ export type ErrorResponse = {
 };
 
 /**
- * Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user.
+ * Request body for friend actions. At least one of 'id' or 'handle'
+ * must be provided to identify the target user.
+ *
  */
 export type FriendActionRequest = {
     /**
@@ -323,11 +325,15 @@ export type LibraryAddResult = {
      */
     id: string;
     /**
-     * Reference ID provided in the request, echoed back for client correlation.
+     * Reference ID provided in the request, echoed back for client
+     * correlation.
+     *
      */
     reference_id?: number;
     /**
-     * True if a new entity was created, false if an existing entity was resolved.
+     * True if a new entity was created, false if an existing entity was
+     * resolved.
+     *
      */
     created: boolean;
 };
@@ -476,7 +482,9 @@ export type RegisterRequest = {
     name: string;
     email: string;
     /**
-     * 8+ characters, must contain uppercase, lowercase, digit, and special character
+     * 8+ characters, must contain uppercase, lowercase, digit, and
+     * special character
+     *
      */
     password: string;
 };

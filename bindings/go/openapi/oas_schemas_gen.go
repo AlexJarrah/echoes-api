@@ -1085,8 +1085,8 @@ func (*ForbiddenTextPlain) removeFriendRes()          {}
 func (*ForbiddenTextPlain) setBestFriendRes()         {}
 func (*ForbiddenTextPlain) setBlockedRes()            {}
 
-// Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the
-// target user.
+// Request body for friend actions. At least one of 'id' or 'handle'
+// must be provided to identify the target user.
 // Ref: #/components/schemas/FriendActionRequest
 type FriendActionRequest struct {
 	// Target user's UUID. Optional if 'handle' is provided.
@@ -2231,9 +2231,11 @@ func (*LibraryAddResponse) addToLibraryRes() {}
 type LibraryAddResult struct {
 	// UUID of the created or resolved entity.
 	ID uuid.UUID `json:"id"`
-	// Reference ID provided in the request, echoed back for client correlation.
+	// Reference ID provided in the request, echoed back for client
+	// correlation.
 	ReferenceID OptInt64 `json:"reference_id"`
-	// True if a new entity was created, false if an existing entity was resolved.
+	// True if a new entity was created, false if an existing entity was
+	// resolved.
 	Created bool `json:"created"`
 }
 
@@ -4285,7 +4287,8 @@ type RegisterRequest struct {
 	// 2+ Unicode letters, spaces allowed.
 	Name  string `json:"name"`
 	Email string `json:"email"`
-	// 8+ characters, must contain uppercase, lowercase, digit, and special character.
+	// 8+ characters, must contain uppercase, lowercase, digit, and
+	// special character.
 	Password string `json:"password"`
 }
 

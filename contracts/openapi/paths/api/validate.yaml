@@ -1,13 +1,13 @@
 /api/validate:
-    get:
-      summary: Validate authentication token
-      operationId: validateToken
-      tags:
-        - Authentication
-      security:
-        - CookieAuth: []
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+  get:
+    summary: Validate authentication token
+    operationId: validateToken
+    tags:
+      - Authentication
+    security:
+      - CookieAuth: []
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "401":
+        $ref: "#/components/responses/Unauthorized"

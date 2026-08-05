@@ -1,25 +1,25 @@
 /api/set-activity:
-    post:
-      summary: Set current activity
-      operationId: setActivity
-      tags:
-        - Activity
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/SetActivityItem"
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+  post:
+    summary: Set current activity
+    operationId: setActivity
+    tags:
+      - Activity
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/SetActivityItem"
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

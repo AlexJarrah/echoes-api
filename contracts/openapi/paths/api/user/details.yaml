@@ -1,17 +1,17 @@
 /api/user/details:
-    get:
-      summary: Get current user details
-      operationId: getUserDetails
-      tags:
-        - User
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: User details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+  get:
+    summary: Get current user details
+    operationId: getUserDetails
+    tags:
+      - User
+    security:
+      - CookieAuth: []
+    responses:
+      "200":
+        description: User details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      "401":
+        $ref: "#/components/responses/Unauthorized"

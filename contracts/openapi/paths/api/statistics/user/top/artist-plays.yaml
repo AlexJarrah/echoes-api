@@ -1,29 +1,29 @@
 /api/statistics/user/top/artist-plays:
-    post:
-      summary: Get user's top artists with each artist's top tracks and albums.
-      operationId: getUserTopArtistPlayStats
-      tags:
-        - Statistics
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: false
+  post:
+    summary: Get user's top artists with each artist's top tracks and albums.
+    operationId: getUserTopArtistPlayStats
+    tags:
+      - Statistics
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ArtistPlayStatisticsQuery"
+    responses:
+      "200":
+        description: Top artist plays returned successfully
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ArtistPlayStatisticsQuery"
-      responses:
-        "200":
-          description: Top artist plays returned successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TopArtistPlayStats"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+              type: array
+              items:
+                $ref: "#/components/schemas/TopArtistPlayStats"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

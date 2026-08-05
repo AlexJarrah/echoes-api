@@ -132,9 +132,11 @@ channels:
                           description: Album cover URL.
                         active:
                           type: boolean
-                          description: >-
+                          description: >
                             Whether the user is currently playing this track
-                            (true) or has stopped/paused (false)..
+                            (true) or has
+
+                            stopped/paused (false)..
                         position:
                           type: integer
                           format: int64
@@ -285,9 +287,11 @@ channels:
                           description: Album cover URL.
                         active:
                           type: boolean
-                          description: >-
+                          description: >
                             Whether the user is currently playing this track
-                            (true) or has stopped/paused (false)..
+                            (true) or has
+
+                            stopped/paused (false)..
                         position:
                           type: integer
                           format: int64
@@ -481,9 +485,11 @@ components:
                         description: Album cover URL.
                       active:
                         type: boolean
-                        description: >-
+                        description: >
                           Whether the user is currently playing this track
-                          (true) or has stopped/paused (false)..
+                          (true) or has
+
+                          stopped/paused (false)..
                       position:
                         type: integer
                         format: int64
@@ -643,9 +649,11 @@ components:
                       description: Album cover URL.
                     active:
                       type: boolean
-                      description: >-
+                      description: >
                         Whether the user is currently playing this track (true)
-                        or has stopped/paused (false)..
+                        or has
+
+                        stopped/paused (false)..
                     position:
                       type: integer
                       format: int64
@@ -743,7 +751,7 @@ components:
               description: Album cover URL.
             active:
               type: boolean
-              description: >-
+              description: |
                 Whether the user is currently playing this track (true) or has
                 stopped/paused (false)..
             position:
@@ -829,7 +837,7 @@ components:
           description: Album cover URL.
         active:
           type: boolean
-          description: >-
+          description: |
             Whether the user is currently playing this track (true) or has
             stopped/paused (false)..
         position:

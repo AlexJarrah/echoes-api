@@ -1834,7 +1834,9 @@ components:
           description: Human-readable error message
     FriendActionRequest:
       type: object
-      description: Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user.
+      description: |
+        Request body for friend actions. At least one of 'id' or 'handle'
+        must be provided to identify the target user.
       properties:
         id:
           type: string
@@ -2148,10 +2150,14 @@ components:
         reference_id:
           type: integer
           format: int64
-          description: Reference ID provided in the request, echoed back for client correlation.
+          description: |
+            Reference ID provided in the request, echoed back for client
+            correlation.
         created:
           type: boolean
-          description: True if a new entity was created, false if an existing entity was resolved.
+          description: |
+            True if a new entity was created, false if an existing entity was
+            resolved.
     LibraryAddTrack:
       type: object
       required:
@@ -2481,7 +2487,9 @@ components:
         password:
           type: string
           minLength: 8
-          description: 8+ characters, must contain uppercase, lowercase, digit, and special character
+          description: |
+            8+ characters, must contain uppercase, lowercase, digit, and
+            special character
     Relation:
       type: object
       required:

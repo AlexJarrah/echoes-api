@@ -910,7 +910,10 @@ export interface components {
             /** @description Human-readable error message */
             message: string;
         };
-        /** @description Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the target user. */
+        /**
+         * @description Request body for friend actions. At least one of 'id' or 'handle'
+         *     must be provided to identify the target user.
+         */
         FriendActionRequest: {
             /**
              * Format: uuid
@@ -1075,10 +1078,14 @@ export interface components {
             id: string;
             /**
              * Format: int64
-             * @description Reference ID provided in the request, echoed back for client correlation.
+             * @description Reference ID provided in the request, echoed back for client
+             *     correlation.
              */
             reference_id?: number;
-            /** @description True if a new entity was created, false if an existing entity was resolved. */
+            /**
+             * @description True if a new entity was created, false if an existing entity was
+             *     resolved.
+             */
             created: boolean;
         };
         LibraryAddTrack: {
@@ -1245,7 +1252,10 @@ export interface components {
             name: string;
             /** Format: email */
             email: string;
-            /** @description 8+ characters, must contain uppercase, lowercase, digit, and special character */
+            /**
+             * @description 8+ characters, must contain uppercase, lowercase, digit, and
+             *     special character
+             */
             password: string;
         };
         Relation: {

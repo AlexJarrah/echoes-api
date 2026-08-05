@@ -479,7 +479,7 @@ components:
 
     FriendActionRequest:
       type: object
-      description:
+      description: |
         Request body for friend actions. At least one of 'id' or 'handle'
         must be provided to identify the target user.
       properties:
@@ -806,12 +806,12 @@ components:
         reference_id:
           type: integer
           format: int64
-          description:
+          description: |
             Reference ID provided in the request, echoed back for client
             correlation.
         created:
           type: boolean
-          description:
+          description: |
             True if a new entity was created, false if an existing entity was
             resolved.
 
@@ -1155,7 +1155,7 @@ components:
         password:
           type: string
           minLength: 8
-          description:
+          description: |
             8+ characters, must contain uppercase, lowercase, digit, and
             special character
 
@@ -1810,1437 +1810,1437 @@ components:
 
 paths:
   /api/@{handle}/listens/sessions:
-      post:
-        summary: Get listen sessions for another user
-        operationId: getUserListenSessions
-        tags:
-          - Listens
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: handle
-            in: path
-            required: true
-            schema:
-              type: string
-        requestBody:
+    post:
+      summary: Get listen sessions for another user
+      operationId: getUserListenSessions
+      tags:
+        - Listens
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: handle
+          in: path
           required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListensSessionsRequest"
+      responses:
+        "200":
+          description: Listen sessions
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListensSessionsRequest"
-        responses:
-          "200":
-            description: Listen sessions
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/SessionsResponse"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                $ref: "#/components/schemas/SessionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/add-friend:
-      post:
-        summary: Add a friend
-        operationId: addFriend
-        tags:
-          - Relations
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
+    post:
+      summary: Add a friend
+      operationId: addFriend
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FriendActionRequest"
+      responses:
+        "200":
+          description: Friend relation created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FriendActionRequest"
-        responses:
-          "200":
-            description: Friend relation created
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Relation"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                $ref: "#/components/schemas/Relation"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/albums/{id}:
-      get:
-        summary: Get album details
-        operationId: getAlbum
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "200":
-            description: Album details
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Album"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    get:
+      summary: Get album details
+      operationId: getAlbum
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Album details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/artists/{id}:
-      get:
-        summary: Get artist details
-        operationId: getArtist
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "200":
-            description: Artist details
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Artist"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    get:
+      summary: Get artist details
+      operationId: getArtist
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Artist details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artist"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
-      put:
-        summary: Add a reaction to a message.
-        operationId: addMessageReaction
-        tags:
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: message_id
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: uint64
-          - name: emoji
-            in: path
-            required: true
-            schema:
-              type: string
-        responses:
-          "200":
-            description: Reaction added successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/MessageReaction"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      delete:
-        summary: Remove a reaction from a message.
-        operationId: deleteMessageReaction
-        tags:
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: message_id
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: uint64
-          - name: emoji
-            in: path
-            required: true
-            schema:
-              type: string
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    put:
+      summary: Add a reaction to a message.
+      operationId: addMessageReaction
+      tags:
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: emoji
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Reaction added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageReaction"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Remove a reaction from a message.
+      operationId: deleteMessageReaction
+      tags:
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: emoji
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/conversations/{conversation_id}/messages/{message_id}/read:
-      post:
-        summary: Read a message.
-        operationId: readMessage
-        tags:
-          - Conversations
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: message_id
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: uint64
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Read a message.
+      operationId: readMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/conversations/{conversation_id}/messages/{message_id}/thread:
-      get:
-        summary: Get message thread.
-        operationId: getMessageThread
-        tags:
-          - Conversations
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: message_id
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: uint64
-          - name: before
-            in: query
-            schema:
-              type: integer
-              format: uint64
-          - name: limit
-            in: query
-            schema:
-              type: integer
-              default: 50
-              maximum: 100
-        responses:
-          "200":
-            description: Thread retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/MessageDetails"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    get:
+      summary: Get message thread.
+      operationId: getMessageThread
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        "200":
+          description: Thread retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/conversations/{conversation_id}/messages/{message_id}:
-      patch:
-        summary: Edit a message.
-        operationId: editMessage
-        tags:
-          - Conversations
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: message_id
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: uint64
-        requestBody:
+    patch:
+      summary: Edit a message.
+      operationId: editMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+      responses:
+        "200":
+          description: Message edited successfully.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  body:
-                    type: string
-        responses:
-          "200":
-            description: Message edited successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Message"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      delete:
-        summary: Delete a message.
-        operationId: deleteMessage
-        tags:
-          - Conversations
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: message_id
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: uint64
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                $ref: "#/components/schemas/Message"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete a message.
+      operationId: deleteMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/conversations/{conversation_id}/messages:
-      get:
-        summary: Get conversation messages.
-        operationId: getMessages
-        tags:
-          - Conversations
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: before
-            in: query
-            schema:
-              type: integer
-              format: uint64
-          - name: limit
-            in: query
-            schema:
-              type: integer
-              default: 50
-              maximum: 100
-        responses:
-          "200":
-            description: Messages retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/MessageDetails"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      post:
-        summary: Send a conversation message.
-        operationId: sendMessage
-        tags:
-          - Conversations
-          - Messages
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: conversation_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        requestBody:
+    get:
+      summary: Get conversation messages.
+      operationId: getMessages
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: before
+          in: query
+          schema:
+            type: integer
+            format: uint64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+      responses:
+        "200":
+          description: Messages retrieved successfully.
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - body
-                properties:
-                  body:
-                    type: string
-                  parent_id:
-                    type: integer
-                    format: uint64
-                    nullable: true
-        responses:
-          "200":
-            description: Message sent successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Message"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Send a conversation message.
+      operationId: sendMessage
+      tags:
+        - Conversations
+        - Messages
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: conversation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - body
+              properties:
+                body:
+                  type: string
+                parent_id:
+                  type: integer
+                  format: uint64
+                  nullable: true
+      responses:
+        "200":
+          description: Message sent successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/groups/{group_id}/roles/{user_id}:
-      patch:
-        summary: Update group roles.
-        operationId: UpdateGroupRoles
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: user_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        requestBody:
+    patch:
+      summary: Update group roles.
+      operationId: UpdateGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                role:
+                  $ref: "#/components/schemas/GroupRoleType"
+      responses:
+        "200":
+          description: Group roles updated successfully.
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - role
-                properties:
-                  role:
-                    $ref: "#/components/schemas/GroupRoleType"
-        responses:
-          "200":
-            description: Group roles updated successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/GroupRole"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      delete:
-        summary: Remove a user from a group.
-        operationId: deleteGroupRole
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-          - name: user_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                $ref: "#/components/schemas/GroupRole"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Remove a user from a group.
+      operationId: deleteGroupRole
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/groups/{group_id}/roles:
-      get:
-        summary: Get group roles.
-        operationId: getGroupRoles
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "200":
-            description: Group roles retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/GroupRole"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      post:
-        summary: Add group roles.
-        operationId: AddGroupRoles
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        requestBody:
+    get:
+      summary: Get group roles.
+      operationId: getGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Group roles retrieved successfully.
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/GroupRole"
-        responses:
-          "200":
-            description: Group roles added successfully.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/GroupRole"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/groups/{group_id}:
-      get:
-        summary: Get group.
-        operationId: getGroup
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Add group roles.
+      operationId: AddGroupRoles
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-              format: uuid
-        responses:
-          "200":
-            description: Group retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/GroupDetails"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      patch:
-        summary: Edit a group.
-        operationId: editGroup
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EditGroupRequest"
-        responses:
-          "200":
-            description: Group edited successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Group"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      delete:
-        summary: Delete a group if owned by the user.
-        operationId: deleteGroup
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: group_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/groups:
-      get:
-        summary: Get groups visible to the user.
-        operationId: getGroups
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        responses:
-          "200":
-            description: Groups retrieved successfully.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/GroupDetails"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-      post:
-        summary: Create a new group as owner.
-        operationId: createGroup
-        tags:
-          - Groups
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CreateGroupRequest"
-        responses:
-          "200":
-            description: Group created successfully.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Group"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/join-free-beta:
-      post:
-        summary: Join free beta
-        operationId: joinFreeBeta
-        tags:
-          - Subscription
-        security:
-          - CookieAuth: []
-        responses:
-          "204":
-            description: Beta joined successfully
-            headers:
-              Hx-Location:
-                schema:
-                  type: string
-                description: Redirect location
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/library/add:
-      post:
-        summary: Add items to library
-        operationId: addToLibrary
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LibraryAddRequest"
-        responses:
-          "200":
-            description: Items added
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/LibraryAddResponse"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/library/get-metadata:
-      get:
-        summary: Get library metadata
-        operationId: getLibraryMetadata
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        responses:
-          "200":
-            description: Library metadata
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/LibraryMetadataResponse"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/library/remove:
-      post:
-        summary: Remove items from library
-        operationId: removeFromLibrary
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LibraryRemoveRequest"
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/library/update:
-      post:
-        summary: Update items in library
-        operationId: updateLibrary
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LibraryUpdateRequest"
-        responses:
-          "200":
-            description: Items updated
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/LibraryUpdateResponse"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/listens/sessions:
-      post:
-        summary: Get recent listening sessions
-        operationId: getListenSessions
-        tags:
-          - Listens
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ListensSessionsRequest"
-        responses:
-          "200":
-            description: Listen sessions
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/SessionsResponse"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/register:
-      post:
-        summary: Register a new user
-        operationId: register
-        tags:
-          - Authentication
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RegisterRequest"
-        responses:
-          "200":
-            description: User created successfully
-            headers:
-              Hx-Location:
-                schema:
-                  type: string
-                description: Redirect location
-              Set-Cookie:
-                schema:
-                  type: string
-                description: Authentication cookie
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/User"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "409":
-            $ref: "#/components/responses/Conflict"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/relations/details:
-      get:
-        summary: Get user relations with visible activity details
-        operationId: getRelationsDetails
-        tags:
-          - Relations
-        security:
-          - CookieAuth: []
-        responses:
-          "200":
-            description: Relations details retrieved successfully
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/RelationDetails"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/relations:
-      get:
-        summary: Get user relations
-        operationId: getRelations
-        tags:
-          - Relations
-        security:
-          - CookieAuth: []
-        responses:
-          "200":
-            description: User relations
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/Relation"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/remove-friend:
-      post:
-        summary: Remove a friend
-        operationId: removeFriend
-        tags:
-          - Relations
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - id
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/search-tracks-via-details:
-      post:
-        summary: Search tracks via details
-        operationId: searchTracksViaDetails
-        tags:
-          - Search
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SearchTracksRequest"
-        responses:
-          "200":
-            description: Search results
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/SearchTrackResult"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/set-activity:
-      post:
-        summary: Set current activity
-        operationId: setActivity
-        tags:
-          - Activity
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
+              type: array
+              items:
+                $ref: "#/components/schemas/GroupRole"
+      responses:
+        "200":
+          description: Group roles added successfully.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/SetActivityItem"
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                  $ref: "#/components/schemas/GroupRole"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/groups/{group_id}:
+    get:
+      summary: Get group.
+      operationId: getGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Group retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    patch:
+      summary: Edit a group.
+      operationId: editGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditGroupRequest"
+      responses:
+        "200":
+          description: Group edited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      summary: Delete a group if owned by the user.
+      operationId: deleteGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/groups:
+    get:
+      summary: Get groups visible to the user.
+      operationId: getGroups
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Groups retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Create a new group as owner.
+      operationId: createGroup
+      tags:
+        - Groups
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGroupRequest"
+      responses:
+        "200":
+          description: Group created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/join-free-beta:
+    post:
+      summary: Join free beta
+      operationId: joinFreeBeta
+      tags:
+        - Subscription
+      security:
+        - CookieAuth: []
+      responses:
+        "204":
+          description: Beta joined successfully
+          headers:
+            Hx-Location:
+              schema:
+                type: string
+              description: Redirect location
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/library/add:
+    post:
+      summary: Add items to library
+      operationId: addToLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryAddRequest"
+      responses:
+        "200":
+          description: Items added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryAddResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/library/get-metadata:
+    get:
+      summary: Get library metadata
+      operationId: getLibraryMetadata
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Library metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryMetadataResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/library/remove:
+    post:
+      summary: Remove items from library
+      operationId: removeFromLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryRemoveRequest"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/library/update:
+    post:
+      summary: Update items in library
+      operationId: updateLibrary
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryUpdateRequest"
+      responses:
+        "200":
+          description: Items updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryUpdateResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/listens/sessions:
+    post:
+      summary: Get recent listening sessions
+      operationId: getListenSessions
+      tags:
+        - Listens
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListensSessionsRequest"
+      responses:
+        "200":
+          description: Listen sessions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/register:
+    post:
+      summary: Register a new user
+      operationId: register
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "200":
+          description: User created successfully
+          headers:
+            Hx-Location:
+              schema:
+                type: string
+              description: Redirect location
+            Set-Cookie:
+              schema:
+                type: string
+              description: Authentication cookie
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/relations/details:
+    get:
+      summary: Get user relations with visible activity details
+      operationId: getRelationsDetails
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: Relations details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RelationDetails"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/relations:
+    get:
+      summary: Get user relations
+      operationId: getRelations
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: User relations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Relation"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/remove-friend:
+    post:
+      summary: Remove a friend
+      operationId: removeFriend
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/search-tracks-via-details:
+    post:
+      summary: Search tracks via details
+      operationId: searchTracksViaDetails
+      tags:
+        - Search
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchTracksRequest"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchTrackResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/set-activity:
+    post:
+      summary: Set current activity
+      operationId: setActivity
+      tags:
+        - Activity
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/SetActivityItem"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/set-best-friend:
-      post:
-        summary: Set or unset best friend
-        operationId: setBestFriend
-        tags:
-          - Relations
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BestFriendActionRequest"
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Set or unset best friend
+      operationId: setBestFriend
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BestFriendActionRequest"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/set-blocked:
-      post:
-        summary: Block or unblock a user
-        operationId: setBlocked
-        tags:
-          - Relations
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BlockedActionRequest"
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    post:
+      summary: Block or unblock a user
+      operationId: setBlocked
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlockedActionRequest"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/signin:
-      post:
-        summary: Sign in with email and password
-        operationId: signIn
-        tags:
-          - Authentication
-        requestBody:
-          required: true
+    post:
+      summary: Sign in with email and password
+      operationId: signIn
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignInRequest"
+      responses:
+        "200":
+          description: Sign in successful
+          headers:
+            Hx-Location:
+              schema:
+                type: string
+              description: Redirect location
+            Set-Cookie:
+              schema:
+                type: string
+              description: Authentication cookie
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SignInRequest"
-        responses:
-          "200":
-            description: Sign in successful
-            headers:
-              Hx-Location:
-                schema:
-                  type: string
-                description: Redirect location
-              Set-Cookie:
-                schema:
-                  type: string
-                description: Authentication cookie
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/User"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/global/top/albums:
-      post:
-        summary:
-          Get global top albums in the specified time range. Time range values
-          default to the range of the previous full week starting on Friday.
-        operationId: getGlobalTopAlbums
-        tags:
-          - Statistics
-        requestBody:
-          required: false
+    post:
+      summary:
+        Get global top albums in the specified time range. Time range values
+        default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopAlbums
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatisticsQuery"
+      responses:
+        "200":
+          description: Top albums returned successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatisticsQuery"
-        responses:
-          "200":
-            description: Top albums returned successfully
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/TopAlbumEntry"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopAlbumEntry"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/global/top/artists:
-      post:
-        summary:
-          Get global top artists in the specified time range. Time range values
-          default to the range of the previous full week starting on Friday.
-        operationId: getGlobalTopArtists
-        tags:
-          - Statistics
-        requestBody:
-          required: false
+    post:
+      summary:
+        Get global top artists in the specified time range. Time range values
+        default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopArtists
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatisticsQuery"
+      responses:
+        "200":
+          description: Top artists returned successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatisticsQuery"
-        responses:
-          "200":
-            description: Top artists returned successfully
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/TopArtistEntry"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopArtistEntry"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/global/top/tracks:
-      post:
-        summary:
-          Get global top tracks in the specified time range. Time range values
-          default to the range of the previous full week starting on Friday.
-        operationId: getGlobalTopTracks
-        tags:
-          - Statistics
-        requestBody:
-          required: false
+    post:
+      summary:
+        Get global top tracks in the specified time range. Time range values
+        default to the range of the previous full week starting on Friday.
+      operationId: getGlobalTopTracks
+      tags:
+        - Statistics
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatisticsQuery"
+      responses:
+        "200":
+          description: Top tracks returned successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StatisticsQuery"
-        responses:
-          "200":
-            description: Top tracks returned successfully
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/TopTrackEntry"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopTrackEntry"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/user/listens/days:
-      post:
-        summary: Get user's listening information for the specified time range.
-        operationId: getUserListensByDays
-        tags:
-          - Statistics
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: true
+    post:
+      summary: Get user's listening information for the specified time range.
+      operationId: getUserListensByDays
+      tags:
+        - Statistics
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DateTimeRange"
+      responses:
+        "200":
+          description: Successfully retrieved listening information by day
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DateTimeRange"
-        responses:
-          "200":
-            description: Successfully retrieved listening information by day
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/DayListenDetails"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                type: array
+                items:
+                  $ref: "#/components/schemas/DayListenDetails"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/statistics/user/top/artist-plays:
-      post:
-        summary: Get user's top artists with each artist's top tracks and albums.
-        operationId: getUserTopArtistPlayStats
-        tags:
-          - Statistics
-        security:
-          - CookieAuth: []
-        requestBody:
-          required: false
+    post:
+      summary: Get user's top artists with each artist's top tracks and albums.
+      operationId: getUserTopArtistPlayStats
+      tags:
+        - Statistics
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtistPlayStatisticsQuery"
+      responses:
+        "200":
+          description: Top artist plays returned successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ArtistPlayStatisticsQuery"
-        responses:
-          "200":
-            description: Top artist plays returned successfully
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/TopArtistPlayStats"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopArtistPlayStats"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/tracks/{id}:
-      get:
-        summary: Get track details
-        operationId: getTrack
-        tags:
-          - Library
-        security:
-          - CookieAuth: []
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "200":
-            description: Track details
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Track"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/user/details:
-      get:
-        summary: Get current user details
-        operationId: getUserDetails
-        tags:
-          - User
-        security:
-          - CookieAuth: []
-        responses:
-          "200":
-            description: User details
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/User"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-
-  /api/user/integrations:
-      get:
-        summary: Get user integration details
-        operationId: getUserIntegrations
-        tags:
-          - User
-        security:
-          - CookieAuth: []
-        responses:
-          "200":
-            description: User integration details
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/IntegrationMetadata"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
-
-  /api/user/update:
-      post:
-        summary: Update user profile
-        operationId: updateUser
-        tags:
-          - User
-        security:
-          - CookieAuth: []
-        requestBody:
+    get:
+      summary: Get track details
+      operationId: getTrack
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Track details
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdateUserRequest"
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
-          "409":
-            $ref: "#/components/responses/Conflict"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+                $ref: "#/components/schemas/Track"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/user/details:
+    get:
+      summary: Get current user details
+      operationId: getUserDetails
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /api/user/integrations:
+    get:
+      summary: Get user integration details
+      operationId: getUserIntegrations
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      responses:
+        "200":
+          description: User integration details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IntegrationMetadata"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/user/update:
+    post:
+      summary: Update user profile
+      operationId: updateUser
+      tags:
+        - User
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequest"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /api/validate:
-      get:
-        summary: Validate authentication token
-        operationId: validateToken
-        tags:
-          - Authentication
-        security:
-          - CookieAuth: []
-        responses:
-          "204":
-            $ref: "#/components/responses/NoContent"
-          "401":
-            $ref: "#/components/responses/Unauthorized"
+    get:
+      summary: Validate authentication token
+      operationId: validateToken
+      tags:
+        - Authentication
+      security:
+        - CookieAuth: []
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
 
   /api/{user_id}/calendar/listens:
-      get:
-        summary: Get calendar listens for user (ICS feed)
-        operationId: getCalendarListens
-        description:
-          Serves listening history as an ICS feed. Access respects requested
-          user's privacy settings. If requested user's privacy is not public, auth
-          and token params are required.
-        tags:
-          - Listens
-        parameters:
-          - name: user_id
-            in: path
-            required: true
-            description: The user whose calendar to retrieve
-            schema:
-              type: string
-              format: uuid
-          - name: auth_id
-            in: query
-            description:
-              The requesting user's ID (the viewer). Required if target user's
-              visibility is not public.
-            schema:
-              type: string
-              format: uuid
-          - name: token
-            in: query
-            description:
-              HMAC token for authentication. Required if target user's visibility
-              is not public.
-            schema:
-              type: string
-        responses:
-          "200":
-            description: Calendar ICS file
-            headers:
-              Content-Disposition:
-                required: true
-                schema:
-                  type: string
-            content:
-              "text/calendar; charset=utf-8":
-                schema:
-                  type: string
-          "400":
-            $ref: "#/components/responses/BadRequest"
-          "403":
-            $ref: "#/components/responses/Forbidden"
-          "404":
-            $ref: "#/components/responses/NotFound"
-          "500":
-            $ref: "#/components/responses/InternalServerError"
+    get:
+      summary: Get calendar listens for user (ICS feed)
+      operationId: getCalendarListens
+      description:
+        Serves listening history as an ICS feed. Access respects requested
+        user's privacy settings. If requested user's privacy is not public, auth
+        and token params are required.
+      tags:
+        - Listens
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The user whose calendar to retrieve
+          schema:
+            type: string
+            format: uuid
+        - name: auth_id
+          in: query
+          description:
+            The requesting user's ID (the viewer). Required if target user's
+            visibility is not public.
+          schema:
+            type: string
+            format: uuid
+        - name: token
+          in: query
+          description:
+            HMAC token for authentication. Required if target user's visibility
+            is not public.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Calendar ICS file
+          headers:
+            Content-Disposition:
+              required: true
+              schema:
+                type: string
+          content:
+            "text/calendar; charset=utf-8":
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   /asyncapi.yaml:
-      get:
-        summary: Get AsyncAPI schema.
-        operationId: getAsyncAPI
-        responses:
-          "200":
-            description: Top artists returned successfully
-            content:
-              text/plain:
-                schema:
-                  type: string
+    get:
+      summary: Get AsyncAPI schema.
+      operationId: getAsyncAPI
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string
 
   /openapi.yaml:
-      get:
-        summary: Get OpenAPI schema.
-        operationId: getOpenAPI
-        responses:
-          "200":
-            description: Top artists returned successfully
-            content:
-              text/plain:
-                schema:
-                  type: string
+    get:
+      summary: Get OpenAPI schema.
+      operationId: getOpenAPI
+      responses:
+        "200":
+          description: Top artists returned successfully
+          content:
+            text/plain:
+              schema:
+                type: string

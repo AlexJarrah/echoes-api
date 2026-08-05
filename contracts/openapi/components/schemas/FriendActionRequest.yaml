@@ -1,6 +1,6 @@
 FriendActionRequest:
   type: object
-  description:
+  description: |
     Request body for friend actions. At least one of 'id' or 'handle'
     must be provided to identify the target user.
   properties:

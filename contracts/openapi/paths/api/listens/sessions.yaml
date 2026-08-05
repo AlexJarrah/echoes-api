@@ -1,27 +1,27 @@
 /api/listens/sessions:
-    post:
-      summary: Get recent listening sessions
-      operationId: getListenSessions
-      tags:
-        - Listens
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
+  post:
+    summary: Get recent listening sessions
+    operationId: getListenSessions
+    tags:
+      - Listens
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ListensSessionsRequest"
+    responses:
+      "200":
+        description: Listen sessions
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ListensSessionsRequest"
-      responses:
-        "200":
-          description: Listen sessions
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SessionsResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+              $ref: "#/components/schemas/SessionsResponse"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

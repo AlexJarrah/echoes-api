@@ -15,6 +15,6 @@ RegisterRequest:
     password:
       type: string
       minLength: 8
-      description:
+      description: |
         8+ characters, must contain uppercase, lowercase, digit, and
         special character

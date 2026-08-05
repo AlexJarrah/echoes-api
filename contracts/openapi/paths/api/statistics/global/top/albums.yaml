@@ -1,27 +1,27 @@
 /api/statistics/global/top/albums:
-    post:
-      summary:
-        Get global top albums in the specified time range. Time range values
-        default to the range of the previous full week starting on Friday.
-      operationId: getGlobalTopAlbums
-      tags:
-        - Statistics
-      requestBody:
-        required: false
+  post:
+    summary:
+      Get global top albums in the specified time range. Time range values
+      default to the range of the previous full week starting on Friday.
+    operationId: getGlobalTopAlbums
+    tags:
+      - Statistics
+    requestBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StatisticsQuery"
+    responses:
+      "200":
+        description: Top albums returned successfully
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StatisticsQuery"
-      responses:
-        "200":
-          description: Top albums returned successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TopAlbumEntry"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+              type: array
+              items:
+                $ref: "#/components/schemas/TopAlbumEntry"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

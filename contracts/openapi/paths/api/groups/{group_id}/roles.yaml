@@ -1,63 +1,63 @@
 /api/groups/{group_id}/roles:
-    get:
-      summary: Get group roles.
-      operationId: getGroupRoles
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Group roles retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GroupRole"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    post:
-      summary: Add group roles.
-      operationId: AddGroupRoles
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
+  get:
+    summary: Get group roles.
+    operationId: getGroupRoles
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: group_id
+        in: path
         required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "200":
+        description: Group roles retrieved successfully.
         content:
           application/json:
             schema:
               type: array
               items:
                 $ref: "#/components/schemas/GroupRole"
-      responses:
-        "200":
-          description: Group roles added successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GroupRole"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  post:
+    summary: Add group roles.
+    operationId: AddGroupRoles
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/GroupRole"
+    responses:
+      "200":
+        description: Group roles added successfully.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/GroupRole"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

@@ -1,78 +1,78 @@
 /api/groups/{group_id}:
-    get:
-      summary: Get group.
-      operationId: getGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Group retrieved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GroupDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    patch:
-      summary: Edit a group.
-      operationId: editGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
+  get:
+    summary: Get group.
+    operationId: getGroup
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: group_id
+        in: path
         required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "200":
+        description: Group retrieved successfully.
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditGroupRequest"
-      responses:
-        "200":
-          description: Group edited successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Delete a group if owned by the user.
-      operationId: deleteGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: group_id
-          in: path
-          required: true
+              $ref: "#/components/schemas/GroupDetails"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  patch:
+    summary: Edit a group.
+    operationId: editGroup
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
           schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+            $ref: "#/components/schemas/EditGroupRequest"
+    responses:
+      "200":
+        description: Group edited successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Group"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    summary: Delete a group if owned by the user.
+    operationId: deleteGroup
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

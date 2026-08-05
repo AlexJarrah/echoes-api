@@ -218,7 +218,8 @@ components:
           description: Album cover URL.
         active:
           type: boolean
-          description: Whether the user is currently playing this track (true) or has
+          description: |
+            Whether the user is currently playing this track (true) or has
             stopped/paused (false)..
         position:
           type: integer

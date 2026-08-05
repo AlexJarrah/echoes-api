@@ -1,21 +1,21 @@
 /api/user/integrations:
-    get:
-      summary: Get user integration details
-      operationId: getUserIntegrations
-      tags:
-        - User
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: User integration details
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/IntegrationMetadata"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+  get:
+    summary: Get user integration details
+    operationId: getUserIntegrations
+    tags:
+      - User
+    security:
+      - CookieAuth: []
+    responses:
+      "200":
+        description: User integration details
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/IntegrationMetadata"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

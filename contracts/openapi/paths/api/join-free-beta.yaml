@@ -1,20 +1,20 @@
 /api/join-free-beta:
-    post:
-      summary: Join free beta
-      operationId: joinFreeBeta
-      tags:
-        - Subscription
-      security:
-        - CookieAuth: []
-      responses:
-        "204":
-          description: Beta joined successfully
-          headers:
-            Hx-Location:
-              schema:
-                type: string
-              description: Redirect location
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+  post:
+    summary: Join free beta
+    operationId: joinFreeBeta
+    tags:
+      - Subscription
+    security:
+      - CookieAuth: []
+    responses:
+      "204":
+        description: Beta joined successfully
+        headers:
+          Hx-Location:
+            schema:
+              type: string
+            description: Redirect location
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

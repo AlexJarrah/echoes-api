@@ -1,31 +1,31 @@
 /api/conversations/{conversation_id}/messages/{message_id}/read:
-    post:
-      summary: Read a message.
-      operationId: readMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+  post:
+    summary: Read a message.
+    operationId: readMessage
+    tags:
+      - Conversations
+      - Messages
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: conversation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

@@ -11,11 +11,11 @@ LibraryAddResult:
     reference_id:
       type: integer
       format: int64
-      description:
+      description: |
         Reference ID provided in the request, echoed back for client
         correlation.
     created:
       type: boolean
-      description:
+      description: |
         True if a new entity was created, false if an existing entity was
         resolved.

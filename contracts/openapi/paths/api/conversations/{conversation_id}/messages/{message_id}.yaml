@@ -1,70 +1,70 @@
 /api/conversations/{conversation_id}/messages/{message_id}:
-    patch:
-      summary: Edit a message.
-      operationId: editMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-      requestBody:
+  patch:
+    summary: Edit a message.
+    operationId: editMessage
+    tags:
+      - Conversations
+      - Messages
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: conversation_id
+        in: path
         required: true
+        schema:
+          type: string
+          format: uuid
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              body:
+                type: string
+    responses:
+      "200":
+        description: Message edited successfully.
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                body:
-                  type: string
-      responses:
-        "200":
-          description: Message edited successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Delete a message.
-      operationId: deleteMessage
-      tags:
-        - Conversations
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+              $ref: "#/components/schemas/Message"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    summary: Delete a message.
+    operationId: deleteMessage
+    tags:
+      - Conversations
+      - Messages
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: conversation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

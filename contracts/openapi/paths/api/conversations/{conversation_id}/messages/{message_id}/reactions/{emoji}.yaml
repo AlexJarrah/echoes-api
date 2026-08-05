@@ -1,71 +1,71 @@
 /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
-    put:
-      summary: Add a reaction to a message.
-      operationId: addMessageReaction
-      tags:
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-        - name: emoji
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Reaction added successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MessageReaction"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    delete:
-      summary: Remove a reaction from a message.
-      operationId: deleteMessageReaction
-      tags:
-        - Messages
-      security:
-        - CookieAuth: []
-      parameters:
-        - name: conversation_id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: uint64
-        - name: emoji
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        "204":
-          $ref: "#/components/responses/NoContent"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+  put:
+    summary: Add a reaction to a message.
+    operationId: addMessageReaction
+    tags:
+      - Messages
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: conversation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: uint64
+      - name: emoji
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "200":
+        description: Reaction added successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageReaction"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    summary: Remove a reaction from a message.
+    operationId: deleteMessageReaction
+    tags:
+      - Messages
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: conversation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: uint64
+      - name: emoji
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

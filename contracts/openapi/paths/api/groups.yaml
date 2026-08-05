@@ -1,45 +1,45 @@
 /api/groups:
-    get:
-      summary: Get groups visible to the user.
-      operationId: getGroups
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      responses:
-        "200":
-          description: Groups retrieved successfully.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GroupDetails"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-    post:
-      summary: Create a new group as owner.
-      operationId: createGroup
-      tags:
-        - Groups
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
+  get:
+    summary: Get groups visible to the user.
+    operationId: getGroups
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    responses:
+      "200":
+        description: Groups retrieved successfully.
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateGroupRequest"
-      responses:
-        "200":
-          description: Group created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Group"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
+              type: array
+              items:
+                $ref: "#/components/schemas/GroupDetails"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  post:
+    summary: Create a new group as owner.
+    operationId: createGroup
+    tags:
+      - Groups
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateGroupRequest"
+    responses:
+      "200":
+        description: Group created successfully.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Group"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
