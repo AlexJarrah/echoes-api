@@ -1,0 +1,35 @@
+/api/upload/tracks/{track_id}/audio:
+  post:
+    summary: Upload track audio data
+    operationId: uploadTrackAudio
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: track_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - audio
+            properties:
+              audio:
+                type: string
+                format: binary
+                description: Audio data
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

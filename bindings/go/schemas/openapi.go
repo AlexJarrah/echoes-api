@@ -1220,6 +1220,127 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/subsonic/rest/download:
+    get:
+      summary: Download track as an audio file
+      operationId: subsonicDownload
+      parameters:
+        - $ref: '#/components/parameters/SubsonicAuthU'
+        - $ref: '#/components/parameters/SubsonicAuthT'
+        - $ref: '#/components/parameters/SubsonicAuthS'
+        - $ref: '#/components/parameters/SubsonicAuthV'
+        - $ref: '#/components/parameters/SubsonicAuthC'
+        - $ref: '#/components/parameters/SubsonicAuthF'
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Track ID
+      responses:
+        '200':
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            audio/*:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/subsonic/rest/stream:
+    get:
+      summary: Stream track audio
+      operationId: subsonicStream
+      parameters:
+        - $ref: '#/components/parameters/SubsonicAuthU'
+        - $ref: '#/components/parameters/SubsonicAuthT'
+        - $ref: '#/components/parameters/SubsonicAuthS'
+        - $ref: '#/components/parameters/SubsonicAuthV'
+        - $ref: '#/components/parameters/SubsonicAuthC'
+        - $ref: '#/components/parameters/SubsonicAuthF'
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Track ID
+        - name: maxBitRate
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 32
+              - 40
+              - 48
+              - 56
+              - 64
+              - 80
+              - 96
+              - 112
+              - 128
+              - 160
+              - 192
+              - 224
+              - 256
+              - 320
+            default: 0
+          description: Maximum bitrate in kbps, 0 meaning unlimited.
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - mp3
+              - flac
+              - ogg
+              - opus
+              - raw
+            default: mp3
+          description: Target transcode format.
+        - name: timeOffset
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+          description: Start streaming from this offset in seconds.
+        - name: estimateContentLength
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: Include an estimated Content-Length header.
+      responses:
+        '200':
+          description: Audio stream
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+            audio/flac:
+              schema:
+                type: string
+                format: binary
+            audio/ogg:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/tracks/{id}:
     get:
       summary: Get track details
@@ -1246,6 +1367,41 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/upload/tracks/{track_id}/audio:
+    post:
+      summary: Upload track audio data
+      operationId: uploadTrackAudio
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: track_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - audio
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                  description: Audio data
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -1395,6 +1551,54 @@ paths:
               schema:
                 type: string
 components:
+  parameters:
+    SubsonicAuthU:
+      name: u
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Username
+    SubsonicAuthT:
+      name: t
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Authentication token (MD5 hash of (password + salt))
+    SubsonicAuthS:
+      name: s
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Salt used in token generation
+    SubsonicAuthV:
+      name: v
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Subsonic API version
+    SubsonicAuthC:
+      name: c
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Client application name
+    SubsonicAuthF:
+      name: f
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - xml
+          - json
+          - jsonp
+        default: xml
+      description: Response format
   responses:
     BadRequest:
       description: Bad request

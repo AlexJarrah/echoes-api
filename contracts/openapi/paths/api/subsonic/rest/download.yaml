@@ -1,0 +1,33 @@
+/api/subsonic/rest/download:
+  get:
+    summary: Download track as an audio file
+    operationId: subsonicDownload
+    parameters:
+      - $ref: "#/components/parameters/SubsonicAuthU"
+      - $ref: "#/components/parameters/SubsonicAuthT"
+      - $ref: "#/components/parameters/SubsonicAuthS"
+      - $ref: "#/components/parameters/SubsonicAuthV"
+      - $ref: "#/components/parameters/SubsonicAuthC"
+      - $ref: "#/components/parameters/SubsonicAuthF"
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Track ID
+    responses:
+      "200":
+        headers:
+          Content-Disposition:
+            schema:
+              type: string
+        content:
+          audio/*:
+            schema:
+              type: string
+              format: binary
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

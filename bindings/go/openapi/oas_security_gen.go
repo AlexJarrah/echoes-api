@@ -75,6 +75,7 @@ var operationRolesCookieAuth = map[string][]string{
 	UpdateGroupRolesOperation:          []string{},
 	UpdateLibraryOperation:             []string{},
 	UpdateUserOperation:                []string{},
+	UploadTrackAudioOperation:          []string{},
 	ValidateTokenOperation:             []string{},
 }
 

@@ -6,7 +6,9 @@ import (
 	"io"
 	"time"
 
+	"github.com/go-faster/errors"
 	"github.com/google/uuid"
+	ht "github.com/ogen-go/ogen/http"
 )
 
 type AddFriendApplicationJSONBadRequest ErrorResponse
@@ -693,6 +695,7 @@ func (*BadRequestTextPlain) signInRes()                    {}
 func (*BadRequestTextPlain) updateGroupRolesRes()          {}
 func (*BadRequestTextPlain) updateLibraryRes()             {}
 func (*BadRequestTextPlain) updateUserRes()                {}
+func (*BadRequestTextPlain) uploadTrackAudioRes()          {}
 
 // Ref: #/components/schemas/BestFriendActionRequest
 type BestFriendActionRequest struct {
@@ -1085,8 +1088,8 @@ func (*ForbiddenTextPlain) removeFriendRes()          {}
 func (*ForbiddenTextPlain) setBestFriendRes()         {}
 func (*ForbiddenTextPlain) setBlockedRes()            {}
 
-// Request body for friend actions. At least one of 'id' or 'handle'
-// must be provided to identify the target user.
+// Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the
+// target user.
 // Ref: #/components/schemas/FriendActionRequest
 type FriendActionRequest struct {
 	// Target user's UUID. Optional if 'handle' is provided.
@@ -1659,9 +1662,7 @@ func (s *GroupRole) SetUpdatedAt(val OptNilDateTime) {
 
 func (*GroupRole) updateGroupRolesRes() {}
 
-// 0=Owner
-// 1=Moderator
-// 2=Member.
+// 0=Owner 1=Moderator 2=Member.
 // Ref: #/components/schemas/GroupRoleType
 type GroupRoleType uint8
 
@@ -1728,9 +1729,7 @@ func (s *IntegrationMetadata) SetUpdatedAt(val OptNilDateTime) {
 	s.UpdatedAt = val
 }
 
-// 0=Google
-// 1=Spotify
-// 2=Last.
+// 0=Google 1=Spotify 2=Last.
 // Ref: #/components/schemas/IntegrationProvider
 type IntegrationProvider uint8
 
@@ -1805,9 +1804,12 @@ func (*InternalServerErrorTextPlain) setActivityRes()               {}
 func (*InternalServerErrorTextPlain) setBestFriendRes()             {}
 func (*InternalServerErrorTextPlain) setBlockedRes()                {}
 func (*InternalServerErrorTextPlain) signInRes()                    {}
+func (*InternalServerErrorTextPlain) subsonicDownloadRes()          {}
+func (*InternalServerErrorTextPlain) subsonicStreamRes()            {}
 func (*InternalServerErrorTextPlain) updateGroupRolesRes()          {}
 func (*InternalServerErrorTextPlain) updateLibraryRes()             {}
 func (*InternalServerErrorTextPlain) updateUserRes()                {}
+func (*InternalServerErrorTextPlain) uploadTrackAudioRes()          {}
 
 type JoinFreeBetaApplicationJSONInternalServerError ErrorResponse
 
@@ -2231,11 +2233,9 @@ func (*LibraryAddResponse) addToLibraryRes() {}
 type LibraryAddResult struct {
 	// UUID of the created or resolved entity.
 	ID uuid.UUID `json:"id"`
-	// Reference ID provided in the request, echoed back for client
-	// correlation.
+	// Reference ID provided in the request, echoed back for client correlation.
 	ReferenceID OptInt64 `json:"reference_id"`
-	// True if a new entity was created, false if an existing entity was
-	// resolved.
+	// True if a new entity was created, false if an existing entity was resolved.
 	Created bool `json:"created"`
 }
 
@@ -2740,12 +2740,9 @@ func (s *Listen) SetUpdatedAt(val OptNilDateTime) {
 	s.UpdatedAt = val
 }
 
-// 0=API: listen was added via API
-// 1=App: listen was added via an official client application
-// 2=Spotify: listen was imported from Spotify
-// 3=AppleMusic: listen was imported from Apple Music
-// 4=Last: listen was imported from Last
-// 5=YouTube: listen was imported from YouTube.
+// 0=API: listen was added via API 1=App: listen was added via an official client application
+// 2=Spotify: listen was imported from Spotify 3=AppleMusic: listen was imported from Apple Music
+// 4=Last: listen was imported from Last 5=YouTube: listen was imported from YouTube.
 // Ref: #/components/schemas/ListenMethod
 type ListenMethod uint8
 
@@ -2776,8 +2773,8 @@ type ListensSessionsRequest struct {
 	Start OptDateTime `json:"start"`
 	// End of time range filter.
 	End OptDateTime `json:"end"`
-	// Minimum amount of listens to be fetched. The start parameter's value may not be respected to
-	// achieve this.
+	// Minimum amount of listens to be fetched. The start parameter's value may not be respected to achieve
+	// this.
 	Minimum OptInt64 `json:"minimum"`
 	// Maximum amount of listens to be fetched.
 	Limit OptInt64 `json:"limit"`
@@ -3009,6 +3006,7 @@ func (*NoContent) setActivityRes()           {}
 func (*NoContent) setBestFriendRes()         {}
 func (*NoContent) setBlockedRes()            {}
 func (*NoContent) updateUserRes()            {}
+func (*NoContent) uploadTrackAudioRes()      {}
 func (*NoContent) validateTokenRes()         {}
 
 type NotFoundTextPlain struct {
@@ -3034,6 +3032,9 @@ func (*NotFoundTextPlain) getCalendarListensRes()    {}
 func (*NotFoundTextPlain) getMessageThreadRes()      {}
 func (*NotFoundTextPlain) getTrackRes()              {}
 func (*NotFoundTextPlain) getUserListenSessionsRes() {}
+func (*NotFoundTextPlain) subsonicDownloadRes()      {}
+func (*NotFoundTextPlain) subsonicStreamRes()        {}
+func (*NotFoundTextPlain) uploadTrackAudioRes()      {}
 
 // NewOptArtist returns new OptArtist with value set to v.
 func NewOptArtist(v Artist) OptArtist {
@@ -3355,6 +3356,11 @@ func (o *OptNilBool) SetToNull() {
 	o.Value = v
 }
 
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilBool) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
 // Get returns value and boolean that denotes whether value was set.
 func (o OptNilBool) Get() (v bool, ok bool) {
 	if o.Null {
@@ -3416,6 +3422,11 @@ func (o *OptNilDateTime) SetToNull() {
 	o.Null = true
 	var v time.Time
 	o.Value = v
+}
+
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilDateTime) IsEmpty() bool {
+	return !o.Set && !o.Null
 }
 
 // Get returns value and boolean that denotes whether value was set.
@@ -3481,6 +3492,11 @@ func (o *OptNilInt8) SetToNull() {
 	o.Value = v
 }
 
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilInt8) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
 // Get returns value and boolean that denotes whether value was set.
 func (o OptNilInt8) Get() (v int8, ok bool) {
 	if o.Null {
@@ -3542,6 +3558,11 @@ func (o *OptNilString) SetToNull() {
 	o.Null = true
 	var v string
 	o.Value = v
+}
+
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilString) IsEmpty() bool {
+	return !o.Set && !o.Null
 }
 
 // Get returns value and boolean that denotes whether value was set.
@@ -3607,6 +3628,11 @@ func (o *OptNilUUID) SetToNull() {
 	o.Value = v
 }
 
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilUUID) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
 // Get returns value and boolean that denotes whether value was set.
 func (o OptNilUUID) Get() (v uuid.UUID, ok bool) {
 	if o.Null {
@@ -3670,6 +3696,11 @@ func (o *OptNilUint16) SetToNull() {
 	o.Value = v
 }
 
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilUint16) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
 // Get returns value and boolean that denotes whether value was set.
 func (o OptNilUint16) Get() (v uint16, ok bool) {
 	if o.Null {
@@ -3731,6 +3762,11 @@ func (o *OptNilUint64) SetToNull() {
 	o.Null = true
 	var v uint64
 	o.Value = v
+}
+
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilUint64) IsEmpty() bool {
+	return !o.Set && !o.Null
 }
 
 // Get returns value and boolean that denotes whether value was set.
@@ -3930,6 +3966,144 @@ func (o OptString) Get() (v string, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptString) Or(d string) string {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptSubsonicAuthF returns new OptSubsonicAuthF with value set to v.
+func NewOptSubsonicAuthF(v SubsonicAuthF) OptSubsonicAuthF {
+	return OptSubsonicAuthF{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptSubsonicAuthF is optional SubsonicAuthF.
+type OptSubsonicAuthF struct {
+	Value SubsonicAuthF
+	Set   bool
+}
+
+// IsSet returns true if OptSubsonicAuthF was set.
+func (o OptSubsonicAuthF) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptSubsonicAuthF) Reset() {
+	var v SubsonicAuthF
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptSubsonicAuthF) SetTo(v SubsonicAuthF) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptSubsonicAuthF) Get() (v SubsonicAuthF, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptSubsonicAuthF) Or(d SubsonicAuthF) SubsonicAuthF {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptSubsonicStreamFormat returns new OptSubsonicStreamFormat with value set to v.
+func NewOptSubsonicStreamFormat(v SubsonicStreamFormat) OptSubsonicStreamFormat {
+	return OptSubsonicStreamFormat{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptSubsonicStreamFormat is optional SubsonicStreamFormat.
+type OptSubsonicStreamFormat struct {
+	Value SubsonicStreamFormat
+	Set   bool
+}
+
+// IsSet returns true if OptSubsonicStreamFormat was set.
+func (o OptSubsonicStreamFormat) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptSubsonicStreamFormat) Reset() {
+	var v SubsonicStreamFormat
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptSubsonicStreamFormat) SetTo(v SubsonicStreamFormat) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptSubsonicStreamFormat) Get() (v SubsonicStreamFormat, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptSubsonicStreamFormat) Or(d SubsonicStreamFormat) SubsonicStreamFormat {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptSubsonicStreamMaxBitRate returns new OptSubsonicStreamMaxBitRate with value set to v.
+func NewOptSubsonicStreamMaxBitRate(v SubsonicStreamMaxBitRate) OptSubsonicStreamMaxBitRate {
+	return OptSubsonicStreamMaxBitRate{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptSubsonicStreamMaxBitRate is optional SubsonicStreamMaxBitRate.
+type OptSubsonicStreamMaxBitRate struct {
+	Value SubsonicStreamMaxBitRate
+	Set   bool
+}
+
+// IsSet returns true if OptSubsonicStreamMaxBitRate was set.
+func (o OptSubsonicStreamMaxBitRate) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptSubsonicStreamMaxBitRate) Reset() {
+	var v SubsonicStreamMaxBitRate
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptSubsonicStreamMaxBitRate) SetTo(v SubsonicStreamMaxBitRate) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptSubsonicStreamMaxBitRate) Get() (v SubsonicStreamMaxBitRate, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptSubsonicStreamMaxBitRate) Or(d SubsonicStreamMaxBitRate) SubsonicStreamMaxBitRate {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -4287,8 +4461,7 @@ type RegisterRequest struct {
 	// 2+ Unicode letters, spaces allowed.
 	Name  string `json:"name"`
 	Email string `json:"email"`
-	// 8+ characters, must contain uppercase, lowercase, digit, and
-	// special character.
+	// 8+ characters, must contain uppercase, lowercase, digit, and special character.
 	Password string `json:"password"`
 }
 
@@ -5171,8 +5344,8 @@ func (*SetActivityApplicationJSONUnauthorized) setActivityRes() {}
 
 // Ref: #/components/schemas/SetActivityItem
 type SetActivityItem struct {
-	// Unique identifier for the listening session, typically a UUID or random string used to group
-	// related activities.
+	// Unique identifier for the listening session, typically a UUID or random string used to group related
+	// activities.
 	SessionID string `json:"session_id"`
 	// UUID of the track being played.
 	TrackID uuid.UUID `json:"track_id"`
@@ -5352,6 +5525,274 @@ func (s *StatisticsQuery) SetEnd(val OptDateTime) {
 func (s *StatisticsQuery) SetLimit(val OptUint32) {
 	s.Limit = val
 }
+
+type SubsonicAuthF string
+
+const (
+	SubsonicAuthFXML   SubsonicAuthF = "xml"
+	SubsonicAuthFJSON  SubsonicAuthF = "json"
+	SubsonicAuthFJsonp SubsonicAuthF = "jsonp"
+)
+
+// AllValues returns all SubsonicAuthF values.
+func (SubsonicAuthF) AllValues() []SubsonicAuthF {
+	return []SubsonicAuthF{
+		SubsonicAuthFXML,
+		SubsonicAuthFJSON,
+		SubsonicAuthFJsonp,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s SubsonicAuthF) MarshalText() ([]byte, error) {
+	switch s {
+	case SubsonicAuthFXML:
+		return []byte(s), nil
+	case SubsonicAuthFJSON:
+		return []byte(s), nil
+	case SubsonicAuthFJsonp:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *SubsonicAuthF) UnmarshalText(data []byte) error {
+	switch SubsonicAuthF(data) {
+	case SubsonicAuthFXML:
+		*s = SubsonicAuthFXML
+		return nil
+	case SubsonicAuthFJSON:
+		*s = SubsonicAuthFJSON
+		return nil
+	case SubsonicAuthFJsonp:
+		*s = SubsonicAuthFJsonp
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type SubsonicDownloadApplicationJSONInternalServerError ErrorResponse
+
+func (*SubsonicDownloadApplicationJSONInternalServerError) subsonicDownloadRes() {}
+
+type SubsonicDownloadApplicationJSONNotFound ErrorResponse
+
+func (*SubsonicDownloadApplicationJSONNotFound) subsonicDownloadRes() {}
+
+type SubsonicDownloadOK struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s SubsonicDownloadOK) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+// SubsonicDownloadOKHeaders wraps SubsonicDownloadOK with response headers.
+type SubsonicDownloadOKHeaders struct {
+	ContentDisposition OptString
+	ContentType        string
+	Response           SubsonicDownloadOK
+}
+
+// GetContentDisposition returns the value of ContentDisposition.
+func (s *SubsonicDownloadOKHeaders) GetContentDisposition() OptString {
+	return s.ContentDisposition
+}
+
+// GetContentType returns the value of ContentType.
+func (s *SubsonicDownloadOKHeaders) GetContentType() string {
+	return s.ContentType
+}
+
+// GetResponse returns the value of Response.
+func (s *SubsonicDownloadOKHeaders) GetResponse() SubsonicDownloadOK {
+	return s.Response
+}
+
+// SetContentDisposition sets the value of ContentDisposition.
+func (s *SubsonicDownloadOKHeaders) SetContentDisposition(val OptString) {
+	s.ContentDisposition = val
+}
+
+// SetContentType sets the value of ContentType.
+func (s *SubsonicDownloadOKHeaders) SetContentType(val string) {
+	s.ContentType = val
+}
+
+// SetResponse sets the value of Response.
+func (s *SubsonicDownloadOKHeaders) SetResponse(val SubsonicDownloadOK) {
+	s.Response = val
+}
+
+func (*SubsonicDownloadOKHeaders) subsonicDownloadRes() {}
+
+type SubsonicStreamApplicationJSONInternalServerError ErrorResponse
+
+func (*SubsonicStreamApplicationJSONInternalServerError) subsonicStreamRes() {}
+
+type SubsonicStreamApplicationJSONNotFound ErrorResponse
+
+func (*SubsonicStreamApplicationJSONNotFound) subsonicStreamRes() {}
+
+type SubsonicStreamFormat string
+
+const (
+	SubsonicStreamFormatMp3  SubsonicStreamFormat = "mp3"
+	SubsonicStreamFormatFlac SubsonicStreamFormat = "flac"
+	SubsonicStreamFormatOgg  SubsonicStreamFormat = "ogg"
+	SubsonicStreamFormatOpus SubsonicStreamFormat = "opus"
+	SubsonicStreamFormatRaw  SubsonicStreamFormat = "raw"
+)
+
+// AllValues returns all SubsonicStreamFormat values.
+func (SubsonicStreamFormat) AllValues() []SubsonicStreamFormat {
+	return []SubsonicStreamFormat{
+		SubsonicStreamFormatMp3,
+		SubsonicStreamFormatFlac,
+		SubsonicStreamFormatOgg,
+		SubsonicStreamFormatOpus,
+		SubsonicStreamFormatRaw,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s SubsonicStreamFormat) MarshalText() ([]byte, error) {
+	switch s {
+	case SubsonicStreamFormatMp3:
+		return []byte(s), nil
+	case SubsonicStreamFormatFlac:
+		return []byte(s), nil
+	case SubsonicStreamFormatOgg:
+		return []byte(s), nil
+	case SubsonicStreamFormatOpus:
+		return []byte(s), nil
+	case SubsonicStreamFormatRaw:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *SubsonicStreamFormat) UnmarshalText(data []byte) error {
+	switch SubsonicStreamFormat(data) {
+	case SubsonicStreamFormatMp3:
+		*s = SubsonicStreamFormatMp3
+		return nil
+	case SubsonicStreamFormatFlac:
+		*s = SubsonicStreamFormatFlac
+		return nil
+	case SubsonicStreamFormatOgg:
+		*s = SubsonicStreamFormatOgg
+		return nil
+	case SubsonicStreamFormatOpus:
+		*s = SubsonicStreamFormatOpus
+		return nil
+	case SubsonicStreamFormatRaw:
+		*s = SubsonicStreamFormatRaw
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type SubsonicStreamMaxBitRate int
+
+const (
+	SubsonicStreamMaxBitRate0   SubsonicStreamMaxBitRate = 0
+	SubsonicStreamMaxBitRate32  SubsonicStreamMaxBitRate = 32
+	SubsonicStreamMaxBitRate40  SubsonicStreamMaxBitRate = 40
+	SubsonicStreamMaxBitRate48  SubsonicStreamMaxBitRate = 48
+	SubsonicStreamMaxBitRate56  SubsonicStreamMaxBitRate = 56
+	SubsonicStreamMaxBitRate64  SubsonicStreamMaxBitRate = 64
+	SubsonicStreamMaxBitRate80  SubsonicStreamMaxBitRate = 80
+	SubsonicStreamMaxBitRate96  SubsonicStreamMaxBitRate = 96
+	SubsonicStreamMaxBitRate112 SubsonicStreamMaxBitRate = 112
+	SubsonicStreamMaxBitRate128 SubsonicStreamMaxBitRate = 128
+	SubsonicStreamMaxBitRate160 SubsonicStreamMaxBitRate = 160
+	SubsonicStreamMaxBitRate192 SubsonicStreamMaxBitRate = 192
+	SubsonicStreamMaxBitRate224 SubsonicStreamMaxBitRate = 224
+	SubsonicStreamMaxBitRate256 SubsonicStreamMaxBitRate = 256
+	SubsonicStreamMaxBitRate320 SubsonicStreamMaxBitRate = 320
+)
+
+// AllValues returns all SubsonicStreamMaxBitRate values.
+func (SubsonicStreamMaxBitRate) AllValues() []SubsonicStreamMaxBitRate {
+	return []SubsonicStreamMaxBitRate{
+		SubsonicStreamMaxBitRate0,
+		SubsonicStreamMaxBitRate32,
+		SubsonicStreamMaxBitRate40,
+		SubsonicStreamMaxBitRate48,
+		SubsonicStreamMaxBitRate56,
+		SubsonicStreamMaxBitRate64,
+		SubsonicStreamMaxBitRate80,
+		SubsonicStreamMaxBitRate96,
+		SubsonicStreamMaxBitRate112,
+		SubsonicStreamMaxBitRate128,
+		SubsonicStreamMaxBitRate160,
+		SubsonicStreamMaxBitRate192,
+		SubsonicStreamMaxBitRate224,
+		SubsonicStreamMaxBitRate256,
+		SubsonicStreamMaxBitRate320,
+	}
+}
+
+type SubsonicStreamOKAudioFlac struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s SubsonicStreamOKAudioFlac) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*SubsonicStreamOKAudioFlac) subsonicStreamRes() {}
+
+type SubsonicStreamOKAudioMpeg struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s SubsonicStreamOKAudioMpeg) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*SubsonicStreamOKAudioMpeg) subsonicStreamRes() {}
+
+type SubsonicStreamOKAudioOgg struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s SubsonicStreamOKAudioOgg) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*SubsonicStreamOKAudioOgg) subsonicStreamRes() {}
 
 // Ref: #/components/schemas/TopAlbumEntry
 type TopAlbumEntry struct {
@@ -6068,6 +6509,33 @@ func (s *UpdateUserRequest) SetVisibility(val OptVisibility) {
 	s.Visibility = val
 }
 
+type UploadTrackAudioApplicationJSONBadRequest ErrorResponse
+
+func (*UploadTrackAudioApplicationJSONBadRequest) uploadTrackAudioRes() {}
+
+type UploadTrackAudioApplicationJSONInternalServerError ErrorResponse
+
+func (*UploadTrackAudioApplicationJSONInternalServerError) uploadTrackAudioRes() {}
+
+type UploadTrackAudioApplicationJSONNotFound ErrorResponse
+
+func (*UploadTrackAudioApplicationJSONNotFound) uploadTrackAudioRes() {}
+
+type UploadTrackAudioReq struct {
+	// Audio data.
+	Audio ht.MultipartFile `json:"audio"`
+}
+
+// GetAudio returns the value of Audio.
+func (s *UploadTrackAudioReq) GetAudio() ht.MultipartFile {
+	return s.Audio
+}
+
+// SetAudio sets the value of Audio.
+func (s *UploadTrackAudioReq) SetAudio(val ht.MultipartFile) {
+	s.Audio = val
+}
+
 // Ref: #/components/schemas/User
 type User struct {
 	UserID                 uuid.UUID      `json:"user_id"`
@@ -6202,12 +6670,10 @@ func (s *UserHeaders) SetResponse(val User) {
 func (*UserHeaders) registerRes() {}
 func (*UserHeaders) signInRes()   {}
 
-// 0=Friend: users are friends
-// 1=BestFriend: source user set target user as a best friend
-// 2=OutgoingRequest: source user has an outgoing friend request
-// 3=IncomingRequest: source user has an incoming friend request
-// 4=BlockSent: source user has blocked target user
-// 5=BlockReceived: target user has blocked source user.
+// 0=Friend: users are friends 1=BestFriend: source user set target user as a best friend
+// 2=OutgoingRequest: source user has an outgoing friend request 3=IncomingRequest: source user has an
+// incoming friend request 4=BlockSent: source user has blocked target user 5=BlockReceived: target
+// user has blocked source user.
 // Ref: #/components/schemas/UserRelation
 type UserRelation uint8
 
@@ -6232,10 +6698,8 @@ func (UserRelation) AllValues() []UserRelation {
 	}
 }
 
-// 0=Public: visible to everyone
-// 1=Friends: visible to the user's friends
-// 2=BestFriends: visible to the user's best friends
-// 3=Private: visible to only the user.
+// 0=Public: visible to everyone 1=Friends: visible to the user's friends 2=BestFriends: visible to the
+// user's best friends 3=Private: visible to only the user.
 // Ref: #/components/schemas/Visibility
 type Visibility uint8
 

@@ -573,6 +573,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/subsonic/rest/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download track as an audio file */
+        get: operations["subsonicDownload"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/subsonic/rest/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stream track audio */
+        get: operations["subsonicStream"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tracks/{id}": {
         parameters: {
             query?: never;
@@ -584,6 +618,23 @@ export interface paths {
         get: operations["getTrack"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/upload/tracks/{track_id}/audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload track audio data */
+        post: operations["uploadTrackAudio"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1670,7 +1721,20 @@ export interface components {
             };
         };
     };
-    parameters: never;
+    parameters: {
+        /** @description Username */
+        SubsonicAuthU: string;
+        /** @description Authentication token (MD5 hash of (password + salt)) */
+        SubsonicAuthT: string;
+        /** @description Salt used in token generation */
+        SubsonicAuthS: string;
+        /** @description Subsonic API version */
+        SubsonicAuthV: string;
+        /** @description Client application name */
+        SubsonicAuthC: string;
+        /** @description Response format */
+        SubsonicAuthF: "xml" | "json" | "jsonp";
+    };
     requestBodies: never;
     headers: never;
     pathItems: never;
@@ -2696,6 +2760,90 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
+    subsonicDownload: {
+        parameters: {
+            query: {
+                /** @description Username */
+                u: components["parameters"]["SubsonicAuthU"];
+                /** @description Authentication token (MD5 hash of (password + salt)) */
+                t: components["parameters"]["SubsonicAuthT"];
+                /** @description Salt used in token generation */
+                s: components["parameters"]["SubsonicAuthS"];
+                /** @description Subsonic API version */
+                v: components["parameters"]["SubsonicAuthV"];
+                /** @description Client application name */
+                c: components["parameters"]["SubsonicAuthC"];
+                /** @description Response format */
+                f?: components["parameters"]["SubsonicAuthF"];
+                /** @description Track ID */
+                id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "audio/*": string;
+                };
+            };
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    subsonicStream: {
+        parameters: {
+            query: {
+                /** @description Username */
+                u: components["parameters"]["SubsonicAuthU"];
+                /** @description Authentication token (MD5 hash of (password + salt)) */
+                t: components["parameters"]["SubsonicAuthT"];
+                /** @description Salt used in token generation */
+                s: components["parameters"]["SubsonicAuthS"];
+                /** @description Subsonic API version */
+                v: components["parameters"]["SubsonicAuthV"];
+                /** @description Client application name */
+                c: components["parameters"]["SubsonicAuthC"];
+                /** @description Response format */
+                f?: components["parameters"]["SubsonicAuthF"];
+                /** @description Track ID */
+                id: string;
+                /** @description Maximum bitrate in kbps, 0 meaning unlimited. */
+                maxBitRate?: 0 | 32 | 40 | 48 | 56 | 64 | 80 | 96 | 112 | 128 | 160 | 192 | 224 | 256 | 320;
+                /** @description Target transcode format. */
+                format?: "mp3" | "flac" | "ogg" | "opus" | "raw";
+                /** @description Start streaming from this offset in seconds. */
+                timeOffset?: number;
+                /** @description Include an estimated Content-Length header. */
+                estimateContentLength?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Audio stream */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "audio/mpeg": string;
+                    "audio/flac": string;
+                    "audio/ogg": string;
+                };
+            };
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
     getTrack: {
         parameters: {
             query?: never;
@@ -2718,6 +2866,33 @@ export interface operations {
             };
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    uploadTrackAudio: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Audio data
+                     */
+                    audio: string;
+                };
+            };
+        };
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };

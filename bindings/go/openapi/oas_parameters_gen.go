@@ -2099,6 +2099,994 @@ func decodeSendMessageParams(args [1]string, argsEscaped bool, r *http.Request) 
 	return params, nil
 }
 
+// SubsonicDownloadParams is parameters of subsonicDownload operation.
+type SubsonicDownloadParams struct {
+	// Username.
+	U string
+	// Authentication token (MD5 hash of (password + salt)).
+	T string
+	// Salt used in token generation.
+	S string
+	// Subsonic API version.
+	V string
+	// Client application name.
+	C string
+	// Response format.
+	F OptSubsonicAuthF `json:",omitempty,omitzero"`
+	// Track ID.
+	ID uuid.UUID
+}
+
+func unpackSubsonicDownloadParams(packed middleware.Parameters) (params SubsonicDownloadParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "u",
+			In:   "query",
+		}
+		params.U = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "t",
+			In:   "query",
+		}
+		params.T = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "s",
+			In:   "query",
+		}
+		params.S = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "v",
+			In:   "query",
+		}
+		params.V = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "c",
+			In:   "query",
+		}
+		params.C = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "f",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.F = v.(OptSubsonicAuthF)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "id",
+			In:   "query",
+		}
+		params.ID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeSubsonicDownloadParams(args [0]string, argsEscaped bool, r *http.Request) (params SubsonicDownloadParams, _ error) {
+	q := uri.NewQueryDecoder(r.URL.Query())
+	// Decode query: u.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "u",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.U = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "u",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: t.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "t",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.T = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "t",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: s.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "s",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.S = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "s",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: v.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "v",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.V = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "v",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: c.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "c",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.C = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "c",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Set default value for query: f.
+	{
+		val := SubsonicAuthF("xml")
+		params.F.SetTo(val)
+	}
+	// Decode query: f.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "f",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotFVal SubsonicAuthF
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotFVal = SubsonicAuthF(c)
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.F.SetTo(paramsDotFVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if value, ok := params.F.Get(); ok {
+					if err := func() error {
+						if err := value.Validate(); err != nil {
+							return err
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "f",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: id.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "id",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.ID = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "id",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// SubsonicStreamParams is parameters of subsonicStream operation.
+type SubsonicStreamParams struct {
+	// Username.
+	U string
+	// Authentication token (MD5 hash of (password + salt)).
+	T string
+	// Salt used in token generation.
+	S string
+	// Subsonic API version.
+	V string
+	// Client application name.
+	C string
+	// Response format.
+	F OptSubsonicAuthF `json:",omitempty,omitzero"`
+	// Track ID.
+	ID uuid.UUID
+	// Maximum bitrate in kbps, 0 meaning unlimited.
+	MaxBitRate OptSubsonicStreamMaxBitRate `json:",omitempty,omitzero"`
+	// Target transcode format.
+	Format OptSubsonicStreamFormat `json:",omitempty,omitzero"`
+	// Start streaming from this offset in seconds.
+	TimeOffset OptInt `json:",omitempty,omitzero"`
+	// Include an estimated Content-Length header.
+	EstimateContentLength OptBool `json:",omitempty,omitzero"`
+}
+
+func unpackSubsonicStreamParams(packed middleware.Parameters) (params SubsonicStreamParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "u",
+			In:   "query",
+		}
+		params.U = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "t",
+			In:   "query",
+		}
+		params.T = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "s",
+			In:   "query",
+		}
+		params.S = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "v",
+			In:   "query",
+		}
+		params.V = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "c",
+			In:   "query",
+		}
+		params.C = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "f",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.F = v.(OptSubsonicAuthF)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "id",
+			In:   "query",
+		}
+		params.ID = packed[key].(uuid.UUID)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "maxBitRate",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.MaxBitRate = v.(OptSubsonicStreamMaxBitRate)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "format",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.Format = v.(OptSubsonicStreamFormat)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "timeOffset",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.TimeOffset = v.(OptInt)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "estimateContentLength",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.EstimateContentLength = v.(OptBool)
+		}
+	}
+	return params
+}
+
+func decodeSubsonicStreamParams(args [0]string, argsEscaped bool, r *http.Request) (params SubsonicStreamParams, _ error) {
+	q := uri.NewQueryDecoder(r.URL.Query())
+	// Decode query: u.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "u",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.U = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "u",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: t.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "t",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.T = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "t",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: s.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "s",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.S = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "s",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: v.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "v",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.V = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "v",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: c.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "c",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.C = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "c",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Set default value for query: f.
+	{
+		val := SubsonicAuthF("xml")
+		params.F.SetTo(val)
+	}
+	// Decode query: f.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "f",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotFVal SubsonicAuthF
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotFVal = SubsonicAuthF(c)
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.F.SetTo(paramsDotFVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if value, ok := params.F.Get(); ok {
+					if err := func() error {
+						if err := value.Validate(); err != nil {
+							return err
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "f",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: id.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "id",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.ID = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "id",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Set default value for query: maxBitRate.
+	{
+		val := SubsonicStreamMaxBitRate(0)
+		params.MaxBitRate.SetTo(val)
+	}
+	// Decode query: maxBitRate.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "maxBitRate",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotMaxBitRateVal SubsonicStreamMaxBitRate
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToInt(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotMaxBitRateVal = SubsonicStreamMaxBitRate(c)
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.MaxBitRate.SetTo(paramsDotMaxBitRateVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if value, ok := params.MaxBitRate.Get(); ok {
+					if err := func() error {
+						if err := value.Validate(); err != nil {
+							return err
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "maxBitRate",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Set default value for query: format.
+	{
+		val := SubsonicStreamFormat("mp3")
+		params.Format.SetTo(val)
+	}
+	// Decode query: format.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "format",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotFormatVal SubsonicStreamFormat
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotFormatVal = SubsonicStreamFormat(c)
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.Format.SetTo(paramsDotFormatVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if value, ok := params.Format.Get(); ok {
+					if err := func() error {
+						if err := value.Validate(); err != nil {
+							return err
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "format",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: timeOffset.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "timeOffset",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotTimeOffsetVal int
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToInt(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotTimeOffsetVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.TimeOffset.SetTo(paramsDotTimeOffsetVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if value, ok := params.TimeOffset.Get(); ok {
+					if err := func() error {
+						if err := (validate.Int{
+							MinSet:        true,
+							Min:           0,
+							MaxSet:        false,
+							Max:           0,
+							MinExclusive:  false,
+							MaxExclusive:  false,
+							MultipleOfSet: false,
+							MultipleOf:    0,
+							Pattern:       nil,
+						}).Validate(int64(value)); err != nil {
+							return errors.Wrap(err, "int")
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "timeOffset",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Set default value for query: estimateContentLength.
+	{
+		val := bool(false)
+		params.EstimateContentLength.SetTo(val)
+	}
+	// Decode query: estimateContentLength.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "estimateContentLength",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotEstimateContentLengthVal bool
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToBool(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotEstimateContentLengthVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.EstimateContentLength.SetTo(paramsDotEstimateContentLengthVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "estimateContentLength",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // UpdateGroupRolesParams is parameters of UpdateGroupRoles operation.
 type UpdateGroupRolesParams struct {
 	GroupID uuid.UUID
@@ -2210,6 +3198,71 @@ func decodeUpdateGroupRolesParams(args [2]string, argsEscaped bool, r *http.Requ
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
 			Name: "user_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// UploadTrackAudioParams is parameters of uploadTrackAudio operation.
+type UploadTrackAudioParams struct {
+	TrackID uuid.UUID
+}
+
+func unpackUploadTrackAudioParams(packed middleware.Parameters) (params UploadTrackAudioParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "track_id",
+			In:   "path",
+		}
+		params.TrackID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeUploadTrackAudioParams(args [1]string, argsEscaped bool, r *http.Request) (params UploadTrackAudioParams, _ error) {
+	// Decode path: track_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "track_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.TrackID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "track_id",
 			In:   "path",
 			Err:  err,
 		}

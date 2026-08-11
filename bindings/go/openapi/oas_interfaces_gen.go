@@ -173,6 +173,14 @@ type SignInRes interface {
 	signInRes()
 }
 
+type SubsonicDownloadRes interface {
+	subsonicDownloadRes()
+}
+
+type SubsonicStreamRes interface {
+	subsonicStreamRes()
+}
+
 type UpdateGroupRolesRes interface {
 	updateGroupRolesRes()
 }
@@ -183,6 +191,10 @@ type UpdateLibraryRes interface {
 
 type UpdateUserRes interface {
 	updateUserRes()
+}
+
+type UploadTrackAudioRes interface {
+	uploadTrackAudioRes()
 }
 
 type ValidateTokenRes interface {

@@ -1225,6 +1225,73 @@ func (s *StatisticsQuery) Validate() error {
 	return nil
 }
 
+func (s SubsonicAuthF) Validate() error {
+	switch s {
+	case "xml":
+		return nil
+	case "json":
+		return nil
+	case "jsonp":
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
+func (s SubsonicStreamFormat) Validate() error {
+	switch s {
+	case "mp3":
+		return nil
+	case "flac":
+		return nil
+	case "ogg":
+		return nil
+	case "opus":
+		return nil
+	case "raw":
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
+func (s SubsonicStreamMaxBitRate) Validate() error {
+	switch s {
+	case 0:
+		return nil
+	case 32:
+		return nil
+	case 40:
+		return nil
+	case 48:
+		return nil
+	case 56:
+		return nil
+	case 64:
+		return nil
+	case 80:
+		return nil
+	case 96:
+		return nil
+	case 112:
+		return nil
+	case 128:
+		return nil
+	case 160:
+		return nil
+	case 192:
+		return nil
+	case 224:
+		return nil
+	case 256:
+		return nil
+	case 320:
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
 func (s *TopAlbumEntry) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer

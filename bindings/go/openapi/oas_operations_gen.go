@@ -51,8 +51,11 @@ const (
 	SetBestFriendOperation             OperationName = "SetBestFriend"
 	SetBlockedOperation                OperationName = "SetBlocked"
 	SignInOperation                    OperationName = "SignIn"
+	SubsonicDownloadOperation          OperationName = "SubsonicDownload"
+	SubsonicStreamOperation            OperationName = "SubsonicStream"
 	UpdateGroupRolesOperation          OperationName = "UpdateGroupRoles"
 	UpdateLibraryOperation             OperationName = "UpdateLibrary"
 	UpdateUserOperation                OperationName = "UpdateUser"
+	UploadTrackAudioOperation          OperationName = "UploadTrackAudio"
 	ValidateTokenOperation             OperationName = "ValidateToken"
 )

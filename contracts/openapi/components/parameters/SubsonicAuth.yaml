@@ -1,0 +1,44 @@
+SubsonicAuthU:
+  name: u
+  in: query
+  required: true
+  schema:
+    type: string
+  description: Username
+SubsonicAuthT:
+  name: t
+  in: query
+  required: true
+  schema:
+    type: string
+  description: Authentication token (MD5 hash of (password + salt))
+SubsonicAuthS:
+  name: s
+  in: query
+  required: true
+  schema:
+    type: string
+  description: Salt used in token generation
+SubsonicAuthV:
+  name: v
+  in: query
+  required: true
+  schema:
+    type: string
+  description: Subsonic API version
+SubsonicAuthC:
+  name: c
+  in: query
+  required: true
+  schema:
+    type: string
+  description: Client application name
+SubsonicAuthF:
+  name: f
+  in: query
+  required: false
+  schema:
+    type: string
+    enum: [xml, json, jsonp]
+    default: xml
+  description: Response format

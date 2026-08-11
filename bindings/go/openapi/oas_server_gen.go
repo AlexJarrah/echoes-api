@@ -282,6 +282,18 @@ type Handler interface {
 	//
 	// POST /api/signin
 	SignIn(ctx context.Context, req *SignInRequest) (SignInRes, error)
+	// SubsonicDownload implements subsonicDownload operation.
+	//
+	// Download track as an audio file.
+	//
+	// GET /api/subsonic/rest/download
+	SubsonicDownload(ctx context.Context, params SubsonicDownloadParams) (SubsonicDownloadRes, error)
+	// SubsonicStream implements subsonicStream operation.
+	//
+	// Stream track audio.
+	//
+	// GET /api/subsonic/rest/stream
+	SubsonicStream(ctx context.Context, params SubsonicStreamParams) (SubsonicStreamRes, error)
 	// UpdateGroupRoles implements UpdateGroupRoles operation.
 	//
 	// Update group roles.
@@ -300,6 +312,12 @@ type Handler interface {
 	//
 	// POST /api/user/update
 	UpdateUser(ctx context.Context, req *UpdateUserRequest) (UpdateUserRes, error)
+	// UploadTrackAudio implements uploadTrackAudio operation.
+	//
+	// Upload track audio data.
+	//
+	// POST /api/upload/tracks/{track_id}/audio
+	UploadTrackAudio(ctx context.Context, req *UploadTrackAudioReq, params UploadTrackAudioParams) (UploadTrackAudioRes, error)
 	// ValidateToken implements validateToken operation.
 	//
 	// Validate authentication token.

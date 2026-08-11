@@ -422,6 +422,24 @@ func (UnimplementedHandler) SignIn(ctx context.Context, req *SignInRequest) (r S
 	return r, ht.ErrNotImplemented
 }
 
+// SubsonicDownload implements subsonicDownload operation.
+//
+// Download track as an audio file.
+//
+// GET /api/subsonic/rest/download
+func (UnimplementedHandler) SubsonicDownload(ctx context.Context, params SubsonicDownloadParams) (r SubsonicDownloadRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// SubsonicStream implements subsonicStream operation.
+//
+// Stream track audio.
+//
+// GET /api/subsonic/rest/stream
+func (UnimplementedHandler) SubsonicStream(ctx context.Context, params SubsonicStreamParams) (r SubsonicStreamRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // UpdateGroupRoles implements UpdateGroupRoles operation.
 //
 // Update group roles.
@@ -446,6 +464,15 @@ func (UnimplementedHandler) UpdateLibrary(ctx context.Context, req *LibraryUpdat
 //
 // POST /api/user/update
 func (UnimplementedHandler) UpdateUser(ctx context.Context, req *UpdateUserRequest) (r UpdateUserRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// UploadTrackAudio implements uploadTrackAudio operation.
+//
+// Upload track audio data.
+//
+// POST /api/upload/tracks/{track_id}/audio
+func (UnimplementedHandler) UploadTrackAudio(ctx context.Context, req *UploadTrackAudioReq, params UploadTrackAudioParams) (r UploadTrackAudioRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

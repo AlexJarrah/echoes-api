@@ -833,6 +833,36 @@ export type UserRelation = 0 | 1 | 2 | 3 | 4 | 5;
  */
 export type Visibility = 0 | 1 | 2 | 3;
 
+/**
+ * Username
+ */
+export type SubsonicAuthU = string;
+
+/**
+ * Authentication token (MD5 hash of (password + salt))
+ */
+export type SubsonicAuthT = string;
+
+/**
+ * Salt used in token generation
+ */
+export type SubsonicAuthS = string;
+
+/**
+ * Subsonic API version
+ */
+export type SubsonicAuthV = string;
+
+/**
+ * Client application name
+ */
+export type SubsonicAuthC = string;
+
+/**
+ * Response format
+ */
+export type SubsonicAuthF = 'xml' | 'json' | 'jsonp';
+
 export type GetUserListenSessionsData = {
     body: ListensSessionsRequest;
     path: {
@@ -2203,6 +2233,135 @@ export type GetUserTopArtistPlayStatsResponses = {
 
 export type GetUserTopArtistPlayStatsResponse = GetUserTopArtistPlayStatsResponses[keyof GetUserTopArtistPlayStatsResponses];
 
+export type SubsonicDownloadData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Username
+         */
+        u: string;
+        /**
+         * Authentication token (MD5 hash of (password + salt))
+         */
+        t: string;
+        /**
+         * Salt used in token generation
+         */
+        s: string;
+        /**
+         * Subsonic API version
+         */
+        v: string;
+        /**
+         * Client application name
+         */
+        c: string;
+        /**
+         * Response format
+         */
+        f?: 'xml' | 'json' | 'jsonp';
+        /**
+         * Track ID
+         */
+        id: string;
+    };
+    url: '/api/subsonic/rest/download';
+};
+
+export type SubsonicDownloadErrors = {
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SubsonicDownloadError = SubsonicDownloadErrors[keyof SubsonicDownloadErrors];
+
+export type SubsonicDownloadResponses = {
+    200: Blob | File;
+};
+
+export type SubsonicDownloadResponse = SubsonicDownloadResponses[keyof SubsonicDownloadResponses];
+
+export type SubsonicStreamData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Username
+         */
+        u: string;
+        /**
+         * Authentication token (MD5 hash of (password + salt))
+         */
+        t: string;
+        /**
+         * Salt used in token generation
+         */
+        s: string;
+        /**
+         * Subsonic API version
+         */
+        v: string;
+        /**
+         * Client application name
+         */
+        c: string;
+        /**
+         * Response format
+         */
+        f?: 'xml' | 'json' | 'jsonp';
+        /**
+         * Track ID
+         */
+        id: string;
+        /**
+         * Maximum bitrate in kbps, 0 meaning unlimited.
+         */
+        maxBitRate?: 0 | 32 | 40 | 48 | 56 | 64 | 80 | 96 | 112 | 128 | 160 | 192 | 224 | 256 | 320;
+        /**
+         * Target transcode format.
+         */
+        format?: 'mp3' | 'flac' | 'ogg' | 'opus' | 'raw';
+        /**
+         * Start streaming from this offset in seconds.
+         */
+        timeOffset?: number;
+        /**
+         * Include an estimated Content-Length header.
+         */
+        estimateContentLength?: boolean;
+    };
+    url: '/api/subsonic/rest/stream';
+};
+
+export type SubsonicStreamErrors = {
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SubsonicStreamError = SubsonicStreamErrors[keyof SubsonicStreamErrors];
+
+export type SubsonicStreamResponses = {
+    /**
+     * Audio stream
+     */
+    200: Blob | File;
+};
+
+export type SubsonicStreamResponse = SubsonicStreamResponses[keyof SubsonicStreamResponses];
+
 export type GetTrackData = {
     body?: never;
     path: {
@@ -2241,6 +2400,46 @@ export type GetTrackResponses = {
 };
 
 export type GetTrackResponse = GetTrackResponses[keyof GetTrackResponses];
+
+export type UploadTrackAudioData = {
+    body: {
+        /**
+         * Audio data
+         */
+        audio: Blob | File;
+    };
+    path: {
+        track_id: string;
+    };
+    query?: never;
+    url: '/api/upload/tracks/{track_id}/audio';
+};
+
+export type UploadTrackAudioErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type UploadTrackAudioError = UploadTrackAudioErrors[keyof UploadTrackAudioErrors];
+
+export type UploadTrackAudioResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type UploadTrackAudioResponse = UploadTrackAudioResponses[keyof UploadTrackAudioResponses];
 
 export type GetUserDetailsData = {
     body?: never;
