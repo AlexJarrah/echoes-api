@@ -67,7 +67,7 @@ var operationRolesCookieAuth = map[string][]string{
 	ReadMessageOperation:               []string{},
 	RemoveFriendOperation:              []string{},
 	RemoveFromLibraryOperation:         []string{},
-	SearchTracksViaDetailsOperation:    []string{},
+	SearchTracksOperation:              []string{},
 	SendMessageOperation:               []string{},
 	SetActivityOperation:               []string{},
 	SetBestFriendOperation:             []string{},

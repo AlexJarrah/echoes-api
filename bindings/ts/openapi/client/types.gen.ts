@@ -512,6 +512,13 @@ export type RelationDetails = {
     };
 };
 
+export type SearchTrackQuery = {
+    track_name: string;
+    artist_names?: Array<string>;
+    album_name?: string;
+    seconds?: number;
+};
+
 export type SearchTrackResult = Track & {
     /**
      * Confidence score (0-100)
@@ -519,11 +526,13 @@ export type SearchTrackResult = Track & {
     confidence: number;
 };
 
-export type SearchTracksRequest = {
-    track_name: string;
-    artist_names?: Array<string>;
-    album_name?: string;
-    seconds?: number;
+export type SearchTracksResultGroup = {
+    /**
+     * Associated request query index
+     */
+    index: number;
+    results: Array<SearchTrackResult>;
+    error?: string;
 };
 
 export type Session = {
@@ -1911,39 +1920,6 @@ export type RemoveFriendResponses = {
 
 export type RemoveFriendResponse = RemoveFriendResponses[keyof RemoveFriendResponses];
 
-export type SearchTracksViaDetailsData = {
-    body: SearchTracksRequest;
-    path?: never;
-    query?: never;
-    url: '/api/search-tracks-via-details';
-};
-
-export type SearchTracksViaDetailsErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type SearchTracksViaDetailsError = SearchTracksViaDetailsErrors[keyof SearchTracksViaDetailsErrors];
-
-export type SearchTracksViaDetailsResponses = {
-    /**
-     * Search results
-     */
-    200: Array<SearchTrackResult>;
-};
-
-export type SearchTracksViaDetailsResponse = SearchTracksViaDetailsResponses[keyof SearchTracksViaDetailsResponses];
-
 export type SetActivityData = {
     body: Array<SetActivityItem>;
     path?: never;
@@ -2361,6 +2337,39 @@ export type SubsonicStreamResponses = {
 };
 
 export type SubsonicStreamResponse = SubsonicStreamResponses[keyof SubsonicStreamResponses];
+
+export type SearchTracksData = {
+    body: Array<SearchTrackQuery>;
+    path?: never;
+    query?: never;
+    url: '/api/tracks/search';
+};
+
+export type SearchTracksErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SearchTracksError = SearchTracksErrors[keyof SearchTracksErrors];
+
+export type SearchTracksResponses = {
+    /**
+     * Search results
+     */
+    200: Array<SearchTracksResultGroup>;
+};
+
+export type SearchTracksResponse = SearchTracksResponses[keyof SearchTracksResponses];
 
 export type GetTrackData = {
     body?: never;

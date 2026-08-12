@@ -1310,8 +1310,8 @@ func (s *Server) decodeRemoveFromLibraryRequest(r *http.Request) (
 	}
 }
 
-func (s *Server) decodeSearchTracksViaDetailsRequest(r *http.Request) (
-	req *SearchTracksRequest,
+func (s *Server) decodeSearchTracksRequest(r *http.Request) (
+	req []SearchTrackQuery,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -1358,9 +1358,17 @@ func (s *Server) decodeSearchTracksViaDetailsRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request SearchTracksRequest
+		var request []SearchTrackQuery
 		if err := func() error {
-			if err := request.Decode(d); err != nil {
+			request = make([]SearchTrackQuery, 0)
+			if err := d.Arr(func(d *jx.Decoder) error {
+				var elem SearchTrackQuery
+				if err := elem.Decode(d); err != nil {
+					return err
+				}
+				request = append(request, elem)
+				return nil
+			}); err != nil {
 				return err
 			}
 			if err := d.Skip(); err != io.EOF {
@@ -1375,7 +1383,23 @@ func (s *Server) decodeSearchTracksViaDetailsRequest(r *http.Request) (
 			}
 			return req, rawBody, close, err
 		}
-		return &request, rawBody, close, nil
+		if err := func() error {
+			if request == nil {
+				return errors.New("nil is invalid value")
+			}
+			if err := (validate.Array{
+				MinLength:    1,
+				MinLengthSet: true,
+				MaxLength:    50,
+				MaxLengthSet: true,
+			}).ValidateLength(len(request)); err != nil {
+				return errors.Wrap(err, "array")
+			}
+			return nil
+		}(); err != nil {
+			return req, rawBody, close, errors.Wrap(err, "validate")
+		}
+		return request, rawBody, close, nil
 	default:
 		return req, rawBody, close, validate.InvalidContentType(ct)
 	}

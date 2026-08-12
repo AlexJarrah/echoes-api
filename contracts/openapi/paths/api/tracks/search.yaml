@@ -1,8 +1,9 @@
-/api/search-tracks-via-details:
+/api/tracks/search:
   post:
-    summary: Search tracks via details
-    operationId: searchTracksViaDetails
+    summary: Search tracks
+    operationId: searchTracks
     tags:
+      - Tracks
       - Search
     security:
       - CookieAuth: []
@@ -11,7 +12,11 @@
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/SearchTracksRequest"
+            type: array
+            items:
+              $ref: "#/components/schemas/SearchTrackQuery"
+            minItems: 1
+            maxItems: 50
     responses:
       "200":
         description: Search results
@@ -20,7 +25,7 @@
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/SearchTrackResult"
+                $ref: "#/components/schemas/SearchTracksResultGroup"
       "400":
         $ref: "#/components/responses/BadRequest"
       "401":

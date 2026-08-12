@@ -149,8 +149,8 @@ type RemoveFromLibraryRes interface {
 	removeFromLibraryRes()
 }
 
-type SearchTracksViaDetailsRes interface {
-	searchTracksViaDetailsRes()
+type SearchTracksRes interface {
+	searchTracksRes()
 }
 
 type SendMessageRes interface {

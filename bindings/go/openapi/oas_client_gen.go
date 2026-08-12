@@ -328,12 +328,12 @@ type Invoker interface {
 	//
 	// POST /api/library/remove
 	RemoveFromLibrary(ctx context.Context, request *LibraryRemoveRequest, options ...RequestOption) (RemoveFromLibraryRes, error)
-	// SearchTracksViaDetails invokes searchTracksViaDetails operation.
+	// SearchTracks invokes searchTracks operation.
 	//
-	// Search tracks via details.
+	// Search tracks.
 	//
-	// POST /api/search-tracks-via-details
-	SearchTracksViaDetails(ctx context.Context, request *SearchTracksRequest, options ...RequestOption) (SearchTracksViaDetailsRes, error)
+	// POST /api/tracks/search
+	SearchTracks(ctx context.Context, request []SearchTrackQuery, options ...RequestOption) (SearchTracksRes, error)
 	// SendMessage invokes sendMessage operation.
 	//
 	// Send a conversation message.
@@ -6453,21 +6453,38 @@ func (c *Client) sendRemoveFromLibrary(ctx context.Context, request *LibraryRemo
 	return result, nil
 }
 
-// SearchTracksViaDetails invokes searchTracksViaDetails operation.
+// SearchTracks invokes searchTracks operation.
 //
-// Search tracks via details.
+// Search tracks.
 //
-// POST /api/search-tracks-via-details
-func (c *Client) SearchTracksViaDetails(ctx context.Context, request *SearchTracksRequest, options ...RequestOption) (SearchTracksViaDetailsRes, error) {
-	res, err := c.sendSearchTracksViaDetails(ctx, request, options...)
+// POST /api/tracks/search
+func (c *Client) SearchTracks(ctx context.Context, request []SearchTrackQuery, options ...RequestOption) (SearchTracksRes, error) {
+	res, err := c.sendSearchTracks(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *SearchTracksRequest, requestOptions ...RequestOption) (res SearchTracksViaDetailsRes, err error) {
+func (c *Client) sendSearchTracks(ctx context.Context, request []SearchTrackQuery, requestOptions ...RequestOption) (res SearchTracksRes, err error) {
+	// Validate request before sending.
+	if err := func() error {
+		if request == nil {
+			return errors.New("nil is invalid value")
+		}
+		if err := (validate.Array{
+			MinLength:    1,
+			MinLengthSet: true,
+			MaxLength:    50,
+			MaxLengthSet: true,
+		}).ValidateLength(len(request)); err != nil {
+			return errors.Wrap(err, "array")
+		}
+		return nil
+	}(); err != nil {
+		return res, errors.Wrap(err, "validate")
+	}
 	otelAttrs := []attribute.KeyValue{
-		otelogen.OperationID("searchTracksViaDetails"),
+		otelogen.OperationID("searchTracks"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.URLTemplateKey.String("/api/search-tracks-via-details"),
+		semconv.URLTemplateKey.String("/api/tracks/search"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -6483,7 +6500,7 @@ func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *Search
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, SearchTracksViaDetailsOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, SearchTracksOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -6511,7 +6528,7 @@ func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *Search
 	}
 	u = uri.Clone(u)
 	var pathParts [1]string
-	pathParts[0] = "/api/search-tracks-via-details"
+	pathParts[0] = "/api/tracks/search"
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
@@ -6519,7 +6536,7 @@ func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *Search
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}
-	if err := encodeSearchTracksViaDetailsRequest(request, r); err != nil {
+	if err := encodeSearchTracksRequest(request, r); err != nil {
 		return res, errors.Wrap(err, "encode request")
 	}
 
@@ -6528,7 +6545,7 @@ func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *Search
 		var satisfied bitset
 		{
 			stage = "Security:CookieAuth"
-			switch err := c.securityCookieAuth(ctx, SearchTracksViaDetailsOperation, r); {
+			switch err := c.securityCookieAuth(ctx, SearchTracksOperation, r); {
 			case err == nil: // if NO error
 				satisfied[0] |= 1 << 0
 			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
@@ -6587,7 +6604,7 @@ func (c *Client) sendSearchTracksViaDetails(ctx context.Context, request *Search
 	}
 
 	stage = "DecodeResponse"
-	result, err := decodeSearchTracksViaDetailsResponse(resp)
+	result, err := decodeSearchTracksResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

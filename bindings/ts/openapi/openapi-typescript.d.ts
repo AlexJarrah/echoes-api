@@ -403,23 +403,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/search-tracks-via-details": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Search tracks via details */
-        post: operations["searchTracksViaDetails"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/set-activity": {
         parameters: {
             query?: never;
@@ -601,6 +584,23 @@ export interface paths {
         get: operations["subsonicStream"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/tracks/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Search tracks */
+        post: operations["searchTracks"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1337,16 +1337,28 @@ export interface components {
                 listening_streak: number;
             };
         };
-        SearchTrackResult: components["schemas"]["Track"] & {
-            /** @description Confidence score (0-100) */
-            confidence: number;
-        };
-        SearchTracksRequest: {
+        SearchTrackQuery: {
             track_name: string;
             artist_names?: string[];
             album_name?: string;
             /** Format: uint16 */
             seconds?: number;
+        };
+        SearchTrackResult: components["schemas"]["Track"] & {
+            /**
+             * Format: uint8
+             * @description Confidence score (0-100)
+             */
+            confidence: number;
+        };
+        SearchTracksResultGroup: {
+            /**
+             * Format: uint8
+             * @description Associated request query index
+             */
+            index: number;
+            results: components["schemas"]["SearchTrackResult"][];
+            error?: string;
         };
         Session: {
             /**
@@ -2512,33 +2524,6 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    searchTracksViaDetails: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SearchTracksRequest"];
-            };
-        };
-        responses: {
-            /** @description Search results */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SearchTrackResult"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
     setActivity: {
         parameters: {
             query?: never;
@@ -2841,6 +2826,33 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    searchTracks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SearchTrackQuery"][];
+            };
+        };
+        responses: {
+            /** @description Search results */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchTracksResultGroup"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };

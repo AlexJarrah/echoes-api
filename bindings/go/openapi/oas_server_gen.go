@@ -246,12 +246,12 @@ type Handler interface {
 	//
 	// POST /api/library/remove
 	RemoveFromLibrary(ctx context.Context, req *LibraryRemoveRequest) (RemoveFromLibraryRes, error)
-	// SearchTracksViaDetails implements searchTracksViaDetails operation.
+	// SearchTracks implements searchTracks operation.
 	//
-	// Search tracks via details.
+	// Search tracks.
 	//
-	// POST /api/search-tracks-via-details
-	SearchTracksViaDetails(ctx context.Context, req *SearchTracksRequest) (SearchTracksViaDetailsRes, error)
+	// POST /api/tracks/search
+	SearchTracks(ctx context.Context, req []SearchTrackQuery) (SearchTracksRes, error)
 	// SendMessage implements sendMessage operation.
 	//
 	// Send a conversation message.

@@ -6999,24 +6999,24 @@ func (s *Server) handleRemoveFromLibraryRequest(args [0]string, argsEscaped bool
 	}
 }
 
-// handleSearchTracksViaDetailsRequest handles searchTracksViaDetails operation.
+// handleSearchTracksRequest handles searchTracks operation.
 //
-// Search tracks via details.
+// Search tracks.
 //
-// POST /api/search-tracks-via-details
-func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
+// POST /api/tracks/search
+func (s *Server) handleSearchTracksRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
-		otelogen.OperationID("searchTracksViaDetails"),
+		otelogen.OperationID("searchTracks"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/search-tracks-via-details"),
+		semconv.HTTPRouteKey.String("/api/tracks/search"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
 
 	// Start a span for this request.
-	ctx, span := s.cfg.Tracer.Start(r.Context(), SearchTracksViaDetailsOperation,
+	ctx, span := s.cfg.Tracer.Start(r.Context(), SearchTracksOperation,
 		trace.WithAttributes(otelAttrs...),
 		serverSpanKind,
 	)
@@ -7071,15 +7071,15 @@ func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped
 		}
 		err          error
 		opErrContext = ogenerrors.OperationContext{
-			Name: SearchTracksViaDetailsOperation,
-			ID:   "searchTracksViaDetails",
+			Name: SearchTracksOperation,
+			ID:   "searchTracks",
 		}
 	)
 	{
 		type bitset = [1]uint8
 		var satisfied bitset
 		{
-			sctx, ok, err := s.securityCookieAuth(ctx, SearchTracksViaDetailsOperation, r)
+			sctx, ok, err := s.securityCookieAuth(ctx, SearchTracksOperation, r)
 			if err != nil {
 				err = &ogenerrors.SecurityError{
 					OperationContext: opErrContext,
@@ -7121,7 +7121,7 @@ func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped
 	}
 
 	var rawBody []byte
-	request, rawBody, close, err := s.decodeSearchTracksViaDetailsRequest(r)
+	request, rawBody, close, err := s.decodeSearchTracksRequest(r)
 	if err != nil {
 		err = &ogenerrors.DecodeRequestError{
 			OperationContext: opErrContext,
@@ -7137,13 +7137,13 @@ func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped
 		}
 	}()
 
-	var response SearchTracksViaDetailsRes
+	var response SearchTracksRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
-			OperationName:    SearchTracksViaDetailsOperation,
-			OperationSummary: "Search tracks via details",
-			OperationID:      "searchTracksViaDetails",
+			OperationName:    SearchTracksOperation,
+			OperationSummary: "Search tracks",
+			OperationID:      "searchTracks",
 			Body:             request,
 			RawBody:          rawBody,
 			Params:           middleware.Parameters{},
@@ -7151,9 +7151,9 @@ func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped
 		}
 
 		type (
-			Request  = *SearchTracksRequest
+			Request  = []SearchTrackQuery
 			Params   = struct{}
-			Response = SearchTracksViaDetailsRes
+			Response = SearchTracksRes
 		)
 		response, err = middleware.HookMiddleware[
 			Request,
@@ -7164,12 +7164,12 @@ func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped
 			mreq,
 			nil,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.SearchTracksViaDetails(ctx, request)
+				response, err = s.h.SearchTracks(ctx, request)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.SearchTracksViaDetails(ctx, request)
+		response, err = s.h.SearchTracks(ctx, request)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -7177,7 +7177,7 @@ func (s *Server) handleSearchTracksViaDetailsRequest(args [0]string, argsEscaped
 		return
 	}
 
-	if err := encodeSearchTracksViaDetailsResponse(response, w, span); err != nil {
+	if err := encodeSearchTracksResponse(response, w, span); err != nil {
 		defer recordError("EncodeResponse", err)
 		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
 			s.cfg.ErrorHandler(ctx, w, r, err)

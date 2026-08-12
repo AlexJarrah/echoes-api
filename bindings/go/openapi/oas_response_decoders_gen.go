@@ -6052,7 +6052,7 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 	return res, validate.UnexpectedStatusCodeWithResponse(resp)
 }
 
-func decodeSearchTracksViaDetailsResponse(resp *http.Response) (res SearchTracksViaDetailsRes, _ error) {
+func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ error) {
 	switch resp.StatusCode {
 	case 200:
 		// Code 200.
@@ -6068,7 +6068,7 @@ func decodeSearchTracksViaDetailsResponse(resp *http.Response) (res SearchTracks
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksViaDetailsOKApplicationJSON
+			var response SearchTracksOKApplicationJSON
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6112,7 +6112,7 @@ func decodeSearchTracksViaDetailsResponse(resp *http.Response) (res SearchTracks
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksViaDetailsApplicationJSONBadRequest
+			var response SearchTracksApplicationJSONBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6156,7 +6156,7 @@ func decodeSearchTracksViaDetailsResponse(resp *http.Response) (res SearchTracks
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksViaDetailsApplicationJSONUnauthorized
+			var response SearchTracksApplicationJSONUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6200,7 +6200,7 @@ func decodeSearchTracksViaDetailsResponse(resp *http.Response) (res SearchTracks
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksViaDetailsApplicationJSONInternalServerError
+			var response SearchTracksApplicationJSONInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

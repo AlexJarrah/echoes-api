@@ -3605,9 +3605,9 @@ func encodeRemoveFromLibraryResponse(response RemoveFromLibraryRes, w http.Respo
 	}
 }
 
-func encodeSearchTracksViaDetailsResponse(response SearchTracksViaDetailsRes, w http.ResponseWriter, span trace.Span) error {
+func encodeSearchTracksResponse(response SearchTracksRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *SearchTracksViaDetailsOKApplicationJSON:
+	case *SearchTracksOKApplicationJSON:
 		if err := func() error {
 			if err := response.Validate(); err != nil {
 				return err
@@ -3627,7 +3627,7 @@ func encodeSearchTracksViaDetailsResponse(response SearchTracksViaDetailsRes, w 
 
 		return nil
 
-	case *SearchTracksViaDetailsApplicationJSONBadRequest:
+	case *SearchTracksApplicationJSONBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3653,7 +3653,7 @@ func encodeSearchTracksViaDetailsResponse(response SearchTracksViaDetailsRes, w 
 
 		return nil
 
-	case *SearchTracksViaDetailsApplicationJSONUnauthorized:
+	case *SearchTracksApplicationJSONUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3679,7 +3679,7 @@ func encodeSearchTracksViaDetailsResponse(response SearchTracksViaDetailsRes, w 
 
 		return nil
 
-	case *SearchTracksViaDetailsApplicationJSONInternalServerError:
+	case *SearchTracksApplicationJSONInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))

@@ -686,7 +686,7 @@ func (*BadRequestTextPlain) readMessageRes()               {}
 func (*BadRequestTextPlain) registerRes()                  {}
 func (*BadRequestTextPlain) removeFriendRes()              {}
 func (*BadRequestTextPlain) removeFromLibraryRes()         {}
-func (*BadRequestTextPlain) searchTracksViaDetailsRes()    {}
+func (*BadRequestTextPlain) searchTracksRes()              {}
 func (*BadRequestTextPlain) sendMessageRes()               {}
 func (*BadRequestTextPlain) setActivityRes()               {}
 func (*BadRequestTextPlain) setBestFriendRes()             {}
@@ -1798,7 +1798,7 @@ func (*InternalServerErrorTextPlain) readMessageRes()               {}
 func (*InternalServerErrorTextPlain) registerRes()                  {}
 func (*InternalServerErrorTextPlain) removeFriendRes()              {}
 func (*InternalServerErrorTextPlain) removeFromLibraryRes()         {}
-func (*InternalServerErrorTextPlain) searchTracksViaDetailsRes()    {}
+func (*InternalServerErrorTextPlain) searchTracksRes()              {}
 func (*InternalServerErrorTextPlain) sendMessageRes()               {}
 func (*InternalServerErrorTextPlain) setActivityRes()               {}
 func (*InternalServerErrorTextPlain) setBestFriendRes()             {}
@@ -4718,6 +4718,54 @@ type RemoveFromLibraryApplicationJSONUnauthorized ErrorResponse
 
 func (*RemoveFromLibraryApplicationJSONUnauthorized) removeFromLibraryRes() {}
 
+// Ref: #/components/schemas/SearchTrackQuery
+type SearchTrackQuery struct {
+	TrackName   string    `json:"track_name"`
+	ArtistNames []string  `json:"artist_names"`
+	AlbumName   OptString `json:"album_name"`
+	Seconds     OptUint16 `json:"seconds"`
+}
+
+// GetTrackName returns the value of TrackName.
+func (s *SearchTrackQuery) GetTrackName() string {
+	return s.TrackName
+}
+
+// GetArtistNames returns the value of ArtistNames.
+func (s *SearchTrackQuery) GetArtistNames() []string {
+	return s.ArtistNames
+}
+
+// GetAlbumName returns the value of AlbumName.
+func (s *SearchTrackQuery) GetAlbumName() OptString {
+	return s.AlbumName
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *SearchTrackQuery) GetSeconds() OptUint16 {
+	return s.Seconds
+}
+
+// SetTrackName sets the value of TrackName.
+func (s *SearchTrackQuery) SetTrackName(val string) {
+	s.TrackName = val
+}
+
+// SetArtistNames sets the value of ArtistNames.
+func (s *SearchTrackQuery) SetArtistNames(val []string) {
+	s.ArtistNames = val
+}
+
+// SetAlbumName sets the value of AlbumName.
+func (s *SearchTrackQuery) SetAlbumName(val OptString) {
+	s.AlbumName = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *SearchTrackQuery) SetSeconds(val OptUint16) {
+	s.Seconds = val
+}
+
 // Merged schema.
 // Ref: #/components/schemas/SearchTrackResult
 type SearchTrackResult struct {
@@ -4735,7 +4783,7 @@ type SearchTrackResult struct {
 	CreatedAt       time.Time      `json:"created_at"`
 	UpdatedAt       OptNilDateTime `json:"updated_at"`
 	// Confidence score (0-100).
-	Confidence int `json:"confidence"`
+	Confidence uint8 `json:"confidence"`
 }
 
 // GetTrackID returns the value of TrackID.
@@ -4804,7 +4852,7 @@ func (s *SearchTrackResult) GetUpdatedAt() OptNilDateTime {
 }
 
 // GetConfidence returns the value of Confidence.
-func (s *SearchTrackResult) GetConfidence() int {
+func (s *SearchTrackResult) GetConfidence() uint8 {
 	return s.Confidence
 }
 
@@ -4874,73 +4922,63 @@ func (s *SearchTrackResult) SetUpdatedAt(val OptNilDateTime) {
 }
 
 // SetConfidence sets the value of Confidence.
-func (s *SearchTrackResult) SetConfidence(val int) {
+func (s *SearchTrackResult) SetConfidence(val uint8) {
 	s.Confidence = val
 }
 
-// Ref: #/components/schemas/SearchTracksRequest
-type SearchTracksRequest struct {
-	TrackName   string    `json:"track_name"`
-	ArtistNames []string  `json:"artist_names"`
-	AlbumName   OptString `json:"album_name"`
-	Seconds     OptUint16 `json:"seconds"`
+type SearchTracksApplicationJSONBadRequest ErrorResponse
+
+func (*SearchTracksApplicationJSONBadRequest) searchTracksRes() {}
+
+type SearchTracksApplicationJSONInternalServerError ErrorResponse
+
+func (*SearchTracksApplicationJSONInternalServerError) searchTracksRes() {}
+
+type SearchTracksApplicationJSONUnauthorized ErrorResponse
+
+func (*SearchTracksApplicationJSONUnauthorized) searchTracksRes() {}
+
+type SearchTracksOKApplicationJSON []SearchTracksResultGroup
+
+func (*SearchTracksOKApplicationJSON) searchTracksRes() {}
+
+// Ref: #/components/schemas/SearchTracksResultGroup
+type SearchTracksResultGroup struct {
+	// Associated request query index.
+	Index   uint8               `json:"index"`
+	Results []SearchTrackResult `json:"results"`
+	Error   OptString           `json:"error"`
 }
 
-// GetTrackName returns the value of TrackName.
-func (s *SearchTracksRequest) GetTrackName() string {
-	return s.TrackName
+// GetIndex returns the value of Index.
+func (s *SearchTracksResultGroup) GetIndex() uint8 {
+	return s.Index
 }
 
-// GetArtistNames returns the value of ArtistNames.
-func (s *SearchTracksRequest) GetArtistNames() []string {
-	return s.ArtistNames
+// GetResults returns the value of Results.
+func (s *SearchTracksResultGroup) GetResults() []SearchTrackResult {
+	return s.Results
 }
 
-// GetAlbumName returns the value of AlbumName.
-func (s *SearchTracksRequest) GetAlbumName() OptString {
-	return s.AlbumName
+// GetError returns the value of Error.
+func (s *SearchTracksResultGroup) GetError() OptString {
+	return s.Error
 }
 
-// GetSeconds returns the value of Seconds.
-func (s *SearchTracksRequest) GetSeconds() OptUint16 {
-	return s.Seconds
+// SetIndex sets the value of Index.
+func (s *SearchTracksResultGroup) SetIndex(val uint8) {
+	s.Index = val
 }
 
-// SetTrackName sets the value of TrackName.
-func (s *SearchTracksRequest) SetTrackName(val string) {
-	s.TrackName = val
+// SetResults sets the value of Results.
+func (s *SearchTracksResultGroup) SetResults(val []SearchTrackResult) {
+	s.Results = val
 }
 
-// SetArtistNames sets the value of ArtistNames.
-func (s *SearchTracksRequest) SetArtistNames(val []string) {
-	s.ArtistNames = val
+// SetError sets the value of Error.
+func (s *SearchTracksResultGroup) SetError(val OptString) {
+	s.Error = val
 }
-
-// SetAlbumName sets the value of AlbumName.
-func (s *SearchTracksRequest) SetAlbumName(val OptString) {
-	s.AlbumName = val
-}
-
-// SetSeconds sets the value of Seconds.
-func (s *SearchTracksRequest) SetSeconds(val OptUint16) {
-	s.Seconds = val
-}
-
-type SearchTracksViaDetailsApplicationJSONBadRequest ErrorResponse
-
-func (*SearchTracksViaDetailsApplicationJSONBadRequest) searchTracksViaDetailsRes() {}
-
-type SearchTracksViaDetailsApplicationJSONInternalServerError ErrorResponse
-
-func (*SearchTracksViaDetailsApplicationJSONInternalServerError) searchTracksViaDetailsRes() {}
-
-type SearchTracksViaDetailsApplicationJSONUnauthorized ErrorResponse
-
-func (*SearchTracksViaDetailsApplicationJSONUnauthorized) searchTracksViaDetailsRes() {}
-
-type SearchTracksViaDetailsOKApplicationJSON []SearchTrackResult
-
-func (*SearchTracksViaDetailsOKApplicationJSON) searchTracksViaDetailsRes() {}
 
 type SendMessageApplicationJSONBadRequest ErrorResponse
 
@@ -6392,7 +6430,7 @@ func (*UnauthorizedTextPlain) joinFreeBetaRes()              {}
 func (*UnauthorizedTextPlain) readMessageRes()               {}
 func (*UnauthorizedTextPlain) removeFriendRes()              {}
 func (*UnauthorizedTextPlain) removeFromLibraryRes()         {}
-func (*UnauthorizedTextPlain) searchTracksViaDetailsRes()    {}
+func (*UnauthorizedTextPlain) searchTracksRes()              {}
 func (*UnauthorizedTextPlain) setActivityRes()               {}
 func (*UnauthorizedTextPlain) setBestFriendRes()             {}
 func (*UnauthorizedTextPlain) setBlockedRes()                {}

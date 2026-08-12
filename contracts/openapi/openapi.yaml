@@ -1271,20 +1271,7 @@ components:
               type: integer
               format: uint16
 
-    SearchTrackResult:
-      allOf:
-        - $ref: "#/components/schemas/Track"
-        - type: object
-          required:
-            - confidence
-          properties:
-            confidence:
-              type: integer
-              description: Confidence score (0-100)
-              minimum: 0
-              maximum: 100
-
-    SearchTracksRequest:
+    SearchTrackQuery:
       type: object
       required:
         - track_name
@@ -1300,6 +1287,37 @@ components:
         seconds:
           type: integer
           format: uint16
+
+    SearchTrackResult:
+      allOf:
+        - $ref: "#/components/schemas/Track"
+        - type: object
+          required:
+            - confidence
+          properties:
+            confidence:
+              type: integer
+              format: uint8
+              description: Confidence score (0-100)
+              minimum: 0
+              maximum: 100
+
+    SearchTracksResultGroup:
+      type: object
+      required:
+        - index
+        - results
+      properties:
+        index:
+          type: integer
+          format: uint8
+          description: Associated request query index
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchTrackResult"
+        error:
+          type: string
 
     Session:
       type: object
@@ -2817,36 +2835,6 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  /api/search-tracks-via-details:
-    post:
-      summary: Search tracks via details
-      operationId: searchTracksViaDetails
-      tags:
-        - Search
-      security:
-        - CookieAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SearchTracksRequest"
-      responses:
-        "200":
-          description: Search results
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SearchTrackResult"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
   /api/set-activity:
     post:
       summary: Set current activity
@@ -3203,6 +3191,41 @@ paths:
                 format: binary
         "404":
           $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/tracks/search:
+    post:
+      summary: Search tracks
+      operationId: searchTracks
+      tags:
+        - Tracks
+        - Search
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/SearchTrackQuery"
+              minItems: 1
+              maxItems: 50
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchTracksResultGroup"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
 

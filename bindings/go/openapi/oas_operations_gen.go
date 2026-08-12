@@ -45,7 +45,7 @@ const (
 	RegisterOperation                  OperationName = "Register"
 	RemoveFriendOperation              OperationName = "RemoveFriend"
 	RemoveFromLibraryOperation         OperationName = "RemoveFromLibrary"
-	SearchTracksViaDetailsOperation    OperationName = "SearchTracksViaDetails"
+	SearchTracksOperation              OperationName = "SearchTracks"
 	SendMessageOperation               OperationName = "SendMessage"
 	SetActivityOperation               OperationName = "SetActivity"
 	SetBestFriendOperation             OperationName = "SetBestFriend"

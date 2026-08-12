@@ -1,4 +1,4 @@
-SearchTracksRequest:
+SearchTrackQuery:
   type: object
   required:
     - track_name

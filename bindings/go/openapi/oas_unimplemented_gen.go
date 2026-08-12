@@ -368,12 +368,12 @@ func (UnimplementedHandler) RemoveFromLibrary(ctx context.Context, req *LibraryR
 	return r, ht.ErrNotImplemented
 }
 
-// SearchTracksViaDetails implements searchTracksViaDetails operation.
+// SearchTracks implements searchTracks operation.
 //
-// Search tracks via details.
+// Search tracks.
 //
-// POST /api/search-tracks-via-details
-func (UnimplementedHandler) SearchTracksViaDetails(ctx context.Context, req *SearchTracksRequest) (r SearchTracksViaDetailsRes, _ error) {
+// POST /api/tracks/search
+func (UnimplementedHandler) SearchTracks(ctx context.Context, req []SearchTrackQuery) (r SearchTracksRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

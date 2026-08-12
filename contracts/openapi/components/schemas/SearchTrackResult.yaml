@@ -7,6 +7,7 @@ SearchTrackResult:
       properties:
         confidence:
           type: integer
+          format: uint8
           description: Confidence score (0-100)
           minimum: 0
           maximum: 100

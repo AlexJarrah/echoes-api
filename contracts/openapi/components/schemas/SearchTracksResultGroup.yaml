@@ -1,0 +1,16 @@
+SearchTracksResultGroup:
+  type: object
+  required:
+    - index
+    - results
+  properties:
+    index:
+      type: integer
+      format: uint8
+      description: Associated request query index
+    results:
+      type: array
+      items:
+        $ref: "#/components/schemas/SearchTrackResult"
+    error:
+      type: string
