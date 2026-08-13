@@ -278,6 +278,15 @@ func (UnimplementedHandler) GetTrack(ctx context.Context, params GetTrackParams)
 	return r, ht.ErrNotImplemented
 }
 
+// GetTracksPlayStats implements getTracksPlayStats operation.
+//
+// Get all tracks' play count & time in a specified time range.
+//
+// POST /api/statistics/user/tracks/plays
+func (UnimplementedHandler) GetTracksPlayStats(ctx context.Context, req OptStatisticsQuery) (r GetTracksPlayStatsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetUserDetails implements getUserDetails operation.
 //
 // Get current user details.

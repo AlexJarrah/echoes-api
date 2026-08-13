@@ -556,6 +556,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/statistics/user/tracks/plays": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get all tracks' play count & time in a specified time range */
+        post: operations["getTracksPlayStats"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/subsonic/rest/download": {
         parameters: {
             query?: never;
@@ -956,6 +973,25 @@ export interface components {
             name?: string;
             description?: string;
             visibility?: components["schemas"]["Visibility"];
+        };
+        /** @description Values change in percentage. */
+        EntityChange: {
+            /** Format: int64 */
+            play_count: number;
+            /**
+             * Format: int64
+             * @description Play duration in seconds
+             */
+            duration: number;
+        };
+        EntityPlays: {
+            /** Format: uint64 */
+            play_count: number;
+            /**
+             * Format: uint64
+             * @description Play duration in seconds
+             */
+            duration: number;
         };
         ErrorResponse: {
             /** @description Human-readable error message */
@@ -1528,9 +1564,9 @@ export interface components {
             rank: number;
             album: components["schemas"]["Album"];
             artists: components["schemas"]["Artist"][];
-            current: components["schemas"]["TopEntityPlays"];
-            previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityChange"];
+            current: components["schemas"]["EntityPlays"];
+            previous?: components["schemas"]["EntityPlays"];
+            change?: components["schemas"]["EntityChange"];
         };
         TopArtistEntry: {
             /** Format: uuid */
@@ -1538,9 +1574,9 @@ export interface components {
             /** Format: uint */
             rank: number;
             artist?: components["schemas"]["Artist"];
-            current: components["schemas"]["TopEntityPlays"];
-            previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityChange"];
+            current: components["schemas"]["EntityPlays"];
+            previous?: components["schemas"]["EntityPlays"];
+            change?: components["schemas"]["EntityChange"];
         };
         TopArtistPlayStats: {
             /** Format: uint */
@@ -1548,25 +1584,6 @@ export interface components {
             artist: components["schemas"]["ArtistPlayStats"];
             top_tracks: components["schemas"]["TrackPlayStats"][];
             top_albums: components["schemas"]["AlbumPlayStats"][];
-        };
-        /** @description Values change in percentage. */
-        TopEntityChange: {
-            /** Format: int64 */
-            play_count: number;
-            /**
-             * Format: int64
-             * @description Play duration in seconds
-             */
-            duration: number;
-        };
-        TopEntityPlays: {
-            /** Format: uint64 */
-            play_count: number;
-            /**
-             * Format: uint64
-             * @description Play duration in seconds
-             */
-            duration: number;
         };
         TopTrackEntry: {
             /** Format: uuid */
@@ -1576,9 +1593,9 @@ export interface components {
             track: components["schemas"]["Track"];
             album: components["schemas"]["Album"];
             artists: components["schemas"]["Artist"][];
-            current: components["schemas"]["TopEntityPlays"];
-            previous?: components["schemas"]["TopEntityPlays"];
-            change?: components["schemas"]["TopEntityChange"];
+            current: components["schemas"]["EntityPlays"];
+            previous?: components["schemas"]["EntityPlays"];
+            change?: components["schemas"]["EntityChange"];
         };
         Track: {
             /** Format: uuid */
@@ -2744,6 +2761,31 @@ export interface operations {
             };
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getTracksPlayStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StatisticsQuery"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntityPlays"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
         };
     };

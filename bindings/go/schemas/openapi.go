@@ -1191,6 +1191,34 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/statistics/user/tracks/plays:
+    post:
+      summary: Get all tracks' play count & time in a specified time range
+      operationId: getTracksPlayStats
+      tags:
+        - Statistics
+        - Tracks
+        - Listens
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatisticsQuery'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityPlays'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/subsonic/rest/download:
     get:
       summary: Download track as an audio file
@@ -2033,6 +2061,33 @@ components:
           type: string
         visibility:
           $ref: '#/components/schemas/Visibility'
+    EntityChange:
+      type: object
+      required:
+        - play_count
+        - duration
+      description: Values change in percentage.
+      properties:
+        play_count:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+          format: int64
+          description: Play duration in seconds
+    EntityPlays:
+      type: object
+      required:
+        - play_count
+        - duration
+      properties:
+        play_count:
+          type: integer
+          format: uint64
+        duration:
+          type: integer
+          format: uint64
+          description: Play duration in seconds
     ErrorResponse:
       type: object
       required:
@@ -3055,11 +3110,11 @@ components:
           items:
             $ref: '#/components/schemas/Artist'
         current:
-          $ref: '#/components/schemas/TopEntityPlays'
+          $ref: '#/components/schemas/EntityPlays'
         previous:
-          $ref: '#/components/schemas/TopEntityPlays'
+          $ref: '#/components/schemas/EntityPlays'
         change:
-          $ref: '#/components/schemas/TopEntityChange'
+          $ref: '#/components/schemas/EntityChange'
     TopArtistEntry:
       type: object
       required:
@@ -3077,11 +3132,11 @@ components:
         artist:
           $ref: '#/components/schemas/Artist'
         current:
-          $ref: '#/components/schemas/TopEntityPlays'
+          $ref: '#/components/schemas/EntityPlays'
         previous:
-          $ref: '#/components/schemas/TopEntityPlays'
+          $ref: '#/components/schemas/EntityPlays'
         change:
-          $ref: '#/components/schemas/TopEntityChange'
+          $ref: '#/components/schemas/EntityChange'
     TopArtistPlayStats:
       type: object
       required:
@@ -3103,33 +3158,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AlbumPlayStats'
-    TopEntityChange:
-      type: object
-      required:
-        - play_count
-        - duration
-      description: Values change in percentage.
-      properties:
-        play_count:
-          type: integer
-          format: int64
-        duration:
-          type: integer
-          format: int64
-          description: Play duration in seconds
-    TopEntityPlays:
-      type: object
-      required:
-        - play_count
-        - duration
-      properties:
-        play_count:
-          type: integer
-          format: uint64
-        duration:
-          type: integer
-          format: uint64
-          description: Play duration in seconds
     TopTrackEntry:
       type: object
       required:
@@ -3155,11 +3183,11 @@ components:
           items:
             $ref: '#/components/schemas/Artist'
         current:
-          $ref: '#/components/schemas/TopEntityPlays'
+          $ref: '#/components/schemas/EntityPlays'
         previous:
-          $ref: '#/components/schemas/TopEntityPlays'
+          $ref: '#/components/schemas/EntityPlays'
         change:
-          $ref: '#/components/schemas/TopEntityChange'
+          $ref: '#/components/schemas/EntityChange'
     Track:
       type: object
       required:

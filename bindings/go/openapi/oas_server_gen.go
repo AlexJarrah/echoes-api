@@ -186,6 +186,12 @@ type Handler interface {
 	//
 	// GET /api/tracks/{id}
 	GetTrack(ctx context.Context, params GetTrackParams) (GetTrackRes, error)
+	// GetTracksPlayStats implements getTracksPlayStats operation.
+	//
+	// Get all tracks' play count & time in a specified time range.
+	//
+	// POST /api/statistics/user/tracks/plays
+	GetTracksPlayStats(ctx context.Context, req OptStatisticsQuery) (GetTracksPlayStatsRes, error)
 	// GetUserDetails implements getUserDetails operation.
 	//
 	// Get current user details.

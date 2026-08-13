@@ -20,8 +20,8 @@ TopAlbumEntry:
       items:
         $ref: "#/components/schemas/Artist"
     current:
-      $ref: "#/components/schemas/TopEntityPlays"
+      $ref: "#/components/schemas/EntityPlays"
     previous:
-      $ref: "#/components/schemas/TopEntityPlays"
+      $ref: "#/components/schemas/EntityPlays"
     change:
-      $ref: "#/components/schemas/TopEntityChange"
+      $ref: "#/components/schemas/EntityChange"

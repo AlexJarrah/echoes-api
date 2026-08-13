@@ -35,6 +35,7 @@ const (
 	GetRelationsOperation              OperationName = "GetRelations"
 	GetRelationsDetailsOperation       OperationName = "GetRelationsDetails"
 	GetTrackOperation                  OperationName = "GetTrack"
+	GetTracksPlayStatsOperation        OperationName = "GetTracksPlayStats"
 	GetUserDetailsOperation            OperationName = "GetUserDetails"
 	GetUserIntegrationsOperation       OperationName = "GetUserIntegrations"
 	GetUserListenSessionsOperation     OperationName = "GetUserListenSessions"

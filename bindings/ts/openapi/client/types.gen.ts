@@ -160,6 +160,25 @@ export type EditGroupRequest = {
     visibility?: Visibility;
 };
 
+/**
+ * Values change in percentage.
+ */
+export type EntityChange = {
+    play_count: number;
+    /**
+     * Play duration in seconds
+     */
+    duration: number;
+};
+
+export type EntityPlays = {
+    play_count: number;
+    /**
+     * Play duration in seconds
+     */
+    duration: number;
+};
+
 export type ErrorResponse = {
     /**
      * Human-readable error message
@@ -720,18 +739,18 @@ export type TopAlbumEntry = {
     rank: number;
     album: Album;
     artists: Array<Artist>;
-    current: TopEntityPlays;
-    previous?: TopEntityPlays;
-    change?: TopEntityChange;
+    current: EntityPlays;
+    previous?: EntityPlays;
+    change?: EntityChange;
 };
 
 export type TopArtistEntry = {
     id: string;
     rank: number;
     artist?: Artist;
-    current: TopEntityPlays;
-    previous?: TopEntityPlays;
-    change?: TopEntityChange;
+    current: EntityPlays;
+    previous?: EntityPlays;
+    change?: EntityChange;
 };
 
 export type TopArtistPlayStats = {
@@ -741,34 +760,15 @@ export type TopArtistPlayStats = {
     top_albums: Array<AlbumPlayStats>;
 };
 
-/**
- * Values change in percentage.
- */
-export type TopEntityChange = {
-    play_count: number;
-    /**
-     * Play duration in seconds
-     */
-    duration: number;
-};
-
-export type TopEntityPlays = {
-    play_count: number;
-    /**
-     * Play duration in seconds
-     */
-    duration: number;
-};
-
 export type TopTrackEntry = {
     id: string;
     rank: number;
     track: Track;
     album: Album;
     artists: Array<Artist>;
-    current: TopEntityPlays;
-    previous?: TopEntityPlays;
-    change?: TopEntityChange;
+    current: EntityPlays;
+    previous?: EntityPlays;
+    change?: EntityChange;
 };
 
 export type Track = {
@@ -2212,6 +2212,32 @@ export type GetUserTopArtistPlayStatsResponses = {
 };
 
 export type GetUserTopArtistPlayStatsResponse = GetUserTopArtistPlayStatsResponses[keyof GetUserTopArtistPlayStatsResponses];
+
+export type GetTracksPlayStatsData = {
+    body?: StatisticsQuery;
+    path?: never;
+    query?: never;
+    url: '/api/statistics/user/tracks/plays';
+};
+
+export type GetTracksPlayStatsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetTracksPlayStatsError = GetTracksPlayStatsErrors[keyof GetTracksPlayStatsErrors];
+
+export type GetTracksPlayStatsResponses = {
+    200: Array<EntityPlays>;
+};
+
+export type GetTracksPlayStatsResponse = GetTracksPlayStatsResponses[keyof GetTracksPlayStatsResponses];
 
 export type SubsonicDownloadData = {
     body?: never;

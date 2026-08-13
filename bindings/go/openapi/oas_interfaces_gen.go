@@ -109,6 +109,10 @@ type GetTrackRes interface {
 	getTrackRes()
 }
 
+type GetTracksPlayStatsRes interface {
+	getTracksPlayStatsRes()
+}
+
 type GetUserDetailsRes interface {
 	getUserDetailsRes()
 }
