@@ -1330,7 +1330,7 @@ paths:
               items:
                 $ref: '#/components/schemas/SearchTrackQuery'
               minItems: 1
-              maxItems: 50
+              maxItems: 1000
       responses:
         '200':
           description: Search results

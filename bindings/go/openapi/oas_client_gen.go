@@ -6472,7 +6472,7 @@ func (c *Client) sendSearchTracks(ctx context.Context, request []SearchTrackQuer
 		if err := (validate.Array{
 			MinLength:    1,
 			MinLengthSet: true,
-			MaxLength:    50,
+			MaxLength:    1000,
 			MaxLengthSet: true,
 		}).ValidateLength(len(request)); err != nil {
 			return errors.Wrap(err, "array")

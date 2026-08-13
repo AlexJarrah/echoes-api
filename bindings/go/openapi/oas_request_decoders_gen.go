@@ -1390,7 +1390,7 @@ func (s *Server) decodeSearchTracksRequest(r *http.Request) (
 			if err := (validate.Array{
 				MinLength:    1,
 				MinLengthSet: true,
-				MaxLength:    50,
+				MaxLength:    1000,
 				MaxLengthSet: true,
 			}).ValidateLength(len(request)); err != nil {
 				return errors.Wrap(err, "array")
