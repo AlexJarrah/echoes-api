@@ -2444,6 +2444,8 @@ components:
           items:
             type: string
             format: uuid
+        audio_available:
+          type: boolean
     LibraryRemoveRequest:
       type: object
       properties:

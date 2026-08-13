@@ -372,6 +372,7 @@ export type LibraryMetadataTrack = {
     seconds?: number | null;
     album_ids?: Array<string>;
     artist_ids?: Array<string>;
+    audio_available?: boolean;
 };
 
 export type LibraryRemoveRequest = {

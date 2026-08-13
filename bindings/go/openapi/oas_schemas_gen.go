@@ -2401,11 +2401,12 @@ func (*LibraryMetadataResponse) getLibraryMetadataRes() {}
 
 // Ref: #/components/schemas/LibraryMetadataTrack
 type LibraryMetadataTrack struct {
-	ID        uuid.UUID    `json:"id"`
-	Name      string       `json:"name"`
-	Seconds   OptNilUint16 `json:"seconds"`
-	AlbumIds  []uuid.UUID  `json:"album_ids"`
-	ArtistIds []uuid.UUID  `json:"artist_ids"`
+	ID             uuid.UUID    `json:"id"`
+	Name           string       `json:"name"`
+	Seconds        OptNilUint16 `json:"seconds"`
+	AlbumIds       []uuid.UUID  `json:"album_ids"`
+	ArtistIds      []uuid.UUID  `json:"artist_ids"`
+	AudioAvailable OptBool      `json:"audio_available"`
 }
 
 // GetID returns the value of ID.
@@ -2433,6 +2434,11 @@ func (s *LibraryMetadataTrack) GetArtistIds() []uuid.UUID {
 	return s.ArtistIds
 }
 
+// GetAudioAvailable returns the value of AudioAvailable.
+func (s *LibraryMetadataTrack) GetAudioAvailable() OptBool {
+	return s.AudioAvailable
+}
+
 // SetID sets the value of ID.
 func (s *LibraryMetadataTrack) SetID(val uuid.UUID) {
 	s.ID = val
@@ -2456,6 +2462,11 @@ func (s *LibraryMetadataTrack) SetAlbumIds(val []uuid.UUID) {
 // SetArtistIds sets the value of ArtistIds.
 func (s *LibraryMetadataTrack) SetArtistIds(val []uuid.UUID) {
 	s.ArtistIds = val
+}
+
+// SetAudioAvailable sets the value of AudioAvailable.
+func (s *LibraryMetadataTrack) SetAudioAvailable(val OptBool) {
+	s.AudioAvailable = val
 }
 
 // Ref: #/components/schemas/LibraryRemoveRequest

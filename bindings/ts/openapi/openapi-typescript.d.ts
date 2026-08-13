@@ -1175,6 +1175,7 @@ export interface components {
             seconds?: number | null;
             album_ids?: string[];
             artist_ids?: string[];
+            audio_available?: boolean;
         };
         LibraryRemoveRequest: {
             track_ids?: string[];
