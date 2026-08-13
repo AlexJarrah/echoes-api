@@ -1,0 +1,16 @@
+/api/library/search/index:
+  get:
+    summary: Returns the user's library search engine index.
+    operationId: getLibrarySearchIndex
+    tags:
+      - Library
+    security:
+      - CookieAuth: []
+    responses:
+      "200":
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchIndex"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

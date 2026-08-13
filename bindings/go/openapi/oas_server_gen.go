@@ -138,12 +138,12 @@ type Handler interface {
 	//
 	// GET /api/groups
 	GetGroups(ctx context.Context) (GetGroupsRes, error)
-	// GetLibraryMetadata implements getLibraryMetadata operation.
+	// GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 	//
-	// Get library metadata.
+	// Returns the user's library search engine index.
 	//
-	// GET /api/library/get-metadata
-	GetLibraryMetadata(ctx context.Context) (GetLibraryMetadataRes, error)
+	// GET /api/library/search/index
+	GetLibrarySearchIndex(ctx context.Context) (GetLibrarySearchIndexRes, error)
 	// GetListenSessions implements getListenSessions operation.
 	//
 	// Get recent listening sessions.

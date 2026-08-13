@@ -369,34 +369,6 @@ export type LibraryAddTrack = {
     force_add?: boolean;
 };
 
-export type LibraryMetadataAlbum = {
-    id: string;
-    name: string;
-};
-
-export type LibraryMetadataArtist = {
-    id: string;
-    name: string;
-};
-
-export type LibraryMetadataResponse = {
-    artists?: Array<LibraryMetadataArtist>;
-    albums?: Array<LibraryMetadataAlbum>;
-    tracks?: Array<LibraryMetadataTrack>;
-};
-
-export type LibraryMetadataTrack = {
-    id: string;
-    name: string;
-    seconds?: number | null;
-    album_ids?: Array<string>;
-    artist_ids?: Array<string>;
-    /**
-     * SHA-256 hash of the audio data.
-     */
-    audio_sha256?: string;
-};
-
 export type LibraryRemoveRequest = {
     track_ids?: Array<string>;
     album_ids?: Array<string>;
@@ -533,6 +505,37 @@ export type RelationDetails = {
         year_seconds: number;
         listening_streak: number;
     };
+};
+
+export type SearchIndex = {
+    artists?: Array<SearchIndexArtist>;
+    albums?: Array<SearchIndexAlbum>;
+    tracks?: Array<SearchIndexTrack>;
+};
+
+export type SearchIndexAlbum = {
+    id: string;
+    user_id?: string;
+    name: string;
+};
+
+export type SearchIndexArtist = {
+    id: string;
+    user_id?: string;
+    name: string;
+};
+
+export type SearchIndexTrack = {
+    id: string;
+    user_id?: string;
+    name: string;
+    seconds?: number;
+    album_ids?: Array<string>;
+    artist_ids?: Array<string>;
+    /**
+     * SHA-256 hash of the audio data.
+     */
+    audio_sha256?: string;
 };
 
 export type SearchTrackQuery = {
@@ -1666,35 +1669,6 @@ export type AddToLibraryResponses = {
 
 export type AddToLibraryResponse = AddToLibraryResponses[keyof AddToLibraryResponses];
 
-export type GetLibraryMetadataData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/library/get-metadata';
-};
-
-export type GetLibraryMetadataErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetLibraryMetadataError = GetLibraryMetadataErrors[keyof GetLibraryMetadataErrors];
-
-export type GetLibraryMetadataResponses = {
-    /**
-     * Library metadata
-     */
-    200: LibraryMetadataResponse;
-};
-
-export type GetLibraryMetadataResponse = GetLibraryMetadataResponses[keyof GetLibraryMetadataResponses];
-
 export type RemoveFromLibraryData = {
     body: LibraryRemoveRequest;
     path?: never;
@@ -1727,6 +1701,28 @@ export type RemoveFromLibraryResponses = {
 };
 
 export type RemoveFromLibraryResponse = RemoveFromLibraryResponses[keyof RemoveFromLibraryResponses];
+
+export type GetLibrarySearchIndexData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/library/search/index';
+};
+
+export type GetLibrarySearchIndexErrors = {
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLibrarySearchIndexError = GetLibrarySearchIndexErrors[keyof GetLibrarySearchIndexErrors];
+
+export type GetLibrarySearchIndexResponses = {
+    200: SearchIndex;
+};
+
+export type GetLibrarySearchIndexResponse = GetLibrarySearchIndexResponses[keyof GetLibrarySearchIndexResponses];
 
 export type UpdateLibraryData = {
     body: LibraryUpdateRequest;

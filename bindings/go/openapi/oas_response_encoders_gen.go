@@ -1898,9 +1898,9 @@ func encodeGetGroupsResponse(response GetGroupsRes, w http.ResponseWriter, span 
 	}
 }
 
-func encodeGetLibraryMetadataResponse(response GetLibraryMetadataRes, w http.ResponseWriter, span trace.Span) error {
+func encodeGetLibrarySearchIndexResponse(response GetLibrarySearchIndexRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *LibraryMetadataResponse:
+	case *SearchIndex:
 		if err := func() error {
 			if err := response.Validate(); err != nil {
 				return err
@@ -1920,33 +1920,7 @@ func encodeGetLibraryMetadataResponse(response GetLibraryMetadataRes, w http.Res
 
 		return nil
 
-	case *GetLibraryMetadataApplicationJSONUnauthorized:
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(401)
-
-		e := new(jx.Encoder)
-		response.Encode(e)
-		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetLibraryMetadataApplicationJSONInternalServerError:
+	case *ErrorResponse:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))

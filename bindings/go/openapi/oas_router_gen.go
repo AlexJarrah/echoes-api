@@ -782,31 +782,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 									return
 								}
 
-							case 'g': // Prefix: "get-metadata"
-
-								if l := len("get-metadata"); len(elem) >= l && elem[0:l] == "get-metadata" {
-									elem = elem[l:]
-								} else {
-									break
-								}
-
-								if len(elem) == 0 {
-									// Leaf node.
-									switch r.Method {
-									case "GET":
-										s.handleGetLibraryMetadataRequest([0]string{}, elemIsEscaped, w, r)
-									default:
-										s.notAllowed(w, r, notAllowedParams{
-											allowedMethods: "GET",
-											allowedHeaders: nil,
-											acceptPost:     "",
-											acceptPatch:    "",
-										})
-									}
-
-									return
-								}
-
 							case 'r': // Prefix: "remove"
 
 								if l := len("remove"); len(elem) >= l && elem[0:l] == "remove" {
@@ -825,6 +800,31 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 											allowedMethods: "POST",
 											allowedHeaders: rn61AllowedHeaders,
 											acceptPost:     "application/json",
+											acceptPatch:    "",
+										})
+									}
+
+									return
+								}
+
+							case 's': // Prefix: "search/index"
+
+								if l := len("search/index"); len(elem) >= l && elem[0:l] == "search/index" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch r.Method {
+									case "GET":
+										s.handleGetLibrarySearchIndexRequest([0]string{}, elemIsEscaped, w, r)
+									default:
+										s.notAllowed(w, r, notAllowedParams{
+											allowedMethods: "GET",
+											allowedHeaders: nil,
+											acceptPost:     "",
 											acceptPatch:    "",
 										})
 									}
@@ -2520,31 +2520,6 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									}
 								}
 
-							case 'g': // Prefix: "get-metadata"
-
-								if l := len("get-metadata"); len(elem) >= l && elem[0:l] == "get-metadata" {
-									elem = elem[l:]
-								} else {
-									break
-								}
-
-								if len(elem) == 0 {
-									// Leaf node.
-									switch method {
-									case "GET":
-										r.name = GetLibraryMetadataOperation
-										r.summary = "Get library metadata"
-										r.operationID = "getLibraryMetadata"
-										r.operationGroup = ""
-										r.pathPattern = "/api/library/get-metadata"
-										r.args = args
-										r.count = 0
-										return r, true
-									default:
-										return
-									}
-								}
-
 							case 'r': // Prefix: "remove"
 
 								if l := len("remove"); len(elem) >= l && elem[0:l] == "remove" {
@@ -2562,6 +2537,31 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 										r.operationID = "removeFromLibrary"
 										r.operationGroup = ""
 										r.pathPattern = "/api/library/remove"
+										r.args = args
+										r.count = 0
+										return r, true
+									default:
+										return
+									}
+								}
+
+							case 's': // Prefix: "search/index"
+
+								if l := len("search/index"); len(elem) >= l && elem[0:l] == "search/index" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch method {
+									case "GET":
+										r.name = GetLibrarySearchIndexOperation
+										r.summary = "Returns the user's library search engine index."
+										r.operationID = "getLibrarySearchIndex"
+										r.operationGroup = ""
+										r.pathPattern = "/api/library/search/index"
 										r.args = args
 										r.count = 0
 										return r, true

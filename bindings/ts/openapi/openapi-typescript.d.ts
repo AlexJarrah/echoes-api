@@ -267,23 +267,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/library/get-metadata": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get library metadata */
-        get: operations["getLibraryMetadata"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/library/remove": {
         parameters: {
             query?: never;
@@ -295,6 +278,23 @@ export interface paths {
         put?: never;
         /** Remove items from library */
         post: operations["removeFromLibrary"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/library/search/index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns the user's library search engine index. */
+        get: operations["getLibrarySearchIndex"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1188,32 +1188,6 @@ export interface components {
              */
             force_add: boolean;
         };
-        LibraryMetadataAlbum: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-        };
-        LibraryMetadataArtist: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-        };
-        LibraryMetadataResponse: {
-            artists?: components["schemas"]["LibraryMetadataArtist"][];
-            albums?: components["schemas"]["LibraryMetadataAlbum"][];
-            tracks?: components["schemas"]["LibraryMetadataTrack"][];
-        };
-        LibraryMetadataTrack: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-            /** Format: uint16 */
-            seconds?: number | null;
-            album_ids?: string[];
-            artist_ids?: string[];
-            /** @description SHA-256 hash of the audio data. */
-            audio_sha256?: string;
-        };
         LibraryRemoveRequest: {
             track_ids?: string[];
             album_ids?: string[];
@@ -1374,6 +1348,38 @@ export interface components {
                 /** Format: uint16 */
                 listening_streak: number;
             };
+        };
+        SearchIndex: {
+            artists?: components["schemas"]["SearchIndexArtist"][];
+            albums?: components["schemas"]["SearchIndexAlbum"][];
+            tracks?: components["schemas"]["SearchIndexTrack"][];
+        };
+        SearchIndexAlbum: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            user_id?: string;
+            name: string;
+        };
+        SearchIndexArtist: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            user_id?: string;
+            name: string;
+        };
+        SearchIndexTrack: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            user_id?: string;
+            name: string;
+            /** Format: uint16 */
+            seconds?: number;
+            album_ids?: string[];
+            artist_ids?: string[];
+            /** @description SHA-256 hash of the audio data. */
+            audio_sha256?: string;
         };
         SearchTrackQuery: {
             track_name: string;
@@ -2350,28 +2356,6 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    getLibraryMetadata: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Library metadata */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LibraryMetadataResponse"];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
     removeFromLibrary: {
         parameters: {
             query?: never;
@@ -2388,6 +2372,26 @@ export interface operations {
             204: components["responses"]["NoContent"];
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getLibrarySearchIndex: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchIndex"];
+                };
+            };
             500: components["responses"]["InternalServerError"];
         };
     };

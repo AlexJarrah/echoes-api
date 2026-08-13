@@ -748,25 +748,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/library/get-metadata:
-    get:
-      summary: Get library metadata
-      operationId: getLibraryMetadata
-      tags:
-        - Library
-      security:
-        - CookieAuth: []
-      responses:
-        '200':
-          description: Library metadata
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LibraryMetadataResponse'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
   /api/library/remove:
     post:
       summary: Remove items from library
@@ -788,6 +769,22 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/library/search/index:
+    get:
+      summary: Returns the user's library search engine index.
+      operationId: getLibrarySearchIndex
+      tags:
+        - Library
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchIndex'
         '500':
           $ref: '#/components/responses/InternalServerError'
   /api/library/update:
@@ -2437,72 +2434,6 @@ components:
           type: boolean
           default: false
           description: If true, skip deduplication and always create a new entity.
-    LibraryMetadataAlbum:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-    LibraryMetadataArtist:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-    LibraryMetadataResponse:
-      type: object
-      properties:
-        artists:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryMetadataArtist'
-        albums:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryMetadataAlbum'
-        tracks:
-          type: array
-          items:
-            $ref: '#/components/schemas/LibraryMetadataTrack'
-    LibraryMetadataTrack:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        seconds:
-          type: integer
-          format: uint16
-          nullable: true
-        album_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        artist_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-        audio_sha256:
-          type: string
-          description: SHA-256 hash of the audio data.
-          pattern: ^[a-fA-F0-9]{64}$
     LibraryRemoveRequest:
       type: object
       properties:
@@ -2822,6 +2753,80 @@ components:
             listening_streak:
               type: integer
               format: uint16
+    SearchIndex:
+      type: object
+      properties:
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchIndexArtist'
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchIndexAlbum'
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchIndexTrack'
+    SearchIndexAlbum:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SearchIndexArtist:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    SearchIndexTrack:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        seconds:
+          type: integer
+          format: uint16
+        album_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        artist_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        audio_sha256:
+          type: string
+          description: SHA-256 hash of the audio data.
+          pattern: ^[a-fA-F0-9]{64}$
     SearchTrackQuery:
       type: object
       required:

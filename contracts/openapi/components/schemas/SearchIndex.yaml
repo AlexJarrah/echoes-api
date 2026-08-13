@@ -1,0 +1,15 @@
+SearchIndex:
+  type: object
+  properties:
+    artists:
+      type: array
+      items:
+        $ref: "#/components/schemas/SearchIndexArtist"
+    albums:
+      type: array
+      items:
+        $ref: "#/components/schemas/SearchIndexAlbum"
+    tracks:
+      type: array
+      items:
+        $ref: "#/components/schemas/SearchIndexTrack"

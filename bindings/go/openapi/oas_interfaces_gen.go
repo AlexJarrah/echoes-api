@@ -81,8 +81,8 @@ type GetGroupsRes interface {
 	getGroupsRes()
 }
 
-type GetLibraryMetadataRes interface {
-	getLibraryMetadataRes()
+type GetLibrarySearchIndexRes interface {
+	getLibrarySearchIndexRes()
 }
 
 type GetListenSessionsRes interface {

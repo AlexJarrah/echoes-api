@@ -1,4 +1,4 @@
-LibraryMetadataTrack:
+SearchIndexTrack:
   type: object
   required:
     - id
@@ -7,12 +7,14 @@ LibraryMetadataTrack:
     id:
       type: string
       format: uuid
+    user_id:
+      type: string
+      format: uuid
     name:
       type: string
     seconds:
       type: integer
       format: uint16
-      nullable: true
     album_ids:
       type: array
       items:

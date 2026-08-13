@@ -220,12 +220,12 @@ type Invoker interface {
 	//
 	// GET /api/groups
 	GetGroups(ctx context.Context, options ...RequestOption) (GetGroupsRes, error)
-	// GetLibraryMetadata invokes getLibraryMetadata operation.
+	// GetLibrarySearchIndex invokes getLibrarySearchIndex operation.
 	//
-	// Get library metadata.
+	// Returns the user's library search engine index.
 	//
-	// GET /api/library/get-metadata
-	GetLibraryMetadata(ctx context.Context, options ...RequestOption) (GetLibraryMetadataRes, error)
+	// GET /api/library/search/index
+	GetLibrarySearchIndex(ctx context.Context, options ...RequestOption) (GetLibrarySearchIndexRes, error)
 	// GetListenSessions invokes getListenSessions operation.
 	//
 	// Get recent listening sessions.
@@ -3751,21 +3751,21 @@ func (c *Client) sendGetGroups(ctx context.Context, requestOptions ...RequestOpt
 	return result, nil
 }
 
-// GetLibraryMetadata invokes getLibraryMetadata operation.
+// GetLibrarySearchIndex invokes getLibrarySearchIndex operation.
 //
-// Get library metadata.
+// Returns the user's library search engine index.
 //
-// GET /api/library/get-metadata
-func (c *Client) GetLibraryMetadata(ctx context.Context, options ...RequestOption) (GetLibraryMetadataRes, error) {
-	res, err := c.sendGetLibraryMetadata(ctx, options...)
+// GET /api/library/search/index
+func (c *Client) GetLibrarySearchIndex(ctx context.Context, options ...RequestOption) (GetLibrarySearchIndexRes, error) {
+	res, err := c.sendGetLibrarySearchIndex(ctx, options...)
 	return res, err
 }
 
-func (c *Client) sendGetLibraryMetadata(ctx context.Context, requestOptions ...RequestOption) (res GetLibraryMetadataRes, err error) {
+func (c *Client) sendGetLibrarySearchIndex(ctx context.Context, requestOptions ...RequestOption) (res GetLibrarySearchIndexRes, err error) {
 	otelAttrs := []attribute.KeyValue{
-		otelogen.OperationID("getLibraryMetadata"),
+		otelogen.OperationID("getLibrarySearchIndex"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/library/get-metadata"),
+		semconv.URLTemplateKey.String("/api/library/search/index"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3781,7 +3781,7 @@ func (c *Client) sendGetLibraryMetadata(ctx context.Context, requestOptions ...R
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, GetLibraryMetadataOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, GetLibrarySearchIndexOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -3809,7 +3809,7 @@ func (c *Client) sendGetLibraryMetadata(ctx context.Context, requestOptions ...R
 	}
 	u = uri.Clone(u)
 	var pathParts [1]string
-	pathParts[0] = "/api/library/get-metadata"
+	pathParts[0] = "/api/library/search/index"
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
@@ -3823,7 +3823,7 @@ func (c *Client) sendGetLibraryMetadata(ctx context.Context, requestOptions ...R
 		var satisfied bitset
 		{
 			stage = "Security:CookieAuth"
-			switch err := c.securityCookieAuth(ctx, GetLibraryMetadataOperation, r); {
+			switch err := c.securityCookieAuth(ctx, GetLibrarySearchIndexOperation, r); {
 			case err == nil: // if NO error
 				satisfied[0] |= 1 << 0
 			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
@@ -3882,7 +3882,7 @@ func (c *Client) sendGetLibraryMetadata(ctx context.Context, requestOptions ...R
 	}
 
 	stage = "DecodeResponse"
-	result, err := decodeGetLibraryMetadataResponse(resp)
+	result, err := decodeGetLibrarySearchIndexResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

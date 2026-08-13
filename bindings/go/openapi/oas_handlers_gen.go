@@ -3791,24 +3791,24 @@ func (s *Server) handleGetGroupsRequest(args [0]string, argsEscaped bool, w http
 	}
 }
 
-// handleGetLibraryMetadataRequest handles getLibraryMetadata operation.
+// handleGetLibrarySearchIndexRequest handles getLibrarySearchIndex operation.
 //
-// Get library metadata.
+// Returns the user's library search engine index.
 //
-// GET /api/library/get-metadata
-func (s *Server) handleGetLibraryMetadataRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
+// GET /api/library/search/index
+func (s *Server) handleGetLibrarySearchIndexRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
-		otelogen.OperationID("getLibraryMetadata"),
+		otelogen.OperationID("getLibrarySearchIndex"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/library/get-metadata"),
+		semconv.HTTPRouteKey.String("/api/library/search/index"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
 
 	// Start a span for this request.
-	ctx, span := s.cfg.Tracer.Start(r.Context(), GetLibraryMetadataOperation,
+	ctx, span := s.cfg.Tracer.Start(r.Context(), GetLibrarySearchIndexOperation,
 		trace.WithAttributes(otelAttrs...),
 		serverSpanKind,
 	)
@@ -3863,15 +3863,15 @@ func (s *Server) handleGetLibraryMetadataRequest(args [0]string, argsEscaped boo
 		}
 		err          error
 		opErrContext = ogenerrors.OperationContext{
-			Name: GetLibraryMetadataOperation,
-			ID:   "getLibraryMetadata",
+			Name: GetLibrarySearchIndexOperation,
+			ID:   "getLibrarySearchIndex",
 		}
 	)
 	{
 		type bitset = [1]uint8
 		var satisfied bitset
 		{
-			sctx, ok, err := s.securityCookieAuth(ctx, GetLibraryMetadataOperation, r)
+			sctx, ok, err := s.securityCookieAuth(ctx, GetLibrarySearchIndexOperation, r)
 			if err != nil {
 				err = &ogenerrors.SecurityError{
 					OperationContext: opErrContext,
@@ -3914,13 +3914,13 @@ func (s *Server) handleGetLibraryMetadataRequest(args [0]string, argsEscaped boo
 
 	var rawBody []byte
 
-	var response GetLibraryMetadataRes
+	var response GetLibrarySearchIndexRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
-			OperationName:    GetLibraryMetadataOperation,
-			OperationSummary: "Get library metadata",
-			OperationID:      "getLibraryMetadata",
+			OperationName:    GetLibrarySearchIndexOperation,
+			OperationSummary: "Returns the user's library search engine index.",
+			OperationID:      "getLibrarySearchIndex",
 			Body:             nil,
 			RawBody:          rawBody,
 			Params:           middleware.Parameters{},
@@ -3930,7 +3930,7 @@ func (s *Server) handleGetLibraryMetadataRequest(args [0]string, argsEscaped boo
 		type (
 			Request  = struct{}
 			Params   = struct{}
-			Response = GetLibraryMetadataRes
+			Response = GetLibrarySearchIndexRes
 		)
 		response, err = middleware.HookMiddleware[
 			Request,
@@ -3941,12 +3941,12 @@ func (s *Server) handleGetLibraryMetadataRequest(args [0]string, argsEscaped boo
 			mreq,
 			nil,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.GetLibraryMetadata(ctx)
+				response, err = s.h.GetLibrarySearchIndex(ctx)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.GetLibraryMetadata(ctx)
+		response, err = s.h.GetLibrarySearchIndex(ctx)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -3954,7 +3954,7 @@ func (s *Server) handleGetLibraryMetadataRequest(args [0]string, argsEscaped boo
 		return
 	}
 
-	if err := encodeGetLibraryMetadataResponse(response, w, span); err != nil {
+	if err := encodeGetLibrarySearchIndexResponse(response, w, span); err != nil {
 		defer recordError("EncodeResponse", err)
 		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
 			s.cfg.ErrorHandler(ctx, w, r, err)

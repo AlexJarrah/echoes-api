@@ -206,12 +206,12 @@ func (UnimplementedHandler) GetGroups(ctx context.Context) (r GetGroupsRes, _ er
 	return r, ht.ErrNotImplemented
 }
 
-// GetLibraryMetadata implements getLibraryMetadata operation.
+// GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 //
-// Get library metadata.
+// Returns the user's library search engine index.
 //
-// GET /api/library/get-metadata
-func (UnimplementedHandler) GetLibraryMetadata(ctx context.Context) (r GetLibraryMetadataRes, _ error) {
+// GET /api/library/search/index
+func (UnimplementedHandler) GetLibrarySearchIndex(ctx context.Context) (r GetLibrarySearchIndexRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

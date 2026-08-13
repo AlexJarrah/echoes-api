@@ -1119,8 +1119,9 @@ func (s *ErrorResponse) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*ErrorResponse) getUserDetailsRes() {}
-func (*ErrorResponse) validateTokenRes()  {}
+func (*ErrorResponse) getLibrarySearchIndexRes() {}
+func (*ErrorResponse) getUserDetailsRes()        {}
+func (*ErrorResponse) validateTokenRes()         {}
 
 type ForbiddenTextPlain struct {
 	Data io.Reader
@@ -1345,14 +1346,6 @@ func (*GetGroupsApplicationJSONUnauthorized) getGroupsRes() {}
 type GetGroupsOKApplicationJSON []GroupDetails
 
 func (*GetGroupsOKApplicationJSON) getGroupsRes() {}
-
-type GetLibraryMetadataApplicationJSONInternalServerError ErrorResponse
-
-func (*GetLibraryMetadataApplicationJSONInternalServerError) getLibraryMetadataRes() {}
-
-type GetLibraryMetadataApplicationJSONUnauthorized ErrorResponse
-
-func (*GetLibraryMetadataApplicationJSONUnauthorized) getLibraryMetadataRes() {}
 
 type GetListenSessionsApplicationJSONBadRequest ErrorResponse
 
@@ -1850,7 +1843,7 @@ func (*InternalServerErrorTextPlain) getGlobalTopTracksRes()        {}
 func (*InternalServerErrorTextPlain) getGroupRes()                  {}
 func (*InternalServerErrorTextPlain) getGroupRolesRes()             {}
 func (*InternalServerErrorTextPlain) getGroupsRes()                 {}
-func (*InternalServerErrorTextPlain) getLibraryMetadataRes()        {}
+func (*InternalServerErrorTextPlain) getLibrarySearchIndexRes()     {}
 func (*InternalServerErrorTextPlain) getListenSessionsRes()         {}
 func (*InternalServerErrorTextPlain) getMessageThreadRes()          {}
 func (*InternalServerErrorTextPlain) getMessagesRes()               {}
@@ -2375,168 +2368,6 @@ func (s *LibraryAddTrack) SetReferenceID(val OptInt64) {
 // SetForceAdd sets the value of ForceAdd.
 func (s *LibraryAddTrack) SetForceAdd(val OptBool) {
 	s.ForceAdd = val
-}
-
-// Ref: #/components/schemas/LibraryMetadataAlbum
-type LibraryMetadataAlbum struct {
-	ID   uuid.UUID `json:"id"`
-	Name string    `json:"name"`
-}
-
-// GetID returns the value of ID.
-func (s *LibraryMetadataAlbum) GetID() uuid.UUID {
-	return s.ID
-}
-
-// GetName returns the value of Name.
-func (s *LibraryMetadataAlbum) GetName() string {
-	return s.Name
-}
-
-// SetID sets the value of ID.
-func (s *LibraryMetadataAlbum) SetID(val uuid.UUID) {
-	s.ID = val
-}
-
-// SetName sets the value of Name.
-func (s *LibraryMetadataAlbum) SetName(val string) {
-	s.Name = val
-}
-
-// Ref: #/components/schemas/LibraryMetadataArtist
-type LibraryMetadataArtist struct {
-	ID   uuid.UUID `json:"id"`
-	Name string    `json:"name"`
-}
-
-// GetID returns the value of ID.
-func (s *LibraryMetadataArtist) GetID() uuid.UUID {
-	return s.ID
-}
-
-// GetName returns the value of Name.
-func (s *LibraryMetadataArtist) GetName() string {
-	return s.Name
-}
-
-// SetID sets the value of ID.
-func (s *LibraryMetadataArtist) SetID(val uuid.UUID) {
-	s.ID = val
-}
-
-// SetName sets the value of Name.
-func (s *LibraryMetadataArtist) SetName(val string) {
-	s.Name = val
-}
-
-// Ref: #/components/schemas/LibraryMetadataResponse
-type LibraryMetadataResponse struct {
-	Artists []LibraryMetadataArtist `json:"artists"`
-	Albums  []LibraryMetadataAlbum  `json:"albums"`
-	Tracks  []LibraryMetadataTrack  `json:"tracks"`
-}
-
-// GetArtists returns the value of Artists.
-func (s *LibraryMetadataResponse) GetArtists() []LibraryMetadataArtist {
-	return s.Artists
-}
-
-// GetAlbums returns the value of Albums.
-func (s *LibraryMetadataResponse) GetAlbums() []LibraryMetadataAlbum {
-	return s.Albums
-}
-
-// GetTracks returns the value of Tracks.
-func (s *LibraryMetadataResponse) GetTracks() []LibraryMetadataTrack {
-	return s.Tracks
-}
-
-// SetArtists sets the value of Artists.
-func (s *LibraryMetadataResponse) SetArtists(val []LibraryMetadataArtist) {
-	s.Artists = val
-}
-
-// SetAlbums sets the value of Albums.
-func (s *LibraryMetadataResponse) SetAlbums(val []LibraryMetadataAlbum) {
-	s.Albums = val
-}
-
-// SetTracks sets the value of Tracks.
-func (s *LibraryMetadataResponse) SetTracks(val []LibraryMetadataTrack) {
-	s.Tracks = val
-}
-
-func (*LibraryMetadataResponse) getLibraryMetadataRes() {}
-
-// Ref: #/components/schemas/LibraryMetadataTrack
-type LibraryMetadataTrack struct {
-	ID        uuid.UUID    `json:"id"`
-	Name      string       `json:"name"`
-	Seconds   OptNilUint16 `json:"seconds"`
-	AlbumIds  []uuid.UUID  `json:"album_ids"`
-	ArtistIds []uuid.UUID  `json:"artist_ids"`
-	// SHA-256 hash of the audio data.
-	AudioSHA256 OptString `json:"audio_sha256"`
-}
-
-// GetID returns the value of ID.
-func (s *LibraryMetadataTrack) GetID() uuid.UUID {
-	return s.ID
-}
-
-// GetName returns the value of Name.
-func (s *LibraryMetadataTrack) GetName() string {
-	return s.Name
-}
-
-// GetSeconds returns the value of Seconds.
-func (s *LibraryMetadataTrack) GetSeconds() OptNilUint16 {
-	return s.Seconds
-}
-
-// GetAlbumIds returns the value of AlbumIds.
-func (s *LibraryMetadataTrack) GetAlbumIds() []uuid.UUID {
-	return s.AlbumIds
-}
-
-// GetArtistIds returns the value of ArtistIds.
-func (s *LibraryMetadataTrack) GetArtistIds() []uuid.UUID {
-	return s.ArtistIds
-}
-
-// GetAudioSHA256 returns the value of AudioSHA256.
-func (s *LibraryMetadataTrack) GetAudioSHA256() OptString {
-	return s.AudioSHA256
-}
-
-// SetID sets the value of ID.
-func (s *LibraryMetadataTrack) SetID(val uuid.UUID) {
-	s.ID = val
-}
-
-// SetName sets the value of Name.
-func (s *LibraryMetadataTrack) SetName(val string) {
-	s.Name = val
-}
-
-// SetSeconds sets the value of Seconds.
-func (s *LibraryMetadataTrack) SetSeconds(val OptNilUint16) {
-	s.Seconds = val
-}
-
-// SetAlbumIds sets the value of AlbumIds.
-func (s *LibraryMetadataTrack) SetAlbumIds(val []uuid.UUID) {
-	s.AlbumIds = val
-}
-
-// SetArtistIds sets the value of ArtistIds.
-func (s *LibraryMetadataTrack) SetArtistIds(val []uuid.UUID) {
-	s.ArtistIds = val
-}
-
-// SetAudioSHA256 sets the value of AudioSHA256.
-func (s *LibraryMetadataTrack) SetAudioSHA256(val OptString) {
-	s.AudioSHA256 = val
 }
 
 // Ref: #/components/schemas/LibraryRemoveRequest
@@ -4799,6 +4630,201 @@ type RemoveFromLibraryApplicationJSONUnauthorized ErrorResponse
 
 func (*RemoveFromLibraryApplicationJSONUnauthorized) removeFromLibraryRes() {}
 
+// Ref: #/components/schemas/SearchIndex
+type SearchIndex struct {
+	Artists []SearchIndexArtist `json:"artists"`
+	Albums  []SearchIndexAlbum  `json:"albums"`
+	Tracks  []SearchIndexTrack  `json:"tracks"`
+}
+
+// GetArtists returns the value of Artists.
+func (s *SearchIndex) GetArtists() []SearchIndexArtist {
+	return s.Artists
+}
+
+// GetAlbums returns the value of Albums.
+func (s *SearchIndex) GetAlbums() []SearchIndexAlbum {
+	return s.Albums
+}
+
+// GetTracks returns the value of Tracks.
+func (s *SearchIndex) GetTracks() []SearchIndexTrack {
+	return s.Tracks
+}
+
+// SetArtists sets the value of Artists.
+func (s *SearchIndex) SetArtists(val []SearchIndexArtist) {
+	s.Artists = val
+}
+
+// SetAlbums sets the value of Albums.
+func (s *SearchIndex) SetAlbums(val []SearchIndexAlbum) {
+	s.Albums = val
+}
+
+// SetTracks sets the value of Tracks.
+func (s *SearchIndex) SetTracks(val []SearchIndexTrack) {
+	s.Tracks = val
+}
+
+func (*SearchIndex) getLibrarySearchIndexRes() {}
+
+// Ref: #/components/schemas/SearchIndexAlbum
+type SearchIndexAlbum struct {
+	ID     uuid.UUID `json:"id"`
+	UserID OptUUID   `json:"user_id"`
+	Name   string    `json:"name"`
+}
+
+// GetID returns the value of ID.
+func (s *SearchIndexAlbum) GetID() uuid.UUID {
+	return s.ID
+}
+
+// GetUserID returns the value of UserID.
+func (s *SearchIndexAlbum) GetUserID() OptUUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *SearchIndexAlbum) GetName() string {
+	return s.Name
+}
+
+// SetID sets the value of ID.
+func (s *SearchIndexAlbum) SetID(val uuid.UUID) {
+	s.ID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *SearchIndexAlbum) SetUserID(val OptUUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *SearchIndexAlbum) SetName(val string) {
+	s.Name = val
+}
+
+// Ref: #/components/schemas/SearchIndexArtist
+type SearchIndexArtist struct {
+	ID     uuid.UUID `json:"id"`
+	UserID OptUUID   `json:"user_id"`
+	Name   string    `json:"name"`
+}
+
+// GetID returns the value of ID.
+func (s *SearchIndexArtist) GetID() uuid.UUID {
+	return s.ID
+}
+
+// GetUserID returns the value of UserID.
+func (s *SearchIndexArtist) GetUserID() OptUUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *SearchIndexArtist) GetName() string {
+	return s.Name
+}
+
+// SetID sets the value of ID.
+func (s *SearchIndexArtist) SetID(val uuid.UUID) {
+	s.ID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *SearchIndexArtist) SetUserID(val OptUUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *SearchIndexArtist) SetName(val string) {
+	s.Name = val
+}
+
+// Ref: #/components/schemas/SearchIndexTrack
+type SearchIndexTrack struct {
+	ID        uuid.UUID   `json:"id"`
+	UserID    OptUUID     `json:"user_id"`
+	Name      string      `json:"name"`
+	Seconds   OptUint16   `json:"seconds"`
+	AlbumIds  []uuid.UUID `json:"album_ids"`
+	ArtistIds []uuid.UUID `json:"artist_ids"`
+	// SHA-256 hash of the audio data.
+	AudioSHA256 OptString `json:"audio_sha256"`
+}
+
+// GetID returns the value of ID.
+func (s *SearchIndexTrack) GetID() uuid.UUID {
+	return s.ID
+}
+
+// GetUserID returns the value of UserID.
+func (s *SearchIndexTrack) GetUserID() OptUUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *SearchIndexTrack) GetName() string {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *SearchIndexTrack) GetSeconds() OptUint16 {
+	return s.Seconds
+}
+
+// GetAlbumIds returns the value of AlbumIds.
+func (s *SearchIndexTrack) GetAlbumIds() []uuid.UUID {
+	return s.AlbumIds
+}
+
+// GetArtistIds returns the value of ArtistIds.
+func (s *SearchIndexTrack) GetArtistIds() []uuid.UUID {
+	return s.ArtistIds
+}
+
+// GetAudioSHA256 returns the value of AudioSHA256.
+func (s *SearchIndexTrack) GetAudioSHA256() OptString {
+	return s.AudioSHA256
+}
+
+// SetID sets the value of ID.
+func (s *SearchIndexTrack) SetID(val uuid.UUID) {
+	s.ID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *SearchIndexTrack) SetUserID(val OptUUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *SearchIndexTrack) SetName(val string) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *SearchIndexTrack) SetSeconds(val OptUint16) {
+	s.Seconds = val
+}
+
+// SetAlbumIds sets the value of AlbumIds.
+func (s *SearchIndexTrack) SetAlbumIds(val []uuid.UUID) {
+	s.AlbumIds = val
+}
+
+// SetArtistIds sets the value of ArtistIds.
+func (s *SearchIndexTrack) SetArtistIds(val []uuid.UUID) {
+	s.ArtistIds = val
+}
+
+// SetAudioSHA256 sets the value of AudioSHA256.
+func (s *SearchIndexTrack) SetAudioSHA256(val OptString) {
+	s.AudioSHA256 = val
+}
+
 // Ref: #/components/schemas/SearchTrackQuery
 type SearchTrackQuery struct {
 	TrackName   string    `json:"track_name"`
@@ -6440,7 +6466,6 @@ func (*UnauthorizedTextPlain) getArtistRes()                 {}
 func (*UnauthorizedTextPlain) getGroupRes()                  {}
 func (*UnauthorizedTextPlain) getGroupRolesRes()             {}
 func (*UnauthorizedTextPlain) getGroupsRes()                 {}
-func (*UnauthorizedTextPlain) getLibraryMetadataRes()        {}
 func (*UnauthorizedTextPlain) getListenSessionsRes()         {}
 func (*UnauthorizedTextPlain) getMessageThreadRes()          {}
 func (*UnauthorizedTextPlain) getMessagesRes()               {}

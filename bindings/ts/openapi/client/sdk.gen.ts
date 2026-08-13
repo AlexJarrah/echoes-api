@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibraryMetadataData, GetLibraryMetadataErrors, GetLibraryMetadataResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetTracksPlayStatsData, GetTracksPlayStatsErrors, GetTracksPlayStatsResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksData, SearchTracksErrors, SearchTracksResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, SubsonicDownloadData, SubsonicDownloadErrors, SubsonicDownloadResponses, SubsonicStreamData, SubsonicStreamErrors, SubsonicStreamResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, UploadTrackAudioData, UploadTrackAudioErrors, UploadTrackAudioResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibrarySearchIndexData, GetLibrarySearchIndexErrors, GetLibrarySearchIndexResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetTracksPlayStatsData, GetTracksPlayStatsErrors, GetTracksPlayStatsResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksData, SearchTracksErrors, SearchTracksResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, SubsonicDownloadData, SubsonicDownloadErrors, SubsonicDownloadResponses, SubsonicStreamData, SubsonicStreamErrors, SubsonicStreamResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, UploadTrackAudioData, UploadTrackAudioErrors, UploadTrackAudioResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -354,19 +354,6 @@ export const addToLibrary = <ThrowOnError extends boolean = false>(options: Opti
 });
 
 /**
- * Get library metadata
- */
-export const getLibraryMetadata = <ThrowOnError extends boolean = false>(options?: Options<GetLibraryMetadataData, ThrowOnError>): RequestResult<GetLibraryMetadataResponses, GetLibraryMetadataErrors, ThrowOnError> => (options?.client ?? client).get<GetLibraryMetadataResponses, GetLibraryMetadataErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/library/get-metadata',
-    ...options
-});
-
-/**
  * Remove items from library
  */
 export const removeFromLibrary = <ThrowOnError extends boolean = false>(options: Options<RemoveFromLibraryData, ThrowOnError>): RequestResult<RemoveFromLibraryResponses, RemoveFromLibraryErrors, ThrowOnError> => (options.client ?? client).post<RemoveFromLibraryResponses, RemoveFromLibraryErrors, ThrowOnError>({
@@ -381,6 +368,19 @@ export const removeFromLibrary = <ThrowOnError extends boolean = false>(options:
         'Content-Type': 'application/json',
         ...options.headers
     }
+});
+
+/**
+ * Returns the user's library search engine index.
+ */
+export const getLibrarySearchIndex = <ThrowOnError extends boolean = false>(options?: Options<GetLibrarySearchIndexData, ThrowOnError>): RequestResult<GetLibrarySearchIndexResponses, GetLibrarySearchIndexErrors, ThrowOnError> => (options?.client ?? client).get<GetLibrarySearchIndexResponses, GetLibrarySearchIndexErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/library/search/index',
+    ...options
 });
 
 /**

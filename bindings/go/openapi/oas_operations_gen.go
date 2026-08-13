@@ -27,7 +27,7 @@ const (
 	GetGroupOperation                  OperationName = "GetGroup"
 	GetGroupRolesOperation             OperationName = "GetGroupRoles"
 	GetGroupsOperation                 OperationName = "GetGroups"
-	GetLibraryMetadataOperation        OperationName = "GetLibraryMetadata"
+	GetLibrarySearchIndexOperation     OperationName = "GetLibrarySearchIndex"
 	GetListenSessionsOperation         OperationName = "GetListenSessions"
 	GetMessageThreadOperation          OperationName = "GetMessageThread"
 	GetMessagesOperation               OperationName = "GetMessages"
