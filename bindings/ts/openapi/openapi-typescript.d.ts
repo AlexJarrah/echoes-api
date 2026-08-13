@@ -1175,7 +1175,8 @@ export interface components {
             seconds?: number | null;
             album_ids?: string[];
             artist_ids?: string[];
-            audio_available?: boolean;
+            /** @description SHA-256 hash of the audio data. */
+            audio_sha256?: string;
         };
         LibraryRemoveRequest: {
             track_ids?: string[];

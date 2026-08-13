@@ -9157,9 +9157,9 @@ func (s *LibraryMetadataTrack) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.AudioAvailable.Set {
-			e.FieldStart("audio_available")
-			s.AudioAvailable.Encode(e)
+		if s.AudioSHA256.Set {
+			e.FieldStart("audio_sha256")
+			s.AudioSHA256.Encode(e)
 		}
 	}
 }
@@ -9170,7 +9170,7 @@ var jsonFieldsNameOfLibraryMetadataTrack = [6]string{
 	2: "seconds",
 	3: "album_ids",
 	4: "artist_ids",
-	5: "audio_available",
+	5: "audio_sha256",
 }
 
 // Decode decodes LibraryMetadataTrack from json.
@@ -9254,15 +9254,15 @@ func (s *LibraryMetadataTrack) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"artist_ids\"")
 			}
-		case "audio_available":
+		case "audio_sha256":
 			if err := func() error {
-				s.AudioAvailable.Reset()
-				if err := s.AudioAvailable.Decode(d); err != nil {
+				s.AudioSHA256.Reset()
+				if err := s.AudioSHA256.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"audio_available\"")
+				return errors.Wrap(err, "decode field \"audio_sha256\"")
 			}
 		default:
 			return d.Skip()

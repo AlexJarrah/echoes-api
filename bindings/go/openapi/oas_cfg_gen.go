@@ -19,6 +19,7 @@ import (
 )
 
 var regexMap = map[string]ogenregex.Regexp{
+	"^[a-fA-F0-9]{64}$":                      ogenregex.MustCompile("^[a-fA-F0-9]{64}$"),
 	"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$": ogenregex.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$"),
 	"^\\p{L}{2,}( \\p{L}+)*$":                ogenregex.MustCompile("^\\p{L}{2,}( \\p{L}+)*$"),
 }

@@ -372,7 +372,10 @@ export type LibraryMetadataTrack = {
     seconds?: number | null;
     album_ids?: Array<string>;
     artist_ids?: Array<string>;
-    audio_available?: boolean;
+    /**
+     * SHA-256 hash of the audio data.
+     */
+    audio_sha256?: string;
 };
 
 export type LibraryRemoveRequest = {

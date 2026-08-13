@@ -942,8 +942,10 @@ components:
           items:
             type: string
             format: uuid
-        audio_available:
-          type: boolean
+        audio_sha256:
+          type: string
+          description: SHA-256 hash of the audio data.
+          pattern: "^[a-fA-F0-9]{64}$"
 
     LibraryRemoveRequest:
       type: object
