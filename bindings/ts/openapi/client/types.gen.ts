@@ -181,7 +181,7 @@ export type EntityPlays = {
 
 export type ErrorResponse = {
     /**
-     * Human-readable error message
+     * Error message
      */
     message: string;
 };

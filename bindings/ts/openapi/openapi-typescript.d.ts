@@ -994,7 +994,7 @@ export interface components {
             duration: number;
         };
         ErrorResponse: {
-            /** @description Human-readable error message */
+            /** @description Error message */
             message: string;
         };
         /**
@@ -1697,7 +1697,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
             };
         };
         /** @description Conflict */
@@ -1707,7 +1706,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
             };
         };
         /** @description Forbidden */
@@ -1717,7 +1715,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
             };
         };
         /** @description Internal server error */
@@ -1727,7 +1724,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
             };
         };
         /** @description No content */
@@ -1744,7 +1740,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
             };
         };
         /** @description Unauthorized */
@@ -1754,7 +1749,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["ErrorResponse"];
-                "text/plain": string;
             };
         };
     };

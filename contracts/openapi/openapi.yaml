@@ -66,9 +66,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
 
     Conflict:
       description: Conflict
@@ -76,9 +73,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
 
     Forbidden:
       description: Forbidden
@@ -86,9 +80,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
 
     InternalServerError:
       description: Internal server error
@@ -96,9 +87,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
 
     NoContent:
       description: No content
@@ -109,9 +97,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
 
     Unauthorized:
       description: Unauthorized
@@ -119,9 +104,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-        text/plain:
-          schema:
-            type: string
 
   schemas:
     Album:
@@ -550,7 +532,7 @@ components:
       properties:
         message:
           type: string
-          description: Human-readable error message
+          description: Error message
 
     FriendActionRequest:
       type: object

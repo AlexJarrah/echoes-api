@@ -11,57 +11,57 @@ import (
 	ht "github.com/ogen-go/ogen/http"
 )
 
-type AddFriendApplicationJSONBadRequest ErrorResponse
+type AddFriendBadRequest ErrorResponse
 
-func (*AddFriendApplicationJSONBadRequest) addFriendRes() {}
+func (*AddFriendBadRequest) addFriendRes() {}
 
-type AddFriendApplicationJSONForbidden ErrorResponse
+type AddFriendForbidden ErrorResponse
 
-func (*AddFriendApplicationJSONForbidden) addFriendRes() {}
+func (*AddFriendForbidden) addFriendRes() {}
 
-type AddFriendApplicationJSONInternalServerError ErrorResponse
+type AddFriendInternalServerError ErrorResponse
 
-func (*AddFriendApplicationJSONInternalServerError) addFriendRes() {}
+func (*AddFriendInternalServerError) addFriendRes() {}
 
-type AddFriendApplicationJSONNotFound ErrorResponse
+type AddFriendNotFound ErrorResponse
 
-func (*AddFriendApplicationJSONNotFound) addFriendRes() {}
+func (*AddFriendNotFound) addFriendRes() {}
 
-type AddFriendApplicationJSONUnauthorized ErrorResponse
+type AddFriendUnauthorized ErrorResponse
 
-func (*AddFriendApplicationJSONUnauthorized) addFriendRes() {}
+func (*AddFriendUnauthorized) addFriendRes() {}
 
-type AddGroupRolesApplicationJSONBadRequest ErrorResponse
+type AddGroupRolesBadRequest ErrorResponse
 
-func (*AddGroupRolesApplicationJSONBadRequest) addGroupRolesRes() {}
+func (*AddGroupRolesBadRequest) addGroupRolesRes() {}
 
-type AddGroupRolesApplicationJSONInternalServerError ErrorResponse
+type AddGroupRolesInternalServerError ErrorResponse
 
-func (*AddGroupRolesApplicationJSONInternalServerError) addGroupRolesRes() {}
+func (*AddGroupRolesInternalServerError) addGroupRolesRes() {}
 
 type AddGroupRolesOKApplicationJSON []GroupRole
 
 func (*AddGroupRolesOKApplicationJSON) addGroupRolesRes() {}
 
-type AddMessageReactionApplicationJSONInternalServerError ErrorResponse
+type AddMessageReactionInternalServerError ErrorResponse
 
-func (*AddMessageReactionApplicationJSONInternalServerError) addMessageReactionRes() {}
+func (*AddMessageReactionInternalServerError) addMessageReactionRes() {}
 
-type AddMessageReactionApplicationJSONUnauthorized ErrorResponse
+type AddMessageReactionUnauthorized ErrorResponse
 
-func (*AddMessageReactionApplicationJSONUnauthorized) addMessageReactionRes() {}
+func (*AddMessageReactionUnauthorized) addMessageReactionRes() {}
 
-type AddToLibraryApplicationJSONBadRequest ErrorResponse
+type AddToLibraryBadRequest ErrorResponse
 
-func (*AddToLibraryApplicationJSONBadRequest) addToLibraryRes() {}
+func (*AddToLibraryBadRequest) addToLibraryRes() {}
 
-type AddToLibraryApplicationJSONInternalServerError ErrorResponse
+type AddToLibraryInternalServerError ErrorResponse
 
-func (*AddToLibraryApplicationJSONInternalServerError) addToLibraryRes() {}
+func (*AddToLibraryInternalServerError) addToLibraryRes() {}
 
-type AddToLibraryApplicationJSONUnauthorized ErrorResponse
+type AddToLibraryUnauthorized ErrorResponse
 
-func (*AddToLibraryApplicationJSONUnauthorized) addToLibraryRes() {}
+func (*AddToLibraryUnauthorized) addToLibraryRes() {}
 
 // Ref: #/components/schemas/Album
 type Album struct {
@@ -649,55 +649,6 @@ func (s *ArtistPlayStats) SetPlayDuration(val uint64) {
 	s.PlayDuration = val
 }
 
-type BadRequestTextPlain struct {
-	Data io.Reader
-}
-
-// Read reads data from the Data reader.
-//
-// Kept to satisfy the io.Reader interface.
-func (s BadRequestTextPlain) Read(p []byte) (n int, err error) {
-	if s.Data == nil {
-		return 0, io.EOF
-	}
-	return s.Data.Read(p)
-}
-
-func (*BadRequestTextPlain) addFriendRes()                 {}
-func (*BadRequestTextPlain) addGroupRolesRes()             {}
-func (*BadRequestTextPlain) addToLibraryRes()              {}
-func (*BadRequestTextPlain) createGroupRes()               {}
-func (*BadRequestTextPlain) deleteGroupRes()               {}
-func (*BadRequestTextPlain) deleteMessageRes()             {}
-func (*BadRequestTextPlain) editGroupRes()                 {}
-func (*BadRequestTextPlain) editMessageRes()               {}
-func (*BadRequestTextPlain) getAlbumRes()                  {}
-func (*BadRequestTextPlain) getArtistRes()                 {}
-func (*BadRequestTextPlain) getCalendarListensRes()        {}
-func (*BadRequestTextPlain) getGlobalTopAlbumsRes()        {}
-func (*BadRequestTextPlain) getGlobalTopArtistsRes()       {}
-func (*BadRequestTextPlain) getGlobalTopTracksRes()        {}
-func (*BadRequestTextPlain) getListenSessionsRes()         {}
-func (*BadRequestTextPlain) getTrackRes()                  {}
-func (*BadRequestTextPlain) getTracksPlayStatsRes()        {}
-func (*BadRequestTextPlain) getUserListenSessionsRes()     {}
-func (*BadRequestTextPlain) getUserListensByDaysRes()      {}
-func (*BadRequestTextPlain) getUserTopArtistPlayStatsRes() {}
-func (*BadRequestTextPlain) readMessageRes()               {}
-func (*BadRequestTextPlain) registerRes()                  {}
-func (*BadRequestTextPlain) removeFriendRes()              {}
-func (*BadRequestTextPlain) removeFromLibraryRes()         {}
-func (*BadRequestTextPlain) searchTracksRes()              {}
-func (*BadRequestTextPlain) sendMessageRes()               {}
-func (*BadRequestTextPlain) setActivityRes()               {}
-func (*BadRequestTextPlain) setBestFriendRes()             {}
-func (*BadRequestTextPlain) setBlockedRes()                {}
-func (*BadRequestTextPlain) signInRes()                    {}
-func (*BadRequestTextPlain) updateGroupRolesRes()          {}
-func (*BadRequestTextPlain) updateLibraryRes()             {}
-func (*BadRequestTextPlain) updateUserRes()                {}
-func (*BadRequestTextPlain) uploadTrackAudioRes()          {}
-
 // Ref: #/components/schemas/BestFriendActionRequest
 type BestFriendActionRequest struct {
 	ID         uuid.UUID `json:"id"`
@@ -750,23 +701,6 @@ func (s *BlockedActionRequest) SetBlocked(val bool) {
 	s.Blocked = val
 }
 
-type ConflictTextPlain struct {
-	Data io.Reader
-}
-
-// Read reads data from the Data reader.
-//
-// Kept to satisfy the io.Reader interface.
-func (s ConflictTextPlain) Read(p []byte) (n int, err error) {
-	if s.Data == nil {
-		return 0, io.EOF
-	}
-	return s.Data.Read(p)
-}
-
-func (*ConflictTextPlain) registerRes()   {}
-func (*ConflictTextPlain) updateUserRes() {}
-
 // Ref: #/components/schemas/Conversation
 type Conversation struct {
 	ConversationID uuid.UUID `json:"conversation_id"`
@@ -818,13 +752,13 @@ func (s *CookieAuth) SetRoles(val []string) {
 	s.Roles = val
 }
 
-type CreateGroupApplicationJSONBadRequest ErrorResponse
+type CreateGroupBadRequest ErrorResponse
 
-func (*CreateGroupApplicationJSONBadRequest) createGroupRes() {}
+func (*CreateGroupBadRequest) createGroupRes() {}
 
-type CreateGroupApplicationJSONInternalServerError ErrorResponse
+type CreateGroupInternalServerError ErrorResponse
 
-func (*CreateGroupApplicationJSONInternalServerError) createGroupRes() {}
+func (*CreateGroupInternalServerError) createGroupRes() {}
 
 // Ref: #/components/schemas/CreateGroupRequest
 type CreateGroupRequest struct {
@@ -937,57 +871,57 @@ func (s *DayListenDetails) SetSeconds(val uint64) {
 	s.Seconds = val
 }
 
-type DeleteGroupApplicationJSONBadRequest ErrorResponse
+type DeleteGroupBadRequest ErrorResponse
 
-func (*DeleteGroupApplicationJSONBadRequest) deleteGroupRes() {}
+func (*DeleteGroupBadRequest) deleteGroupRes() {}
 
-type DeleteGroupApplicationJSONInternalServerError ErrorResponse
+type DeleteGroupInternalServerError ErrorResponse
 
-func (*DeleteGroupApplicationJSONInternalServerError) deleteGroupRes() {}
+func (*DeleteGroupInternalServerError) deleteGroupRes() {}
 
-type DeleteGroupRoleApplicationJSONForbidden ErrorResponse
+type DeleteGroupRoleForbidden ErrorResponse
 
-func (*DeleteGroupRoleApplicationJSONForbidden) deleteGroupRoleRes() {}
+func (*DeleteGroupRoleForbidden) deleteGroupRoleRes() {}
 
-type DeleteGroupRoleApplicationJSONInternalServerError ErrorResponse
+type DeleteGroupRoleInternalServerError ErrorResponse
 
-func (*DeleteGroupRoleApplicationJSONInternalServerError) deleteGroupRoleRes() {}
+func (*DeleteGroupRoleInternalServerError) deleteGroupRoleRes() {}
 
-type DeleteGroupRoleApplicationJSONNotFound ErrorResponse
+type DeleteGroupRoleNotFound ErrorResponse
 
-func (*DeleteGroupRoleApplicationJSONNotFound) deleteGroupRoleRes() {}
+func (*DeleteGroupRoleNotFound) deleteGroupRoleRes() {}
 
-type DeleteGroupRoleApplicationJSONUnauthorized ErrorResponse
+type DeleteGroupRoleUnauthorized ErrorResponse
 
-func (*DeleteGroupRoleApplicationJSONUnauthorized) deleteGroupRoleRes() {}
+func (*DeleteGroupRoleUnauthorized) deleteGroupRoleRes() {}
 
-type DeleteMessageApplicationJSONBadRequest ErrorResponse
+type DeleteMessageBadRequest ErrorResponse
 
-func (*DeleteMessageApplicationJSONBadRequest) deleteMessageRes() {}
+func (*DeleteMessageBadRequest) deleteMessageRes() {}
 
-type DeleteMessageApplicationJSONInternalServerError ErrorResponse
+type DeleteMessageInternalServerError ErrorResponse
 
-func (*DeleteMessageApplicationJSONInternalServerError) deleteMessageRes() {}
+func (*DeleteMessageInternalServerError) deleteMessageRes() {}
 
-type DeleteMessageReactionApplicationJSONInternalServerError ErrorResponse
+type DeleteMessageReactionInternalServerError ErrorResponse
 
-func (*DeleteMessageReactionApplicationJSONInternalServerError) deleteMessageReactionRes() {}
+func (*DeleteMessageReactionInternalServerError) deleteMessageReactionRes() {}
 
-type DeleteMessageReactionApplicationJSONNotFound ErrorResponse
+type DeleteMessageReactionNotFound ErrorResponse
 
-func (*DeleteMessageReactionApplicationJSONNotFound) deleteMessageReactionRes() {}
+func (*DeleteMessageReactionNotFound) deleteMessageReactionRes() {}
 
-type DeleteMessageReactionApplicationJSONUnauthorized ErrorResponse
+type DeleteMessageReactionUnauthorized ErrorResponse
 
-func (*DeleteMessageReactionApplicationJSONUnauthorized) deleteMessageReactionRes() {}
+func (*DeleteMessageReactionUnauthorized) deleteMessageReactionRes() {}
 
-type EditGroupApplicationJSONBadRequest ErrorResponse
+type EditGroupBadRequest ErrorResponse
 
-func (*EditGroupApplicationJSONBadRequest) editGroupRes() {}
+func (*EditGroupBadRequest) editGroupRes() {}
 
-type EditGroupApplicationJSONInternalServerError ErrorResponse
+type EditGroupInternalServerError ErrorResponse
 
-func (*EditGroupApplicationJSONInternalServerError) editGroupRes() {}
+func (*EditGroupInternalServerError) editGroupRes() {}
 
 // Ref: #/components/schemas/EditGroupRequest
 type EditGroupRequest struct {
@@ -1026,13 +960,13 @@ func (s *EditGroupRequest) SetVisibility(val OptVisibility) {
 	s.Visibility = val
 }
 
-type EditMessageApplicationJSONBadRequest ErrorResponse
+type EditMessageBadRequest ErrorResponse
 
-func (*EditMessageApplicationJSONBadRequest) editMessageRes() {}
+func (*EditMessageBadRequest) editMessageRes() {}
 
-type EditMessageApplicationJSONInternalServerError ErrorResponse
+type EditMessageInternalServerError ErrorResponse
 
-func (*EditMessageApplicationJSONInternalServerError) editMessageRes() {}
+func (*EditMessageInternalServerError) editMessageRes() {}
 
 type EditMessageReq struct {
 	Body OptString `json:"body"`
@@ -1105,7 +1039,7 @@ func (s *EntityPlays) SetDuration(val uint64) {
 
 // Ref: #/components/schemas/ErrorResponse
 type ErrorResponse struct {
-	// Human-readable error message.
+	// Error message.
 	Message string `json:"message"`
 }
 
@@ -1122,28 +1056,6 @@ func (s *ErrorResponse) SetMessage(val string) {
 func (*ErrorResponse) getLibrarySearchIndexRes() {}
 func (*ErrorResponse) getUserDetailsRes()        {}
 func (*ErrorResponse) validateTokenRes()         {}
-
-type ForbiddenTextPlain struct {
-	Data io.Reader
-}
-
-// Read reads data from the Data reader.
-//
-// Kept to satisfy the io.Reader interface.
-func (s ForbiddenTextPlain) Read(p []byte) (n int, err error) {
-	if s.Data == nil {
-		return 0, io.EOF
-	}
-	return s.Data.Read(p)
-}
-
-func (*ForbiddenTextPlain) addFriendRes()             {}
-func (*ForbiddenTextPlain) deleteGroupRoleRes()       {}
-func (*ForbiddenTextPlain) getCalendarListensRes()    {}
-func (*ForbiddenTextPlain) getUserListenSessionsRes() {}
-func (*ForbiddenTextPlain) removeFriendRes()          {}
-func (*ForbiddenTextPlain) setBestFriendRes()         {}
-func (*ForbiddenTextPlain) setBlockedRes()            {}
 
 // Request body for friend actions. At least one of 'id' or 'handle' must be provided to identify the
 // target user.
@@ -1175,37 +1087,37 @@ func (s *FriendActionRequest) SetHandle(val OptNilString) {
 	s.Handle = val
 }
 
-type GetAlbumApplicationJSONBadRequest ErrorResponse
+type GetAlbumBadRequest ErrorResponse
 
-func (*GetAlbumApplicationJSONBadRequest) getAlbumRes() {}
+func (*GetAlbumBadRequest) getAlbumRes() {}
 
-type GetAlbumApplicationJSONInternalServerError ErrorResponse
+type GetAlbumInternalServerError ErrorResponse
 
-func (*GetAlbumApplicationJSONInternalServerError) getAlbumRes() {}
+func (*GetAlbumInternalServerError) getAlbumRes() {}
 
-type GetAlbumApplicationJSONNotFound ErrorResponse
+type GetAlbumNotFound ErrorResponse
 
-func (*GetAlbumApplicationJSONNotFound) getAlbumRes() {}
+func (*GetAlbumNotFound) getAlbumRes() {}
 
-type GetAlbumApplicationJSONUnauthorized ErrorResponse
+type GetAlbumUnauthorized ErrorResponse
 
-func (*GetAlbumApplicationJSONUnauthorized) getAlbumRes() {}
+func (*GetAlbumUnauthorized) getAlbumRes() {}
 
-type GetArtistApplicationJSONBadRequest ErrorResponse
+type GetArtistBadRequest ErrorResponse
 
-func (*GetArtistApplicationJSONBadRequest) getArtistRes() {}
+func (*GetArtistBadRequest) getArtistRes() {}
 
-type GetArtistApplicationJSONInternalServerError ErrorResponse
+type GetArtistInternalServerError ErrorResponse
 
-func (*GetArtistApplicationJSONInternalServerError) getArtistRes() {}
+func (*GetArtistInternalServerError) getArtistRes() {}
 
-type GetArtistApplicationJSONNotFound ErrorResponse
+type GetArtistNotFound ErrorResponse
 
-func (*GetArtistApplicationJSONNotFound) getArtistRes() {}
+func (*GetArtistNotFound) getArtistRes() {}
 
-type GetArtistApplicationJSONUnauthorized ErrorResponse
+type GetArtistUnauthorized ErrorResponse
 
-func (*GetArtistApplicationJSONUnauthorized) getArtistRes() {}
+func (*GetArtistUnauthorized) getArtistRes() {}
 
 type GetAsyncAPIOK struct {
 	Data io.Reader
@@ -1221,21 +1133,21 @@ func (s GetAsyncAPIOK) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-type GetCalendarListensApplicationJSONBadRequest ErrorResponse
+type GetCalendarListensBadRequest ErrorResponse
 
-func (*GetCalendarListensApplicationJSONBadRequest) getCalendarListensRes() {}
+func (*GetCalendarListensBadRequest) getCalendarListensRes() {}
 
-type GetCalendarListensApplicationJSONForbidden ErrorResponse
+type GetCalendarListensForbidden ErrorResponse
 
-func (*GetCalendarListensApplicationJSONForbidden) getCalendarListensRes() {}
+func (*GetCalendarListensForbidden) getCalendarListensRes() {}
 
-type GetCalendarListensApplicationJSONInternalServerError ErrorResponse
+type GetCalendarListensInternalServerError ErrorResponse
 
-func (*GetCalendarListensApplicationJSONInternalServerError) getCalendarListensRes() {}
+func (*GetCalendarListensInternalServerError) getCalendarListensRes() {}
 
-type GetCalendarListensApplicationJSONNotFound ErrorResponse
+type GetCalendarListensNotFound ErrorResponse
 
-func (*GetCalendarListensApplicationJSONNotFound) getCalendarListensRes() {}
+func (*GetCalendarListensNotFound) getCalendarListensRes() {}
 
 type GetCalendarListensOK struct {
 	Data io.Reader
@@ -1279,113 +1191,113 @@ func (s *GetCalendarListensOKHeaders) SetResponse(val GetCalendarListensOK) {
 
 func (*GetCalendarListensOKHeaders) getCalendarListensRes() {}
 
-type GetGlobalTopAlbumsApplicationJSONBadRequest ErrorResponse
+type GetGlobalTopAlbumsBadRequest ErrorResponse
 
-func (*GetGlobalTopAlbumsApplicationJSONBadRequest) getGlobalTopAlbumsRes() {}
+func (*GetGlobalTopAlbumsBadRequest) getGlobalTopAlbumsRes() {}
 
-type GetGlobalTopAlbumsApplicationJSONInternalServerError ErrorResponse
+type GetGlobalTopAlbumsInternalServerError ErrorResponse
 
-func (*GetGlobalTopAlbumsApplicationJSONInternalServerError) getGlobalTopAlbumsRes() {}
+func (*GetGlobalTopAlbumsInternalServerError) getGlobalTopAlbumsRes() {}
 
 type GetGlobalTopAlbumsOKApplicationJSON []TopAlbumEntry
 
 func (*GetGlobalTopAlbumsOKApplicationJSON) getGlobalTopAlbumsRes() {}
 
-type GetGlobalTopArtistsApplicationJSONBadRequest ErrorResponse
+type GetGlobalTopArtistsBadRequest ErrorResponse
 
-func (*GetGlobalTopArtistsApplicationJSONBadRequest) getGlobalTopArtistsRes() {}
+func (*GetGlobalTopArtistsBadRequest) getGlobalTopArtistsRes() {}
 
-type GetGlobalTopArtistsApplicationJSONInternalServerError ErrorResponse
+type GetGlobalTopArtistsInternalServerError ErrorResponse
 
-func (*GetGlobalTopArtistsApplicationJSONInternalServerError) getGlobalTopArtistsRes() {}
+func (*GetGlobalTopArtistsInternalServerError) getGlobalTopArtistsRes() {}
 
 type GetGlobalTopArtistsOKApplicationJSON []TopArtistEntry
 
 func (*GetGlobalTopArtistsOKApplicationJSON) getGlobalTopArtistsRes() {}
 
-type GetGlobalTopTracksApplicationJSONBadRequest ErrorResponse
+type GetGlobalTopTracksBadRequest ErrorResponse
 
-func (*GetGlobalTopTracksApplicationJSONBadRequest) getGlobalTopTracksRes() {}
+func (*GetGlobalTopTracksBadRequest) getGlobalTopTracksRes() {}
 
-type GetGlobalTopTracksApplicationJSONInternalServerError ErrorResponse
+type GetGlobalTopTracksInternalServerError ErrorResponse
 
-func (*GetGlobalTopTracksApplicationJSONInternalServerError) getGlobalTopTracksRes() {}
+func (*GetGlobalTopTracksInternalServerError) getGlobalTopTracksRes() {}
 
 type GetGlobalTopTracksOKApplicationJSON []TopTrackEntry
 
 func (*GetGlobalTopTracksOKApplicationJSON) getGlobalTopTracksRes() {}
 
-type GetGroupApplicationJSONInternalServerError ErrorResponse
+type GetGroupInternalServerError ErrorResponse
 
-func (*GetGroupApplicationJSONInternalServerError) getGroupRes() {}
+func (*GetGroupInternalServerError) getGroupRes() {}
 
-type GetGroupApplicationJSONUnauthorized ErrorResponse
+type GetGroupRolesInternalServerError ErrorResponse
 
-func (*GetGroupApplicationJSONUnauthorized) getGroupRes() {}
-
-type GetGroupRolesApplicationJSONInternalServerError ErrorResponse
-
-func (*GetGroupRolesApplicationJSONInternalServerError) getGroupRolesRes() {}
-
-type GetGroupRolesApplicationJSONUnauthorized ErrorResponse
-
-func (*GetGroupRolesApplicationJSONUnauthorized) getGroupRolesRes() {}
+func (*GetGroupRolesInternalServerError) getGroupRolesRes() {}
 
 type GetGroupRolesOKApplicationJSON []GroupRole
 
 func (*GetGroupRolesOKApplicationJSON) getGroupRolesRes() {}
 
-type GetGroupsApplicationJSONInternalServerError ErrorResponse
+type GetGroupRolesUnauthorized ErrorResponse
 
-func (*GetGroupsApplicationJSONInternalServerError) getGroupsRes() {}
+func (*GetGroupRolesUnauthorized) getGroupRolesRes() {}
 
-type GetGroupsApplicationJSONUnauthorized ErrorResponse
+type GetGroupUnauthorized ErrorResponse
 
-func (*GetGroupsApplicationJSONUnauthorized) getGroupsRes() {}
+func (*GetGroupUnauthorized) getGroupRes() {}
+
+type GetGroupsInternalServerError ErrorResponse
+
+func (*GetGroupsInternalServerError) getGroupsRes() {}
 
 type GetGroupsOKApplicationJSON []GroupDetails
 
 func (*GetGroupsOKApplicationJSON) getGroupsRes() {}
 
-type GetListenSessionsApplicationJSONBadRequest ErrorResponse
+type GetGroupsUnauthorized ErrorResponse
 
-func (*GetListenSessionsApplicationJSONBadRequest) getListenSessionsRes() {}
+func (*GetGroupsUnauthorized) getGroupsRes() {}
 
-type GetListenSessionsApplicationJSONInternalServerError ErrorResponse
+type GetListenSessionsBadRequest ErrorResponse
 
-func (*GetListenSessionsApplicationJSONInternalServerError) getListenSessionsRes() {}
+func (*GetListenSessionsBadRequest) getListenSessionsRes() {}
 
-type GetListenSessionsApplicationJSONUnauthorized ErrorResponse
+type GetListenSessionsInternalServerError ErrorResponse
 
-func (*GetListenSessionsApplicationJSONUnauthorized) getListenSessionsRes() {}
+func (*GetListenSessionsInternalServerError) getListenSessionsRes() {}
 
-type GetMessageThreadApplicationJSONInternalServerError ErrorResponse
+type GetListenSessionsUnauthorized ErrorResponse
 
-func (*GetMessageThreadApplicationJSONInternalServerError) getMessageThreadRes() {}
+func (*GetListenSessionsUnauthorized) getListenSessionsRes() {}
 
-type GetMessageThreadApplicationJSONNotFound ErrorResponse
+type GetMessageThreadInternalServerError ErrorResponse
 
-func (*GetMessageThreadApplicationJSONNotFound) getMessageThreadRes() {}
+func (*GetMessageThreadInternalServerError) getMessageThreadRes() {}
 
-type GetMessageThreadApplicationJSONUnauthorized ErrorResponse
+type GetMessageThreadNotFound ErrorResponse
 
-func (*GetMessageThreadApplicationJSONUnauthorized) getMessageThreadRes() {}
+func (*GetMessageThreadNotFound) getMessageThreadRes() {}
 
 type GetMessageThreadOKApplicationJSON []MessageDetails
 
 func (*GetMessageThreadOKApplicationJSON) getMessageThreadRes() {}
 
-type GetMessagesApplicationJSONInternalServerError ErrorResponse
+type GetMessageThreadUnauthorized ErrorResponse
 
-func (*GetMessagesApplicationJSONInternalServerError) getMessagesRes() {}
+func (*GetMessageThreadUnauthorized) getMessageThreadRes() {}
 
-type GetMessagesApplicationJSONUnauthorized ErrorResponse
+type GetMessagesInternalServerError ErrorResponse
 
-func (*GetMessagesApplicationJSONUnauthorized) getMessagesRes() {}
+func (*GetMessagesInternalServerError) getMessagesRes() {}
 
 type GetMessagesOKApplicationJSON []MessageDetails
 
 func (*GetMessagesOKApplicationJSON) getMessagesRes() {}
+
+type GetMessagesUnauthorized ErrorResponse
+
+func (*GetMessagesUnauthorized) getMessagesRes() {}
 
 type GetOpenAPIOK struct {
 	Data io.Reader
@@ -1401,121 +1313,121 @@ func (s GetOpenAPIOK) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-type GetRelationsApplicationJSONInternalServerError ErrorResponse
+type GetRelationsDetailsInternalServerError ErrorResponse
 
-func (*GetRelationsApplicationJSONInternalServerError) getRelationsRes() {}
-
-type GetRelationsApplicationJSONUnauthorized ErrorResponse
-
-func (*GetRelationsApplicationJSONUnauthorized) getRelationsRes() {}
-
-type GetRelationsDetailsApplicationJSONInternalServerError ErrorResponse
-
-func (*GetRelationsDetailsApplicationJSONInternalServerError) getRelationsDetailsRes() {}
-
-type GetRelationsDetailsApplicationJSONUnauthorized ErrorResponse
-
-func (*GetRelationsDetailsApplicationJSONUnauthorized) getRelationsDetailsRes() {}
+func (*GetRelationsDetailsInternalServerError) getRelationsDetailsRes() {}
 
 type GetRelationsDetailsOKApplicationJSON []RelationDetails
 
 func (*GetRelationsDetailsOKApplicationJSON) getRelationsDetailsRes() {}
 
+type GetRelationsDetailsUnauthorized ErrorResponse
+
+func (*GetRelationsDetailsUnauthorized) getRelationsDetailsRes() {}
+
+type GetRelationsInternalServerError ErrorResponse
+
+func (*GetRelationsInternalServerError) getRelationsRes() {}
+
 type GetRelationsOKApplicationJSON []Relation
 
 func (*GetRelationsOKApplicationJSON) getRelationsRes() {}
 
-type GetTrackApplicationJSONBadRequest ErrorResponse
+type GetRelationsUnauthorized ErrorResponse
 
-func (*GetTrackApplicationJSONBadRequest) getTrackRes() {}
+func (*GetRelationsUnauthorized) getRelationsRes() {}
 
-type GetTrackApplicationJSONInternalServerError ErrorResponse
+type GetTrackBadRequest ErrorResponse
 
-func (*GetTrackApplicationJSONInternalServerError) getTrackRes() {}
+func (*GetTrackBadRequest) getTrackRes() {}
 
-type GetTrackApplicationJSONNotFound ErrorResponse
+type GetTrackInternalServerError ErrorResponse
 
-func (*GetTrackApplicationJSONNotFound) getTrackRes() {}
+func (*GetTrackInternalServerError) getTrackRes() {}
 
-type GetTrackApplicationJSONUnauthorized ErrorResponse
+type GetTrackNotFound ErrorResponse
 
-func (*GetTrackApplicationJSONUnauthorized) getTrackRes() {}
+func (*GetTrackNotFound) getTrackRes() {}
 
-type GetTracksPlayStatsApplicationJSONBadRequest ErrorResponse
+type GetTrackUnauthorized ErrorResponse
 
-func (*GetTracksPlayStatsApplicationJSONBadRequest) getTracksPlayStatsRes() {}
+func (*GetTrackUnauthorized) getTrackRes() {}
 
-type GetTracksPlayStatsApplicationJSONInternalServerError ErrorResponse
+type GetTracksPlayStatsBadRequest ErrorResponse
 
-func (*GetTracksPlayStatsApplicationJSONInternalServerError) getTracksPlayStatsRes() {}
+func (*GetTracksPlayStatsBadRequest) getTracksPlayStatsRes() {}
+
+type GetTracksPlayStatsInternalServerError ErrorResponse
+
+func (*GetTracksPlayStatsInternalServerError) getTracksPlayStatsRes() {}
 
 type GetTracksPlayStatsOKApplicationJSON []EntityPlays
 
 func (*GetTracksPlayStatsOKApplicationJSON) getTracksPlayStatsRes() {}
 
-type GetUserIntegrationsApplicationJSONInternalServerError ErrorResponse
+type GetUserIntegrationsInternalServerError ErrorResponse
 
-func (*GetUserIntegrationsApplicationJSONInternalServerError) getUserIntegrationsRes() {}
-
-type GetUserIntegrationsApplicationJSONUnauthorized ErrorResponse
-
-func (*GetUserIntegrationsApplicationJSONUnauthorized) getUserIntegrationsRes() {}
+func (*GetUserIntegrationsInternalServerError) getUserIntegrationsRes() {}
 
 type GetUserIntegrationsOKApplicationJSON []IntegrationMetadata
 
 func (*GetUserIntegrationsOKApplicationJSON) getUserIntegrationsRes() {}
 
-type GetUserListenSessionsApplicationJSONBadRequest ErrorResponse
+type GetUserIntegrationsUnauthorized ErrorResponse
 
-func (*GetUserListenSessionsApplicationJSONBadRequest) getUserListenSessionsRes() {}
+func (*GetUserIntegrationsUnauthorized) getUserIntegrationsRes() {}
 
-type GetUserListenSessionsApplicationJSONForbidden ErrorResponse
+type GetUserListenSessionsBadRequest ErrorResponse
 
-func (*GetUserListenSessionsApplicationJSONForbidden) getUserListenSessionsRes() {}
+func (*GetUserListenSessionsBadRequest) getUserListenSessionsRes() {}
 
-type GetUserListenSessionsApplicationJSONInternalServerError ErrorResponse
+type GetUserListenSessionsForbidden ErrorResponse
 
-func (*GetUserListenSessionsApplicationJSONInternalServerError) getUserListenSessionsRes() {}
+func (*GetUserListenSessionsForbidden) getUserListenSessionsRes() {}
 
-type GetUserListenSessionsApplicationJSONNotFound ErrorResponse
+type GetUserListenSessionsInternalServerError ErrorResponse
 
-func (*GetUserListenSessionsApplicationJSONNotFound) getUserListenSessionsRes() {}
+func (*GetUserListenSessionsInternalServerError) getUserListenSessionsRes() {}
 
-type GetUserListenSessionsApplicationJSONUnauthorized ErrorResponse
+type GetUserListenSessionsNotFound ErrorResponse
 
-func (*GetUserListenSessionsApplicationJSONUnauthorized) getUserListenSessionsRes() {}
+func (*GetUserListenSessionsNotFound) getUserListenSessionsRes() {}
 
-type GetUserListensByDaysApplicationJSONBadRequest ErrorResponse
+type GetUserListenSessionsUnauthorized ErrorResponse
 
-func (*GetUserListensByDaysApplicationJSONBadRequest) getUserListensByDaysRes() {}
+func (*GetUserListenSessionsUnauthorized) getUserListenSessionsRes() {}
 
-type GetUserListensByDaysApplicationJSONInternalServerError ErrorResponse
+type GetUserListensByDaysBadRequest ErrorResponse
 
-func (*GetUserListensByDaysApplicationJSONInternalServerError) getUserListensByDaysRes() {}
+func (*GetUserListensByDaysBadRequest) getUserListensByDaysRes() {}
 
-type GetUserListensByDaysApplicationJSONUnauthorized ErrorResponse
+type GetUserListensByDaysInternalServerError ErrorResponse
 
-func (*GetUserListensByDaysApplicationJSONUnauthorized) getUserListensByDaysRes() {}
+func (*GetUserListensByDaysInternalServerError) getUserListensByDaysRes() {}
 
 type GetUserListensByDaysOKApplicationJSON []DayListenDetails
 
 func (*GetUserListensByDaysOKApplicationJSON) getUserListensByDaysRes() {}
 
-type GetUserTopArtistPlayStatsApplicationJSONBadRequest ErrorResponse
+type GetUserListensByDaysUnauthorized ErrorResponse
 
-func (*GetUserTopArtistPlayStatsApplicationJSONBadRequest) getUserTopArtistPlayStatsRes() {}
+func (*GetUserListensByDaysUnauthorized) getUserListensByDaysRes() {}
 
-type GetUserTopArtistPlayStatsApplicationJSONInternalServerError ErrorResponse
+type GetUserTopArtistPlayStatsBadRequest ErrorResponse
 
-func (*GetUserTopArtistPlayStatsApplicationJSONInternalServerError) getUserTopArtistPlayStatsRes() {}
+func (*GetUserTopArtistPlayStatsBadRequest) getUserTopArtistPlayStatsRes() {}
 
-type GetUserTopArtistPlayStatsApplicationJSONUnauthorized ErrorResponse
+type GetUserTopArtistPlayStatsInternalServerError ErrorResponse
 
-func (*GetUserTopArtistPlayStatsApplicationJSONUnauthorized) getUserTopArtistPlayStatsRes() {}
+func (*GetUserTopArtistPlayStatsInternalServerError) getUserTopArtistPlayStatsRes() {}
 
 type GetUserTopArtistPlayStatsOKApplicationJSON []TopArtistPlayStats
 
 func (*GetUserTopArtistPlayStatsOKApplicationJSON) getUserTopArtistPlayStatsRes() {}
+
+type GetUserTopArtistPlayStatsUnauthorized ErrorResponse
+
+func (*GetUserTopArtistPlayStatsUnauthorized) getUserTopArtistPlayStatsRes() {}
 
 // Ref: #/components/schemas/Group
 type Group struct {
@@ -1809,77 +1721,9 @@ func (IntegrationProvider) AllValues() []IntegrationProvider {
 	}
 }
 
-type InternalServerErrorTextPlain struct {
-	Data io.Reader
-}
+type JoinFreeBetaInternalServerError ErrorResponse
 
-// Read reads data from the Data reader.
-//
-// Kept to satisfy the io.Reader interface.
-func (s InternalServerErrorTextPlain) Read(p []byte) (n int, err error) {
-	if s.Data == nil {
-		return 0, io.EOF
-	}
-	return s.Data.Read(p)
-}
-
-func (*InternalServerErrorTextPlain) addFriendRes()                 {}
-func (*InternalServerErrorTextPlain) addGroupRolesRes()             {}
-func (*InternalServerErrorTextPlain) addMessageReactionRes()        {}
-func (*InternalServerErrorTextPlain) addToLibraryRes()              {}
-func (*InternalServerErrorTextPlain) createGroupRes()               {}
-func (*InternalServerErrorTextPlain) deleteGroupRes()               {}
-func (*InternalServerErrorTextPlain) deleteGroupRoleRes()           {}
-func (*InternalServerErrorTextPlain) deleteMessageReactionRes()     {}
-func (*InternalServerErrorTextPlain) deleteMessageRes()             {}
-func (*InternalServerErrorTextPlain) editGroupRes()                 {}
-func (*InternalServerErrorTextPlain) editMessageRes()               {}
-func (*InternalServerErrorTextPlain) getAlbumRes()                  {}
-func (*InternalServerErrorTextPlain) getArtistRes()                 {}
-func (*InternalServerErrorTextPlain) getCalendarListensRes()        {}
-func (*InternalServerErrorTextPlain) getGlobalTopAlbumsRes()        {}
-func (*InternalServerErrorTextPlain) getGlobalTopArtistsRes()       {}
-func (*InternalServerErrorTextPlain) getGlobalTopTracksRes()        {}
-func (*InternalServerErrorTextPlain) getGroupRes()                  {}
-func (*InternalServerErrorTextPlain) getGroupRolesRes()             {}
-func (*InternalServerErrorTextPlain) getGroupsRes()                 {}
-func (*InternalServerErrorTextPlain) getLibrarySearchIndexRes()     {}
-func (*InternalServerErrorTextPlain) getListenSessionsRes()         {}
-func (*InternalServerErrorTextPlain) getMessageThreadRes()          {}
-func (*InternalServerErrorTextPlain) getMessagesRes()               {}
-func (*InternalServerErrorTextPlain) getRelationsDetailsRes()       {}
-func (*InternalServerErrorTextPlain) getRelationsRes()              {}
-func (*InternalServerErrorTextPlain) getTrackRes()                  {}
-func (*InternalServerErrorTextPlain) getTracksPlayStatsRes()        {}
-func (*InternalServerErrorTextPlain) getUserIntegrationsRes()       {}
-func (*InternalServerErrorTextPlain) getUserListenSessionsRes()     {}
-func (*InternalServerErrorTextPlain) getUserListensByDaysRes()      {}
-func (*InternalServerErrorTextPlain) getUserTopArtistPlayStatsRes() {}
-func (*InternalServerErrorTextPlain) joinFreeBetaRes()              {}
-func (*InternalServerErrorTextPlain) readMessageRes()               {}
-func (*InternalServerErrorTextPlain) registerRes()                  {}
-func (*InternalServerErrorTextPlain) removeFriendRes()              {}
-func (*InternalServerErrorTextPlain) removeFromLibraryRes()         {}
-func (*InternalServerErrorTextPlain) searchTracksRes()              {}
-func (*InternalServerErrorTextPlain) sendMessageRes()               {}
-func (*InternalServerErrorTextPlain) setActivityRes()               {}
-func (*InternalServerErrorTextPlain) setBestFriendRes()             {}
-func (*InternalServerErrorTextPlain) setBlockedRes()                {}
-func (*InternalServerErrorTextPlain) signInRes()                    {}
-func (*InternalServerErrorTextPlain) subsonicDownloadRes()          {}
-func (*InternalServerErrorTextPlain) subsonicStreamRes()            {}
-func (*InternalServerErrorTextPlain) updateGroupRolesRes()          {}
-func (*InternalServerErrorTextPlain) updateLibraryRes()             {}
-func (*InternalServerErrorTextPlain) updateUserRes()                {}
-func (*InternalServerErrorTextPlain) uploadTrackAudioRes()          {}
-
-type JoinFreeBetaApplicationJSONInternalServerError ErrorResponse
-
-func (*JoinFreeBetaApplicationJSONInternalServerError) joinFreeBetaRes() {}
-
-type JoinFreeBetaApplicationJSONUnauthorized ErrorResponse
-
-func (*JoinFreeBetaApplicationJSONUnauthorized) joinFreeBetaRes() {}
+func (*JoinFreeBetaInternalServerError) joinFreeBetaRes() {}
 
 // JoinFreeBetaNoContent is response for JoinFreeBeta operation.
 type JoinFreeBetaNoContent struct {
@@ -1897,6 +1741,10 @@ func (s *JoinFreeBetaNoContent) SetHxLocation(val OptString) {
 }
 
 func (*JoinFreeBetaNoContent) joinFreeBetaRes() {}
+
+type JoinFreeBetaUnauthorized ErrorResponse
+
+func (*JoinFreeBetaUnauthorized) joinFreeBetaRes() {}
 
 // Ref: #/components/schemas/LibraryAddAlbum
 type LibraryAddAlbum struct {
@@ -2920,33 +2768,6 @@ func (*NoContent) setBlockedRes()            {}
 func (*NoContent) updateUserRes()            {}
 func (*NoContent) uploadTrackAudioRes()      {}
 func (*NoContent) validateTokenRes()         {}
-
-type NotFoundTextPlain struct {
-	Data io.Reader
-}
-
-// Read reads data from the Data reader.
-//
-// Kept to satisfy the io.Reader interface.
-func (s NotFoundTextPlain) Read(p []byte) (n int, err error) {
-	if s.Data == nil {
-		return 0, io.EOF
-	}
-	return s.Data.Read(p)
-}
-
-func (*NotFoundTextPlain) addFriendRes()             {}
-func (*NotFoundTextPlain) deleteGroupRoleRes()       {}
-func (*NotFoundTextPlain) deleteMessageReactionRes() {}
-func (*NotFoundTextPlain) getAlbumRes()              {}
-func (*NotFoundTextPlain) getArtistRes()             {}
-func (*NotFoundTextPlain) getCalendarListensRes()    {}
-func (*NotFoundTextPlain) getMessageThreadRes()      {}
-func (*NotFoundTextPlain) getTrackRes()              {}
-func (*NotFoundTextPlain) getUserListenSessionsRes() {}
-func (*NotFoundTextPlain) subsonicDownloadRes()      {}
-func (*NotFoundTextPlain) subsonicStreamRes()        {}
-func (*NotFoundTextPlain) uploadTrackAudioRes()      {}
 
 // NewOptArtist returns new OptArtist with value set to v.
 func NewOptArtist(v Artist) OptArtist {
@@ -4344,29 +4165,29 @@ func (o OptVisibility) Or(d Visibility) Visibility {
 	return d
 }
 
-type ReadMessageApplicationJSONBadRequest ErrorResponse
+type ReadMessageBadRequest ErrorResponse
 
-func (*ReadMessageApplicationJSONBadRequest) readMessageRes() {}
+func (*ReadMessageBadRequest) readMessageRes() {}
 
-type ReadMessageApplicationJSONInternalServerError ErrorResponse
+type ReadMessageInternalServerError ErrorResponse
 
-func (*ReadMessageApplicationJSONInternalServerError) readMessageRes() {}
+func (*ReadMessageInternalServerError) readMessageRes() {}
 
-type ReadMessageApplicationJSONUnauthorized ErrorResponse
+type ReadMessageUnauthorized ErrorResponse
 
-func (*ReadMessageApplicationJSONUnauthorized) readMessageRes() {}
+func (*ReadMessageUnauthorized) readMessageRes() {}
 
-type RegisterApplicationJSONBadRequest ErrorResponse
+type RegisterBadRequest ErrorResponse
 
-func (*RegisterApplicationJSONBadRequest) registerRes() {}
+func (*RegisterBadRequest) registerRes() {}
 
-type RegisterApplicationJSONConflict ErrorResponse
+type RegisterConflict ErrorResponse
 
-func (*RegisterApplicationJSONConflict) registerRes() {}
+func (*RegisterConflict) registerRes() {}
 
-type RegisterApplicationJSONInternalServerError ErrorResponse
+type RegisterInternalServerError ErrorResponse
 
-func (*RegisterApplicationJSONInternalServerError) registerRes() {}
+func (*RegisterInternalServerError) registerRes() {}
 
 // Ref: #/components/schemas/RegisterRequest
 type RegisterRequest struct {
@@ -4588,21 +4409,17 @@ func (s *RelationDetailsStatistics) SetListeningStreak(val uint16) {
 	s.ListeningStreak = val
 }
 
-type RemoveFriendApplicationJSONBadRequest ErrorResponse
+type RemoveFriendBadRequest ErrorResponse
 
-func (*RemoveFriendApplicationJSONBadRequest) removeFriendRes() {}
+func (*RemoveFriendBadRequest) removeFriendRes() {}
 
-type RemoveFriendApplicationJSONForbidden ErrorResponse
+type RemoveFriendForbidden ErrorResponse
 
-func (*RemoveFriendApplicationJSONForbidden) removeFriendRes() {}
+func (*RemoveFriendForbidden) removeFriendRes() {}
 
-type RemoveFriendApplicationJSONInternalServerError ErrorResponse
+type RemoveFriendInternalServerError ErrorResponse
 
-func (*RemoveFriendApplicationJSONInternalServerError) removeFriendRes() {}
-
-type RemoveFriendApplicationJSONUnauthorized ErrorResponse
-
-func (*RemoveFriendApplicationJSONUnauthorized) removeFriendRes() {}
+func (*RemoveFriendInternalServerError) removeFriendRes() {}
 
 type RemoveFriendReq struct {
 	ID uuid.UUID `json:"id"`
@@ -4618,17 +4435,21 @@ func (s *RemoveFriendReq) SetID(val uuid.UUID) {
 	s.ID = val
 }
 
-type RemoveFromLibraryApplicationJSONBadRequest ErrorResponse
+type RemoveFriendUnauthorized ErrorResponse
 
-func (*RemoveFromLibraryApplicationJSONBadRequest) removeFromLibraryRes() {}
+func (*RemoveFriendUnauthorized) removeFriendRes() {}
 
-type RemoveFromLibraryApplicationJSONInternalServerError ErrorResponse
+type RemoveFromLibraryBadRequest ErrorResponse
 
-func (*RemoveFromLibraryApplicationJSONInternalServerError) removeFromLibraryRes() {}
+func (*RemoveFromLibraryBadRequest) removeFromLibraryRes() {}
 
-type RemoveFromLibraryApplicationJSONUnauthorized ErrorResponse
+type RemoveFromLibraryInternalServerError ErrorResponse
 
-func (*RemoveFromLibraryApplicationJSONUnauthorized) removeFromLibraryRes() {}
+func (*RemoveFromLibraryInternalServerError) removeFromLibraryRes() {}
+
+type RemoveFromLibraryUnauthorized ErrorResponse
+
+func (*RemoveFromLibraryUnauthorized) removeFromLibraryRes() {}
 
 // Ref: #/components/schemas/SearchIndex
 type SearchIndex struct {
@@ -5033,17 +4854,13 @@ func (s *SearchTrackResult) SetConfidence(val uint8) {
 	s.Confidence = val
 }
 
-type SearchTracksApplicationJSONBadRequest ErrorResponse
+type SearchTracksBadRequest ErrorResponse
 
-func (*SearchTracksApplicationJSONBadRequest) searchTracksRes() {}
+func (*SearchTracksBadRequest) searchTracksRes() {}
 
-type SearchTracksApplicationJSONInternalServerError ErrorResponse
+type SearchTracksInternalServerError ErrorResponse
 
-func (*SearchTracksApplicationJSONInternalServerError) searchTracksRes() {}
-
-type SearchTracksApplicationJSONUnauthorized ErrorResponse
-
-func (*SearchTracksApplicationJSONUnauthorized) searchTracksRes() {}
+func (*SearchTracksInternalServerError) searchTracksRes() {}
 
 type SearchTracksOKApplicationJSON []SearchTracksResultGroup
 
@@ -5087,13 +4904,17 @@ func (s *SearchTracksResultGroup) SetError(val OptString) {
 	s.Error = val
 }
 
-type SendMessageApplicationJSONBadRequest ErrorResponse
+type SearchTracksUnauthorized ErrorResponse
 
-func (*SendMessageApplicationJSONBadRequest) sendMessageRes() {}
+func (*SearchTracksUnauthorized) searchTracksRes() {}
 
-type SendMessageApplicationJSONInternalServerError ErrorResponse
+type SendMessageBadRequest ErrorResponse
 
-func (*SendMessageApplicationJSONInternalServerError) sendMessageRes() {}
+func (*SendMessageBadRequest) sendMessageRes() {}
+
+type SendMessageInternalServerError ErrorResponse
+
+func (*SendMessageInternalServerError) sendMessageRes() {}
 
 type SendMessageReq struct {
 	Body     string       `json:"body"`
@@ -5475,17 +5296,13 @@ func (s *SessionsResponse) SetArtists(val []SessionArtist) {
 func (*SessionsResponse) getListenSessionsRes()     {}
 func (*SessionsResponse) getUserListenSessionsRes() {}
 
-type SetActivityApplicationJSONBadRequest ErrorResponse
+type SetActivityBadRequest ErrorResponse
 
-func (*SetActivityApplicationJSONBadRequest) setActivityRes() {}
+func (*SetActivityBadRequest) setActivityRes() {}
 
-type SetActivityApplicationJSONInternalServerError ErrorResponse
+type SetActivityInternalServerError ErrorResponse
 
-func (*SetActivityApplicationJSONInternalServerError) setActivityRes() {}
-
-type SetActivityApplicationJSONUnauthorized ErrorResponse
-
-func (*SetActivityApplicationJSONUnauthorized) setActivityRes() {}
+func (*SetActivityInternalServerError) setActivityRes() {}
 
 // Ref: #/components/schemas/SetActivityItem
 type SetActivityItem struct {
@@ -5565,45 +5382,49 @@ func (s *SetActivityItem) SetEndTimestamp(val OptDateTime) {
 	s.EndTimestamp = val
 }
 
-type SetBestFriendApplicationJSONBadRequest ErrorResponse
+type SetActivityUnauthorized ErrorResponse
 
-func (*SetBestFriendApplicationJSONBadRequest) setBestFriendRes() {}
+func (*SetActivityUnauthorized) setActivityRes() {}
 
-type SetBestFriendApplicationJSONForbidden ErrorResponse
+type SetBestFriendBadRequest ErrorResponse
 
-func (*SetBestFriendApplicationJSONForbidden) setBestFriendRes() {}
+func (*SetBestFriendBadRequest) setBestFriendRes() {}
 
-type SetBestFriendApplicationJSONInternalServerError ErrorResponse
+type SetBestFriendForbidden ErrorResponse
 
-func (*SetBestFriendApplicationJSONInternalServerError) setBestFriendRes() {}
+func (*SetBestFriendForbidden) setBestFriendRes() {}
 
-type SetBestFriendApplicationJSONUnauthorized ErrorResponse
+type SetBestFriendInternalServerError ErrorResponse
 
-func (*SetBestFriendApplicationJSONUnauthorized) setBestFriendRes() {}
+func (*SetBestFriendInternalServerError) setBestFriendRes() {}
 
-type SetBlockedApplicationJSONBadRequest ErrorResponse
+type SetBestFriendUnauthorized ErrorResponse
 
-func (*SetBlockedApplicationJSONBadRequest) setBlockedRes() {}
+func (*SetBestFriendUnauthorized) setBestFriendRes() {}
 
-type SetBlockedApplicationJSONForbidden ErrorResponse
+type SetBlockedBadRequest ErrorResponse
 
-func (*SetBlockedApplicationJSONForbidden) setBlockedRes() {}
+func (*SetBlockedBadRequest) setBlockedRes() {}
 
-type SetBlockedApplicationJSONInternalServerError ErrorResponse
+type SetBlockedForbidden ErrorResponse
 
-func (*SetBlockedApplicationJSONInternalServerError) setBlockedRes() {}
+func (*SetBlockedForbidden) setBlockedRes() {}
 
-type SetBlockedApplicationJSONUnauthorized ErrorResponse
+type SetBlockedInternalServerError ErrorResponse
 
-func (*SetBlockedApplicationJSONUnauthorized) setBlockedRes() {}
+func (*SetBlockedInternalServerError) setBlockedRes() {}
 
-type SignInApplicationJSONBadRequest ErrorResponse
+type SetBlockedUnauthorized ErrorResponse
 
-func (*SignInApplicationJSONBadRequest) signInRes() {}
+func (*SetBlockedUnauthorized) setBlockedRes() {}
 
-type SignInApplicationJSONInternalServerError ErrorResponse
+type SignInBadRequest ErrorResponse
 
-func (*SignInApplicationJSONInternalServerError) signInRes() {}
+func (*SignInBadRequest) signInRes() {}
+
+type SignInInternalServerError ErrorResponse
+
+func (*SignInInternalServerError) signInRes() {}
 
 // Ref: #/components/schemas/SignInRequest
 type SignInRequest struct {
@@ -5719,13 +5540,13 @@ func (s *SubsonicAuthF) UnmarshalText(data []byte) error {
 	}
 }
 
-type SubsonicDownloadApplicationJSONInternalServerError ErrorResponse
+type SubsonicDownloadInternalServerError ErrorResponse
 
-func (*SubsonicDownloadApplicationJSONInternalServerError) subsonicDownloadRes() {}
+func (*SubsonicDownloadInternalServerError) subsonicDownloadRes() {}
 
-type SubsonicDownloadApplicationJSONNotFound ErrorResponse
+type SubsonicDownloadNotFound ErrorResponse
 
-func (*SubsonicDownloadApplicationJSONNotFound) subsonicDownloadRes() {}
+func (*SubsonicDownloadNotFound) subsonicDownloadRes() {}
 
 type SubsonicDownloadOK struct {
 	Data io.Reader
@@ -5779,14 +5600,6 @@ func (s *SubsonicDownloadOKHeaders) SetResponse(val SubsonicDownloadOK) {
 }
 
 func (*SubsonicDownloadOKHeaders) subsonicDownloadRes() {}
-
-type SubsonicStreamApplicationJSONInternalServerError ErrorResponse
-
-func (*SubsonicStreamApplicationJSONInternalServerError) subsonicStreamRes() {}
-
-type SubsonicStreamApplicationJSONNotFound ErrorResponse
-
-func (*SubsonicStreamApplicationJSONNotFound) subsonicStreamRes() {}
 
 type SubsonicStreamFormat string
 
@@ -5850,6 +5663,10 @@ func (s *SubsonicStreamFormat) UnmarshalText(data []byte) error {
 	}
 }
 
+type SubsonicStreamInternalServerError ErrorResponse
+
+func (*SubsonicStreamInternalServerError) subsonicStreamRes() {}
+
 type SubsonicStreamMaxBitRate int
 
 const (
@@ -5890,6 +5707,10 @@ func (SubsonicStreamMaxBitRate) AllValues() []SubsonicStreamMaxBitRate {
 		SubsonicStreamMaxBitRate320,
 	}
 }
+
+type SubsonicStreamNotFound ErrorResponse
+
+func (*SubsonicStreamNotFound) subsonicStreamRes() {}
 
 type SubsonicStreamOKAudioFlac struct {
 	Data io.Reader
@@ -6442,60 +6263,13 @@ func (s *TrackPlayStats) SetPlayDuration(val uint64) {
 	s.PlayDuration = val
 }
 
-type UnauthorizedTextPlain struct {
-	Data io.Reader
-}
+type UpdateGroupRolesBadRequest ErrorResponse
 
-// Read reads data from the Data reader.
-//
-// Kept to satisfy the io.Reader interface.
-func (s UnauthorizedTextPlain) Read(p []byte) (n int, err error) {
-	if s.Data == nil {
-		return 0, io.EOF
-	}
-	return s.Data.Read(p)
-}
+func (*UpdateGroupRolesBadRequest) updateGroupRolesRes() {}
 
-func (*UnauthorizedTextPlain) addFriendRes()                 {}
-func (*UnauthorizedTextPlain) addMessageReactionRes()        {}
-func (*UnauthorizedTextPlain) addToLibraryRes()              {}
-func (*UnauthorizedTextPlain) deleteGroupRoleRes()           {}
-func (*UnauthorizedTextPlain) deleteMessageReactionRes()     {}
-func (*UnauthorizedTextPlain) getAlbumRes()                  {}
-func (*UnauthorizedTextPlain) getArtistRes()                 {}
-func (*UnauthorizedTextPlain) getGroupRes()                  {}
-func (*UnauthorizedTextPlain) getGroupRolesRes()             {}
-func (*UnauthorizedTextPlain) getGroupsRes()                 {}
-func (*UnauthorizedTextPlain) getListenSessionsRes()         {}
-func (*UnauthorizedTextPlain) getMessageThreadRes()          {}
-func (*UnauthorizedTextPlain) getMessagesRes()               {}
-func (*UnauthorizedTextPlain) getRelationsDetailsRes()       {}
-func (*UnauthorizedTextPlain) getRelationsRes()              {}
-func (*UnauthorizedTextPlain) getTrackRes()                  {}
-func (*UnauthorizedTextPlain) getUserDetailsRes()            {}
-func (*UnauthorizedTextPlain) getUserIntegrationsRes()       {}
-func (*UnauthorizedTextPlain) getUserListenSessionsRes()     {}
-func (*UnauthorizedTextPlain) getUserListensByDaysRes()      {}
-func (*UnauthorizedTextPlain) getUserTopArtistPlayStatsRes() {}
-func (*UnauthorizedTextPlain) joinFreeBetaRes()              {}
-func (*UnauthorizedTextPlain) readMessageRes()               {}
-func (*UnauthorizedTextPlain) removeFriendRes()              {}
-func (*UnauthorizedTextPlain) removeFromLibraryRes()         {}
-func (*UnauthorizedTextPlain) searchTracksRes()              {}
-func (*UnauthorizedTextPlain) setActivityRes()               {}
-func (*UnauthorizedTextPlain) setBestFriendRes()             {}
-func (*UnauthorizedTextPlain) setBlockedRes()                {}
-func (*UnauthorizedTextPlain) updateLibraryRes()             {}
-func (*UnauthorizedTextPlain) updateUserRes()                {}
-func (*UnauthorizedTextPlain) validateTokenRes()             {}
+type UpdateGroupRolesInternalServerError ErrorResponse
 
-type UpdateGroupRolesApplicationJSONBadRequest ErrorResponse
-
-func (*UpdateGroupRolesApplicationJSONBadRequest) updateGroupRolesRes() {}
-
-type UpdateGroupRolesApplicationJSONInternalServerError ErrorResponse
-
-func (*UpdateGroupRolesApplicationJSONInternalServerError) updateGroupRolesRes() {}
+func (*UpdateGroupRolesInternalServerError) updateGroupRolesRes() {}
 
 type UpdateGroupRolesReq struct {
 	Role GroupRoleType `json:"role"`
@@ -6511,33 +6285,29 @@ func (s *UpdateGroupRolesReq) SetRole(val GroupRoleType) {
 	s.Role = val
 }
 
-type UpdateLibraryApplicationJSONBadRequest ErrorResponse
+type UpdateLibraryBadRequest ErrorResponse
 
-func (*UpdateLibraryApplicationJSONBadRequest) updateLibraryRes() {}
+func (*UpdateLibraryBadRequest) updateLibraryRes() {}
 
-type UpdateLibraryApplicationJSONInternalServerError ErrorResponse
+type UpdateLibraryInternalServerError ErrorResponse
 
-func (*UpdateLibraryApplicationJSONInternalServerError) updateLibraryRes() {}
+func (*UpdateLibraryInternalServerError) updateLibraryRes() {}
 
-type UpdateLibraryApplicationJSONUnauthorized ErrorResponse
+type UpdateLibraryUnauthorized ErrorResponse
 
-func (*UpdateLibraryApplicationJSONUnauthorized) updateLibraryRes() {}
+func (*UpdateLibraryUnauthorized) updateLibraryRes() {}
 
-type UpdateUserApplicationJSONBadRequest ErrorResponse
+type UpdateUserBadRequest ErrorResponse
 
-func (*UpdateUserApplicationJSONBadRequest) updateUserRes() {}
+func (*UpdateUserBadRequest) updateUserRes() {}
 
-type UpdateUserApplicationJSONConflict ErrorResponse
+type UpdateUserConflict ErrorResponse
 
-func (*UpdateUserApplicationJSONConflict) updateUserRes() {}
+func (*UpdateUserConflict) updateUserRes() {}
 
-type UpdateUserApplicationJSONInternalServerError ErrorResponse
+type UpdateUserInternalServerError ErrorResponse
 
-func (*UpdateUserApplicationJSONInternalServerError) updateUserRes() {}
-
-type UpdateUserApplicationJSONUnauthorized ErrorResponse
-
-func (*UpdateUserApplicationJSONUnauthorized) updateUserRes() {}
+func (*UpdateUserInternalServerError) updateUserRes() {}
 
 // Ref: #/components/schemas/UpdateUserRequest
 type UpdateUserRequest struct {
@@ -6598,17 +6368,21 @@ func (s *UpdateUserRequest) SetVisibility(val OptVisibility) {
 	s.Visibility = val
 }
 
-type UploadTrackAudioApplicationJSONBadRequest ErrorResponse
+type UpdateUserUnauthorized ErrorResponse
 
-func (*UploadTrackAudioApplicationJSONBadRequest) uploadTrackAudioRes() {}
+func (*UpdateUserUnauthorized) updateUserRes() {}
 
-type UploadTrackAudioApplicationJSONInternalServerError ErrorResponse
+type UploadTrackAudioBadRequest ErrorResponse
 
-func (*UploadTrackAudioApplicationJSONInternalServerError) uploadTrackAudioRes() {}
+func (*UploadTrackAudioBadRequest) uploadTrackAudioRes() {}
 
-type UploadTrackAudioApplicationJSONNotFound ErrorResponse
+type UploadTrackAudioInternalServerError ErrorResponse
 
-func (*UploadTrackAudioApplicationJSONNotFound) uploadTrackAudioRes() {}
+func (*UploadTrackAudioInternalServerError) uploadTrackAudioRes() {}
+
+type UploadTrackAudioNotFound ErrorResponse
+
+func (*UploadTrackAudioNotFound) uploadTrackAudioRes() {}
 
 type UploadTrackAudioReq struct {
 	// Audio data.

@@ -5,4 +5,4 @@ ErrorResponse:
   properties:
     message:
       type: string
-      description: Human-readable error message
+      description: Error message

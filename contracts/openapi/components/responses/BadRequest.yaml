@@ -4,6 +4,3 @@ BadRequest:
     application/json:
       schema:
         $ref: "#/components/schemas/ErrorResponse"
-    text/plain:
-      schema:
-        type: string

@@ -36,7 +36,7 @@ func encodeAddFriendResponse(response AddFriendRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *AddFriendApplicationJSONBadRequest:
+	case *AddFriendBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -48,21 +48,7 @@ func encodeAddFriendResponse(response AddFriendRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddFriendApplicationJSONUnauthorized:
+	case *AddFriendUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -74,21 +60,7 @@ func encodeAddFriendResponse(response AddFriendRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddFriendApplicationJSONForbidden:
+	case *AddFriendForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -100,21 +72,7 @@ func encodeAddFriendResponse(response AddFriendRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddFriendApplicationJSONNotFound:
+	case *AddFriendNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -126,21 +84,7 @@ func encodeAddFriendResponse(response AddFriendRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddFriendApplicationJSONInternalServerError:
+	case *AddFriendInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -148,21 +92,6 @@ func encodeAddFriendResponse(response AddFriendRes, w http.ResponseWriter, span 
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -195,7 +124,7 @@ func encodeAddGroupRolesResponse(response AddGroupRolesRes, w http.ResponseWrite
 
 		return nil
 
-	case *AddGroupRolesApplicationJSONBadRequest:
+	case *AddGroupRolesBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -207,21 +136,7 @@ func encodeAddGroupRolesResponse(response AddGroupRolesRes, w http.ResponseWrite
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddGroupRolesApplicationJSONInternalServerError:
+	case *AddGroupRolesInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -229,21 +144,6 @@ func encodeAddGroupRolesResponse(response AddGroupRolesRes, w http.ResponseWrite
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -268,7 +168,7 @@ func encodeAddMessageReactionResponse(response AddMessageReactionRes, w http.Res
 
 		return nil
 
-	case *AddMessageReactionApplicationJSONUnauthorized:
+	case *AddMessageReactionUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -280,21 +180,7 @@ func encodeAddMessageReactionResponse(response AddMessageReactionRes, w http.Res
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddMessageReactionApplicationJSONInternalServerError:
+	case *AddMessageReactionInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -302,21 +188,6 @@ func encodeAddMessageReactionResponse(response AddMessageReactionRes, w http.Res
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -341,7 +212,7 @@ func encodeAddToLibraryResponse(response AddToLibraryRes, w http.ResponseWriter,
 
 		return nil
 
-	case *AddToLibraryApplicationJSONBadRequest:
+	case *AddToLibraryBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -353,21 +224,7 @@ func encodeAddToLibraryResponse(response AddToLibraryRes, w http.ResponseWriter,
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddToLibraryApplicationJSONUnauthorized:
+	case *AddToLibraryUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -379,21 +236,7 @@ func encodeAddToLibraryResponse(response AddToLibraryRes, w http.ResponseWriter,
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *AddToLibraryApplicationJSONInternalServerError:
+	case *AddToLibraryInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -401,21 +244,6 @@ func encodeAddToLibraryResponse(response AddToLibraryRes, w http.ResponseWriter,
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -448,7 +276,7 @@ func encodeCreateGroupResponse(response CreateGroupRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *CreateGroupApplicationJSONBadRequest:
+	case *CreateGroupBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -460,21 +288,7 @@ func encodeCreateGroupResponse(response CreateGroupRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *CreateGroupApplicationJSONInternalServerError:
+	case *CreateGroupInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -482,21 +296,6 @@ func encodeCreateGroupResponse(response CreateGroupRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -514,7 +313,7 @@ func encodeDeleteGroupResponse(response DeleteGroupRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *DeleteGroupApplicationJSONBadRequest:
+	case *DeleteGroupBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -526,21 +325,7 @@ func encodeDeleteGroupResponse(response DeleteGroupRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteGroupApplicationJSONInternalServerError:
+	case *DeleteGroupInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -548,21 +333,6 @@ func encodeDeleteGroupResponse(response DeleteGroupRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -580,7 +350,7 @@ func encodeDeleteGroupRoleResponse(response DeleteGroupRoleRes, w http.ResponseW
 
 		return nil
 
-	case *DeleteGroupRoleApplicationJSONUnauthorized:
+	case *DeleteGroupRoleUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -592,21 +362,7 @@ func encodeDeleteGroupRoleResponse(response DeleteGroupRoleRes, w http.ResponseW
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteGroupRoleApplicationJSONForbidden:
+	case *DeleteGroupRoleForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -618,21 +374,7 @@ func encodeDeleteGroupRoleResponse(response DeleteGroupRoleRes, w http.ResponseW
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteGroupRoleApplicationJSONNotFound:
+	case *DeleteGroupRoleNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -644,21 +386,7 @@ func encodeDeleteGroupRoleResponse(response DeleteGroupRoleRes, w http.ResponseW
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteGroupRoleApplicationJSONInternalServerError:
+	case *DeleteGroupRoleInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -666,21 +394,6 @@ func encodeDeleteGroupRoleResponse(response DeleteGroupRoleRes, w http.ResponseW
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -698,7 +411,7 @@ func encodeDeleteMessageResponse(response DeleteMessageRes, w http.ResponseWrite
 
 		return nil
 
-	case *DeleteMessageApplicationJSONBadRequest:
+	case *DeleteMessageBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -710,21 +423,7 @@ func encodeDeleteMessageResponse(response DeleteMessageRes, w http.ResponseWrite
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteMessageApplicationJSONInternalServerError:
+	case *DeleteMessageInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -732,21 +431,6 @@ func encodeDeleteMessageResponse(response DeleteMessageRes, w http.ResponseWrite
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -764,7 +448,7 @@ func encodeDeleteMessageReactionResponse(response DeleteMessageReactionRes, w ht
 
 		return nil
 
-	case *DeleteMessageReactionApplicationJSONUnauthorized:
+	case *DeleteMessageReactionUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -776,21 +460,7 @@ func encodeDeleteMessageReactionResponse(response DeleteMessageReactionRes, w ht
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteMessageReactionApplicationJSONNotFound:
+	case *DeleteMessageReactionNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -802,21 +472,7 @@ func encodeDeleteMessageReactionResponse(response DeleteMessageReactionRes, w ht
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *DeleteMessageReactionApplicationJSONInternalServerError:
+	case *DeleteMessageReactionInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -824,21 +480,6 @@ func encodeDeleteMessageReactionResponse(response DeleteMessageReactionRes, w ht
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -871,7 +512,7 @@ func encodeEditGroupResponse(response EditGroupRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *EditGroupApplicationJSONBadRequest:
+	case *EditGroupBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -883,21 +524,7 @@ func encodeEditGroupResponse(response EditGroupRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *EditGroupApplicationJSONInternalServerError:
+	case *EditGroupInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -905,21 +532,6 @@ func encodeEditGroupResponse(response EditGroupRes, w http.ResponseWriter, span 
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -944,7 +556,7 @@ func encodeEditMessageResponse(response EditMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *EditMessageApplicationJSONBadRequest:
+	case *EditMessageBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -956,21 +568,7 @@ func encodeEditMessageResponse(response EditMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *EditMessageApplicationJSONInternalServerError:
+	case *EditMessageInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -978,21 +576,6 @@ func encodeEditMessageResponse(response EditMessageRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1017,7 +600,7 @@ func encodeGetAlbumResponse(response GetAlbumRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *GetAlbumApplicationJSONBadRequest:
+	case *GetAlbumBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1029,21 +612,7 @@ func encodeGetAlbumResponse(response GetAlbumRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetAlbumApplicationJSONUnauthorized:
+	case *GetAlbumUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -1055,21 +624,7 @@ func encodeGetAlbumResponse(response GetAlbumRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetAlbumApplicationJSONNotFound:
+	case *GetAlbumNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -1081,21 +636,7 @@ func encodeGetAlbumResponse(response GetAlbumRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetAlbumApplicationJSONInternalServerError:
+	case *GetAlbumInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1103,21 +644,6 @@ func encodeGetAlbumResponse(response GetAlbumRes, w http.ResponseWriter, span tr
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1142,7 +668,7 @@ func encodeGetArtistResponse(response GetArtistRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *GetArtistApplicationJSONBadRequest:
+	case *GetArtistBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1154,21 +680,7 @@ func encodeGetArtistResponse(response GetArtistRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetArtistApplicationJSONUnauthorized:
+	case *GetArtistUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -1180,21 +692,7 @@ func encodeGetArtistResponse(response GetArtistRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetArtistApplicationJSONNotFound:
+	case *GetArtistNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -1206,21 +704,7 @@ func encodeGetArtistResponse(response GetArtistRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetArtistApplicationJSONInternalServerError:
+	case *GetArtistInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1228,21 +712,6 @@ func encodeGetArtistResponse(response GetArtistRes, w http.ResponseWriter, span 
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1301,7 +770,7 @@ func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.Res
 
 		return nil
 
-	case *GetCalendarListensApplicationJSONBadRequest:
+	case *GetCalendarListensBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1313,21 +782,7 @@ func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.Res
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetCalendarListensApplicationJSONForbidden:
+	case *GetCalendarListensForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -1339,21 +794,7 @@ func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.Res
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetCalendarListensApplicationJSONNotFound:
+	case *GetCalendarListensNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -1365,21 +806,7 @@ func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.Res
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetCalendarListensApplicationJSONInternalServerError:
+	case *GetCalendarListensInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1387,21 +814,6 @@ func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.Res
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1434,7 +846,7 @@ func encodeGetGlobalTopAlbumsResponse(response GetGlobalTopAlbumsRes, w http.Res
 
 		return nil
 
-	case *GetGlobalTopAlbumsApplicationJSONBadRequest:
+	case *GetGlobalTopAlbumsBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1446,21 +858,7 @@ func encodeGetGlobalTopAlbumsResponse(response GetGlobalTopAlbumsRes, w http.Res
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetGlobalTopAlbumsApplicationJSONInternalServerError:
+	case *GetGlobalTopAlbumsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1468,21 +866,6 @@ func encodeGetGlobalTopAlbumsResponse(response GetGlobalTopAlbumsRes, w http.Res
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1515,7 +898,7 @@ func encodeGetGlobalTopArtistsResponse(response GetGlobalTopArtistsRes, w http.R
 
 		return nil
 
-	case *GetGlobalTopArtistsApplicationJSONBadRequest:
+	case *GetGlobalTopArtistsBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1527,21 +910,7 @@ func encodeGetGlobalTopArtistsResponse(response GetGlobalTopArtistsRes, w http.R
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetGlobalTopArtistsApplicationJSONInternalServerError:
+	case *GetGlobalTopArtistsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1549,21 +918,6 @@ func encodeGetGlobalTopArtistsResponse(response GetGlobalTopArtistsRes, w http.R
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1596,7 +950,7 @@ func encodeGetGlobalTopTracksResponse(response GetGlobalTopTracksRes, w http.Res
 
 		return nil
 
-	case *GetGlobalTopTracksApplicationJSONBadRequest:
+	case *GetGlobalTopTracksBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1608,21 +962,7 @@ func encodeGetGlobalTopTracksResponse(response GetGlobalTopTracksRes, w http.Res
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetGlobalTopTracksApplicationJSONInternalServerError:
+	case *GetGlobalTopTracksInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1630,21 +970,6 @@ func encodeGetGlobalTopTracksResponse(response GetGlobalTopTracksRes, w http.Res
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1677,7 +1002,7 @@ func encodeGetGroupResponse(response GetGroupRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *GetGroupApplicationJSONUnauthorized:
+	case *GetGroupUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -1689,21 +1014,7 @@ func encodeGetGroupResponse(response GetGroupRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetGroupApplicationJSONInternalServerError:
+	case *GetGroupInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1711,21 +1022,6 @@ func encodeGetGroupResponse(response GetGroupRes, w http.ResponseWriter, span tr
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1758,7 +1054,7 @@ func encodeGetGroupRolesResponse(response GetGroupRolesRes, w http.ResponseWrite
 
 		return nil
 
-	case *GetGroupRolesApplicationJSONUnauthorized:
+	case *GetGroupRolesUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -1770,21 +1066,7 @@ func encodeGetGroupRolesResponse(response GetGroupRolesRes, w http.ResponseWrite
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetGroupRolesApplicationJSONInternalServerError:
+	case *GetGroupRolesInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1792,21 +1074,6 @@ func encodeGetGroupRolesResponse(response GetGroupRolesRes, w http.ResponseWrite
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1839,7 +1106,7 @@ func encodeGetGroupsResponse(response GetGroupsRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *GetGroupsApplicationJSONUnauthorized:
+	case *GetGroupsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -1851,21 +1118,7 @@ func encodeGetGroupsResponse(response GetGroupsRes, w http.ResponseWriter, span 
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetGroupsApplicationJSONInternalServerError:
+	case *GetGroupsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -1873,21 +1126,6 @@ func encodeGetGroupsResponse(response GetGroupsRes, w http.ResponseWriter, span 
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -1933,21 +1171,6 @@ func encodeGetLibrarySearchIndexResponse(response GetLibrarySearchIndexRes, w ht
 
 		return nil
 
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
 	default:
 		return errors.Errorf("unexpected response type: %T", response)
 	}
@@ -1975,7 +1198,7 @@ func encodeGetListenSessionsResponse(response GetListenSessionsRes, w http.Respo
 
 		return nil
 
-	case *GetListenSessionsApplicationJSONBadRequest:
+	case *GetListenSessionsBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -1987,21 +1210,7 @@ func encodeGetListenSessionsResponse(response GetListenSessionsRes, w http.Respo
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetListenSessionsApplicationJSONUnauthorized:
+	case *GetListenSessionsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2013,21 +1222,7 @@ func encodeGetListenSessionsResponse(response GetListenSessionsRes, w http.Respo
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetListenSessionsApplicationJSONInternalServerError:
+	case *GetListenSessionsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2035,21 +1230,6 @@ func encodeGetListenSessionsResponse(response GetListenSessionsRes, w http.Respo
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2082,7 +1262,7 @@ func encodeGetMessageThreadResponse(response GetMessageThreadRes, w http.Respons
 
 		return nil
 
-	case *GetMessageThreadApplicationJSONUnauthorized:
+	case *GetMessageThreadUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2094,21 +1274,7 @@ func encodeGetMessageThreadResponse(response GetMessageThreadRes, w http.Respons
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetMessageThreadApplicationJSONNotFound:
+	case *GetMessageThreadNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -2120,21 +1286,7 @@ func encodeGetMessageThreadResponse(response GetMessageThreadRes, w http.Respons
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetMessageThreadApplicationJSONInternalServerError:
+	case *GetMessageThreadInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2142,21 +1294,6 @@ func encodeGetMessageThreadResponse(response GetMessageThreadRes, w http.Respons
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2189,7 +1326,7 @@ func encodeGetMessagesResponse(response GetMessagesRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *GetMessagesApplicationJSONUnauthorized:
+	case *GetMessagesUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2201,21 +1338,7 @@ func encodeGetMessagesResponse(response GetMessagesRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetMessagesApplicationJSONInternalServerError:
+	case *GetMessagesInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2223,21 +1346,6 @@ func encodeGetMessagesResponse(response GetMessagesRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2285,7 +1393,7 @@ func encodeGetRelationsResponse(response GetRelationsRes, w http.ResponseWriter,
 
 		return nil
 
-	case *GetRelationsApplicationJSONUnauthorized:
+	case *GetRelationsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2297,21 +1405,7 @@ func encodeGetRelationsResponse(response GetRelationsRes, w http.ResponseWriter,
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetRelationsApplicationJSONInternalServerError:
+	case *GetRelationsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2319,21 +1413,6 @@ func encodeGetRelationsResponse(response GetRelationsRes, w http.ResponseWriter,
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2366,7 +1445,7 @@ func encodeGetRelationsDetailsResponse(response GetRelationsDetailsRes, w http.R
 
 		return nil
 
-	case *GetRelationsDetailsApplicationJSONUnauthorized:
+	case *GetRelationsDetailsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2378,21 +1457,7 @@ func encodeGetRelationsDetailsResponse(response GetRelationsDetailsRes, w http.R
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetRelationsDetailsApplicationJSONInternalServerError:
+	case *GetRelationsDetailsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2400,21 +1465,6 @@ func encodeGetRelationsDetailsResponse(response GetRelationsDetailsRes, w http.R
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2439,7 +1489,7 @@ func encodeGetTrackResponse(response GetTrackRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *GetTrackApplicationJSONBadRequest:
+	case *GetTrackBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -2451,21 +1501,7 @@ func encodeGetTrackResponse(response GetTrackRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetTrackApplicationJSONUnauthorized:
+	case *GetTrackUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2477,21 +1513,7 @@ func encodeGetTrackResponse(response GetTrackRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetTrackApplicationJSONNotFound:
+	case *GetTrackNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -2503,21 +1525,7 @@ func encodeGetTrackResponse(response GetTrackRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetTrackApplicationJSONInternalServerError:
+	case *GetTrackInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2525,21 +1533,6 @@ func encodeGetTrackResponse(response GetTrackRes, w http.ResponseWriter, span tr
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2572,7 +1565,7 @@ func encodeGetTracksPlayStatsResponse(response GetTracksPlayStatsRes, w http.Res
 
 		return nil
 
-	case *GetTracksPlayStatsApplicationJSONBadRequest:
+	case *GetTracksPlayStatsBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -2584,21 +1577,7 @@ func encodeGetTracksPlayStatsResponse(response GetTracksPlayStatsRes, w http.Res
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetTracksPlayStatsApplicationJSONInternalServerError:
+	case *GetTracksPlayStatsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2606,21 +1585,6 @@ func encodeGetTracksPlayStatsResponse(response GetTracksPlayStatsRes, w http.Res
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2665,20 +1629,6 @@ func encodeGetUserDetailsResponse(response GetUserDetailsRes, w http.ResponseWri
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
 	default:
 		return errors.Errorf("unexpected response type: %T", response)
 	}
@@ -2706,7 +1656,7 @@ func encodeGetUserIntegrationsResponse(response GetUserIntegrationsRes, w http.R
 
 		return nil
 
-	case *GetUserIntegrationsApplicationJSONUnauthorized:
+	case *GetUserIntegrationsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2718,21 +1668,7 @@ func encodeGetUserIntegrationsResponse(response GetUserIntegrationsRes, w http.R
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserIntegrationsApplicationJSONInternalServerError:
+	case *GetUserIntegrationsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2740,21 +1676,6 @@ func encodeGetUserIntegrationsResponse(response GetUserIntegrationsRes, w http.R
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2787,7 +1708,7 @@ func encodeGetUserListenSessionsResponse(response GetUserListenSessionsRes, w ht
 
 		return nil
 
-	case *GetUserListenSessionsApplicationJSONBadRequest:
+	case *GetUserListenSessionsBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -2799,21 +1720,7 @@ func encodeGetUserListenSessionsResponse(response GetUserListenSessionsRes, w ht
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserListenSessionsApplicationJSONUnauthorized:
+	case *GetUserListenSessionsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2825,21 +1732,7 @@ func encodeGetUserListenSessionsResponse(response GetUserListenSessionsRes, w ht
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserListenSessionsApplicationJSONForbidden:
+	case *GetUserListenSessionsForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -2851,21 +1744,7 @@ func encodeGetUserListenSessionsResponse(response GetUserListenSessionsRes, w ht
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserListenSessionsApplicationJSONNotFound:
+	case *GetUserListenSessionsNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -2877,21 +1756,7 @@ func encodeGetUserListenSessionsResponse(response GetUserListenSessionsRes, w ht
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserListenSessionsApplicationJSONInternalServerError:
+	case *GetUserListenSessionsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -2899,21 +1764,6 @@ func encodeGetUserListenSessionsResponse(response GetUserListenSessionsRes, w ht
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -2946,7 +1796,7 @@ func encodeGetUserListensByDaysResponse(response GetUserListensByDaysRes, w http
 
 		return nil
 
-	case *GetUserListensByDaysApplicationJSONBadRequest:
+	case *GetUserListensByDaysBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -2958,21 +1808,7 @@ func encodeGetUserListensByDaysResponse(response GetUserListensByDaysRes, w http
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserListensByDaysApplicationJSONUnauthorized:
+	case *GetUserListensByDaysUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -2984,21 +1820,7 @@ func encodeGetUserListensByDaysResponse(response GetUserListensByDaysRes, w http
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserListensByDaysApplicationJSONInternalServerError:
+	case *GetUserListensByDaysInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3006,21 +1828,6 @@ func encodeGetUserListensByDaysResponse(response GetUserListensByDaysRes, w http
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3053,7 +1860,7 @@ func encodeGetUserTopArtistPlayStatsResponse(response GetUserTopArtistPlayStatsR
 
 		return nil
 
-	case *GetUserTopArtistPlayStatsApplicationJSONBadRequest:
+	case *GetUserTopArtistPlayStatsBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3065,21 +1872,7 @@ func encodeGetUserTopArtistPlayStatsResponse(response GetUserTopArtistPlayStatsR
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserTopArtistPlayStatsApplicationJSONUnauthorized:
+	case *GetUserTopArtistPlayStatsUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3091,21 +1884,7 @@ func encodeGetUserTopArtistPlayStatsResponse(response GetUserTopArtistPlayStatsR
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *GetUserTopArtistPlayStatsApplicationJSONInternalServerError:
+	case *GetUserTopArtistPlayStatsInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3113,21 +1892,6 @@ func encodeGetUserTopArtistPlayStatsResponse(response GetUserTopArtistPlayStatsR
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3165,7 +1929,7 @@ func encodeJoinFreeBetaResponse(response JoinFreeBetaRes, w http.ResponseWriter,
 
 		return nil
 
-	case *JoinFreeBetaApplicationJSONUnauthorized:
+	case *JoinFreeBetaUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3177,21 +1941,7 @@ func encodeJoinFreeBetaResponse(response JoinFreeBetaRes, w http.ResponseWriter,
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *JoinFreeBetaApplicationJSONInternalServerError:
+	case *JoinFreeBetaInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3199,21 +1949,6 @@ func encodeJoinFreeBetaResponse(response JoinFreeBetaRes, w http.ResponseWriter,
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3231,7 +1966,7 @@ func encodeReadMessageResponse(response ReadMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *ReadMessageApplicationJSONBadRequest:
+	case *ReadMessageBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3243,21 +1978,7 @@ func encodeReadMessageResponse(response ReadMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *ReadMessageApplicationJSONUnauthorized:
+	case *ReadMessageUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3269,21 +1990,7 @@ func encodeReadMessageResponse(response ReadMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *ReadMessageApplicationJSONInternalServerError:
+	case *ReadMessageInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3291,21 +1998,6 @@ func encodeReadMessageResponse(response ReadMessageRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3373,7 +2065,7 @@ func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *RegisterApplicationJSONBadRequest:
+	case *RegisterBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3385,21 +2077,7 @@ func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RegisterApplicationJSONConflict:
+	case *RegisterConflict:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(409)
 
@@ -3411,21 +2089,7 @@ func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span tr
 
 		return nil
 
-	case *ConflictTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(409)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RegisterApplicationJSONInternalServerError:
+	case *RegisterInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3433,21 +2097,6 @@ func encodeRegisterResponse(response RegisterRes, w http.ResponseWriter, span tr
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3465,7 +2114,7 @@ func encodeRemoveFriendResponse(response RemoveFriendRes, w http.ResponseWriter,
 
 		return nil
 
-	case *RemoveFriendApplicationJSONBadRequest:
+	case *RemoveFriendBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3477,21 +2126,7 @@ func encodeRemoveFriendResponse(response RemoveFriendRes, w http.ResponseWriter,
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RemoveFriendApplicationJSONUnauthorized:
+	case *RemoveFriendUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3503,21 +2138,7 @@ func encodeRemoveFriendResponse(response RemoveFriendRes, w http.ResponseWriter,
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RemoveFriendApplicationJSONForbidden:
+	case *RemoveFriendForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -3529,21 +2150,7 @@ func encodeRemoveFriendResponse(response RemoveFriendRes, w http.ResponseWriter,
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RemoveFriendApplicationJSONInternalServerError:
+	case *RemoveFriendInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3551,21 +2158,6 @@ func encodeRemoveFriendResponse(response RemoveFriendRes, w http.ResponseWriter,
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3583,7 +2175,7 @@ func encodeRemoveFromLibraryResponse(response RemoveFromLibraryRes, w http.Respo
 
 		return nil
 
-	case *RemoveFromLibraryApplicationJSONBadRequest:
+	case *RemoveFromLibraryBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3595,21 +2187,7 @@ func encodeRemoveFromLibraryResponse(response RemoveFromLibraryRes, w http.Respo
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RemoveFromLibraryApplicationJSONUnauthorized:
+	case *RemoveFromLibraryUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3621,21 +2199,7 @@ func encodeRemoveFromLibraryResponse(response RemoveFromLibraryRes, w http.Respo
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *RemoveFromLibraryApplicationJSONInternalServerError:
+	case *RemoveFromLibraryInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3643,21 +2207,6 @@ func encodeRemoveFromLibraryResponse(response RemoveFromLibraryRes, w http.Respo
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3690,7 +2239,7 @@ func encodeSearchTracksResponse(response SearchTracksRes, w http.ResponseWriter,
 
 		return nil
 
-	case *SearchTracksApplicationJSONBadRequest:
+	case *SearchTracksBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3702,21 +2251,7 @@ func encodeSearchTracksResponse(response SearchTracksRes, w http.ResponseWriter,
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SearchTracksApplicationJSONUnauthorized:
+	case *SearchTracksUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3728,21 +2263,7 @@ func encodeSearchTracksResponse(response SearchTracksRes, w http.ResponseWriter,
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SearchTracksApplicationJSONInternalServerError:
+	case *SearchTracksInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3750,21 +2271,6 @@ func encodeSearchTracksResponse(response SearchTracksRes, w http.ResponseWriter,
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3789,7 +2295,7 @@ func encodeSendMessageResponse(response SendMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *SendMessageApplicationJSONBadRequest:
+	case *SendMessageBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3801,21 +2307,7 @@ func encodeSendMessageResponse(response SendMessageRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SendMessageApplicationJSONInternalServerError:
+	case *SendMessageInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3823,21 +2315,6 @@ func encodeSendMessageResponse(response SendMessageRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3855,7 +2332,7 @@ func encodeSetActivityResponse(response SetActivityRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *SetActivityApplicationJSONBadRequest:
+	case *SetActivityBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3867,21 +2344,7 @@ func encodeSetActivityResponse(response SetActivityRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetActivityApplicationJSONUnauthorized:
+	case *SetActivityUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3893,21 +2356,7 @@ func encodeSetActivityResponse(response SetActivityRes, w http.ResponseWriter, s
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetActivityApplicationJSONInternalServerError:
+	case *SetActivityInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -3915,21 +2364,6 @@ func encodeSetActivityResponse(response SetActivityRes, w http.ResponseWriter, s
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -3947,7 +2381,7 @@ func encodeSetBestFriendResponse(response SetBestFriendRes, w http.ResponseWrite
 
 		return nil
 
-	case *SetBestFriendApplicationJSONBadRequest:
+	case *SetBestFriendBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -3959,21 +2393,7 @@ func encodeSetBestFriendResponse(response SetBestFriendRes, w http.ResponseWrite
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetBestFriendApplicationJSONUnauthorized:
+	case *SetBestFriendUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -3985,21 +2405,7 @@ func encodeSetBestFriendResponse(response SetBestFriendRes, w http.ResponseWrite
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetBestFriendApplicationJSONForbidden:
+	case *SetBestFriendForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -4011,21 +2417,7 @@ func encodeSetBestFriendResponse(response SetBestFriendRes, w http.ResponseWrite
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetBestFriendApplicationJSONInternalServerError:
+	case *SetBestFriendInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4033,21 +2425,6 @@ func encodeSetBestFriendResponse(response SetBestFriendRes, w http.ResponseWrite
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4065,7 +2442,7 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *SetBlockedApplicationJSONBadRequest:
+	case *SetBlockedBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -4077,21 +2454,7 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetBlockedApplicationJSONUnauthorized:
+	case *SetBlockedUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -4103,21 +2466,7 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetBlockedApplicationJSONForbidden:
+	case *SetBlockedForbidden:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(403)
 
@@ -4129,21 +2478,7 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *ForbiddenTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(403)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SetBlockedApplicationJSONInternalServerError:
+	case *SetBlockedInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4151,21 +2486,6 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4233,7 +2553,7 @@ func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.
 
 		return nil
 
-	case *SignInApplicationJSONBadRequest:
+	case *SignInBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -4245,21 +2565,7 @@ func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SignInApplicationJSONInternalServerError:
+	case *SignInInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4267,21 +2573,6 @@ func encodeSignInResponse(response SignInRes, w http.ResponseWriter, span trace.
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4339,7 +2630,7 @@ func encodeSubsonicDownloadResponse(response SubsonicDownloadRes, w http.Respons
 
 		return nil
 
-	case *SubsonicDownloadApplicationJSONNotFound:
+	case *SubsonicDownloadNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -4351,21 +2642,7 @@ func encodeSubsonicDownloadResponse(response SubsonicDownloadRes, w http.Respons
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SubsonicDownloadApplicationJSONInternalServerError:
+	case *SubsonicDownloadInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4373,21 +2650,6 @@ func encodeSubsonicDownloadResponse(response SubsonicDownloadRes, w http.Respons
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4442,7 +2704,7 @@ func encodeSubsonicStreamResponse(response SubsonicStreamRes, w http.ResponseWri
 
 		return nil
 
-	case *SubsonicStreamApplicationJSONNotFound:
+	case *SubsonicStreamNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -4454,21 +2716,7 @@ func encodeSubsonicStreamResponse(response SubsonicStreamRes, w http.ResponseWri
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *SubsonicStreamApplicationJSONInternalServerError:
+	case *SubsonicStreamInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4476,21 +2724,6 @@ func encodeSubsonicStreamResponse(response SubsonicStreamRes, w http.ResponseWri
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4523,7 +2756,7 @@ func encodeUpdateGroupRolesResponse(response UpdateGroupRolesRes, w http.Respons
 
 		return nil
 
-	case *UpdateGroupRolesApplicationJSONBadRequest:
+	case *UpdateGroupRolesBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -4535,21 +2768,7 @@ func encodeUpdateGroupRolesResponse(response UpdateGroupRolesRes, w http.Respons
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UpdateGroupRolesApplicationJSONInternalServerError:
+	case *UpdateGroupRolesInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4557,21 +2776,6 @@ func encodeUpdateGroupRolesResponse(response UpdateGroupRolesRes, w http.Respons
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4596,7 +2800,7 @@ func encodeUpdateLibraryResponse(response UpdateLibraryRes, w http.ResponseWrite
 
 		return nil
 
-	case *UpdateLibraryApplicationJSONBadRequest:
+	case *UpdateLibraryBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -4608,21 +2812,7 @@ func encodeUpdateLibraryResponse(response UpdateLibraryRes, w http.ResponseWrite
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UpdateLibraryApplicationJSONUnauthorized:
+	case *UpdateLibraryUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -4634,21 +2824,7 @@ func encodeUpdateLibraryResponse(response UpdateLibraryRes, w http.ResponseWrite
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UpdateLibraryApplicationJSONInternalServerError:
+	case *UpdateLibraryInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4656,21 +2832,6 @@ func encodeUpdateLibraryResponse(response UpdateLibraryRes, w http.ResponseWrite
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4688,7 +2849,7 @@ func encodeUpdateUserResponse(response UpdateUserRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *UpdateUserApplicationJSONBadRequest:
+	case *UpdateUserBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -4700,21 +2861,7 @@ func encodeUpdateUserResponse(response UpdateUserRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UpdateUserApplicationJSONUnauthorized:
+	case *UpdateUserUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 
@@ -4726,21 +2873,7 @@ func encodeUpdateUserResponse(response UpdateUserRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UpdateUserApplicationJSONConflict:
+	case *UpdateUserConflict:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(409)
 
@@ -4752,21 +2885,7 @@ func encodeUpdateUserResponse(response UpdateUserRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *ConflictTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(409)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UpdateUserApplicationJSONInternalServerError:
+	case *UpdateUserInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4774,21 +2893,6 @@ func encodeUpdateUserResponse(response UpdateUserRes, w http.ResponseWriter, spa
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4806,7 +2910,7 @@ func encodeUploadTrackAudioResponse(response UploadTrackAudioRes, w http.Respons
 
 		return nil
 
-	case *UploadTrackAudioApplicationJSONBadRequest:
+	case *UploadTrackAudioBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 
@@ -4818,21 +2922,7 @@ func encodeUploadTrackAudioResponse(response UploadTrackAudioRes, w http.Respons
 
 		return nil
 
-	case *BadRequestTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(400)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UploadTrackAudioApplicationJSONNotFound:
+	case *UploadTrackAudioNotFound:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 
@@ -4844,21 +2934,7 @@ func encodeUploadTrackAudioResponse(response UploadTrackAudioRes, w http.Respons
 
 		return nil
 
-	case *NotFoundTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(404)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UploadTrackAudioApplicationJSONInternalServerError:
+	case *UploadTrackAudioInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -4866,21 +2942,6 @@ func encodeUploadTrackAudioResponse(response UploadTrackAudioRes, w http.Respons
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *InternalServerErrorTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(500)
-		span.SetStatus(codes.Error, http.StatusText(500))
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 
@@ -4905,20 +2966,6 @@ func encodeValidateTokenResponse(response ValidateTokenRes, w http.ResponseWrite
 		e := new(jx.Encoder)
 		response.Encode(e)
 		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
-
-		return nil
-
-	case *UnauthorizedTextPlain:
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.WriteHeader(401)
-
-		writer := w
-		if closer, ok := response.Data.(io.Closer); ok {
-			defer closer.Close()
-		}
-		if _, err := io.Copy(writer, response); err != nil {
 			return errors.Wrap(err, "write")
 		}
 

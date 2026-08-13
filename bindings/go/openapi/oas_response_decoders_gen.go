@@ -77,7 +77,7 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddFriendApplicationJSONBadRequest
+			var response AddFriendBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -94,15 +94,6 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -121,7 +112,7 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddFriendApplicationJSONUnauthorized
+			var response AddFriendUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -138,15 +129,6 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -165,7 +147,7 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddFriendApplicationJSONForbidden
+			var response AddFriendForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -182,15 +164,6 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -209,7 +182,7 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddFriendApplicationJSONNotFound
+			var response AddFriendNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -226,15 +199,6 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -253,7 +217,7 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddFriendApplicationJSONInternalServerError
+			var response AddFriendInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -270,15 +234,6 @@ func decodeAddFriendResponse(resp *http.Response) (res AddFriendRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -347,7 +302,7 @@ func decodeAddGroupRolesResponse(resp *http.Response) (res AddGroupRolesRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddGroupRolesApplicationJSONBadRequest
+			var response AddGroupRolesBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -364,15 +319,6 @@ func decodeAddGroupRolesResponse(resp *http.Response) (res AddGroupRolesRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -391,7 +337,7 @@ func decodeAddGroupRolesResponse(resp *http.Response) (res AddGroupRolesRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddGroupRolesApplicationJSONInternalServerError
+			var response AddGroupRolesInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -408,15 +354,6 @@ func decodeAddGroupRolesResponse(resp *http.Response) (res AddGroupRolesRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -476,7 +413,7 @@ func decodeAddMessageReactionResponse(resp *http.Response) (res AddMessageReacti
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddMessageReactionApplicationJSONUnauthorized
+			var response AddMessageReactionUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -493,15 +430,6 @@ func decodeAddMessageReactionResponse(resp *http.Response) (res AddMessageReacti
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -520,7 +448,7 @@ func decodeAddMessageReactionResponse(resp *http.Response) (res AddMessageReacti
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddMessageReactionApplicationJSONInternalServerError
+			var response AddMessageReactionInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -537,15 +465,6 @@ func decodeAddMessageReactionResponse(resp *http.Response) (res AddMessageReacti
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -605,7 +524,7 @@ func decodeAddToLibraryResponse(resp *http.Response) (res AddToLibraryRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddToLibraryApplicationJSONBadRequest
+			var response AddToLibraryBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -622,15 +541,6 @@ func decodeAddToLibraryResponse(resp *http.Response) (res AddToLibraryRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -649,7 +559,7 @@ func decodeAddToLibraryResponse(resp *http.Response) (res AddToLibraryRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddToLibraryApplicationJSONUnauthorized
+			var response AddToLibraryUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -666,15 +576,6 @@ func decodeAddToLibraryResponse(resp *http.Response) (res AddToLibraryRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -693,7 +594,7 @@ func decodeAddToLibraryResponse(resp *http.Response) (res AddToLibraryRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response AddToLibraryApplicationJSONInternalServerError
+			var response AddToLibraryInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -710,15 +611,6 @@ func decodeAddToLibraryResponse(resp *http.Response) (res AddToLibraryRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -787,7 +679,7 @@ func decodeCreateGroupResponse(resp *http.Response) (res CreateGroupRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response CreateGroupApplicationJSONBadRequest
+			var response CreateGroupBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -804,15 +696,6 @@ func decodeCreateGroupResponse(resp *http.Response) (res CreateGroupRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -831,7 +714,7 @@ func decodeCreateGroupResponse(resp *http.Response) (res CreateGroupRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response CreateGroupApplicationJSONInternalServerError
+			var response CreateGroupInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -848,15 +731,6 @@ func decodeCreateGroupResponse(resp *http.Response) (res CreateGroupRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -884,7 +758,7 @@ func decodeDeleteGroupResponse(resp *http.Response) (res DeleteGroupRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteGroupApplicationJSONBadRequest
+			var response DeleteGroupBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -901,15 +775,6 @@ func decodeDeleteGroupResponse(resp *http.Response) (res DeleteGroupRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -928,7 +793,7 @@ func decodeDeleteGroupResponse(resp *http.Response) (res DeleteGroupRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteGroupApplicationJSONInternalServerError
+			var response DeleteGroupInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -945,15 +810,6 @@ func decodeDeleteGroupResponse(resp *http.Response) (res DeleteGroupRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -981,7 +837,7 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteGroupRoleApplicationJSONUnauthorized
+			var response DeleteGroupRoleUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -998,15 +854,6 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1025,7 +872,7 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteGroupRoleApplicationJSONForbidden
+			var response DeleteGroupRoleForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1042,15 +889,6 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1069,7 +907,7 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteGroupRoleApplicationJSONNotFound
+			var response DeleteGroupRoleNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1086,15 +924,6 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1113,7 +942,7 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteGroupRoleApplicationJSONInternalServerError
+			var response DeleteGroupRoleInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1130,15 +959,6 @@ func decodeDeleteGroupRoleResponse(resp *http.Response) (res DeleteGroupRoleRes,
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1166,7 +986,7 @@ func decodeDeleteMessageResponse(resp *http.Response) (res DeleteMessageRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteMessageApplicationJSONBadRequest
+			var response DeleteMessageBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1183,15 +1003,6 @@ func decodeDeleteMessageResponse(resp *http.Response) (res DeleteMessageRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1210,7 +1021,7 @@ func decodeDeleteMessageResponse(resp *http.Response) (res DeleteMessageRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteMessageApplicationJSONInternalServerError
+			var response DeleteMessageInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1227,15 +1038,6 @@ func decodeDeleteMessageResponse(resp *http.Response) (res DeleteMessageRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1263,7 +1065,7 @@ func decodeDeleteMessageReactionResponse(resp *http.Response) (res DeleteMessage
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteMessageReactionApplicationJSONUnauthorized
+			var response DeleteMessageReactionUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1280,15 +1082,6 @@ func decodeDeleteMessageReactionResponse(resp *http.Response) (res DeleteMessage
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1307,7 +1100,7 @@ func decodeDeleteMessageReactionResponse(resp *http.Response) (res DeleteMessage
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteMessageReactionApplicationJSONNotFound
+			var response DeleteMessageReactionNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1324,15 +1117,6 @@ func decodeDeleteMessageReactionResponse(resp *http.Response) (res DeleteMessage
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1351,7 +1135,7 @@ func decodeDeleteMessageReactionResponse(resp *http.Response) (res DeleteMessage
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response DeleteMessageReactionApplicationJSONInternalServerError
+			var response DeleteMessageReactionInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1368,15 +1152,6 @@ func decodeDeleteMessageReactionResponse(resp *http.Response) (res DeleteMessage
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1445,7 +1220,7 @@ func decodeEditGroupResponse(resp *http.Response) (res EditGroupRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response EditGroupApplicationJSONBadRequest
+			var response EditGroupBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1462,15 +1237,6 @@ func decodeEditGroupResponse(resp *http.Response) (res EditGroupRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1489,7 +1255,7 @@ func decodeEditGroupResponse(resp *http.Response) (res EditGroupRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response EditGroupApplicationJSONInternalServerError
+			var response EditGroupInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1506,15 +1272,6 @@ func decodeEditGroupResponse(resp *http.Response) (res EditGroupRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1574,7 +1331,7 @@ func decodeEditMessageResponse(resp *http.Response) (res EditMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response EditMessageApplicationJSONBadRequest
+			var response EditMessageBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1591,15 +1348,6 @@ func decodeEditMessageResponse(resp *http.Response) (res EditMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1618,7 +1366,7 @@ func decodeEditMessageResponse(resp *http.Response) (res EditMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response EditMessageApplicationJSONInternalServerError
+			var response EditMessageInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1635,15 +1383,6 @@ func decodeEditMessageResponse(resp *http.Response) (res EditMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1703,7 +1442,7 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetAlbumApplicationJSONBadRequest
+			var response GetAlbumBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1720,15 +1459,6 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1747,7 +1477,7 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetAlbumApplicationJSONUnauthorized
+			var response GetAlbumUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1764,15 +1494,6 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1791,7 +1512,7 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetAlbumApplicationJSONNotFound
+			var response GetAlbumNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1808,15 +1529,6 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1835,7 +1547,7 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetAlbumApplicationJSONInternalServerError
+			var response GetAlbumInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1852,15 +1564,6 @@ func decodeGetAlbumResponse(resp *http.Response) (res GetAlbumRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1920,7 +1623,7 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetArtistApplicationJSONBadRequest
+			var response GetArtistBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1937,15 +1640,6 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -1964,7 +1658,7 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetArtistApplicationJSONUnauthorized
+			var response GetArtistUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -1981,15 +1675,6 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2008,7 +1693,7 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetArtistApplicationJSONNotFound
+			var response GetArtistNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2025,15 +1710,6 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2052,7 +1728,7 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetArtistApplicationJSONInternalServerError
+			var response GetArtistInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2069,15 +1745,6 @@ func decodeGetArtistResponse(resp *http.Response) (res GetArtistRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2181,7 +1848,7 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetCalendarListensApplicationJSONBadRequest
+			var response GetCalendarListensBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2198,15 +1865,6 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2225,7 +1883,7 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetCalendarListensApplicationJSONForbidden
+			var response GetCalendarListensForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2242,15 +1900,6 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2269,7 +1918,7 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetCalendarListensApplicationJSONNotFound
+			var response GetCalendarListensNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2286,15 +1935,6 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2313,7 +1953,7 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetCalendarListensApplicationJSONInternalServerError
+			var response GetCalendarListensInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2330,15 +1970,6 @@ func decodeGetCalendarListensResponse(resp *http.Response) (res GetCalendarListe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2407,7 +2038,7 @@ func decodeGetGlobalTopAlbumsResponse(resp *http.Response) (res GetGlobalTopAlbu
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGlobalTopAlbumsApplicationJSONBadRequest
+			var response GetGlobalTopAlbumsBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2424,15 +2055,6 @@ func decodeGetGlobalTopAlbumsResponse(resp *http.Response) (res GetGlobalTopAlbu
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2451,7 +2073,7 @@ func decodeGetGlobalTopAlbumsResponse(resp *http.Response) (res GetGlobalTopAlbu
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGlobalTopAlbumsApplicationJSONInternalServerError
+			var response GetGlobalTopAlbumsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2468,15 +2090,6 @@ func decodeGetGlobalTopAlbumsResponse(resp *http.Response) (res GetGlobalTopAlbu
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2545,7 +2158,7 @@ func decodeGetGlobalTopArtistsResponse(resp *http.Response) (res GetGlobalTopArt
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGlobalTopArtistsApplicationJSONBadRequest
+			var response GetGlobalTopArtistsBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2562,15 +2175,6 @@ func decodeGetGlobalTopArtistsResponse(resp *http.Response) (res GetGlobalTopArt
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2589,7 +2193,7 @@ func decodeGetGlobalTopArtistsResponse(resp *http.Response) (res GetGlobalTopArt
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGlobalTopArtistsApplicationJSONInternalServerError
+			var response GetGlobalTopArtistsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2606,15 +2210,6 @@ func decodeGetGlobalTopArtistsResponse(resp *http.Response) (res GetGlobalTopArt
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2683,7 +2278,7 @@ func decodeGetGlobalTopTracksResponse(resp *http.Response) (res GetGlobalTopTrac
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGlobalTopTracksApplicationJSONBadRequest
+			var response GetGlobalTopTracksBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2700,15 +2295,6 @@ func decodeGetGlobalTopTracksResponse(resp *http.Response) (res GetGlobalTopTrac
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2727,7 +2313,7 @@ func decodeGetGlobalTopTracksResponse(resp *http.Response) (res GetGlobalTopTrac
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGlobalTopTracksApplicationJSONInternalServerError
+			var response GetGlobalTopTracksInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2744,15 +2330,6 @@ func decodeGetGlobalTopTracksResponse(resp *http.Response) (res GetGlobalTopTrac
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2821,7 +2398,7 @@ func decodeGetGroupResponse(resp *http.Response) (res GetGroupRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGroupApplicationJSONUnauthorized
+			var response GetGroupUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2838,15 +2415,6 @@ func decodeGetGroupResponse(resp *http.Response) (res GetGroupRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2865,7 +2433,7 @@ func decodeGetGroupResponse(resp *http.Response) (res GetGroupRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGroupApplicationJSONInternalServerError
+			var response GetGroupInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2882,15 +2450,6 @@ func decodeGetGroupResponse(resp *http.Response) (res GetGroupRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -2959,7 +2518,7 @@ func decodeGetGroupRolesResponse(resp *http.Response) (res GetGroupRolesRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGroupRolesApplicationJSONUnauthorized
+			var response GetGroupRolesUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -2976,15 +2535,6 @@ func decodeGetGroupRolesResponse(resp *http.Response) (res GetGroupRolesRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3003,7 +2553,7 @@ func decodeGetGroupRolesResponse(resp *http.Response) (res GetGroupRolesRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGroupRolesApplicationJSONInternalServerError
+			var response GetGroupRolesInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3020,15 +2570,6 @@ func decodeGetGroupRolesResponse(resp *http.Response) (res GetGroupRolesRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3097,7 +2638,7 @@ func decodeGetGroupsResponse(resp *http.Response) (res GetGroupsRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGroupsApplicationJSONUnauthorized
+			var response GetGroupsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3114,15 +2655,6 @@ func decodeGetGroupsResponse(resp *http.Response) (res GetGroupsRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3141,7 +2673,7 @@ func decodeGetGroupsResponse(resp *http.Response) (res GetGroupsRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetGroupsApplicationJSONInternalServerError
+			var response GetGroupsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3158,15 +2690,6 @@ func decodeGetGroupsResponse(resp *http.Response) (res GetGroupsRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3253,15 +2776,6 @@ func decodeGetLibrarySearchIndexResponse(resp *http.Response) (res GetLibrarySea
 				return res, err
 			}
 			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
-			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
 		}
@@ -3329,7 +2843,7 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetListenSessionsApplicationJSONBadRequest
+			var response GetListenSessionsBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3346,15 +2860,6 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3373,7 +2878,7 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetListenSessionsApplicationJSONUnauthorized
+			var response GetListenSessionsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3390,15 +2895,6 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3417,7 +2913,7 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetListenSessionsApplicationJSONInternalServerError
+			var response GetListenSessionsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3434,15 +2930,6 @@ func decodeGetListenSessionsResponse(resp *http.Response) (res GetListenSessions
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3511,7 +2998,7 @@ func decodeGetMessageThreadResponse(resp *http.Response) (res GetMessageThreadRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetMessageThreadApplicationJSONUnauthorized
+			var response GetMessageThreadUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3528,15 +3015,6 @@ func decodeGetMessageThreadResponse(resp *http.Response) (res GetMessageThreadRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3555,7 +3033,7 @@ func decodeGetMessageThreadResponse(resp *http.Response) (res GetMessageThreadRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetMessageThreadApplicationJSONNotFound
+			var response GetMessageThreadNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3572,15 +3050,6 @@ func decodeGetMessageThreadResponse(resp *http.Response) (res GetMessageThreadRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3599,7 +3068,7 @@ func decodeGetMessageThreadResponse(resp *http.Response) (res GetMessageThreadRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetMessageThreadApplicationJSONInternalServerError
+			var response GetMessageThreadInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3616,15 +3085,6 @@ func decodeGetMessageThreadResponse(resp *http.Response) (res GetMessageThreadRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3693,7 +3153,7 @@ func decodeGetMessagesResponse(resp *http.Response) (res GetMessagesRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetMessagesApplicationJSONUnauthorized
+			var response GetMessagesUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3710,15 +3170,6 @@ func decodeGetMessagesResponse(resp *http.Response) (res GetMessagesRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3737,7 +3188,7 @@ func decodeGetMessagesResponse(resp *http.Response) (res GetMessagesRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetMessagesApplicationJSONInternalServerError
+			var response GetMessagesInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3754,15 +3205,6 @@ func decodeGetMessagesResponse(resp *http.Response) (res GetMessagesRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3856,7 +3298,7 @@ func decodeGetRelationsResponse(resp *http.Response) (res GetRelationsRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetRelationsApplicationJSONUnauthorized
+			var response GetRelationsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3873,15 +3315,6 @@ func decodeGetRelationsResponse(resp *http.Response) (res GetRelationsRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3900,7 +3333,7 @@ func decodeGetRelationsResponse(resp *http.Response) (res GetRelationsRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetRelationsApplicationJSONInternalServerError
+			var response GetRelationsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -3917,15 +3350,6 @@ func decodeGetRelationsResponse(resp *http.Response) (res GetRelationsRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -3994,7 +3418,7 @@ func decodeGetRelationsDetailsResponse(resp *http.Response) (res GetRelationsDet
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetRelationsDetailsApplicationJSONUnauthorized
+			var response GetRelationsDetailsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4011,15 +3435,6 @@ func decodeGetRelationsDetailsResponse(resp *http.Response) (res GetRelationsDet
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4038,7 +3453,7 @@ func decodeGetRelationsDetailsResponse(resp *http.Response) (res GetRelationsDet
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetRelationsDetailsApplicationJSONInternalServerError
+			var response GetRelationsDetailsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4055,15 +3470,6 @@ func decodeGetRelationsDetailsResponse(resp *http.Response) (res GetRelationsDet
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4123,7 +3529,7 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetTrackApplicationJSONBadRequest
+			var response GetTrackBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4140,15 +3546,6 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4167,7 +3564,7 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetTrackApplicationJSONUnauthorized
+			var response GetTrackUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4184,15 +3581,6 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4211,7 +3599,7 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetTrackApplicationJSONNotFound
+			var response GetTrackNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4228,15 +3616,6 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4255,7 +3634,7 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetTrackApplicationJSONInternalServerError
+			var response GetTrackInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4272,15 +3651,6 @@ func decodeGetTrackResponse(resp *http.Response) (res GetTrackRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4349,7 +3719,7 @@ func decodeGetTracksPlayStatsResponse(resp *http.Response) (res GetTracksPlaySta
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetTracksPlayStatsApplicationJSONBadRequest
+			var response GetTracksPlayStatsBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4366,15 +3736,6 @@ func decodeGetTracksPlayStatsResponse(resp *http.Response) (res GetTracksPlaySta
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4393,7 +3754,7 @@ func decodeGetTracksPlayStatsResponse(resp *http.Response) (res GetTracksPlaySta
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetTracksPlayStatsApplicationJSONInternalServerError
+			var response GetTracksPlayStatsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4410,15 +3771,6 @@ func decodeGetTracksPlayStatsResponse(resp *http.Response) (res GetTracksPlaySta
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4505,15 +3857,6 @@ func decodeGetUserDetailsResponse(resp *http.Response) (res GetUserDetailsRes, _
 				return res, err
 			}
 			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
-			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
 		}
@@ -4581,7 +3924,7 @@ func decodeGetUserIntegrationsResponse(resp *http.Response) (res GetUserIntegrat
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserIntegrationsApplicationJSONUnauthorized
+			var response GetUserIntegrationsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4598,15 +3941,6 @@ func decodeGetUserIntegrationsResponse(resp *http.Response) (res GetUserIntegrat
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4625,7 +3959,7 @@ func decodeGetUserIntegrationsResponse(resp *http.Response) (res GetUserIntegrat
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserIntegrationsApplicationJSONInternalServerError
+			var response GetUserIntegrationsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4642,15 +3976,6 @@ func decodeGetUserIntegrationsResponse(resp *http.Response) (res GetUserIntegrat
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4719,7 +4044,7 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListenSessionsApplicationJSONBadRequest
+			var response GetUserListenSessionsBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4736,15 +4061,6 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4763,7 +4079,7 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListenSessionsApplicationJSONUnauthorized
+			var response GetUserListenSessionsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4780,15 +4096,6 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4807,7 +4114,7 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListenSessionsApplicationJSONForbidden
+			var response GetUserListenSessionsForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4824,15 +4131,6 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4851,7 +4149,7 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListenSessionsApplicationJSONNotFound
+			var response GetUserListenSessionsNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4868,15 +4166,6 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4895,7 +4184,7 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListenSessionsApplicationJSONInternalServerError
+			var response GetUserListenSessionsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -4912,15 +4201,6 @@ func decodeGetUserListenSessionsResponse(resp *http.Response) (res GetUserListen
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -4989,7 +4269,7 @@ func decodeGetUserListensByDaysResponse(resp *http.Response) (res GetUserListens
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListensByDaysApplicationJSONBadRequest
+			var response GetUserListensByDaysBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5006,15 +4286,6 @@ func decodeGetUserListensByDaysResponse(resp *http.Response) (res GetUserListens
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5033,7 +4304,7 @@ func decodeGetUserListensByDaysResponse(resp *http.Response) (res GetUserListens
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListensByDaysApplicationJSONUnauthorized
+			var response GetUserListensByDaysUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5050,15 +4321,6 @@ func decodeGetUserListensByDaysResponse(resp *http.Response) (res GetUserListens
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5077,7 +4339,7 @@ func decodeGetUserListensByDaysResponse(resp *http.Response) (res GetUserListens
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserListensByDaysApplicationJSONInternalServerError
+			var response GetUserListensByDaysInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5094,15 +4356,6 @@ func decodeGetUserListensByDaysResponse(resp *http.Response) (res GetUserListens
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5171,7 +4424,7 @@ func decodeGetUserTopArtistPlayStatsResponse(resp *http.Response) (res GetUserTo
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserTopArtistPlayStatsApplicationJSONBadRequest
+			var response GetUserTopArtistPlayStatsBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5188,15 +4441,6 @@ func decodeGetUserTopArtistPlayStatsResponse(resp *http.Response) (res GetUserTo
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5215,7 +4459,7 @@ func decodeGetUserTopArtistPlayStatsResponse(resp *http.Response) (res GetUserTo
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserTopArtistPlayStatsApplicationJSONUnauthorized
+			var response GetUserTopArtistPlayStatsUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5232,15 +4476,6 @@ func decodeGetUserTopArtistPlayStatsResponse(resp *http.Response) (res GetUserTo
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5259,7 +4494,7 @@ func decodeGetUserTopArtistPlayStatsResponse(resp *http.Response) (res GetUserTo
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetUserTopArtistPlayStatsApplicationJSONInternalServerError
+			var response GetUserTopArtistPlayStatsInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5276,15 +4511,6 @@ func decodeGetUserTopArtistPlayStatsResponse(resp *http.Response) (res GetUserTo
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5351,7 +4577,7 @@ func decodeJoinFreeBetaResponse(resp *http.Response) (res JoinFreeBetaRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response JoinFreeBetaApplicationJSONUnauthorized
+			var response JoinFreeBetaUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5368,15 +4594,6 @@ func decodeJoinFreeBetaResponse(resp *http.Response) (res JoinFreeBetaRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5395,7 +4612,7 @@ func decodeJoinFreeBetaResponse(resp *http.Response) (res JoinFreeBetaRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response JoinFreeBetaApplicationJSONInternalServerError
+			var response JoinFreeBetaInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5412,15 +4629,6 @@ func decodeJoinFreeBetaResponse(resp *http.Response) (res JoinFreeBetaRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5448,7 +4656,7 @@ func decodeReadMessageResponse(resp *http.Response) (res ReadMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response ReadMessageApplicationJSONBadRequest
+			var response ReadMessageBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5465,15 +4673,6 @@ func decodeReadMessageResponse(resp *http.Response) (res ReadMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5492,7 +4691,7 @@ func decodeReadMessageResponse(resp *http.Response) (res ReadMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response ReadMessageApplicationJSONUnauthorized
+			var response ReadMessageUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5509,15 +4708,6 @@ func decodeReadMessageResponse(resp *http.Response) (res ReadMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5536,7 +4726,7 @@ func decodeReadMessageResponse(resp *http.Response) (res ReadMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response ReadMessageApplicationJSONInternalServerError
+			var response ReadMessageInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5553,15 +4743,6 @@ func decodeReadMessageResponse(resp *http.Response) (res ReadMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5707,7 +4888,7 @@ func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RegisterApplicationJSONBadRequest
+			var response RegisterBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5724,15 +4905,6 @@ func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5751,7 +4923,7 @@ func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RegisterApplicationJSONConflict
+			var response RegisterConflict
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5768,15 +4940,6 @@ func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ConflictTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5795,7 +4958,7 @@ func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RegisterApplicationJSONInternalServerError
+			var response RegisterInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5812,15 +4975,6 @@ func decodeRegisterResponse(resp *http.Response) (res RegisterRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5848,7 +5002,7 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFriendApplicationJSONBadRequest
+			var response RemoveFriendBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5865,15 +5019,6 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5892,7 +5037,7 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFriendApplicationJSONUnauthorized
+			var response RemoveFriendUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5909,15 +5054,6 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5936,7 +5072,7 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFriendApplicationJSONForbidden
+			var response RemoveFriendForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5953,15 +5089,6 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -5980,7 +5107,7 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFriendApplicationJSONInternalServerError
+			var response RemoveFriendInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -5997,15 +5124,6 @@ func decodeRemoveFriendResponse(resp *http.Response) (res RemoveFriendRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6033,7 +5151,7 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFromLibraryApplicationJSONBadRequest
+			var response RemoveFromLibraryBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6050,15 +5168,6 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6077,7 +5186,7 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFromLibraryApplicationJSONUnauthorized
+			var response RemoveFromLibraryUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6094,15 +5203,6 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6121,7 +5221,7 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response RemoveFromLibraryApplicationJSONInternalServerError
+			var response RemoveFromLibraryInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6138,15 +5238,6 @@ func decodeRemoveFromLibraryResponse(resp *http.Response) (res RemoveFromLibrary
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6215,7 +5306,7 @@ func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksApplicationJSONBadRequest
+			var response SearchTracksBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6232,15 +5323,6 @@ func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6259,7 +5341,7 @@ func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksApplicationJSONUnauthorized
+			var response SearchTracksUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6276,15 +5358,6 @@ func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6303,7 +5376,7 @@ func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ err
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SearchTracksApplicationJSONInternalServerError
+			var response SearchTracksInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6320,15 +5393,6 @@ func decodeSearchTracksResponse(resp *http.Response) (res SearchTracksRes, _ err
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6388,7 +5452,7 @@ func decodeSendMessageResponse(resp *http.Response) (res SendMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SendMessageApplicationJSONBadRequest
+			var response SendMessageBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6405,15 +5469,6 @@ func decodeSendMessageResponse(resp *http.Response) (res SendMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6432,7 +5487,7 @@ func decodeSendMessageResponse(resp *http.Response) (res SendMessageRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SendMessageApplicationJSONInternalServerError
+			var response SendMessageInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6449,15 +5504,6 @@ func decodeSendMessageResponse(resp *http.Response) (res SendMessageRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6485,7 +5531,7 @@ func decodeSetActivityResponse(resp *http.Response) (res SetActivityRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetActivityApplicationJSONBadRequest
+			var response SetActivityBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6502,15 +5548,6 @@ func decodeSetActivityResponse(resp *http.Response) (res SetActivityRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6529,7 +5566,7 @@ func decodeSetActivityResponse(resp *http.Response) (res SetActivityRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetActivityApplicationJSONUnauthorized
+			var response SetActivityUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6546,15 +5583,6 @@ func decodeSetActivityResponse(resp *http.Response) (res SetActivityRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6573,7 +5601,7 @@ func decodeSetActivityResponse(resp *http.Response) (res SetActivityRes, _ error
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetActivityApplicationJSONInternalServerError
+			var response SetActivityInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6590,15 +5618,6 @@ func decodeSetActivityResponse(resp *http.Response) (res SetActivityRes, _ error
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6626,7 +5645,7 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBestFriendApplicationJSONBadRequest
+			var response SetBestFriendBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6643,15 +5662,6 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6670,7 +5680,7 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBestFriendApplicationJSONUnauthorized
+			var response SetBestFriendUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6687,15 +5697,6 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6714,7 +5715,7 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBestFriendApplicationJSONForbidden
+			var response SetBestFriendForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6731,15 +5732,6 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6758,7 +5750,7 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBestFriendApplicationJSONInternalServerError
+			var response SetBestFriendInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6775,15 +5767,6 @@ func decodeSetBestFriendResponse(resp *http.Response) (res SetBestFriendRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6811,7 +5794,7 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBlockedApplicationJSONBadRequest
+			var response SetBlockedBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6828,15 +5811,6 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6855,7 +5829,7 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBlockedApplicationJSONUnauthorized
+			var response SetBlockedUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6872,15 +5846,6 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6899,7 +5864,7 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBlockedApplicationJSONForbidden
+			var response SetBlockedForbidden
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6916,15 +5881,6 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ForbiddenTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -6943,7 +5899,7 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SetBlockedApplicationJSONInternalServerError
+			var response SetBlockedInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -6960,15 +5916,6 @@ func decodeSetBlockedResponse(resp *http.Response) (res SetBlockedRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7114,7 +6061,7 @@ func decodeSignInResponse(resp *http.Response) (res SignInRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SignInApplicationJSONBadRequest
+			var response SignInBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7131,15 +6078,6 @@ func decodeSignInResponse(resp *http.Response) (res SignInRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7158,7 +6096,7 @@ func decodeSignInResponse(resp *http.Response) (res SignInRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SignInApplicationJSONInternalServerError
+			var response SignInInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7175,15 +6113,6 @@ func decodeSignInResponse(resp *http.Response) (res SignInRes, _ error) {
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7299,7 +6228,7 @@ func decodeSubsonicDownloadResponse(resp *http.Response) (res SubsonicDownloadRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SubsonicDownloadApplicationJSONNotFound
+			var response SubsonicDownloadNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7316,15 +6245,6 @@ func decodeSubsonicDownloadResponse(resp *http.Response) (res SubsonicDownloadRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7343,7 +6263,7 @@ func decodeSubsonicDownloadResponse(resp *http.Response) (res SubsonicDownloadRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SubsonicDownloadApplicationJSONInternalServerError
+			var response SubsonicDownloadInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7360,15 +6280,6 @@ func decodeSubsonicDownloadResponse(resp *http.Response) (res SubsonicDownloadRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7430,7 +6341,7 @@ func decodeSubsonicStreamResponse(resp *http.Response) (res SubsonicStreamRes, _
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SubsonicStreamApplicationJSONNotFound
+			var response SubsonicStreamNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7447,15 +6358,6 @@ func decodeSubsonicStreamResponse(resp *http.Response) (res SubsonicStreamRes, _
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7474,7 +6376,7 @@ func decodeSubsonicStreamResponse(resp *http.Response) (res SubsonicStreamRes, _
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response SubsonicStreamApplicationJSONInternalServerError
+			var response SubsonicStreamInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7491,15 +6393,6 @@ func decodeSubsonicStreamResponse(resp *http.Response) (res SubsonicStreamRes, _
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7568,7 +6461,7 @@ func decodeUpdateGroupRolesResponse(resp *http.Response) (res UpdateGroupRolesRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateGroupRolesApplicationJSONBadRequest
+			var response UpdateGroupRolesBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7585,15 +6478,6 @@ func decodeUpdateGroupRolesResponse(resp *http.Response) (res UpdateGroupRolesRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7612,7 +6496,7 @@ func decodeUpdateGroupRolesResponse(resp *http.Response) (res UpdateGroupRolesRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateGroupRolesApplicationJSONInternalServerError
+			var response UpdateGroupRolesInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7629,15 +6513,6 @@ func decodeUpdateGroupRolesResponse(resp *http.Response) (res UpdateGroupRolesRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7697,7 +6572,7 @@ func decodeUpdateLibraryResponse(resp *http.Response) (res UpdateLibraryRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateLibraryApplicationJSONBadRequest
+			var response UpdateLibraryBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7714,15 +6589,6 @@ func decodeUpdateLibraryResponse(resp *http.Response) (res UpdateLibraryRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7741,7 +6607,7 @@ func decodeUpdateLibraryResponse(resp *http.Response) (res UpdateLibraryRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateLibraryApplicationJSONUnauthorized
+			var response UpdateLibraryUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7758,15 +6624,6 @@ func decodeUpdateLibraryResponse(resp *http.Response) (res UpdateLibraryRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7785,7 +6642,7 @@ func decodeUpdateLibraryResponse(resp *http.Response) (res UpdateLibraryRes, _ e
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateLibraryApplicationJSONInternalServerError
+			var response UpdateLibraryInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7802,15 +6659,6 @@ func decodeUpdateLibraryResponse(resp *http.Response) (res UpdateLibraryRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7838,7 +6686,7 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateUserApplicationJSONBadRequest
+			var response UpdateUserBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7855,15 +6703,6 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7882,7 +6721,7 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateUserApplicationJSONUnauthorized
+			var response UpdateUserUnauthorized
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7899,15 +6738,6 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7926,7 +6756,7 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateUserApplicationJSONConflict
+			var response UpdateUserConflict
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7943,15 +6773,6 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := ConflictTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -7970,7 +6791,7 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UpdateUserApplicationJSONInternalServerError
+			var response UpdateUserInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -7987,15 +6808,6 @@ func decodeUpdateUserResponse(resp *http.Response) (res UpdateUserRes, _ error) 
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -8023,7 +6835,7 @@ func decodeUploadTrackAudioResponse(resp *http.Response) (res UploadTrackAudioRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UploadTrackAudioApplicationJSONBadRequest
+			var response UploadTrackAudioBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -8040,15 +6852,6 @@ func decodeUploadTrackAudioResponse(resp *http.Response) (res UploadTrackAudioRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := BadRequestTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -8067,7 +6870,7 @@ func decodeUploadTrackAudioResponse(resp *http.Response) (res UploadTrackAudioRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UploadTrackAudioApplicationJSONNotFound
+			var response UploadTrackAudioNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -8084,15 +6887,6 @@ func decodeUploadTrackAudioResponse(resp *http.Response) (res UploadTrackAudioRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := NotFoundTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -8111,7 +6905,7 @@ func decodeUploadTrackAudioResponse(resp *http.Response) (res UploadTrackAudioRe
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response UploadTrackAudioApplicationJSONInternalServerError
+			var response UploadTrackAudioInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -8128,15 +6922,6 @@ func decodeUploadTrackAudioResponse(resp *http.Response) (res UploadTrackAudioRe
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := InternalServerErrorTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
@@ -8181,15 +6966,6 @@ func decodeValidateTokenResponse(resp *http.Response) (res ValidateTokenRes, _ e
 				}
 				return res, err
 			}
-			return &response, nil
-		case ct == "text/plain":
-			reader := resp.Body
-			b, err := io.ReadAll(reader)
-			if err != nil {
-				return res, err
-			}
-
-			response := UnauthorizedTextPlain{Data: bytes.NewReader(b)}
 			return &response, nil
 		default:
 			return res, validate.InvalidContentType(ct)
