@@ -251,15 +251,6 @@ func (UnimplementedHandler) GetOpenAPI(ctx context.Context) (r GetOpenAPIOK, _ e
 	return r, ht.ErrNotImplemented
 }
 
-// GetRelations implements getRelations operation.
-//
-// Get user relations.
-//
-// GET /api/relations
-func (UnimplementedHandler) GetRelations(ctx context.Context) (r GetRelationsRes, _ error) {
-	return r, ht.ErrNotImplemented
-}
-
 // GetRelationsDetails implements getRelationsDetails operation.
 //
 // Get user relations with visible activity details.
@@ -320,6 +311,15 @@ func (UnimplementedHandler) GetUserListenSessions(ctx context.Context, req *List
 //
 // POST /api/statistics/user/listens/days
 func (UnimplementedHandler) GetUserListensByDays(ctx context.Context, req *DateTimeRange) (r GetUserListensByDaysRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetUserRelations implements getUserRelations operation.
+//
+// Get user relations.
+//
+// GET /api/user/relations
+func (UnimplementedHandler) GetUserRelations(ctx context.Context) (r GetUserRelationsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

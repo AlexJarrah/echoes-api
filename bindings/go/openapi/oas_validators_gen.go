@@ -389,31 +389,6 @@ func (s GetRelationsDetailsOKApplicationJSON) Validate() error {
 	return nil
 }
 
-func (s GetRelationsOKApplicationJSON) Validate() error {
-	alias := ([]Relation)(s)
-	if alias == nil {
-		return errors.New("nil is invalid value")
-	}
-	var failures []validate.FieldError
-	for i, elem := range alias {
-		if err := func() error {
-			if err := elem.Validate(); err != nil {
-				return err
-			}
-			return nil
-		}(); err != nil {
-			failures = append(failures, validate.FieldError{
-				Name:  fmt.Sprintf("[%d]", i),
-				Error: err,
-			})
-		}
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
 func (s GetTracksPlayStatsOKApplicationJSON) Validate() error {
 	alias := ([]EntityPlays)(s)
 	if alias == nil {
@@ -451,6 +426,31 @@ func (s GetUserListensByDaysOKApplicationJSON) Validate() error {
 	alias := ([]DayListenDetails)(s)
 	if alias == nil {
 		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
+func (s GetUserRelationsOKApplicationJSON) Validate() error {
+	alias := ([]Relation)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	var failures []validate.FieldError
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
 	}
 	return nil
 }

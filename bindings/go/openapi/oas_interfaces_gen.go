@@ -101,10 +101,6 @@ type GetRelationsDetailsRes interface {
 	getRelationsDetailsRes()
 }
 
-type GetRelationsRes interface {
-	getRelationsRes()
-}
-
 type GetTrackRes interface {
 	getTrackRes()
 }
@@ -127,6 +123,10 @@ type GetUserListenSessionsRes interface {
 
 type GetUserListensByDaysRes interface {
 	getUserListensByDaysRes()
+}
+
+type GetUserRelationsRes interface {
+	getUserRelationsRes()
 }
 
 type GetUserTopArtistPlayStatsRes interface {

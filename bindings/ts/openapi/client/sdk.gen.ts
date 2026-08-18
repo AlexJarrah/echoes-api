@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibrarySearchIndexData, GetLibrarySearchIndexErrors, GetLibrarySearchIndexResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetRelationsData, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetRelationsErrors, GetRelationsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetTracksPlayStatsData, GetTracksPlayStatsErrors, GetTracksPlayStatsResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksData, SearchTracksErrors, SearchTracksResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, SubsonicDownloadData, SubsonicDownloadErrors, SubsonicDownloadResponses, SubsonicStreamData, SubsonicStreamErrors, SubsonicStreamResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, UploadTrackAudioData, UploadTrackAudioErrors, UploadTrackAudioResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibrarySearchIndexData, GetLibrarySearchIndexErrors, GetLibrarySearchIndexResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetTracksPlayStatsData, GetTracksPlayStatsErrors, GetTracksPlayStatsResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserRelationsData, GetUserRelationsErrors, GetUserRelationsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksData, SearchTracksErrors, SearchTracksResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SignInData, SignInErrors, SignInResponses, SubsonicDownloadData, SubsonicDownloadErrors, SubsonicDownloadResponses, SubsonicStreamData, SubsonicStreamErrors, SubsonicStreamResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, UploadTrackAudioData, UploadTrackAudioErrors, UploadTrackAudioResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -443,19 +443,6 @@ export const getRelationsDetails = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Get user relations
- */
-export const getRelations = <ThrowOnError extends boolean = false>(options?: Options<GetRelationsData, ThrowOnError>): RequestResult<GetRelationsResponses, GetRelationsErrors, ThrowOnError> => (options?.client ?? client).get<GetRelationsResponses, GetRelationsErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/relations',
-    ...options
-});
-
-/**
  * Remove a friend
  */
 export const removeFriend = <ThrowOnError extends boolean = false>(options: Options<RemoveFriendData, ThrowOnError>): RequestResult<RemoveFriendResponses, RemoveFriendErrors, ThrowOnError> => (options.client ?? client).post<RemoveFriendResponses, RemoveFriendErrors, ThrowOnError>({
@@ -703,6 +690,19 @@ export const getUserIntegrations = <ThrowOnError extends boolean = false>(option
             type: 'apiKey'
         }],
     url: '/api/user/integrations',
+    ...options
+});
+
+/**
+ * Get user relations
+ */
+export const getUserRelations = <ThrowOnError extends boolean = false>(options?: Options<GetUserRelationsData, ThrowOnError>): RequestResult<GetUserRelationsResponses, GetUserRelationsErrors, ThrowOnError> => (options?.client ?? client).get<GetUserRelationsResponses, GetUserRelationsErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/user/relations',
     ...options
 });
 

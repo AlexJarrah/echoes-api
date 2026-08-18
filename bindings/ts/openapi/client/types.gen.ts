@@ -1852,35 +1852,6 @@ export type GetRelationsDetailsResponses = {
 
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
 
-export type GetRelationsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/relations';
-};
-
-export type GetRelationsErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type GetRelationsError = GetRelationsErrors[keyof GetRelationsErrors];
-
-export type GetRelationsResponses = {
-    /**
-     * User relations
-     */
-    200: Array<Relation>;
-};
-
-export type GetRelationsResponse = GetRelationsResponses[keyof GetRelationsResponses];
-
 export type RemoveFriendData = {
     body: {
         id: string;
@@ -2529,6 +2500,32 @@ export type GetUserIntegrationsResponses = {
 };
 
 export type GetUserIntegrationsResponse = GetUserIntegrationsResponses[keyof GetUserIntegrationsResponses];
+
+export type GetUserRelationsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/relations';
+};
+
+export type GetUserRelationsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserRelationsError = GetUserRelationsErrors[keyof GetUserRelationsErrors];
+
+export type GetUserRelationsResponses = {
+    200: Array<Relation>;
+};
+
+export type GetUserRelationsResponse = GetUserRelationsResponses[keyof GetUserRelationsResponses];
 
 export type UpdateUserData = {
     body: UpdateUserRequest;

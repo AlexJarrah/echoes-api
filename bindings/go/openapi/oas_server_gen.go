@@ -168,12 +168,6 @@ type Handler interface {
 	//
 	// GET /openapi.yaml
 	GetOpenAPI(ctx context.Context) (GetOpenAPIOK, error)
-	// GetRelations implements getRelations operation.
-	//
-	// Get user relations.
-	//
-	// GET /api/relations
-	GetRelations(ctx context.Context) (GetRelationsRes, error)
 	// GetRelationsDetails implements getRelationsDetails operation.
 	//
 	// Get user relations with visible activity details.
@@ -216,6 +210,12 @@ type Handler interface {
 	//
 	// POST /api/statistics/user/listens/days
 	GetUserListensByDays(ctx context.Context, req *DateTimeRange) (GetUserListensByDaysRes, error)
+	// GetUserRelations implements getUserRelations operation.
+	//
+	// Get user relations.
+	//
+	// GET /api/user/relations
+	GetUserRelations(ctx context.Context) (GetUserRelationsRes, error)
 	// GetUserTopArtistPlayStats implements getUserTopArtistPlayStats operation.
 	//
 	// Get user's top artists with each artist's top tracks and albums.

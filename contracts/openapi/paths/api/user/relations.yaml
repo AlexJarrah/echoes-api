@@ -1,14 +1,13 @@
-/api/relations:
+/api/user/relations:
   get:
     summary: Get user relations
-    operationId: getRelations
+    operationId: getUserRelations
     tags:
       - Relations
     security:
       - CookieAuth: []
     responses:
       "200":
-        description: User relations
         content:
           application/json:
             schema:

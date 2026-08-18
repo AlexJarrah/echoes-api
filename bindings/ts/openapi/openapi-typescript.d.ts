@@ -369,23 +369,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/relations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get user relations */
-        get: operations["getRelations"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/remove-friend": {
         parameters: {
             query?: never;
@@ -684,6 +667,23 @@ export interface paths {
         };
         /** Get user integration details */
         get: operations["getUserIntegrations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/relations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user relations */
+        get: operations["getUserRelations"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2496,28 +2496,6 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    getRelations: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description User relations */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Relation"][];
-                };
-            };
-            401: components["responses"]["Unauthorized"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
     removeFriend: {
         parameters: {
             query?: never;
@@ -2988,6 +2966,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["IntegrationMetadata"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserRelations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Relation"][];
                 };
             };
             401: components["responses"]["Unauthorized"];

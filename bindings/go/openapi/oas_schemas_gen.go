@@ -1325,18 +1325,6 @@ type GetRelationsDetailsUnauthorized ErrorResponse
 
 func (*GetRelationsDetailsUnauthorized) getRelationsDetailsRes() {}
 
-type GetRelationsInternalServerError ErrorResponse
-
-func (*GetRelationsInternalServerError) getRelationsRes() {}
-
-type GetRelationsOKApplicationJSON []Relation
-
-func (*GetRelationsOKApplicationJSON) getRelationsRes() {}
-
-type GetRelationsUnauthorized ErrorResponse
-
-func (*GetRelationsUnauthorized) getRelationsRes() {}
-
 type GetTrackBadRequest ErrorResponse
 
 func (*GetTrackBadRequest) getTrackRes() {}
@@ -1412,6 +1400,18 @@ func (*GetUserListensByDaysOKApplicationJSON) getUserListensByDaysRes() {}
 type GetUserListensByDaysUnauthorized ErrorResponse
 
 func (*GetUserListensByDaysUnauthorized) getUserListensByDaysRes() {}
+
+type GetUserRelationsInternalServerError ErrorResponse
+
+func (*GetUserRelationsInternalServerError) getUserRelationsRes() {}
+
+type GetUserRelationsOKApplicationJSON []Relation
+
+func (*GetUserRelationsOKApplicationJSON) getUserRelationsRes() {}
+
+type GetUserRelationsUnauthorized ErrorResponse
+
+func (*GetUserRelationsUnauthorized) getUserRelationsRes() {}
 
 type GetUserTopArtistPlayStatsBadRequest ErrorResponse
 
