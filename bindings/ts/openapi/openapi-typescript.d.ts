@@ -832,9 +832,9 @@ export interface components {
             album_id: string;
             /** Format: uuid */
             track_id: string;
-            /** Format: int8 */
+            /** Format: uint8 */
             disc_number?: number | null;
-            /** Format: int8 */
+            /** Format: uint8 */
             track_number?: number | null;
         };
         Artist: {

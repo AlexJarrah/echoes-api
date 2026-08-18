@@ -1777,11 +1777,11 @@ components:
           format: uuid
         disc_number:
           type: integer
-          format: int8
+          format: uint8
           nullable: true
         track_number:
           type: integer
-          format: int8
+          format: uint8
           nullable: true
     Artist:
       type: object

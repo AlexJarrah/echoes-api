@@ -315,10 +315,10 @@ func (s *AlbumPlayStats) SetPlayDuration(val uint64) {
 
 // Ref: #/components/schemas/AlbumTrack
 type AlbumTrack struct {
-	AlbumID     uuid.UUID  `json:"album_id"`
-	TrackID     uuid.UUID  `json:"track_id"`
-	DiscNumber  OptNilInt8 `json:"disc_number"`
-	TrackNumber OptNilInt8 `json:"track_number"`
+	AlbumID     uuid.UUID   `json:"album_id"`
+	TrackID     uuid.UUID   `json:"track_id"`
+	DiscNumber  OptNilUint8 `json:"disc_number"`
+	TrackNumber OptNilUint8 `json:"track_number"`
 }
 
 // GetAlbumID returns the value of AlbumID.
@@ -332,12 +332,12 @@ func (s *AlbumTrack) GetTrackID() uuid.UUID {
 }
 
 // GetDiscNumber returns the value of DiscNumber.
-func (s *AlbumTrack) GetDiscNumber() OptNilInt8 {
+func (s *AlbumTrack) GetDiscNumber() OptNilUint8 {
 	return s.DiscNumber
 }
 
 // GetTrackNumber returns the value of TrackNumber.
-func (s *AlbumTrack) GetTrackNumber() OptNilInt8 {
+func (s *AlbumTrack) GetTrackNumber() OptNilUint8 {
 	return s.TrackNumber
 }
 
@@ -352,12 +352,12 @@ func (s *AlbumTrack) SetTrackID(val uuid.UUID) {
 }
 
 // SetDiscNumber sets the value of DiscNumber.
-func (s *AlbumTrack) SetDiscNumber(val OptNilInt8) {
+func (s *AlbumTrack) SetDiscNumber(val OptNilUint8) {
 	s.DiscNumber = val
 }
 
 // SetTrackNumber sets the value of TrackNumber.
-func (s *AlbumTrack) SetTrackNumber(val OptNilInt8) {
+func (s *AlbumTrack) SetTrackNumber(val OptNilUint8) {
 	s.TrackNumber = val
 }
 
@@ -1788,12 +1788,12 @@ func (s *LibraryAddAlbum) SetForceAdd(val OptBool) {
 // Merged schema.
 // Ref: #/components/schemas/LibraryAddAlbumTrack
 type LibraryAddAlbumTrack struct {
-	AlbumID          uuid.UUID  `json:"album_id"`
-	TrackID          uuid.UUID  `json:"track_id"`
-	DiscNumber       OptNilInt8 `json:"disc_number"`
-	TrackNumber      OptNilInt8 `json:"track_number"`
-	AlbumReferenceID int64      `json:"album_reference_id"`
-	TrackReferenceID int64      `json:"track_reference_id"`
+	AlbumID          uuid.UUID   `json:"album_id"`
+	TrackID          uuid.UUID   `json:"track_id"`
+	DiscNumber       OptNilUint8 `json:"disc_number"`
+	TrackNumber      OptNilUint8 `json:"track_number"`
+	AlbumReferenceID int64       `json:"album_reference_id"`
+	TrackReferenceID int64       `json:"track_reference_id"`
 }
 
 // GetAlbumID returns the value of AlbumID.
@@ -1807,12 +1807,12 @@ func (s *LibraryAddAlbumTrack) GetTrackID() uuid.UUID {
 }
 
 // GetDiscNumber returns the value of DiscNumber.
-func (s *LibraryAddAlbumTrack) GetDiscNumber() OptNilInt8 {
+func (s *LibraryAddAlbumTrack) GetDiscNumber() OptNilUint8 {
 	return s.DiscNumber
 }
 
 // GetTrackNumber returns the value of TrackNumber.
-func (s *LibraryAddAlbumTrack) GetTrackNumber() OptNilInt8 {
+func (s *LibraryAddAlbumTrack) GetTrackNumber() OptNilUint8 {
 	return s.TrackNumber
 }
 
@@ -1837,12 +1837,12 @@ func (s *LibraryAddAlbumTrack) SetTrackID(val uuid.UUID) {
 }
 
 // SetDiscNumber sets the value of DiscNumber.
-func (s *LibraryAddAlbumTrack) SetDiscNumber(val OptNilInt8) {
+func (s *LibraryAddAlbumTrack) SetDiscNumber(val OptNilUint8) {
 	s.DiscNumber = val
 }
 
 // SetTrackNumber sets the value of TrackNumber.
-func (s *LibraryAddAlbumTrack) SetTrackNumber(val OptNilInt8) {
+func (s *LibraryAddAlbumTrack) SetTrackNumber(val OptNilUint8) {
 	s.TrackNumber = val
 }
 
@@ -3273,74 +3273,6 @@ func (o OptNilDateTime) Or(d time.Time) time.Time {
 	return d
 }
 
-// NewOptNilInt8 returns new OptNilInt8 with value set to v.
-func NewOptNilInt8(v int8) OptNilInt8 {
-	return OptNilInt8{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptNilInt8 is optional nullable int8.
-type OptNilInt8 struct {
-	Value int8
-	Set   bool
-	Null  bool
-}
-
-// IsSet returns true if OptNilInt8 was set.
-func (o OptNilInt8) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptNilInt8) Reset() {
-	var v int8
-	o.Value = v
-	o.Set = false
-	o.Null = false
-}
-
-// SetTo sets value to v.
-func (o *OptNilInt8) SetTo(v int8) {
-	o.Set = true
-	o.Null = false
-	o.Value = v
-}
-
-// IsNull returns true if value is Null.
-func (o OptNilInt8) IsNull() bool { return o.Null }
-
-// SetToNull sets value to null.
-func (o *OptNilInt8) SetToNull() {
-	o.Set = true
-	o.Null = true
-	var v int8
-	o.Value = v
-}
-
-// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
-func (o OptNilInt8) IsEmpty() bool {
-	return !o.Set && !o.Null
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptNilInt8) Get() (v int8, ok bool) {
-	if o.Null {
-		return v, false
-	}
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptNilInt8) Or(d int8) int8 {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
 // NewOptNilString returns new OptNilString with value set to v.
 func NewOptNilString(v string) OptNilString {
 	return OptNilString{
@@ -3607,6 +3539,74 @@ func (o OptNilUint64) Get() (v uint64, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptNilUint64) Or(d uint64) uint64 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptNilUint8 returns new OptNilUint8 with value set to v.
+func NewOptNilUint8(v uint8) OptNilUint8 {
+	return OptNilUint8{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptNilUint8 is optional nullable uint8.
+type OptNilUint8 struct {
+	Value uint8
+	Set   bool
+	Null  bool
+}
+
+// IsSet returns true if OptNilUint8 was set.
+func (o OptNilUint8) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptNilUint8) Reset() {
+	var v uint8
+	o.Value = v
+	o.Set = false
+	o.Null = false
+}
+
+// SetTo sets value to v.
+func (o *OptNilUint8) SetTo(v uint8) {
+	o.Set = true
+	o.Null = false
+	o.Value = v
+}
+
+// IsNull returns true if value is Null.
+func (o OptNilUint8) IsNull() bool { return o.Null }
+
+// SetToNull sets value to null.
+func (o *OptNilUint8) SetToNull() {
+	o.Set = true
+	o.Null = true
+	var v uint8
+	o.Value = v
+}
+
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilUint8) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptNilUint8) Get() (v uint8, ok bool) {
+	if o.Null {
+		return v, false
+	}
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptNilUint8) Or(d uint8) uint8 {
 	if v, ok := o.Get(); ok {
 		return v
 	}
