@@ -3194,11 +3194,13 @@ components:
           type: integer
           format: uint16
           nullable: true
-        lyrics:
+        lyrics_id:
           type: string
+          format: uuid
           nullable: true
-        explicit:
-          type: boolean
+        audio_id:
+          type: string
+          format: uuid
           nullable: true
         musicbrainz_id:
           type: string

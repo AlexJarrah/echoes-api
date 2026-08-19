@@ -13417,15 +13417,15 @@ func (s *SearchTrackResult) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.Lyrics.Set {
-			e.FieldStart("lyrics")
-			s.Lyrics.Encode(e)
+		if s.LyricsID.Set {
+			e.FieldStart("lyrics_id")
+			s.LyricsID.Encode(e)
 		}
 	}
 	{
-		if s.Explicit.Set {
-			e.FieldStart("explicit")
-			s.Explicit.Encode(e)
+		if s.AudioID.Set {
+			e.FieldStart("audio_id")
+			s.AudioID.Encode(e)
 		}
 	}
 	{
@@ -13479,8 +13479,8 @@ var jsonFieldsNameOfSearchTrackResult = [14]string{
 	1:  "user_id",
 	2:  "name",
 	3:  "seconds",
-	4:  "lyrics",
-	5:  "explicit",
+	4:  "lyrics_id",
+	5:  "audio_id",
 	6:  "musicbrainz_id",
 	7:  "spotify_url",
 	8:  "apple_music_url",
@@ -13544,25 +13544,25 @@ func (s *SearchTrackResult) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"seconds\"")
 			}
-		case "lyrics":
+		case "lyrics_id":
 			if err := func() error {
-				s.Lyrics.Reset()
-				if err := s.Lyrics.Decode(d); err != nil {
+				s.LyricsID.Reset()
+				if err := s.LyricsID.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"lyrics\"")
+				return errors.Wrap(err, "decode field \"lyrics_id\"")
 			}
-		case "explicit":
+		case "audio_id":
 			if err := func() error {
-				s.Explicit.Reset()
-				if err := s.Explicit.Decode(d); err != nil {
+				s.AudioID.Reset()
+				if err := s.AudioID.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"explicit\"")
+				return errors.Wrap(err, "decode field \"audio_id\"")
 			}
 		case "musicbrainz_id":
 			if err := func() error {
@@ -17118,15 +17118,15 @@ func (s *Track) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.Lyrics.Set {
-			e.FieldStart("lyrics")
-			s.Lyrics.Encode(e)
+		if s.LyricsID.Set {
+			e.FieldStart("lyrics_id")
+			s.LyricsID.Encode(e)
 		}
 	}
 	{
-		if s.Explicit.Set {
-			e.FieldStart("explicit")
-			s.Explicit.Encode(e)
+		if s.AudioID.Set {
+			e.FieldStart("audio_id")
+			s.AudioID.Encode(e)
 		}
 	}
 	{
@@ -17176,8 +17176,8 @@ var jsonFieldsNameOfTrack = [13]string{
 	1:  "user_id",
 	2:  "name",
 	3:  "seconds",
-	4:  "lyrics",
-	5:  "explicit",
+	4:  "lyrics_id",
+	5:  "audio_id",
 	6:  "musicbrainz_id",
 	7:  "spotify_url",
 	8:  "apple_music_url",
@@ -17240,25 +17240,25 @@ func (s *Track) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"seconds\"")
 			}
-		case "lyrics":
+		case "lyrics_id":
 			if err := func() error {
-				s.Lyrics.Reset()
-				if err := s.Lyrics.Decode(d); err != nil {
+				s.LyricsID.Reset()
+				if err := s.LyricsID.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"lyrics\"")
+				return errors.Wrap(err, "decode field \"lyrics_id\"")
 			}
-		case "explicit":
+		case "audio_id":
 			if err := func() error {
-				s.Explicit.Reset()
-				if err := s.Explicit.Decode(d); err != nil {
+				s.AudioID.Reset()
+				if err := s.AudioID.Decode(d); err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
-				return errors.Wrap(err, "decode field \"explicit\"")
+				return errors.Wrap(err, "decode field \"audio_id\"")
 			}
 		case "musicbrainz_id":
 			if err := func() error {

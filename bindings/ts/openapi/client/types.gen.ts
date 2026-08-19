@@ -779,8 +779,8 @@ export type Track = {
     user_id?: string | null;
     name: string;
     seconds?: number | null;
-    lyrics?: string | null;
-    explicit?: boolean | null;
+    lyrics_id?: string | null;
+    audio_id?: string | null;
     musicbrainz_id?: string | null;
     spotify_url?: string | null;
     apple_music_url?: string | null;

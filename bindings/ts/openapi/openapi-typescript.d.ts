@@ -1611,8 +1611,10 @@ export interface components {
             name: string;
             /** Format: uint16 */
             seconds?: number | null;
-            lyrics?: string | null;
-            explicit?: boolean | null;
+            /** Format: uuid */
+            lyrics_id?: string | null;
+            /** Format: uuid */
+            audio_id?: string | null;
             /** Format: uuid */
             musicbrainz_id?: string | null;
             spotify_url?: string | null;

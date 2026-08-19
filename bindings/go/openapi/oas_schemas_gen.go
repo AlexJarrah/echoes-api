@@ -4701,8 +4701,8 @@ type SearchTrackResult struct {
 	UserID          OptNilUUID     `json:"user_id"`
 	Name            string         `json:"name"`
 	Seconds         OptNilUint16   `json:"seconds"`
-	Lyrics          OptNilString   `json:"lyrics"`
-	Explicit        OptNilBool     `json:"explicit"`
+	LyricsID        OptNilUUID     `json:"lyrics_id"`
+	AudioID         OptNilUUID     `json:"audio_id"`
 	MusicbrainzID   OptNilUUID     `json:"musicbrainz_id"`
 	SpotifyURL      OptNilString   `json:"spotify_url"`
 	AppleMusicURL   OptNilString   `json:"apple_music_url"`
@@ -4734,14 +4734,14 @@ func (s *SearchTrackResult) GetSeconds() OptNilUint16 {
 	return s.Seconds
 }
 
-// GetLyrics returns the value of Lyrics.
-func (s *SearchTrackResult) GetLyrics() OptNilString {
-	return s.Lyrics
+// GetLyricsID returns the value of LyricsID.
+func (s *SearchTrackResult) GetLyricsID() OptNilUUID {
+	return s.LyricsID
 }
 
-// GetExplicit returns the value of Explicit.
-func (s *SearchTrackResult) GetExplicit() OptNilBool {
-	return s.Explicit
+// GetAudioID returns the value of AudioID.
+func (s *SearchTrackResult) GetAudioID() OptNilUUID {
+	return s.AudioID
 }
 
 // GetMusicbrainzID returns the value of MusicbrainzID.
@@ -4804,14 +4804,14 @@ func (s *SearchTrackResult) SetSeconds(val OptNilUint16) {
 	s.Seconds = val
 }
 
-// SetLyrics sets the value of Lyrics.
-func (s *SearchTrackResult) SetLyrics(val OptNilString) {
-	s.Lyrics = val
+// SetLyricsID sets the value of LyricsID.
+func (s *SearchTrackResult) SetLyricsID(val OptNilUUID) {
+	s.LyricsID = val
 }
 
-// SetExplicit sets the value of Explicit.
-func (s *SearchTrackResult) SetExplicit(val OptNilBool) {
-	s.Explicit = val
+// SetAudioID sets the value of AudioID.
+func (s *SearchTrackResult) SetAudioID(val OptNilUUID) {
+	s.AudioID = val
 }
 
 // SetMusicbrainzID sets the value of MusicbrainzID.
@@ -6057,8 +6057,8 @@ type Track struct {
 	UserID          OptNilUUID     `json:"user_id"`
 	Name            string         `json:"name"`
 	Seconds         OptNilUint16   `json:"seconds"`
-	Lyrics          OptNilString   `json:"lyrics"`
-	Explicit        OptNilBool     `json:"explicit"`
+	LyricsID        OptNilUUID     `json:"lyrics_id"`
+	AudioID         OptNilUUID     `json:"audio_id"`
 	MusicbrainzID   OptNilUUID     `json:"musicbrainz_id"`
 	SpotifyURL      OptNilString   `json:"spotify_url"`
 	AppleMusicURL   OptNilString   `json:"apple_music_url"`
@@ -6088,14 +6088,14 @@ func (s *Track) GetSeconds() OptNilUint16 {
 	return s.Seconds
 }
 
-// GetLyrics returns the value of Lyrics.
-func (s *Track) GetLyrics() OptNilString {
-	return s.Lyrics
+// GetLyricsID returns the value of LyricsID.
+func (s *Track) GetLyricsID() OptNilUUID {
+	return s.LyricsID
 }
 
-// GetExplicit returns the value of Explicit.
-func (s *Track) GetExplicit() OptNilBool {
-	return s.Explicit
+// GetAudioID returns the value of AudioID.
+func (s *Track) GetAudioID() OptNilUUID {
+	return s.AudioID
 }
 
 // GetMusicbrainzID returns the value of MusicbrainzID.
@@ -6153,14 +6153,14 @@ func (s *Track) SetSeconds(val OptNilUint16) {
 	s.Seconds = val
 }
 
-// SetLyrics sets the value of Lyrics.
-func (s *Track) SetLyrics(val OptNilString) {
-	s.Lyrics = val
+// SetLyricsID sets the value of LyricsID.
+func (s *Track) SetLyricsID(val OptNilUUID) {
+	s.LyricsID = val
 }
 
-// SetExplicit sets the value of Explicit.
-func (s *Track) SetExplicit(val OptNilBool) {
-	s.Explicit = val
+// SetAudioID sets the value of AudioID.
+func (s *Track) SetAudioID(val OptNilUUID) {
+	s.AudioID = val
 }
 
 // SetMusicbrainzID sets the value of MusicbrainzID.
