@@ -224,6 +224,27 @@ export type GetLibraryAlbumsRequest = {
     descending?: boolean;
 };
 
+export type GetLibraryArtistsRequest = {
+    existing?: {
+        ids: Array<string>;
+        /**
+         * Timestamp of the fetch returning IDs
+         */
+        timestamp: string;
+    };
+    search?: string;
+    limit?: number;
+    offset?: number;
+    /**
+     * 0=PlayTime
+     * 1=Name
+     * 4=DateAdded
+     *
+     */
+    order?: 0 | 1 | 2 | 3 | 4;
+    descending?: boolean;
+};
+
 export type GetLibraryTracksRequest = {
     existing?: {
         ids: Array<string>;
@@ -1743,6 +1764,36 @@ export type GetLibraryAlbumsResponses = {
 };
 
 export type GetLibraryAlbumsResponse = GetLibraryAlbumsResponses[keyof GetLibraryAlbumsResponses];
+
+export type GetLibraryArtistsData = {
+    body: GetLibraryArtistsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/artists';
+};
+
+export type GetLibraryArtistsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLibraryArtistsError = GetLibraryArtistsErrors[keyof GetLibraryArtistsErrors];
+
+export type GetLibraryArtistsResponses = {
+    200: Array<Artist>;
+};
+
+export type GetLibraryArtistsResponse = GetLibraryArtistsResponses[keyof GetLibraryArtistsResponses];
 
 export type RemoveFromLibraryData = {
     body: LibraryRemoveRequest;

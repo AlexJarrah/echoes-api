@@ -777,6 +777,35 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/library/artists:
+    get:
+      summary: Get library artists
+      operationId: getLibraryArtists
+      tags:
+        - Library
+        - Artists
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLibraryArtistsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artist'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/library/remove:
     post:
       summary: Remove items from library
@@ -2186,6 +2215,47 @@ components:
             1=Duration
             2=ReleaseDate
             3=DateAdded
+        descending:
+          type: boolean
+    GetLibraryArtistsRequest:
+      type: object
+      properties:
+        existing:
+          type: object
+          required:
+            - ids
+            - timestamp
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            timestamp:
+              type: string
+              format: date-time
+              description: Timestamp of the fetch returning IDs
+        search:
+          type: string
+        limit:
+          type: integer
+          format: uint
+        offset:
+          type: integer
+          format: uint
+        order:
+          type: integer
+          format: uint8
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          description: |
+            0=PlayTime
+            1=Name
+            4=DateAdded
         descending:
           type: boolean
     GetLibraryTracksRequest:

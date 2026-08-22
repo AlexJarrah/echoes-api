@@ -144,6 +144,12 @@ type Handler interface {
 	//
 	// GET /api/library/albums
 	GetLibraryAlbums(ctx context.Context, req *GetLibraryAlbumsRequest) (GetLibraryAlbumsRes, error)
+	// GetLibraryArtists implements getLibraryArtists operation.
+	//
+	// Get library artists.
+	//
+	// GET /api/library/artists
+	GetLibraryArtists(ctx context.Context, req *GetLibraryArtistsRequest) (GetLibraryArtistsRes, error)
 	// GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 	//
 	// Returns the user's library search engine index.

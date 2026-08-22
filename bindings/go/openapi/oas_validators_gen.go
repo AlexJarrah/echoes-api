@@ -442,6 +442,102 @@ func (s GetLibraryAlbumsRequestOrder) Validate() error {
 	}
 }
 
+func (s GetLibraryArtistsOKApplicationJSON) Validate() error {
+	alias := ([]Artist)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
+func (s *GetLibraryArtistsRequest) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if value, ok := s.Existing.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "existing",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if value, ok := s.Order.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "order",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *GetLibraryArtistsRequestExisting) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if s.Ids == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "ids",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s GetLibraryArtistsRequestOrder) Validate() error {
+	switch s {
+	case 0:
+		return nil
+	case 1:
+		return nil
+	case 2:
+		return nil
+	case 3:
+		return nil
+	case 4:
+		return nil
+	default:
+		return errors.Errorf("invalid value: %v", s)
+	}
+}
+
 func (s GetLibraryTracksOKApplicationJSON) Validate() error {
 	alias := ([]Track)(s)
 	if alias == nil {

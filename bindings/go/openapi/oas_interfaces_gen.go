@@ -85,6 +85,10 @@ type GetLibraryAlbumsRes interface {
 	getLibraryAlbumsRes()
 }
 
+type GetLibraryArtistsRes interface {
+	getLibraryArtistsRes()
+}
+
 type GetLibrarySearchIndexRes interface {
 	getLibrarySearchIndexRes()
 }

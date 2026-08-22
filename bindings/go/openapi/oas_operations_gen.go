@@ -28,6 +28,7 @@ const (
 	GetGroupRolesOperation             OperationName = "GetGroupRoles"
 	GetGroupsOperation                 OperationName = "GetGroups"
 	GetLibraryAlbumsOperation          OperationName = "GetLibraryAlbums"
+	GetLibraryArtistsOperation         OperationName = "GetLibraryArtists"
 	GetLibrarySearchIndexOperation     OperationName = "GetLibrarySearchIndex"
 	GetLibraryTracksOperation          OperationName = "GetLibraryTracks"
 	GetListenSessionsOperation         OperationName = "GetListenSessions"

@@ -1,0 +1,29 @@
+/api/library/artists:
+  get:
+    summary: Get library artists
+    operationId: getLibraryArtists
+    tags:
+      - Library
+      - Artists
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetLibraryArtistsRequest"
+    responses:
+      "200":
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Artist"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

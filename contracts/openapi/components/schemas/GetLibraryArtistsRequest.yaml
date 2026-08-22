@@ -1,0 +1,36 @@
+GetLibraryArtistsRequest:
+  type: object
+  properties:
+    existing:
+      type: object
+      required:
+        - ids
+        - timestamp
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the fetch returning IDs
+    search:
+      type: string
+    limit:
+      type: integer
+      format: uint
+    offset:
+      type: integer
+      format: uint
+    order:
+      type: integer
+      format: uint8
+      enum: [0, 1, 2, 3, 4]
+      description: |
+        0=PlayTime
+        1=Name
+        4=DateAdded
+    descending:
+      type: boolean

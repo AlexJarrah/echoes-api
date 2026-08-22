@@ -215,6 +215,15 @@ func (UnimplementedHandler) GetLibraryAlbums(ctx context.Context, req *GetLibrar
 	return r, ht.ErrNotImplemented
 }
 
+// GetLibraryArtists implements getLibraryArtists operation.
+//
+// Get library artists.
+//
+// GET /api/library/artists
+func (UnimplementedHandler) GetLibraryArtists(ctx context.Context, req *GetLibraryArtistsRequest) (r GetLibraryArtistsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 //
 // Returns the user's library search engine index.

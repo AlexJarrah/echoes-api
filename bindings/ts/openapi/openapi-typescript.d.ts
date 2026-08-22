@@ -284,6 +284,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/library/artists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get library artists */
+        get: operations["getLibraryArtists"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/library/remove": {
         parameters: {
             query?: never;
@@ -1067,6 +1084,30 @@ export interface components {
              * @enum {integer}
              */
             order?: 0 | 1 | 2 | 3;
+            descending?: boolean;
+        };
+        GetLibraryArtistsRequest: {
+            existing?: {
+                ids: string[];
+                /**
+                 * Format: date-time
+                 * @description Timestamp of the fetch returning IDs
+                 */
+                timestamp: string;
+            };
+            search?: string;
+            /** Format: uint */
+            limit?: number;
+            /** Format: uint */
+            offset?: number;
+            /**
+             * Format: uint8
+             * @description 0=PlayTime
+             *     1=Name
+             *     4=DateAdded
+             * @enum {integer}
+             */
+            order?: 0 | 1 | 2 | 3 | 4;
             descending?: boolean;
         };
         GetLibraryTracksRequest: {
@@ -2456,6 +2497,32 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Album"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getLibraryArtists: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GetLibraryArtistsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Artist"][];
                 };
             };
             400: components["responses"]["BadRequest"];
