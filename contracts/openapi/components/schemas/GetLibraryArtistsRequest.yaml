@@ -25,10 +25,10 @@ GetLibraryArtistsRequest:
     order:
       type: integer
       format: uint8
-      enum: [0, 1, 2, 3, 4]
+      enum: [0, 1, 2]
       description: |
         0=PlayTime
         1=Name
-        4=DateAdded
+        2=DateAdded
     descending:
       type: boolean
