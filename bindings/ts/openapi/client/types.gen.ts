@@ -203,14 +203,13 @@ export type FriendActionRequest = {
 };
 
 export type GetLibraryAlbumsRequest = {
+    /**
+     * ids will not be returned except for those updated since timestamp.
+     */
     existing?: {
         ids: Array<string>;
-        /**
-         * Timestamp of the fetch returning IDs
-         */
         timestamp: string;
     };
-    search?: string;
     limit?: number;
     offset?: number;
     /**
@@ -225,14 +224,13 @@ export type GetLibraryAlbumsRequest = {
 };
 
 export type GetLibraryArtistsRequest = {
+    /**
+     * ids will not be returned except for those updated since timestamp.
+     */
     existing?: {
         ids: Array<string>;
-        /**
-         * Timestamp of the fetch returning IDs
-         */
         timestamp: string;
     };
-    search?: string;
     limit?: number;
     offset?: number;
     /**
@@ -246,14 +244,13 @@ export type GetLibraryArtistsRequest = {
 };
 
 export type GetLibraryTracksRequest = {
+    /**
+     * ids will not be returned except for those updated since timestamp.
+     */
     existing?: {
         ids: Array<string>;
-        /**
-         * Timestamp of the fetch returning IDs
-         */
         timestamp: string;
     };
-    search?: string;
     limit?: number;
     offset?: number;
     /**

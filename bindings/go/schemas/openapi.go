@@ -2193,9 +2193,7 @@ components:
             timestamp:
               type: string
               format: date-time
-              description: Timestamp of the fetch returning IDs
-        search:
-          type: string
+          description: ids will not be returned except for those updated since timestamp.
         limit:
           type: integer
           format: uint
@@ -2234,9 +2232,7 @@ components:
             timestamp:
               type: string
               format: date-time
-              description: Timestamp of the fetch returning IDs
-        search:
-          type: string
+          description: ids will not be returned except for those updated since timestamp.
         limit:
           type: integer
           format: uint
@@ -2275,9 +2271,7 @@ components:
             timestamp:
               type: string
               format: date-time
-              description: Timestamp of the fetch returning IDs
-        search:
-          type: string
+          description: ids will not be returned except for those updated since timestamp.
         limit:
           type: integer
           format: uint

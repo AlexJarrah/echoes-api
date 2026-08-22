@@ -5301,12 +5301,6 @@ func (s *GetLibraryAlbumsRequest) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.Search.Set {
-			e.FieldStart("search")
-			s.Search.Encode(e)
-		}
-	}
-	{
 		if s.Limit.Set {
 			e.FieldStart("limit")
 			s.Limit.Encode(e)
@@ -5332,13 +5326,12 @@ func (s *GetLibraryAlbumsRequest) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfGetLibraryAlbumsRequest = [6]string{
+var jsonFieldsNameOfGetLibraryAlbumsRequest = [5]string{
 	0: "existing",
-	1: "search",
-	2: "limit",
-	3: "offset",
-	4: "order",
-	5: "descending",
+	1: "limit",
+	2: "offset",
+	3: "order",
+	4: "descending",
 }
 
 // Decode decodes GetLibraryAlbumsRequest from json.
@@ -5358,16 +5351,6 @@ func (s *GetLibraryAlbumsRequest) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"existing\"")
-			}
-		case "search":
-			if err := func() error {
-				s.Search.Reset()
-				if err := s.Search.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"search\"")
 			}
 		case "limit":
 			if err := func() error {
@@ -5770,12 +5753,6 @@ func (s *GetLibraryArtistsRequest) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.Search.Set {
-			e.FieldStart("search")
-			s.Search.Encode(e)
-		}
-	}
-	{
 		if s.Limit.Set {
 			e.FieldStart("limit")
 			s.Limit.Encode(e)
@@ -5801,13 +5778,12 @@ func (s *GetLibraryArtistsRequest) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfGetLibraryArtistsRequest = [6]string{
+var jsonFieldsNameOfGetLibraryArtistsRequest = [5]string{
 	0: "existing",
-	1: "search",
-	2: "limit",
-	3: "offset",
-	4: "order",
-	5: "descending",
+	1: "limit",
+	2: "offset",
+	3: "order",
+	4: "descending",
 }
 
 // Decode decodes GetLibraryArtistsRequest from json.
@@ -5827,16 +5803,6 @@ func (s *GetLibraryArtistsRequest) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"existing\"")
-			}
-		case "search":
-			if err := func() error {
-				s.Search.Reset()
-				if err := s.Search.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"search\"")
 			}
 		case "limit":
 			if err := func() error {
@@ -6239,12 +6205,6 @@ func (s *GetLibraryTracksRequest) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
-		if s.Search.Set {
-			e.FieldStart("search")
-			s.Search.Encode(e)
-		}
-	}
-	{
 		if s.Limit.Set {
 			e.FieldStart("limit")
 			s.Limit.Encode(e)
@@ -6270,13 +6230,12 @@ func (s *GetLibraryTracksRequest) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfGetLibraryTracksRequest = [6]string{
+var jsonFieldsNameOfGetLibraryTracksRequest = [5]string{
 	0: "existing",
-	1: "search",
-	2: "limit",
-	3: "offset",
-	4: "order",
-	5: "descending",
+	1: "limit",
+	2: "offset",
+	3: "order",
+	4: "descending",
 }
 
 // Decode decodes GetLibraryTracksRequest from json.
@@ -6296,16 +6255,6 @@ func (s *GetLibraryTracksRequest) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"existing\"")
-			}
-		case "search":
-			if err := func() error {
-				s.Search.Reset()
-				if err := s.Search.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"search\"")
 			}
 		case "limit":
 			if err := func() error {

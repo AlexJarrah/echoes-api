@@ -1273,8 +1273,8 @@ func (*GetLibraryAlbumsOKApplicationJSON) getLibraryAlbumsRes() {}
 
 // Ref: #/components/schemas/GetLibraryAlbumsRequest
 type GetLibraryAlbumsRequest struct {
+	// Ids will not be returned except for those updated since timestamp.
 	Existing OptGetLibraryAlbumsRequestExisting `json:"existing"`
-	Search   OptString                          `json:"search"`
 	Limit    OptUint                            `json:"limit"`
 	Offset   OptUint                            `json:"offset"`
 	// 0=Name 1=Duration 2=ReleaseDate 3=DateAdded.
@@ -1285,11 +1285,6 @@ type GetLibraryAlbumsRequest struct {
 // GetExisting returns the value of Existing.
 func (s *GetLibraryAlbumsRequest) GetExisting() OptGetLibraryAlbumsRequestExisting {
 	return s.Existing
-}
-
-// GetSearch returns the value of Search.
-func (s *GetLibraryAlbumsRequest) GetSearch() OptString {
-	return s.Search
 }
 
 // GetLimit returns the value of Limit.
@@ -1317,11 +1312,6 @@ func (s *GetLibraryAlbumsRequest) SetExisting(val OptGetLibraryAlbumsRequestExis
 	s.Existing = val
 }
 
-// SetSearch sets the value of Search.
-func (s *GetLibraryAlbumsRequest) SetSearch(val OptString) {
-	s.Search = val
-}
-
 // SetLimit sets the value of Limit.
 func (s *GetLibraryAlbumsRequest) SetLimit(val OptUint) {
 	s.Limit = val
@@ -1342,10 +1332,10 @@ func (s *GetLibraryAlbumsRequest) SetDescending(val OptBool) {
 	s.Descending = val
 }
 
+// Ids will not be returned except for those updated since timestamp.
 type GetLibraryAlbumsRequestExisting struct {
-	Ids []uuid.UUID `json:"ids"`
-	// Timestamp of the fetch returning IDs.
-	Timestamp time.Time `json:"timestamp"`
+	Ids       []uuid.UUID `json:"ids"`
+	Timestamp time.Time   `json:"timestamp"`
 }
 
 // GetIds returns the value of Ids.
@@ -1406,8 +1396,8 @@ func (*GetLibraryArtistsOKApplicationJSON) getLibraryArtistsRes() {}
 
 // Ref: #/components/schemas/GetLibraryArtistsRequest
 type GetLibraryArtistsRequest struct {
+	// Ids will not be returned except for those updated since timestamp.
 	Existing OptGetLibraryArtistsRequestExisting `json:"existing"`
-	Search   OptString                           `json:"search"`
 	Limit    OptUint                             `json:"limit"`
 	Offset   OptUint                             `json:"offset"`
 	// 0=PlayTime 1=Name 4=DateAdded.
@@ -1418,11 +1408,6 @@ type GetLibraryArtistsRequest struct {
 // GetExisting returns the value of Existing.
 func (s *GetLibraryArtistsRequest) GetExisting() OptGetLibraryArtistsRequestExisting {
 	return s.Existing
-}
-
-// GetSearch returns the value of Search.
-func (s *GetLibraryArtistsRequest) GetSearch() OptString {
-	return s.Search
 }
 
 // GetLimit returns the value of Limit.
@@ -1450,11 +1435,6 @@ func (s *GetLibraryArtistsRequest) SetExisting(val OptGetLibraryArtistsRequestEx
 	s.Existing = val
 }
 
-// SetSearch sets the value of Search.
-func (s *GetLibraryArtistsRequest) SetSearch(val OptString) {
-	s.Search = val
-}
-
 // SetLimit sets the value of Limit.
 func (s *GetLibraryArtistsRequest) SetLimit(val OptUint) {
 	s.Limit = val
@@ -1475,10 +1455,10 @@ func (s *GetLibraryArtistsRequest) SetDescending(val OptBool) {
 	s.Descending = val
 }
 
+// Ids will not be returned except for those updated since timestamp.
 type GetLibraryArtistsRequestExisting struct {
-	Ids []uuid.UUID `json:"ids"`
-	// Timestamp of the fetch returning IDs.
-	Timestamp time.Time `json:"timestamp"`
+	Ids       []uuid.UUID `json:"ids"`
+	Timestamp time.Time   `json:"timestamp"`
 }
 
 // GetIds returns the value of Ids.
@@ -1541,8 +1521,8 @@ func (*GetLibraryTracksOKApplicationJSON) getLibraryTracksRes() {}
 
 // Ref: #/components/schemas/GetLibraryTracksRequest
 type GetLibraryTracksRequest struct {
+	// Ids will not be returned except for those updated since timestamp.
 	Existing OptGetLibraryTracksRequestExisting `json:"existing"`
-	Search   OptString                          `json:"search"`
 	Limit    OptUint                            `json:"limit"`
 	Offset   OptUint                            `json:"offset"`
 	// 0=PlayTime 1=Name 2=ReleaseDate 3=Duration 4=DateAdded.
@@ -1553,11 +1533,6 @@ type GetLibraryTracksRequest struct {
 // GetExisting returns the value of Existing.
 func (s *GetLibraryTracksRequest) GetExisting() OptGetLibraryTracksRequestExisting {
 	return s.Existing
-}
-
-// GetSearch returns the value of Search.
-func (s *GetLibraryTracksRequest) GetSearch() OptString {
-	return s.Search
 }
 
 // GetLimit returns the value of Limit.
@@ -1585,11 +1560,6 @@ func (s *GetLibraryTracksRequest) SetExisting(val OptGetLibraryTracksRequestExis
 	s.Existing = val
 }
 
-// SetSearch sets the value of Search.
-func (s *GetLibraryTracksRequest) SetSearch(val OptString) {
-	s.Search = val
-}
-
 // SetLimit sets the value of Limit.
 func (s *GetLibraryTracksRequest) SetLimit(val OptUint) {
 	s.Limit = val
@@ -1610,10 +1580,10 @@ func (s *GetLibraryTracksRequest) SetDescending(val OptBool) {
 	s.Descending = val
 }
 
+// Ids will not be returned except for those updated since timestamp.
 type GetLibraryTracksRequestExisting struct {
-	Ids []uuid.UUID `json:"ids"`
-	// Timestamp of the fetch returning IDs.
-	Timestamp time.Time `json:"timestamp"`
+	Ids       []uuid.UUID `json:"ids"`
+	Timestamp time.Time   `json:"timestamp"`
 }
 
 // GetIds returns the value of Ids.

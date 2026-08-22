@@ -1062,15 +1062,12 @@ export interface components {
             handle?: string | null;
         };
         GetLibraryAlbumsRequest: {
+            /** @description ids will not be returned except for those updated since timestamp. */
             existing?: {
                 ids: string[];
-                /**
-                 * Format: date-time
-                 * @description Timestamp of the fetch returning IDs
-                 */
+                /** Format: date-time */
                 timestamp: string;
             };
-            search?: string;
             /** Format: uint */
             limit?: number;
             /** Format: uint */
@@ -1087,15 +1084,12 @@ export interface components {
             descending?: boolean;
         };
         GetLibraryArtistsRequest: {
+            /** @description ids will not be returned except for those updated since timestamp. */
             existing?: {
                 ids: string[];
-                /**
-                 * Format: date-time
-                 * @description Timestamp of the fetch returning IDs
-                 */
+                /** Format: date-time */
                 timestamp: string;
             };
-            search?: string;
             /** Format: uint */
             limit?: number;
             /** Format: uint */
@@ -1111,15 +1105,12 @@ export interface components {
             descending?: boolean;
         };
         GetLibraryTracksRequest: {
+            /** @description ids will not be returned except for those updated since timestamp. */
             existing?: {
                 ids: string[];
-                /**
-                 * Format: date-time
-                 * @description Timestamp of the fetch returning IDs
-                 */
+                /** Format: date-time */
                 timestamp: string;
             };
-            search?: string;
             /** Format: uint */
             limit?: number;
             /** Format: uint */
