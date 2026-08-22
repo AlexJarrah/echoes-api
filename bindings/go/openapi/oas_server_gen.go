@@ -138,6 +138,12 @@ type Handler interface {
 	//
 	// GET /api/groups
 	GetGroups(ctx context.Context) (GetGroupsRes, error)
+	// GetLibraryAlbums implements getLibraryAlbums operation.
+	//
+	// Get library albums.
+	//
+	// GET /api/library/albums
+	GetLibraryAlbums(ctx context.Context, req *GetLibraryAlbumsRequest) (GetLibraryAlbumsRes, error)
 	// GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 	//
 	// Returns the user's library search engine index.
@@ -149,7 +155,7 @@ type Handler interface {
 	// Get library tracks.
 	//
 	// GET /api/library/tracks
-	GetLibraryTracks(ctx context.Context, req *LibraryGetRequest) (GetLibraryTracksRes, error)
+	GetLibraryTracks(ctx context.Context, req *GetLibraryTracksRequest) (GetLibraryTracksRes, error)
 	// GetListenSessions implements getListenSessions operation.
 	//
 	// Get recent listening sessions.

@@ -1,4 +1,4 @@
-LibraryGetRequest:
+GetLibraryAlbumsRequest:
   type: object
   properties:
     existing:
@@ -25,8 +25,13 @@ LibraryGetRequest:
       type: integer
       format: uint
     order:
-      $ref: "#/components/schemas/LibraryGetTracksOrder"
       type: integer
       format: uint8
+      enum: [0, 1, 2, 3]
+      description: |
+        0=Name
+        1=Duration
+        2=ReleaseDate
+        3=DateAdded
     descending:
       type: boolean

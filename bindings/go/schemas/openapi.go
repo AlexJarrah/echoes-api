@@ -748,6 +748,35 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/library/albums:
+    get:
+      summary: Get library albums
+      operationId: getLibraryAlbums
+      tags:
+        - Library
+        - Albums
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLibraryAlbumsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Album'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/library/remove:
     post:
       summary: Remove items from library
@@ -801,7 +830,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LibraryGetRequest'
+              $ref: '#/components/schemas/GetLibraryTracksRequest'
       responses:
         '200':
           content:
@@ -2118,6 +2147,90 @@ components:
           type: string
           nullable: true
           description: Target user's handle. Optional if 'id' is provided.
+    GetLibraryAlbumsRequest:
+      type: object
+      properties:
+        existing:
+          type: object
+          required:
+            - ids
+            - timestamp
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            timestamp:
+              type: string
+              format: date-time
+              description: Timestamp of the fetch returning IDs
+        search:
+          type: string
+        limit:
+          type: integer
+          format: uint
+        offset:
+          type: integer
+          format: uint
+        order:
+          type: integer
+          format: uint8
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          description: |
+            0=Name
+            1=Duration
+            2=ReleaseDate
+            3=DateAdded
+        descending:
+          type: boolean
+    GetLibraryTracksRequest:
+      type: object
+      properties:
+        existing:
+          type: object
+          required:
+            - ids
+            - timestamp
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            timestamp:
+              type: string
+              format: date-time
+              description: Timestamp of the fetch returning IDs
+        search:
+          type: string
+        limit:
+          type: integer
+          format: uint
+        offset:
+          type: integer
+          format: uint
+        order:
+          type: integer
+          format: uint8
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          description: |
+            0=PlayTime
+            1=Name
+            2=ReleaseDate
+            3=Duration
+            4=DateAdded
+        descending:
+          type: boolean
     Group:
       type: object
       required:
@@ -2444,53 +2557,6 @@ components:
           type: boolean
           default: false
           description: If true, skip deduplication and always create a new entity.
-    LibraryGetRequest:
-      type: object
-      properties:
-        existing:
-          type: object
-          required:
-            - ids
-            - timestamp
-          properties:
-            ids:
-              type: array
-              items:
-                type: string
-                format: uuid
-            timestamp:
-              type: string
-              format: date-time
-              description: Timestamp of the fetch returning IDs
-        search:
-          type: string
-        limit:
-          type: integer
-          format: uint
-        offset:
-          type: integer
-          format: uint
-        order:
-          $ref: '#/components/schemas/LibraryGetTracksOrder'
-          type: integer
-          format: uint8
-        descending:
-          type: boolean
-    LibraryGetTracksOrder:
-      type: integer
-      format: uint8
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-      description: |
-        0=TrackRank
-        1=TrackName
-        2=ReleaseDate
-        3=Duration
-        4=DateAdded
     LibraryRemoveRequest:
       type: object
       properties:

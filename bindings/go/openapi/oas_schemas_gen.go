@@ -1259,6 +1259,139 @@ type GetGroupsUnauthorized ErrorResponse
 
 func (*GetGroupsUnauthorized) getGroupsRes() {}
 
+type GetLibraryAlbumsBadRequest ErrorResponse
+
+func (*GetLibraryAlbumsBadRequest) getLibraryAlbumsRes() {}
+
+type GetLibraryAlbumsInternalServerError ErrorResponse
+
+func (*GetLibraryAlbumsInternalServerError) getLibraryAlbumsRes() {}
+
+type GetLibraryAlbumsOKApplicationJSON []Album
+
+func (*GetLibraryAlbumsOKApplicationJSON) getLibraryAlbumsRes() {}
+
+// Ref: #/components/schemas/GetLibraryAlbumsRequest
+type GetLibraryAlbumsRequest struct {
+	Existing OptGetLibraryAlbumsRequestExisting `json:"existing"`
+	Search   OptString                          `json:"search"`
+	Limit    OptUint                            `json:"limit"`
+	Offset   OptUint                            `json:"offset"`
+	// 0=Name 1=Duration 2=ReleaseDate 3=DateAdded.
+	Order      OptGetLibraryAlbumsRequestOrder `json:"order"`
+	Descending OptBool                         `json:"descending"`
+}
+
+// GetExisting returns the value of Existing.
+func (s *GetLibraryAlbumsRequest) GetExisting() OptGetLibraryAlbumsRequestExisting {
+	return s.Existing
+}
+
+// GetSearch returns the value of Search.
+func (s *GetLibraryAlbumsRequest) GetSearch() OptString {
+	return s.Search
+}
+
+// GetLimit returns the value of Limit.
+func (s *GetLibraryAlbumsRequest) GetLimit() OptUint {
+	return s.Limit
+}
+
+// GetOffset returns the value of Offset.
+func (s *GetLibraryAlbumsRequest) GetOffset() OptUint {
+	return s.Offset
+}
+
+// GetOrder returns the value of Order.
+func (s *GetLibraryAlbumsRequest) GetOrder() OptGetLibraryAlbumsRequestOrder {
+	return s.Order
+}
+
+// GetDescending returns the value of Descending.
+func (s *GetLibraryAlbumsRequest) GetDescending() OptBool {
+	return s.Descending
+}
+
+// SetExisting sets the value of Existing.
+func (s *GetLibraryAlbumsRequest) SetExisting(val OptGetLibraryAlbumsRequestExisting) {
+	s.Existing = val
+}
+
+// SetSearch sets the value of Search.
+func (s *GetLibraryAlbumsRequest) SetSearch(val OptString) {
+	s.Search = val
+}
+
+// SetLimit sets the value of Limit.
+func (s *GetLibraryAlbumsRequest) SetLimit(val OptUint) {
+	s.Limit = val
+}
+
+// SetOffset sets the value of Offset.
+func (s *GetLibraryAlbumsRequest) SetOffset(val OptUint) {
+	s.Offset = val
+}
+
+// SetOrder sets the value of Order.
+func (s *GetLibraryAlbumsRequest) SetOrder(val OptGetLibraryAlbumsRequestOrder) {
+	s.Order = val
+}
+
+// SetDescending sets the value of Descending.
+func (s *GetLibraryAlbumsRequest) SetDescending(val OptBool) {
+	s.Descending = val
+}
+
+type GetLibraryAlbumsRequestExisting struct {
+	Ids []uuid.UUID `json:"ids"`
+	// Timestamp of the fetch returning IDs.
+	Timestamp time.Time `json:"timestamp"`
+}
+
+// GetIds returns the value of Ids.
+func (s *GetLibraryAlbumsRequestExisting) GetIds() []uuid.UUID {
+	return s.Ids
+}
+
+// GetTimestamp returns the value of Timestamp.
+func (s *GetLibraryAlbumsRequestExisting) GetTimestamp() time.Time {
+	return s.Timestamp
+}
+
+// SetIds sets the value of Ids.
+func (s *GetLibraryAlbumsRequestExisting) SetIds(val []uuid.UUID) {
+	s.Ids = val
+}
+
+// SetTimestamp sets the value of Timestamp.
+func (s *GetLibraryAlbumsRequestExisting) SetTimestamp(val time.Time) {
+	s.Timestamp = val
+}
+
+// 0=Name 1=Duration 2=ReleaseDate 3=DateAdded.
+type GetLibraryAlbumsRequestOrder uint8
+
+const (
+	GetLibraryAlbumsRequestOrder0 GetLibraryAlbumsRequestOrder = 0
+	GetLibraryAlbumsRequestOrder1 GetLibraryAlbumsRequestOrder = 1
+	GetLibraryAlbumsRequestOrder2 GetLibraryAlbumsRequestOrder = 2
+	GetLibraryAlbumsRequestOrder3 GetLibraryAlbumsRequestOrder = 3
+)
+
+// AllValues returns all GetLibraryAlbumsRequestOrder values.
+func (GetLibraryAlbumsRequestOrder) AllValues() []GetLibraryAlbumsRequestOrder {
+	return []GetLibraryAlbumsRequestOrder{
+		GetLibraryAlbumsRequestOrder0,
+		GetLibraryAlbumsRequestOrder1,
+		GetLibraryAlbumsRequestOrder2,
+		GetLibraryAlbumsRequestOrder3,
+	}
+}
+
+type GetLibraryAlbumsUnauthorized ErrorResponse
+
+func (*GetLibraryAlbumsUnauthorized) getLibraryAlbumsRes() {}
+
 type GetLibraryTracksBadRequest ErrorResponse
 
 func (*GetLibraryTracksBadRequest) getLibraryTracksRes() {}
@@ -1270,6 +1403,125 @@ func (*GetLibraryTracksInternalServerError) getLibraryTracksRes() {}
 type GetLibraryTracksOKApplicationJSON []Track
 
 func (*GetLibraryTracksOKApplicationJSON) getLibraryTracksRes() {}
+
+// Ref: #/components/schemas/GetLibraryTracksRequest
+type GetLibraryTracksRequest struct {
+	Existing OptGetLibraryTracksRequestExisting `json:"existing"`
+	Search   OptString                          `json:"search"`
+	Limit    OptUint                            `json:"limit"`
+	Offset   OptUint                            `json:"offset"`
+	// 0=PlayTime 1=Name 2=ReleaseDate 3=Duration 4=DateAdded.
+	Order      OptGetLibraryTracksRequestOrder `json:"order"`
+	Descending OptBool                         `json:"descending"`
+}
+
+// GetExisting returns the value of Existing.
+func (s *GetLibraryTracksRequest) GetExisting() OptGetLibraryTracksRequestExisting {
+	return s.Existing
+}
+
+// GetSearch returns the value of Search.
+func (s *GetLibraryTracksRequest) GetSearch() OptString {
+	return s.Search
+}
+
+// GetLimit returns the value of Limit.
+func (s *GetLibraryTracksRequest) GetLimit() OptUint {
+	return s.Limit
+}
+
+// GetOffset returns the value of Offset.
+func (s *GetLibraryTracksRequest) GetOffset() OptUint {
+	return s.Offset
+}
+
+// GetOrder returns the value of Order.
+func (s *GetLibraryTracksRequest) GetOrder() OptGetLibraryTracksRequestOrder {
+	return s.Order
+}
+
+// GetDescending returns the value of Descending.
+func (s *GetLibraryTracksRequest) GetDescending() OptBool {
+	return s.Descending
+}
+
+// SetExisting sets the value of Existing.
+func (s *GetLibraryTracksRequest) SetExisting(val OptGetLibraryTracksRequestExisting) {
+	s.Existing = val
+}
+
+// SetSearch sets the value of Search.
+func (s *GetLibraryTracksRequest) SetSearch(val OptString) {
+	s.Search = val
+}
+
+// SetLimit sets the value of Limit.
+func (s *GetLibraryTracksRequest) SetLimit(val OptUint) {
+	s.Limit = val
+}
+
+// SetOffset sets the value of Offset.
+func (s *GetLibraryTracksRequest) SetOffset(val OptUint) {
+	s.Offset = val
+}
+
+// SetOrder sets the value of Order.
+func (s *GetLibraryTracksRequest) SetOrder(val OptGetLibraryTracksRequestOrder) {
+	s.Order = val
+}
+
+// SetDescending sets the value of Descending.
+func (s *GetLibraryTracksRequest) SetDescending(val OptBool) {
+	s.Descending = val
+}
+
+type GetLibraryTracksRequestExisting struct {
+	Ids []uuid.UUID `json:"ids"`
+	// Timestamp of the fetch returning IDs.
+	Timestamp time.Time `json:"timestamp"`
+}
+
+// GetIds returns the value of Ids.
+func (s *GetLibraryTracksRequestExisting) GetIds() []uuid.UUID {
+	return s.Ids
+}
+
+// GetTimestamp returns the value of Timestamp.
+func (s *GetLibraryTracksRequestExisting) GetTimestamp() time.Time {
+	return s.Timestamp
+}
+
+// SetIds sets the value of Ids.
+func (s *GetLibraryTracksRequestExisting) SetIds(val []uuid.UUID) {
+	s.Ids = val
+}
+
+// SetTimestamp sets the value of Timestamp.
+func (s *GetLibraryTracksRequestExisting) SetTimestamp(val time.Time) {
+	s.Timestamp = val
+}
+
+// 0=PlayTime 1=Name 2=ReleaseDate 3=Duration 4=DateAdded.
+type GetLibraryTracksRequestOrder uint8
+
+const (
+	GetLibraryTracksRequestOrder0 GetLibraryTracksRequestOrder = 0
+	GetLibraryTracksRequestOrder1 GetLibraryTracksRequestOrder = 1
+	GetLibraryTracksRequestOrder2 GetLibraryTracksRequestOrder = 2
+	GetLibraryTracksRequestOrder3 GetLibraryTracksRequestOrder = 3
+	GetLibraryTracksRequestOrder4 GetLibraryTracksRequestOrder = 4
+)
+
+// AllValues returns all GetLibraryTracksRequestOrder values.
+func (GetLibraryTracksRequestOrder) AllValues() []GetLibraryTracksRequestOrder {
+	return []GetLibraryTracksRequestOrder{
+		GetLibraryTracksRequestOrder0,
+		GetLibraryTracksRequestOrder1,
+		GetLibraryTracksRequestOrder2,
+		GetLibraryTracksRequestOrder3,
+		GetLibraryTracksRequestOrder4,
+	}
+}
 
 type GetLibraryTracksUnauthorized ErrorResponse
 
@@ -2234,125 +2486,6 @@ func (s *LibraryAddTrack) SetForceAdd(val OptBool) {
 	s.ForceAdd = val
 }
 
-// Ref: #/components/schemas/LibraryGetRequest
-type LibraryGetRequest struct {
-	Existing   OptLibraryGetRequestExisting `json:"existing"`
-	Search     OptString                    `json:"search"`
-	Limit      OptUint                      `json:"limit"`
-	Offset     OptUint                      `json:"offset"`
-	Order      OptLibraryGetTracksOrder     `json:"order"`
-	Descending OptBool                      `json:"descending"`
-}
-
-// GetExisting returns the value of Existing.
-func (s *LibraryGetRequest) GetExisting() OptLibraryGetRequestExisting {
-	return s.Existing
-}
-
-// GetSearch returns the value of Search.
-func (s *LibraryGetRequest) GetSearch() OptString {
-	return s.Search
-}
-
-// GetLimit returns the value of Limit.
-func (s *LibraryGetRequest) GetLimit() OptUint {
-	return s.Limit
-}
-
-// GetOffset returns the value of Offset.
-func (s *LibraryGetRequest) GetOffset() OptUint {
-	return s.Offset
-}
-
-// GetOrder returns the value of Order.
-func (s *LibraryGetRequest) GetOrder() OptLibraryGetTracksOrder {
-	return s.Order
-}
-
-// GetDescending returns the value of Descending.
-func (s *LibraryGetRequest) GetDescending() OptBool {
-	return s.Descending
-}
-
-// SetExisting sets the value of Existing.
-func (s *LibraryGetRequest) SetExisting(val OptLibraryGetRequestExisting) {
-	s.Existing = val
-}
-
-// SetSearch sets the value of Search.
-func (s *LibraryGetRequest) SetSearch(val OptString) {
-	s.Search = val
-}
-
-// SetLimit sets the value of Limit.
-func (s *LibraryGetRequest) SetLimit(val OptUint) {
-	s.Limit = val
-}
-
-// SetOffset sets the value of Offset.
-func (s *LibraryGetRequest) SetOffset(val OptUint) {
-	s.Offset = val
-}
-
-// SetOrder sets the value of Order.
-func (s *LibraryGetRequest) SetOrder(val OptLibraryGetTracksOrder) {
-	s.Order = val
-}
-
-// SetDescending sets the value of Descending.
-func (s *LibraryGetRequest) SetDescending(val OptBool) {
-	s.Descending = val
-}
-
-type LibraryGetRequestExisting struct {
-	Ids []uuid.UUID `json:"ids"`
-	// Timestamp of the fetch returning IDs.
-	Timestamp time.Time `json:"timestamp"`
-}
-
-// GetIds returns the value of Ids.
-func (s *LibraryGetRequestExisting) GetIds() []uuid.UUID {
-	return s.Ids
-}
-
-// GetTimestamp returns the value of Timestamp.
-func (s *LibraryGetRequestExisting) GetTimestamp() time.Time {
-	return s.Timestamp
-}
-
-// SetIds sets the value of Ids.
-func (s *LibraryGetRequestExisting) SetIds(val []uuid.UUID) {
-	s.Ids = val
-}
-
-// SetTimestamp sets the value of Timestamp.
-func (s *LibraryGetRequestExisting) SetTimestamp(val time.Time) {
-	s.Timestamp = val
-}
-
-// 0=TrackRank 1=TrackName 2=ReleaseDate 3=Duration 4=DateAdded.
-// Ref: #/components/schemas/LibraryGetTracksOrder
-type LibraryGetTracksOrder uint8
-
-const (
-	LibraryGetTracksOrder0 LibraryGetTracksOrder = 0
-	LibraryGetTracksOrder1 LibraryGetTracksOrder = 1
-	LibraryGetTracksOrder2 LibraryGetTracksOrder = 2
-	LibraryGetTracksOrder3 LibraryGetTracksOrder = 3
-	LibraryGetTracksOrder4 LibraryGetTracksOrder = 4
-)
-
-// AllValues returns all LibraryGetTracksOrder values.
-func (LibraryGetTracksOrder) AllValues() []LibraryGetTracksOrder {
-	return []LibraryGetTracksOrder{
-		LibraryGetTracksOrder0,
-		LibraryGetTracksOrder1,
-		LibraryGetTracksOrder2,
-		LibraryGetTracksOrder3,
-		LibraryGetTracksOrder4,
-	}
-}
-
 // Ref: #/components/schemas/LibraryRemoveRequest
 type LibraryRemoveRequest struct {
 	TrackIds  []uuid.UUID `json:"track_ids"`
@@ -3180,6 +3313,190 @@ func (o OptEntityPlays) Or(d EntityPlays) EntityPlays {
 	return d
 }
 
+// NewOptGetLibraryAlbumsRequestExisting returns new OptGetLibraryAlbumsRequestExisting with value set to v.
+func NewOptGetLibraryAlbumsRequestExisting(v GetLibraryAlbumsRequestExisting) OptGetLibraryAlbumsRequestExisting {
+	return OptGetLibraryAlbumsRequestExisting{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryAlbumsRequestExisting is optional GetLibraryAlbumsRequestExisting.
+type OptGetLibraryAlbumsRequestExisting struct {
+	Value GetLibraryAlbumsRequestExisting
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryAlbumsRequestExisting was set.
+func (o OptGetLibraryAlbumsRequestExisting) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryAlbumsRequestExisting) Reset() {
+	var v GetLibraryAlbumsRequestExisting
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryAlbumsRequestExisting) SetTo(v GetLibraryAlbumsRequestExisting) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryAlbumsRequestExisting) Get() (v GetLibraryAlbumsRequestExisting, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryAlbumsRequestExisting) Or(d GetLibraryAlbumsRequestExisting) GetLibraryAlbumsRequestExisting {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryAlbumsRequestOrder returns new OptGetLibraryAlbumsRequestOrder with value set to v.
+func NewOptGetLibraryAlbumsRequestOrder(v GetLibraryAlbumsRequestOrder) OptGetLibraryAlbumsRequestOrder {
+	return OptGetLibraryAlbumsRequestOrder{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryAlbumsRequestOrder is optional GetLibraryAlbumsRequestOrder.
+type OptGetLibraryAlbumsRequestOrder struct {
+	Value GetLibraryAlbumsRequestOrder
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryAlbumsRequestOrder was set.
+func (o OptGetLibraryAlbumsRequestOrder) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryAlbumsRequestOrder) Reset() {
+	var v GetLibraryAlbumsRequestOrder
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryAlbumsRequestOrder) SetTo(v GetLibraryAlbumsRequestOrder) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryAlbumsRequestOrder) Get() (v GetLibraryAlbumsRequestOrder, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryAlbumsRequestOrder) Or(d GetLibraryAlbumsRequestOrder) GetLibraryAlbumsRequestOrder {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryTracksRequestExisting returns new OptGetLibraryTracksRequestExisting with value set to v.
+func NewOptGetLibraryTracksRequestExisting(v GetLibraryTracksRequestExisting) OptGetLibraryTracksRequestExisting {
+	return OptGetLibraryTracksRequestExisting{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryTracksRequestExisting is optional GetLibraryTracksRequestExisting.
+type OptGetLibraryTracksRequestExisting struct {
+	Value GetLibraryTracksRequestExisting
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryTracksRequestExisting was set.
+func (o OptGetLibraryTracksRequestExisting) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryTracksRequestExisting) Reset() {
+	var v GetLibraryTracksRequestExisting
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryTracksRequestExisting) SetTo(v GetLibraryTracksRequestExisting) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryTracksRequestExisting) Get() (v GetLibraryTracksRequestExisting, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryTracksRequestExisting) Or(d GetLibraryTracksRequestExisting) GetLibraryTracksRequestExisting {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryTracksRequestOrder returns new OptGetLibraryTracksRequestOrder with value set to v.
+func NewOptGetLibraryTracksRequestOrder(v GetLibraryTracksRequestOrder) OptGetLibraryTracksRequestOrder {
+	return OptGetLibraryTracksRequestOrder{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryTracksRequestOrder is optional GetLibraryTracksRequestOrder.
+type OptGetLibraryTracksRequestOrder struct {
+	Value GetLibraryTracksRequestOrder
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryTracksRequestOrder was set.
+func (o OptGetLibraryTracksRequestOrder) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryTracksRequestOrder) Reset() {
+	var v GetLibraryTracksRequestOrder
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryTracksRequestOrder) SetTo(v GetLibraryTracksRequestOrder) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryTracksRequestOrder) Get() (v GetLibraryTracksRequestOrder, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryTracksRequestOrder) Or(d GetLibraryTracksRequestOrder) GetLibraryTracksRequestOrder {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptInt returns new OptInt with value set to v.
 func NewOptInt(v int) OptInt {
 	return OptInt{
@@ -3266,98 +3583,6 @@ func (o OptInt64) Get() (v int64, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptInt64) Or(d int64) int64 {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptLibraryGetRequestExisting returns new OptLibraryGetRequestExisting with value set to v.
-func NewOptLibraryGetRequestExisting(v LibraryGetRequestExisting) OptLibraryGetRequestExisting {
-	return OptLibraryGetRequestExisting{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptLibraryGetRequestExisting is optional LibraryGetRequestExisting.
-type OptLibraryGetRequestExisting struct {
-	Value LibraryGetRequestExisting
-	Set   bool
-}
-
-// IsSet returns true if OptLibraryGetRequestExisting was set.
-func (o OptLibraryGetRequestExisting) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptLibraryGetRequestExisting) Reset() {
-	var v LibraryGetRequestExisting
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptLibraryGetRequestExisting) SetTo(v LibraryGetRequestExisting) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptLibraryGetRequestExisting) Get() (v LibraryGetRequestExisting, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptLibraryGetRequestExisting) Or(d LibraryGetRequestExisting) LibraryGetRequestExisting {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptLibraryGetTracksOrder returns new OptLibraryGetTracksOrder with value set to v.
-func NewOptLibraryGetTracksOrder(v LibraryGetTracksOrder) OptLibraryGetTracksOrder {
-	return OptLibraryGetTracksOrder{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptLibraryGetTracksOrder is optional LibraryGetTracksOrder.
-type OptLibraryGetTracksOrder struct {
-	Value LibraryGetTracksOrder
-	Set   bool
-}
-
-// IsSet returns true if OptLibraryGetTracksOrder was set.
-func (o OptLibraryGetTracksOrder) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptLibraryGetTracksOrder) Reset() {
-	var v LibraryGetTracksOrder
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptLibraryGetTracksOrder) SetTo(v LibraryGetTracksOrder) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptLibraryGetTracksOrder) Get() (v LibraryGetTracksOrder, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptLibraryGetTracksOrder) Or(d LibraryGetTracksOrder) LibraryGetTracksOrder {
 	if v, ok := o.Get(); ok {
 		return v
 	}

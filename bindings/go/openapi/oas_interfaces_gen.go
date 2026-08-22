@@ -81,6 +81,10 @@ type GetGroupsRes interface {
 	getGroupsRes()
 }
 
+type GetLibraryAlbumsRes interface {
+	getLibraryAlbumsRes()
+}
+
 type GetLibrarySearchIndexRes interface {
 	getLibrarySearchIndexRes()
 }

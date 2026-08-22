@@ -202,6 +202,51 @@ export type FriendActionRequest = {
     handle?: string | null;
 };
 
+export type GetLibraryAlbumsRequest = {
+    existing?: {
+        ids: Array<string>;
+        /**
+         * Timestamp of the fetch returning IDs
+         */
+        timestamp: string;
+    };
+    search?: string;
+    limit?: number;
+    offset?: number;
+    /**
+     * 0=Name
+     * 1=Duration
+     * 2=ReleaseDate
+     * 3=DateAdded
+     *
+     */
+    order?: 0 | 1 | 2 | 3;
+    descending?: boolean;
+};
+
+export type GetLibraryTracksRequest = {
+    existing?: {
+        ids: Array<string>;
+        /**
+         * Timestamp of the fetch returning IDs
+         */
+        timestamp: string;
+    };
+    search?: string;
+    limit?: number;
+    offset?: number;
+    /**
+     * 0=PlayTime
+     * 1=Name
+     * 2=ReleaseDate
+     * 3=Duration
+     * 4=DateAdded
+     *
+     */
+    order?: 0 | 1 | 2 | 3 | 4;
+    descending?: boolean;
+};
+
 export type Group = {
     group_id: string;
     conversation_id: string;
@@ -368,31 +413,6 @@ export type LibraryAddTrack = {
      */
     force_add?: boolean;
 };
-
-export type LibraryGetRequest = {
-    existing?: {
-        ids: Array<string>;
-        /**
-         * Timestamp of the fetch returning IDs
-         */
-        timestamp: string;
-    };
-    search?: string;
-    limit?: number;
-    offset?: number;
-    order?: LibraryGetTracksOrder;
-    descending?: boolean;
-};
-
-/**
- * 0=TrackRank
- * 1=TrackName
- * 2=ReleaseDate
- * 3=Duration
- * 4=DateAdded
- *
- */
-export type LibraryGetTracksOrder = 0 | 1 | 2 | 3 | 4;
 
 export type LibraryRemoveRequest = {
     track_ids?: Array<string>;
@@ -1694,6 +1714,36 @@ export type AddToLibraryResponses = {
 
 export type AddToLibraryResponse = AddToLibraryResponses[keyof AddToLibraryResponses];
 
+export type GetLibraryAlbumsData = {
+    body: GetLibraryAlbumsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/albums';
+};
+
+export type GetLibraryAlbumsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLibraryAlbumsError = GetLibraryAlbumsErrors[keyof GetLibraryAlbumsErrors];
+
+export type GetLibraryAlbumsResponses = {
+    200: Array<Album>;
+};
+
+export type GetLibraryAlbumsResponse = GetLibraryAlbumsResponses[keyof GetLibraryAlbumsResponses];
+
 export type RemoveFromLibraryData = {
     body: LibraryRemoveRequest;
     path?: never;
@@ -1750,7 +1800,7 @@ export type GetLibrarySearchIndexResponses = {
 export type GetLibrarySearchIndexResponse = GetLibrarySearchIndexResponses[keyof GetLibrarySearchIndexResponses];
 
 export type GetLibraryTracksData = {
-    body: LibraryGetRequest;
+    body: GetLibraryTracksRequest;
     path?: never;
     query?: never;
     url: '/api/library/tracks';

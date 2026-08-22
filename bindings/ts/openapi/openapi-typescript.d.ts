@@ -267,6 +267,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/library/albums": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get library albums */
+        get: operations["getLibraryAlbums"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/library/remove": {
         parameters: {
             query?: never;
@@ -1027,6 +1044,57 @@ export interface components {
             /** @description Target user's handle. Optional if 'id' is provided. */
             handle?: string | null;
         };
+        GetLibraryAlbumsRequest: {
+            existing?: {
+                ids: string[];
+                /**
+                 * Format: date-time
+                 * @description Timestamp of the fetch returning IDs
+                 */
+                timestamp: string;
+            };
+            search?: string;
+            /** Format: uint */
+            limit?: number;
+            /** Format: uint */
+            offset?: number;
+            /**
+             * Format: uint8
+             * @description 0=Name
+             *     1=Duration
+             *     2=ReleaseDate
+             *     3=DateAdded
+             * @enum {integer}
+             */
+            order?: 0 | 1 | 2 | 3;
+            descending?: boolean;
+        };
+        GetLibraryTracksRequest: {
+            existing?: {
+                ids: string[];
+                /**
+                 * Format: date-time
+                 * @description Timestamp of the fetch returning IDs
+                 */
+                timestamp: string;
+            };
+            search?: string;
+            /** Format: uint */
+            limit?: number;
+            /** Format: uint */
+            offset?: number;
+            /**
+             * Format: uint8
+             * @description 0=PlayTime
+             *     1=Name
+             *     2=ReleaseDate
+             *     3=Duration
+             *     4=DateAdded
+             * @enum {integer}
+             */
+            order?: 0 | 1 | 2 | 3 | 4;
+            descending?: boolean;
+        };
         Group: {
             /** Format: uuid */
             group_id: string;
@@ -1205,34 +1273,6 @@ export interface components {
              */
             force_add: boolean;
         };
-        LibraryGetRequest: {
-            existing?: {
-                ids: string[];
-                /**
-                 * Format: date-time
-                 * @description Timestamp of the fetch returning IDs
-                 */
-                timestamp: string;
-            };
-            search?: string;
-            /** Format: uint */
-            limit?: number;
-            /** Format: uint */
-            offset?: number;
-            /** Format: uint8 */
-            order?: components["schemas"]["LibraryGetTracksOrder"];
-            descending?: boolean;
-        };
-        /**
-         * Format: uint8
-         * @description 0=TrackRank
-         *     1=TrackName
-         *     2=ReleaseDate
-         *     3=Duration
-         *     4=DateAdded
-         * @enum {integer}
-         */
-        LibraryGetTracksOrder: 0 | 1 | 2 | 3 | 4;
         LibraryRemoveRequest: {
             track_ids?: string[];
             album_ids?: string[];
@@ -2397,6 +2437,32 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
+    getLibraryAlbums: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GetLibraryAlbumsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Album"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
     removeFromLibrary: {
         parameters: {
             query?: never;
@@ -2445,7 +2511,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["LibraryGetRequest"];
+                "application/json": components["schemas"]["GetLibraryTracksRequest"];
             };
         };
         responses: {

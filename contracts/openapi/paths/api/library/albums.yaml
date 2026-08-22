@@ -1,10 +1,10 @@
-/api/library/tracks:
+/api/library/albums:
   get:
-    summary: Get library tracks
-    operationId: getLibraryTracks
+    summary: Get library albums
+    operationId: getLibraryAlbums
     tags:
       - Library
-      - Tracks
+      - Albums
     security:
       - CookieAuth: []
     requestBody:
@@ -12,7 +12,7 @@
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/GetLibraryTracksRequest"
+            $ref: "#/components/schemas/GetLibraryAlbumsRequest"
     responses:
       "200":
         content:
@@ -20,7 +20,7 @@
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/Track"
+                $ref: "#/components/schemas/Album"
       "400":
         $ref: "#/components/responses/BadRequest"
       "401":

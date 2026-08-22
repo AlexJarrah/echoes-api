@@ -206,6 +206,15 @@ func (UnimplementedHandler) GetGroups(ctx context.Context) (r GetGroupsRes, _ er
 	return r, ht.ErrNotImplemented
 }
 
+// GetLibraryAlbums implements getLibraryAlbums operation.
+//
+// Get library albums.
+//
+// GET /api/library/albums
+func (UnimplementedHandler) GetLibraryAlbums(ctx context.Context, req *GetLibraryAlbumsRequest) (r GetLibraryAlbumsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 //
 // Returns the user's library search engine index.
@@ -220,7 +229,7 @@ func (UnimplementedHandler) GetLibrarySearchIndex(ctx context.Context) (r GetLib
 // Get library tracks.
 //
 // GET /api/library/tracks
-func (UnimplementedHandler) GetLibraryTracks(ctx context.Context, req *LibraryGetRequest) (r GetLibraryTracksRes, _ error) {
+func (UnimplementedHandler) GetLibraryTracks(ctx context.Context, req *GetLibraryTracksRequest) (r GetLibraryTracksRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

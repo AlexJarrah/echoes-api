@@ -5159,6 +5159,475 @@ func (s *GetGroupsUnauthorized) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
+// Encode encodes GetLibraryAlbumsBadRequest as json.
+func (s *GetLibraryAlbumsBadRequest) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetLibraryAlbumsBadRequest from json.
+func (s *GetLibraryAlbumsBadRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsBadRequest to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetLibraryAlbumsBadRequest(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryAlbumsBadRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsBadRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryAlbumsInternalServerError as json.
+func (s *GetLibraryAlbumsInternalServerError) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetLibraryAlbumsInternalServerError from json.
+func (s *GetLibraryAlbumsInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsInternalServerError to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetLibraryAlbumsInternalServerError(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryAlbumsInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryAlbumsOKApplicationJSON as json.
+func (s GetLibraryAlbumsOKApplicationJSON) Encode(e *jx.Encoder) {
+	unwrapped := []Album(s)
+
+	e.ArrStart()
+	for _, elem := range unwrapped {
+		elem.Encode(e)
+	}
+	e.ArrEnd()
+}
+
+// Decode decodes GetLibraryAlbumsOKApplicationJSON from json.
+func (s *GetLibraryAlbumsOKApplicationJSON) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsOKApplicationJSON to nil")
+	}
+	var unwrapped []Album
+	if err := func() error {
+		unwrapped = make([]Album, 0)
+		if err := d.Arr(func(d *jx.Decoder) error {
+			var elem Album
+			if err := elem.Decode(d); err != nil {
+				return err
+			}
+			unwrapped = append(unwrapped, elem)
+			return nil
+		}); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetLibraryAlbumsOKApplicationJSON(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s GetLibraryAlbumsOKApplicationJSON) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsOKApplicationJSON) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *GetLibraryAlbumsRequest) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *GetLibraryAlbumsRequest) encodeFields(e *jx.Encoder) {
+	{
+		if s.Existing.Set {
+			e.FieldStart("existing")
+			s.Existing.Encode(e)
+		}
+	}
+	{
+		if s.Search.Set {
+			e.FieldStart("search")
+			s.Search.Encode(e)
+		}
+	}
+	{
+		if s.Limit.Set {
+			e.FieldStart("limit")
+			s.Limit.Encode(e)
+		}
+	}
+	{
+		if s.Offset.Set {
+			e.FieldStart("offset")
+			s.Offset.Encode(e)
+		}
+	}
+	{
+		if s.Order.Set {
+			e.FieldStart("order")
+			s.Order.Encode(e)
+		}
+	}
+	{
+		if s.Descending.Set {
+			e.FieldStart("descending")
+			s.Descending.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfGetLibraryAlbumsRequest = [6]string{
+	0: "existing",
+	1: "search",
+	2: "limit",
+	3: "offset",
+	4: "order",
+	5: "descending",
+}
+
+// Decode decodes GetLibraryAlbumsRequest from json.
+func (s *GetLibraryAlbumsRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsRequest to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "existing":
+			if err := func() error {
+				s.Existing.Reset()
+				if err := s.Existing.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"existing\"")
+			}
+		case "search":
+			if err := func() error {
+				s.Search.Reset()
+				if err := s.Search.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"search\"")
+			}
+		case "limit":
+			if err := func() error {
+				s.Limit.Reset()
+				if err := s.Limit.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"limit\"")
+			}
+		case "offset":
+			if err := func() error {
+				s.Offset.Reset()
+				if err := s.Offset.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"offset\"")
+			}
+		case "order":
+			if err := func() error {
+				s.Order.Reset()
+				if err := s.Order.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"order\"")
+			}
+		case "descending":
+			if err := func() error {
+				s.Descending.Reset()
+				if err := s.Descending.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"descending\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode GetLibraryAlbumsRequest")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryAlbumsRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *GetLibraryAlbumsRequestExisting) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *GetLibraryAlbumsRequestExisting) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("ids")
+		e.ArrStart()
+		for _, elem := range s.Ids {
+			json.EncodeUUID(e, elem)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("timestamp")
+		json.EncodeDateTime(e, s.Timestamp)
+	}
+}
+
+var jsonFieldsNameOfGetLibraryAlbumsRequestExisting = [2]string{
+	0: "ids",
+	1: "timestamp",
+}
+
+// Decode decodes GetLibraryAlbumsRequestExisting from json.
+func (s *GetLibraryAlbumsRequestExisting) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsRequestExisting to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "ids":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				s.Ids = make([]uuid.UUID, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem uuid.UUID
+					v, err := json.DecodeUUID(d)
+					elem = v
+					if err != nil {
+						return err
+					}
+					s.Ids = append(s.Ids, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"ids\"")
+			}
+		case "timestamp":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := json.DecodeDateTime(d)
+				s.Timestamp = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"timestamp\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode GetLibraryAlbumsRequestExisting")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000011,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfGetLibraryAlbumsRequestExisting) {
+					name = jsonFieldsNameOfGetLibraryAlbumsRequestExisting[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryAlbumsRequestExisting) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsRequestExisting) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryAlbumsRequestOrder as json.
+func (s GetLibraryAlbumsRequestOrder) Encode(e *jx.Encoder) {
+	e.UInt8(uint8(s))
+}
+
+// Decode decodes GetLibraryAlbumsRequestOrder from json.
+func (s *GetLibraryAlbumsRequestOrder) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsRequestOrder to nil")
+	}
+	v, err := d.UInt8()
+	if err != nil {
+		return err
+	}
+	*s = GetLibraryAlbumsRequestOrder(v)
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s GetLibraryAlbumsRequestOrder) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsRequestOrder) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryAlbumsUnauthorized as json.
+func (s *GetLibraryAlbumsUnauthorized) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetLibraryAlbumsUnauthorized from json.
+func (s *GetLibraryAlbumsUnauthorized) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryAlbumsUnauthorized to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetLibraryAlbumsUnauthorized(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryAlbumsUnauthorized) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryAlbumsUnauthorized) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes GetLibraryTracksBadRequest as json.
 func (s *GetLibraryTracksBadRequest) Encode(e *jx.Encoder) {
 	unwrapped := (*ErrorResponse)(s)
@@ -5281,6 +5750,311 @@ func (s GetLibraryTracksOKApplicationJSON) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *GetLibraryTracksOKApplicationJSON) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *GetLibraryTracksRequest) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *GetLibraryTracksRequest) encodeFields(e *jx.Encoder) {
+	{
+		if s.Existing.Set {
+			e.FieldStart("existing")
+			s.Existing.Encode(e)
+		}
+	}
+	{
+		if s.Search.Set {
+			e.FieldStart("search")
+			s.Search.Encode(e)
+		}
+	}
+	{
+		if s.Limit.Set {
+			e.FieldStart("limit")
+			s.Limit.Encode(e)
+		}
+	}
+	{
+		if s.Offset.Set {
+			e.FieldStart("offset")
+			s.Offset.Encode(e)
+		}
+	}
+	{
+		if s.Order.Set {
+			e.FieldStart("order")
+			s.Order.Encode(e)
+		}
+	}
+	{
+		if s.Descending.Set {
+			e.FieldStart("descending")
+			s.Descending.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfGetLibraryTracksRequest = [6]string{
+	0: "existing",
+	1: "search",
+	2: "limit",
+	3: "offset",
+	4: "order",
+	5: "descending",
+}
+
+// Decode decodes GetLibraryTracksRequest from json.
+func (s *GetLibraryTracksRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryTracksRequest to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "existing":
+			if err := func() error {
+				s.Existing.Reset()
+				if err := s.Existing.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"existing\"")
+			}
+		case "search":
+			if err := func() error {
+				s.Search.Reset()
+				if err := s.Search.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"search\"")
+			}
+		case "limit":
+			if err := func() error {
+				s.Limit.Reset()
+				if err := s.Limit.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"limit\"")
+			}
+		case "offset":
+			if err := func() error {
+				s.Offset.Reset()
+				if err := s.Offset.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"offset\"")
+			}
+		case "order":
+			if err := func() error {
+				s.Order.Reset()
+				if err := s.Order.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"order\"")
+			}
+		case "descending":
+			if err := func() error {
+				s.Descending.Reset()
+				if err := s.Descending.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"descending\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode GetLibraryTracksRequest")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryTracksRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryTracksRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *GetLibraryTracksRequestExisting) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *GetLibraryTracksRequestExisting) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("ids")
+		e.ArrStart()
+		for _, elem := range s.Ids {
+			json.EncodeUUID(e, elem)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("timestamp")
+		json.EncodeDateTime(e, s.Timestamp)
+	}
+}
+
+var jsonFieldsNameOfGetLibraryTracksRequestExisting = [2]string{
+	0: "ids",
+	1: "timestamp",
+}
+
+// Decode decodes GetLibraryTracksRequestExisting from json.
+func (s *GetLibraryTracksRequestExisting) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryTracksRequestExisting to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "ids":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				s.Ids = make([]uuid.UUID, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem uuid.UUID
+					v, err := json.DecodeUUID(d)
+					elem = v
+					if err != nil {
+						return err
+					}
+					s.Ids = append(s.Ids, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"ids\"")
+			}
+		case "timestamp":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := json.DecodeDateTime(d)
+				s.Timestamp = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"timestamp\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode GetLibraryTracksRequestExisting")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000011,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfGetLibraryTracksRequestExisting) {
+					name = jsonFieldsNameOfGetLibraryTracksRequestExisting[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetLibraryTracksRequestExisting) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryTracksRequestExisting) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryTracksRequestOrder as json.
+func (s GetLibraryTracksRequestOrder) Encode(e *jx.Encoder) {
+	e.UInt8(uint8(s))
+}
+
+// Decode decodes GetLibraryTracksRequestOrder from json.
+func (s *GetLibraryTracksRequestOrder) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetLibraryTracksRequestOrder to nil")
+	}
+	v, err := d.UInt8()
+	if err != nil {
+		return err
+	}
+	*s = GetLibraryTracksRequestOrder(v)
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s GetLibraryTracksRequestOrder) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetLibraryTracksRequestOrder) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -9198,311 +9972,6 @@ func (s *LibraryAddTrack) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *LibraryGetRequest) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *LibraryGetRequest) encodeFields(e *jx.Encoder) {
-	{
-		if s.Existing.Set {
-			e.FieldStart("existing")
-			s.Existing.Encode(e)
-		}
-	}
-	{
-		if s.Search.Set {
-			e.FieldStart("search")
-			s.Search.Encode(e)
-		}
-	}
-	{
-		if s.Limit.Set {
-			e.FieldStart("limit")
-			s.Limit.Encode(e)
-		}
-	}
-	{
-		if s.Offset.Set {
-			e.FieldStart("offset")
-			s.Offset.Encode(e)
-		}
-	}
-	{
-		if s.Order.Set {
-			e.FieldStart("order")
-			s.Order.Encode(e)
-		}
-	}
-	{
-		if s.Descending.Set {
-			e.FieldStart("descending")
-			s.Descending.Encode(e)
-		}
-	}
-}
-
-var jsonFieldsNameOfLibraryGetRequest = [6]string{
-	0: "existing",
-	1: "search",
-	2: "limit",
-	3: "offset",
-	4: "order",
-	5: "descending",
-}
-
-// Decode decodes LibraryGetRequest from json.
-func (s *LibraryGetRequest) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode LibraryGetRequest to nil")
-	}
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		case "existing":
-			if err := func() error {
-				s.Existing.Reset()
-				if err := s.Existing.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"existing\"")
-			}
-		case "search":
-			if err := func() error {
-				s.Search.Reset()
-				if err := s.Search.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"search\"")
-			}
-		case "limit":
-			if err := func() error {
-				s.Limit.Reset()
-				if err := s.Limit.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"limit\"")
-			}
-		case "offset":
-			if err := func() error {
-				s.Offset.Reset()
-				if err := s.Offset.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"offset\"")
-			}
-		case "order":
-			if err := func() error {
-				s.Order.Reset()
-				if err := s.Order.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"order\"")
-			}
-		case "descending":
-			if err := func() error {
-				s.Descending.Reset()
-				if err := s.Descending.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"descending\"")
-			}
-		default:
-			return d.Skip()
-		}
-		return nil
-	}); err != nil {
-		return errors.Wrap(err, "decode LibraryGetRequest")
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *LibraryGetRequest) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *LibraryGetRequest) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode implements json.Marshaler.
-func (s *LibraryGetRequestExisting) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *LibraryGetRequestExisting) encodeFields(e *jx.Encoder) {
-	{
-		e.FieldStart("ids")
-		e.ArrStart()
-		for _, elem := range s.Ids {
-			json.EncodeUUID(e, elem)
-		}
-		e.ArrEnd()
-	}
-	{
-		e.FieldStart("timestamp")
-		json.EncodeDateTime(e, s.Timestamp)
-	}
-}
-
-var jsonFieldsNameOfLibraryGetRequestExisting = [2]string{
-	0: "ids",
-	1: "timestamp",
-}
-
-// Decode decodes LibraryGetRequestExisting from json.
-func (s *LibraryGetRequestExisting) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode LibraryGetRequestExisting to nil")
-	}
-	var requiredBitSet [1]uint8
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		case "ids":
-			requiredBitSet[0] |= 1 << 0
-			if err := func() error {
-				s.Ids = make([]uuid.UUID, 0)
-				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem uuid.UUID
-					v, err := json.DecodeUUID(d)
-					elem = v
-					if err != nil {
-						return err
-					}
-					s.Ids = append(s.Ids, elem)
-					return nil
-				}); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"ids\"")
-			}
-		case "timestamp":
-			requiredBitSet[0] |= 1 << 1
-			if err := func() error {
-				v, err := json.DecodeDateTime(d)
-				s.Timestamp = v
-				if err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"timestamp\"")
-			}
-		default:
-			return d.Skip()
-		}
-		return nil
-	}); err != nil {
-		return errors.Wrap(err, "decode LibraryGetRequestExisting")
-	}
-	// Validate required fields.
-	var failures []validate.FieldError
-	for i, mask := range [1]uint8{
-		0b00000011,
-	} {
-		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
-			// Mask only required fields and check equality to mask using XOR.
-			//
-			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
-			// Bits of fields which would be set are actually bits of missed fields.
-			missed := bits.OnesCount8(result)
-			for bitN := 0; bitN < missed; bitN++ {
-				bitIdx := bits.TrailingZeros8(result)
-				fieldIdx := i*8 + bitIdx
-				var name string
-				if fieldIdx < len(jsonFieldsNameOfLibraryGetRequestExisting) {
-					name = jsonFieldsNameOfLibraryGetRequestExisting[fieldIdx]
-				} else {
-					name = strconv.Itoa(fieldIdx)
-				}
-				failures = append(failures, validate.FieldError{
-					Name:  name,
-					Error: validate.ErrFieldRequired,
-				})
-				// Reset bit.
-				result &^= 1 << bitIdx
-			}
-		}
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *LibraryGetRequestExisting) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *LibraryGetRequestExisting) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes LibraryGetTracksOrder as json.
-func (s LibraryGetTracksOrder) Encode(e *jx.Encoder) {
-	e.UInt8(uint8(s))
-}
-
-// Decode decodes LibraryGetTracksOrder from json.
-func (s *LibraryGetTracksOrder) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode LibraryGetTracksOrder to nil")
-	}
-	v, err := d.UInt8()
-	if err != nil {
-		return err
-	}
-	*s = LibraryGetTracksOrder(v)
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s LibraryGetTracksOrder) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *LibraryGetTracksOrder) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode implements json.Marshaler.
 func (s *LibraryRemoveRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -11123,6 +11592,138 @@ func (s *OptEntityPlays) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
+// Encode encodes GetLibraryAlbumsRequestExisting as json.
+func (o OptGetLibraryAlbumsRequestExisting) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes GetLibraryAlbumsRequestExisting from json.
+func (o *OptGetLibraryAlbumsRequestExisting) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptGetLibraryAlbumsRequestExisting to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptGetLibraryAlbumsRequestExisting) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptGetLibraryAlbumsRequestExisting) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryAlbumsRequestOrder as json.
+func (o OptGetLibraryAlbumsRequestOrder) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.UInt8(uint8(o.Value))
+}
+
+// Decode decodes GetLibraryAlbumsRequestOrder from json.
+func (o *OptGetLibraryAlbumsRequestOrder) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptGetLibraryAlbumsRequestOrder to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptGetLibraryAlbumsRequestOrder) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptGetLibraryAlbumsRequestOrder) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryTracksRequestExisting as json.
+func (o OptGetLibraryTracksRequestExisting) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes GetLibraryTracksRequestExisting from json.
+func (o *OptGetLibraryTracksRequestExisting) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptGetLibraryTracksRequestExisting to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptGetLibraryTracksRequestExisting) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptGetLibraryTracksRequestExisting) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetLibraryTracksRequestOrder as json.
+func (o OptGetLibraryTracksRequestOrder) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.UInt8(uint8(o.Value))
+}
+
+// Decode decodes GetLibraryTracksRequestOrder from json.
+func (o *OptGetLibraryTracksRequestOrder) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptGetLibraryTracksRequestOrder to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptGetLibraryTracksRequestOrder) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptGetLibraryTracksRequestOrder) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes int64 as json.
 func (o OptInt64) Encode(e *jx.Encoder) {
 	if !o.Set {
@@ -11154,72 +11755,6 @@ func (s OptInt64) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptInt64) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes LibraryGetRequestExisting as json.
-func (o OptLibraryGetRequestExisting) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	o.Value.Encode(e)
-}
-
-// Decode decodes LibraryGetRequestExisting from json.
-func (o *OptLibraryGetRequestExisting) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptLibraryGetRequestExisting to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptLibraryGetRequestExisting) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptLibraryGetRequestExisting) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes LibraryGetTracksOrder as json.
-func (o OptLibraryGetTracksOrder) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	e.UInt8(uint8(o.Value))
-}
-
-// Decode decodes LibraryGetTracksOrder from json.
-func (o *OptLibraryGetTracksOrder) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptLibraryGetTracksOrder to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptLibraryGetTracksOrder) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptLibraryGetTracksOrder) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
