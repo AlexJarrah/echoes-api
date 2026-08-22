@@ -3795,13 +3795,13 @@ func (s *Server) handleGetGroupsRequest(args [0]string, argsEscaped bool, w http
 //
 // Get library albums.
 //
-// GET /api/library/albums
+// POST /api/library/albums
 func (s *Server) handleGetLibraryAlbumsRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getLibraryAlbums"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/library/albums"),
 	}
 	// Add attributes from config.
@@ -3982,13 +3982,13 @@ func (s *Server) handleGetLibraryAlbumsRequest(args [0]string, argsEscaped bool,
 //
 // Get library artists.
 //
-// GET /api/library/artists
+// POST /api/library/artists
 func (s *Server) handleGetLibraryArtistsRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getLibraryArtists"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/library/artists"),
 	}
 	// Add attributes from config.
@@ -4341,13 +4341,13 @@ func (s *Server) handleGetLibrarySearchIndexRequest(args [0]string, argsEscaped 
 //
 // Get library tracks.
 //
-// GET /api/library/tracks
+// POST /api/library/tracks
 func (s *Server) handleGetLibraryTracksRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getLibraryTracks"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/library/tracks"),
 	}
 	// Add attributes from config.

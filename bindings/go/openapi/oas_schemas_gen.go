@@ -1400,7 +1400,7 @@ type GetLibraryArtistsRequest struct {
 	Existing OptGetLibraryArtistsRequestExisting `json:"existing"`
 	Limit    OptUint                             `json:"limit"`
 	Offset   OptUint                             `json:"offset"`
-	// 0=PlayTime 1=Name 4=DateAdded.
+	// 0=PlayTime 1=Name 2=DateAdded.
 	Order      OptGetLibraryArtistsRequestOrder `json:"order"`
 	Descending OptBool                          `json:"descending"`
 }
@@ -1481,15 +1481,13 @@ func (s *GetLibraryArtistsRequestExisting) SetTimestamp(val time.Time) {
 	s.Timestamp = val
 }
 
-// 0=PlayTime 1=Name 4=DateAdded.
+// 0=PlayTime 1=Name 2=DateAdded.
 type GetLibraryArtistsRequestOrder uint8
 
 const (
 	GetLibraryArtistsRequestOrder0 GetLibraryArtistsRequestOrder = 0
 	GetLibraryArtistsRequestOrder1 GetLibraryArtistsRequestOrder = 1
 	GetLibraryArtistsRequestOrder2 GetLibraryArtistsRequestOrder = 2
-	GetLibraryArtistsRequestOrder3 GetLibraryArtistsRequestOrder = 3
-	GetLibraryArtistsRequestOrder4 GetLibraryArtistsRequestOrder = 4
 )
 
 // AllValues returns all GetLibraryArtistsRequestOrder values.
@@ -1498,8 +1496,6 @@ func (GetLibraryArtistsRequestOrder) AllValues() []GetLibraryArtistsRequestOrder
 		GetLibraryArtistsRequestOrder0,
 		GetLibraryArtistsRequestOrder1,
 		GetLibraryArtistsRequestOrder2,
-		GetLibraryArtistsRequestOrder3,
-		GetLibraryArtistsRequestOrder4,
 	}
 }
 

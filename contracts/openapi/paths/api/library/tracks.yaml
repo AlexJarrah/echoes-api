@@ -1,5 +1,5 @@
 /api/library/tracks:
-  get:
+  post:
     summary: Get library tracks
     operationId: getLibraryTracks
     tags:

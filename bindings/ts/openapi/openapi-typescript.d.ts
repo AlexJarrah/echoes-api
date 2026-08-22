@@ -274,10 +274,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get library albums */
-        get: operations["getLibraryAlbums"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get library albums */
+        post: operations["getLibraryAlbums"];
         delete?: never;
         options?: never;
         head?: never;
@@ -291,10 +291,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get library artists */
-        get: operations["getLibraryArtists"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get library artists */
+        post: operations["getLibraryArtists"];
         delete?: never;
         options?: never;
         head?: never;
@@ -342,10 +342,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get library tracks */
-        get: operations["getLibraryTracks"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Get library tracks */
+        post: operations["getLibraryTracks"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1098,10 +1098,10 @@ export interface components {
              * Format: uint8
              * @description 0=PlayTime
              *     1=Name
-             *     4=DateAdded
+             *     2=DateAdded
              * @enum {integer}
              */
-            order?: 0 | 1 | 2 | 3 | 4;
+            order?: 0 | 1 | 2;
             descending?: boolean;
         };
         GetLibraryTracksRequest: {

@@ -1,5 +1,5 @@
 /api/library/artists:
-  get:
+  post:
     summary: Get library artists
     operationId: getLibraryArtists
     tags:

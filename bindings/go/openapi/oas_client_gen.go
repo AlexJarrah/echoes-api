@@ -224,13 +224,13 @@ type Invoker interface {
 	//
 	// Get library albums.
 	//
-	// GET /api/library/albums
+	// POST /api/library/albums
 	GetLibraryAlbums(ctx context.Context, request *GetLibraryAlbumsRequest, options ...RequestOption) (GetLibraryAlbumsRes, error)
 	// GetLibraryArtists invokes getLibraryArtists operation.
 	//
 	// Get library artists.
 	//
-	// GET /api/library/artists
+	// POST /api/library/artists
 	GetLibraryArtists(ctx context.Context, request *GetLibraryArtistsRequest, options ...RequestOption) (GetLibraryArtistsRes, error)
 	// GetLibrarySearchIndex invokes getLibrarySearchIndex operation.
 	//
@@ -242,7 +242,7 @@ type Invoker interface {
 	//
 	// Get library tracks.
 	//
-	// GET /api/library/tracks
+	// POST /api/library/tracks
 	GetLibraryTracks(ctx context.Context, request *GetLibraryTracksRequest, options ...RequestOption) (GetLibraryTracksRes, error)
 	// GetListenSessions invokes getListenSessions operation.
 	//
@@ -3773,7 +3773,7 @@ func (c *Client) sendGetGroups(ctx context.Context, requestOptions ...RequestOpt
 //
 // Get library albums.
 //
-// GET /api/library/albums
+// POST /api/library/albums
 func (c *Client) GetLibraryAlbums(ctx context.Context, request *GetLibraryAlbumsRequest, options ...RequestOption) (GetLibraryAlbumsRes, error) {
 	res, err := c.sendGetLibraryAlbums(ctx, request, options...)
 	return res, err
@@ -3791,7 +3791,7 @@ func (c *Client) sendGetLibraryAlbums(ctx context.Context, request *GetLibraryAl
 	}
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getLibraryAlbums"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.URLTemplateKey.String("/api/library/albums"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
@@ -3840,7 +3840,7 @@ func (c *Client) sendGetLibraryAlbums(ctx context.Context, request *GetLibraryAl
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}
@@ -3924,7 +3924,7 @@ func (c *Client) sendGetLibraryAlbums(ctx context.Context, request *GetLibraryAl
 //
 // Get library artists.
 //
-// GET /api/library/artists
+// POST /api/library/artists
 func (c *Client) GetLibraryArtists(ctx context.Context, request *GetLibraryArtistsRequest, options ...RequestOption) (GetLibraryArtistsRes, error) {
 	res, err := c.sendGetLibraryArtists(ctx, request, options...)
 	return res, err
@@ -3942,7 +3942,7 @@ func (c *Client) sendGetLibraryArtists(ctx context.Context, request *GetLibraryA
 	}
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getLibraryArtists"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.URLTemplateKey.String("/api/library/artists"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
@@ -3991,7 +3991,7 @@ func (c *Client) sendGetLibraryArtists(ctx context.Context, request *GetLibraryA
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}
@@ -4214,7 +4214,7 @@ func (c *Client) sendGetLibrarySearchIndex(ctx context.Context, requestOptions .
 //
 // Get library tracks.
 //
-// GET /api/library/tracks
+// POST /api/library/tracks
 func (c *Client) GetLibraryTracks(ctx context.Context, request *GetLibraryTracksRequest, options ...RequestOption) (GetLibraryTracksRes, error) {
 	res, err := c.sendGetLibraryTracks(ctx, request, options...)
 	return res, err
@@ -4232,7 +4232,7 @@ func (c *Client) sendGetLibraryTracks(ctx context.Context, request *GetLibraryTr
 	}
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getLibraryTracks"),
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.URLTemplateKey.String("/api/library/tracks"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
@@ -4281,7 +4281,7 @@ func (c *Client) sendGetLibraryTracks(ctx context.Context, request *GetLibraryTr
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}

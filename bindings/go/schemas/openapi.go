@@ -749,7 +749,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
   /api/library/albums:
-    get:
+    post:
       summary: Get library albums
       operationId: getLibraryAlbums
       tags:
@@ -778,7 +778,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
   /api/library/artists:
-    get:
+    post:
       summary: Get library artists
       operationId: getLibraryArtists
       tags:
@@ -846,7 +846,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
   /api/library/tracks:
-    get:
+    post:
       summary: Get library tracks
       operationId: getLibraryTracks
       tags:
@@ -2246,12 +2246,10 @@ components:
             - 0
             - 1
             - 2
-            - 3
-            - 4
           description: |
             0=PlayTime
             1=Name
-            4=DateAdded
+            2=DateAdded
         descending:
           type: boolean
     GetLibraryTracksRequest:

@@ -39,16 +39,16 @@ var (
 		"POST": "Content-Type",
 	}
 	rn31AllowedHeaders = map[string]string{
-		"GET": "Content-Type",
+		"POST": "Content-Type",
 	}
 	rn32AllowedHeaders = map[string]string{
-		"GET": "Content-Type",
+		"POST": "Content-Type",
 	}
 	rn65AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 	rn35AllowedHeaders = map[string]string{
-		"GET": "Content-Type",
+		"POST": "Content-Type",
 	}
 	rn77AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
@@ -814,13 +814,13 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 									if len(elem) == 0 {
 										// Leaf node.
 										switch r.Method {
-										case "GET":
+										case "POST":
 											s.handleGetLibraryAlbumsRequest([0]string{}, elemIsEscaped, w, r)
 										default:
 											s.notAllowed(w, r, notAllowedParams{
-												allowedMethods: "GET",
+												allowedMethods: "POST",
 												allowedHeaders: rn31AllowedHeaders,
-												acceptPost:     "",
+												acceptPost:     "application/json",
 												acceptPatch:    "",
 											})
 										}
@@ -839,13 +839,13 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 									if len(elem) == 0 {
 										// Leaf node.
 										switch r.Method {
-										case "GET":
+										case "POST":
 											s.handleGetLibraryArtistsRequest([0]string{}, elemIsEscaped, w, r)
 										default:
 											s.notAllowed(w, r, notAllowedParams{
-												allowedMethods: "GET",
+												allowedMethods: "POST",
 												allowedHeaders: rn32AllowedHeaders,
-												acceptPost:     "",
+												acceptPost:     "application/json",
 												acceptPatch:    "",
 											})
 										}
@@ -916,13 +916,13 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 								if len(elem) == 0 {
 									// Leaf node.
 									switch r.Method {
-									case "GET":
+									case "POST":
 										s.handleGetLibraryTracksRequest([0]string{}, elemIsEscaped, w, r)
 									default:
 										s.notAllowed(w, r, notAllowedParams{
-											allowedMethods: "GET",
+											allowedMethods: "POST",
 											allowedHeaders: rn35AllowedHeaders,
-											acceptPost:     "",
+											acceptPost:     "application/json",
 											acceptPatch:    "",
 										})
 									}
@@ -2640,7 +2640,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									if len(elem) == 0 {
 										// Leaf node.
 										switch method {
-										case "GET":
+										case "POST":
 											r.name = GetLibraryAlbumsOperation
 											r.summary = "Get library albums"
 											r.operationID = "getLibraryAlbums"
@@ -2665,7 +2665,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									if len(elem) == 0 {
 										// Leaf node.
 										switch method {
-										case "GET":
+										case "POST":
 											r.name = GetLibraryArtistsOperation
 											r.summary = "Get library artists"
 											r.operationID = "getLibraryArtists"
@@ -2742,7 +2742,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 								if len(elem) == 0 {
 									// Leaf node.
 									switch method {
-									case "GET":
+									case "POST":
 										r.name = GetLibraryTracksOperation
 										r.summary = "Get library tracks"
 										r.operationID = "getLibraryTracks"

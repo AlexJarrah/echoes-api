@@ -1,5 +1,5 @@
 /api/library/albums:
-  get:
+  post:
     summary: Get library albums
     operationId: getLibraryAlbums
     tags:

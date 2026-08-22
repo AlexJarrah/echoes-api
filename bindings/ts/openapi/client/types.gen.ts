@@ -236,10 +236,10 @@ export type GetLibraryArtistsRequest = {
     /**
      * 0=PlayTime
      * 1=Name
-     * 4=DateAdded
+     * 2=DateAdded
      *
      */
-    order?: 0 | 1 | 2 | 3 | 4;
+    order?: 0 | 1 | 2;
     descending?: boolean;
 };
 
