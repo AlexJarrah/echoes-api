@@ -1,0 +1,32 @@
+LibraryGetRequest:
+  type: object
+  properties:
+    existing:
+      type: object
+      required:
+        - ids
+        - timestamp
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the fetch returning IDs
+    search:
+      type: string
+    limit:
+      type: integer
+      format: uint
+    offset:
+      type: integer
+      format: uint
+    order:
+      $ref: "#/components/schemas/LibraryGetTracksOrder"
+      type: integer
+      format: uint8
+    descending:
+      type: boolean

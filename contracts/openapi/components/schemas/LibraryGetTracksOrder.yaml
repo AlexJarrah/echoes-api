@@ -1,0 +1,10 @@
+LibraryGetTracksOrder:
+  type: integer
+  format: uint8
+  enum: [0, 1, 2, 3, 4]
+  description: |
+    0=TrackRank
+    1=TrackName
+    2=ReleaseDate
+    3=Duration
+    4=DateAdded

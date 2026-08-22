@@ -52,6 +52,7 @@ var operationRolesCookieAuth = map[string][]string{
 	GetGroupRolesOperation:             []string{},
 	GetGroupsOperation:                 []string{},
 	GetLibrarySearchIndexOperation:     []string{},
+	GetLibraryTracksOperation:          []string{},
 	GetListenSessionsOperation:         []string{},
 	GetMessageThreadOperation:          []string{},
 	GetMessagesOperation:               []string{},

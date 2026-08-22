@@ -301,6 +301,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/library/tracks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get library tracks */
+        get: operations["getLibraryTracks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/library/update": {
         parameters: {
             query?: never;
@@ -1188,6 +1205,34 @@ export interface components {
              */
             force_add: boolean;
         };
+        LibraryGetRequest: {
+            existing?: {
+                ids: string[];
+                /**
+                 * Format: date-time
+                 * @description Timestamp of the fetch returning IDs
+                 */
+                timestamp: string;
+            };
+            search?: string;
+            /** Format: uint */
+            limit?: number;
+            /** Format: uint */
+            offset?: number;
+            /** Format: uint8 */
+            order?: components["schemas"]["LibraryGetTracksOrder"];
+            descending?: boolean;
+        };
+        /**
+         * Format: uint8
+         * @description 0=TrackRank
+         *     1=TrackName
+         *     2=ReleaseDate
+         *     3=Duration
+         *     4=DateAdded
+         * @enum {integer}
+         */
+        LibraryGetTracksOrder: 0 | 1 | 2 | 3 | 4;
         LibraryRemoveRequest: {
             track_ids?: string[];
             album_ids?: string[];
@@ -2388,6 +2433,32 @@ export interface operations {
                     "application/json": components["schemas"]["SearchIndex"];
                 };
             };
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getLibraryTracks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryGetRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Track"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };

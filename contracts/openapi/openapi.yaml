@@ -888,6 +888,50 @@ components:
           default: false
           description: If true, skip deduplication and always create a new entity.
 
+    LibraryGetRequest:
+      type: object
+      properties:
+        existing:
+          type: object
+          required:
+            - ids
+            - timestamp
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            timestamp:
+              type: string
+              format: date-time
+              description: Timestamp of the fetch returning IDs
+        search:
+          type: string
+        limit:
+          type: integer
+          format: uint
+        offset:
+          type: integer
+          format: uint
+        order:
+          $ref: "#/components/schemas/LibraryGetTracksOrder"
+          type: integer
+          format: uint8
+        descending:
+          type: boolean
+
+    LibraryGetTracksOrder:
+      type: integer
+      format: uint8
+      enum: [0, 1, 2, 3, 4]
+      description: |
+        0=TrackRank
+        1=TrackName
+        2=ReleaseDate
+        3=Duration
+        4=DateAdded
+
     LibraryRemoveRequest:
       type: object
       properties:
@@ -2658,6 +2702,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SearchIndex"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/library/tracks:
+    get:
+      summary: Get library tracks
+      operationId: getLibraryTracks
+      tags:
+        - Library
+        - Tracks
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryGetRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Track"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
 

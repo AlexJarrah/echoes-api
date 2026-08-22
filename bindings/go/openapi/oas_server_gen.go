@@ -144,6 +144,12 @@ type Handler interface {
 	//
 	// GET /api/library/search/index
 	GetLibrarySearchIndex(ctx context.Context) (GetLibrarySearchIndexRes, error)
+	// GetLibraryTracks implements getLibraryTracks operation.
+	//
+	// Get library tracks.
+	//
+	// GET /api/library/tracks
+	GetLibraryTracks(ctx context.Context, req *LibraryGetRequest) (GetLibraryTracksRes, error)
 	// GetListenSessions implements getListenSessions operation.
 	//
 	// Get recent listening sessions.

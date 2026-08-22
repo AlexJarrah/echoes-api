@@ -369,6 +369,31 @@ export type LibraryAddTrack = {
     force_add?: boolean;
 };
 
+export type LibraryGetRequest = {
+    existing?: {
+        ids: Array<string>;
+        /**
+         * Timestamp of the fetch returning IDs
+         */
+        timestamp: string;
+    };
+    search?: string;
+    limit?: number;
+    offset?: number;
+    order?: LibraryGetTracksOrder;
+    descending?: boolean;
+};
+
+/**
+ * 0=TrackRank
+ * 1=TrackName
+ * 2=ReleaseDate
+ * 3=Duration
+ * 4=DateAdded
+ *
+ */
+export type LibraryGetTracksOrder = 0 | 1 | 2 | 3 | 4;
+
 export type LibraryRemoveRequest = {
     track_ids?: Array<string>;
     album_ids?: Array<string>;
@@ -1723,6 +1748,36 @@ export type GetLibrarySearchIndexResponses = {
 };
 
 export type GetLibrarySearchIndexResponse = GetLibrarySearchIndexResponses[keyof GetLibrarySearchIndexResponses];
+
+export type GetLibraryTracksData = {
+    body: LibraryGetRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/tracks';
+};
+
+export type GetLibraryTracksErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLibraryTracksError = GetLibraryTracksErrors[keyof GetLibraryTracksErrors];
+
+export type GetLibraryTracksResponses = {
+    200: Array<Track>;
+};
+
+export type GetLibraryTracksResponse = GetLibraryTracksResponses[keyof GetLibraryTracksResponses];
 
 export type UpdateLibraryData = {
     body: LibraryUpdateRequest;

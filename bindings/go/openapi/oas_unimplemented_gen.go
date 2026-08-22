@@ -215,6 +215,15 @@ func (UnimplementedHandler) GetLibrarySearchIndex(ctx context.Context) (r GetLib
 	return r, ht.ErrNotImplemented
 }
 
+// GetLibraryTracks implements getLibraryTracks operation.
+//
+// Get library tracks.
+//
+// GET /api/library/tracks
+func (UnimplementedHandler) GetLibraryTracks(ctx context.Context, req *LibraryGetRequest) (r GetLibraryTracksRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetListenSessions implements getListenSessions operation.
 //
 // Get recent listening sessions.

@@ -85,6 +85,10 @@ type GetLibrarySearchIndexRes interface {
 	getLibrarySearchIndexRes()
 }
 
+type GetLibraryTracksRes interface {
+	getLibraryTracksRes()
+}
+
 type GetListenSessionsRes interface {
 	getListenSessionsRes()
 }
