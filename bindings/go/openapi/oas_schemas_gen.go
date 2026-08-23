@@ -1277,7 +1277,7 @@ type GetLibraryAlbumsRequest struct {
 	Existing OptGetLibraryAlbumsRequestExisting `json:"existing"`
 	Limit    OptUint                            `json:"limit"`
 	Offset   OptUint                            `json:"offset"`
-	// 0=Name 1=Duration 2=ReleaseDate 3=DateAdded.
+	// 0=PlayTime 1=Name 2=Duration 3=ReleaseDate 4=DateAdded.
 	Order      OptGetLibraryAlbumsRequestOrder `json:"order"`
 	Descending OptBool                         `json:"descending"`
 }
@@ -1358,7 +1358,7 @@ func (s *GetLibraryAlbumsRequestExisting) SetTimestamp(val time.Time) {
 	s.Timestamp = val
 }
 
-// 0=Name 1=Duration 2=ReleaseDate 3=DateAdded.
+// 0=PlayTime 1=Name 2=Duration 3=ReleaseDate 4=DateAdded.
 type GetLibraryAlbumsRequestOrder uint8
 
 const (
@@ -1366,6 +1366,7 @@ const (
 	GetLibraryAlbumsRequestOrder1 GetLibraryAlbumsRequestOrder = 1
 	GetLibraryAlbumsRequestOrder2 GetLibraryAlbumsRequestOrder = 2
 	GetLibraryAlbumsRequestOrder3 GetLibraryAlbumsRequestOrder = 3
+	GetLibraryAlbumsRequestOrder4 GetLibraryAlbumsRequestOrder = 4
 )
 
 // AllValues returns all GetLibraryAlbumsRequestOrder values.
@@ -1375,6 +1376,7 @@ func (GetLibraryAlbumsRequestOrder) AllValues() []GetLibraryAlbumsRequestOrder {
 		GetLibraryAlbumsRequestOrder1,
 		GetLibraryAlbumsRequestOrder2,
 		GetLibraryAlbumsRequestOrder3,
+		GetLibraryAlbumsRequestOrder4,
 	}
 }
 
@@ -1521,7 +1523,7 @@ type GetLibraryTracksRequest struct {
 	Existing OptGetLibraryTracksRequestExisting `json:"existing"`
 	Limit    OptUint                            `json:"limit"`
 	Offset   OptUint                            `json:"offset"`
-	// 0=PlayTime 1=Name 2=ReleaseDate 3=Duration 4=DateAdded.
+	// 0=PlayTime 1=Name 2=Duration 3=ReleaseDate 4=DateAdded.
 	Order      OptGetLibraryTracksRequestOrder `json:"order"`
 	Descending OptBool                         `json:"descending"`
 }
@@ -1602,7 +1604,7 @@ func (s *GetLibraryTracksRequestExisting) SetTimestamp(val time.Time) {
 	s.Timestamp = val
 }
 
-// 0=PlayTime 1=Name 2=ReleaseDate 3=Duration 4=DateAdded.
+// 0=PlayTime 1=Name 2=Duration 3=ReleaseDate 4=DateAdded.
 type GetLibraryTracksRequestOrder uint8
 
 const (

@@ -1074,13 +1074,14 @@ export interface components {
             offset?: number;
             /**
              * Format: uint8
-             * @description 0=Name
-             *     1=Duration
-             *     2=ReleaseDate
-             *     3=DateAdded
+             * @description 0=PlayTime
+             *     1=Name
+             *     2=Duration
+             *     3=ReleaseDate
+             *     4=DateAdded
              * @enum {integer}
              */
-            order?: 0 | 1 | 2 | 3;
+            order?: 0 | 1 | 2 | 3 | 4;
             descending?: boolean;
         };
         GetLibraryArtistsRequest: {
@@ -1119,8 +1120,8 @@ export interface components {
              * Format: uint8
              * @description 0=PlayTime
              *     1=Name
-             *     2=ReleaseDate
-             *     3=Duration
+             *     2=Duration
+             *     3=ReleaseDate
              *     4=DateAdded
              * @enum {integer}
              */

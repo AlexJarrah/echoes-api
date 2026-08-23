@@ -2208,11 +2208,13 @@ components:
             - 1
             - 2
             - 3
+            - 4
           description: |
-            0=Name
-            1=Duration
-            2=ReleaseDate
-            3=DateAdded
+            0=PlayTime
+            1=Name
+            2=Duration
+            3=ReleaseDate
+            4=DateAdded
         descending:
           type: boolean
     GetLibraryArtistsRequest:
@@ -2288,8 +2290,8 @@ components:
           description: |
             0=PlayTime
             1=Name
-            2=ReleaseDate
-            3=Duration
+            2=Duration
+            3=ReleaseDate
             4=DateAdded
         descending:
           type: boolean

@@ -213,13 +213,14 @@ export type GetLibraryAlbumsRequest = {
     limit?: number;
     offset?: number;
     /**
-     * 0=Name
-     * 1=Duration
-     * 2=ReleaseDate
-     * 3=DateAdded
+     * 0=PlayTime
+     * 1=Name
+     * 2=Duration
+     * 3=ReleaseDate
+     * 4=DateAdded
      *
      */
-    order?: 0 | 1 | 2 | 3;
+    order?: 0 | 1 | 2 | 3 | 4;
     descending?: boolean;
 };
 
@@ -256,8 +257,8 @@ export type GetLibraryTracksRequest = {
     /**
      * 0=PlayTime
      * 1=Name
-     * 2=ReleaseDate
-     * 3=Duration
+     * 2=Duration
+     * 3=ReleaseDate
      * 4=DateAdded
      *
      */

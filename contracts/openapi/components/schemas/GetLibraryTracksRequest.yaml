@@ -29,8 +29,8 @@ GetLibraryTracksRequest:
       description: |
         0=PlayTime
         1=Name
-        2=ReleaseDate
-        3=Duration
+        2=Duration
+        3=ReleaseDate
         4=DateAdded
     descending:
       type: boolean

@@ -437,6 +437,8 @@ func (s GetLibraryAlbumsRequestOrder) Validate() error {
 		return nil
 	case 3:
 		return nil
+	case 4:
+		return nil
 	default:
 		return errors.Errorf("invalid value: %v", s)
 	}
