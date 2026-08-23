@@ -143,13 +143,13 @@ type Handler interface {
 	// Get library albums.
 	//
 	// POST /api/library/albums
-	GetLibraryAlbums(ctx context.Context, req *GetLibraryAlbumsRequest) (GetLibraryAlbumsRes, error)
+	GetLibraryAlbums(ctx context.Context, req OptGetLibraryAlbumsRequest) (GetLibraryAlbumsRes, error)
 	// GetLibraryArtists implements getLibraryArtists operation.
 	//
 	// Get library artists.
 	//
 	// POST /api/library/artists
-	GetLibraryArtists(ctx context.Context, req *GetLibraryArtistsRequest) (GetLibraryArtistsRes, error)
+	GetLibraryArtists(ctx context.Context, req OptGetLibraryArtistsRequest) (GetLibraryArtistsRes, error)
 	// GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 	//
 	// Returns the user's library search engine index.
@@ -161,7 +161,7 @@ type Handler interface {
 	// Get library tracks.
 	//
 	// POST /api/library/tracks
-	GetLibraryTracks(ctx context.Context, req *GetLibraryTracksRequest) (GetLibraryTracksRes, error)
+	GetLibraryTracks(ctx context.Context, req OptGetLibraryTracksRequest) (GetLibraryTracksRes, error)
 	// GetListenSessions implements getListenSessions operation.
 	//
 	// Get recent listening sessions.

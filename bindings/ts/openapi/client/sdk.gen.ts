@@ -356,7 +356,7 @@ export const addToLibrary = <ThrowOnError extends boolean = false>(options: Opti
 /**
  * Get library albums
  */
-export const getLibraryAlbums = <ThrowOnError extends boolean = false>(options: Options<GetLibraryAlbumsData, ThrowOnError>): RequestResult<GetLibraryAlbumsResponses, GetLibraryAlbumsErrors, ThrowOnError> => (options.client ?? client).post<GetLibraryAlbumsResponses, GetLibraryAlbumsErrors, ThrowOnError>({
+export const getLibraryAlbums = <ThrowOnError extends boolean = false>(options?: Options<GetLibraryAlbumsData, ThrowOnError>): RequestResult<GetLibraryAlbumsResponses, GetLibraryAlbumsErrors, ThrowOnError> => (options?.client ?? client).post<GetLibraryAlbumsResponses, GetLibraryAlbumsErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
@@ -366,14 +366,14 @@ export const getLibraryAlbums = <ThrowOnError extends boolean = false>(options: 
     ...options,
     headers: {
         'Content-Type': 'application/json',
-        ...options.headers
+        ...options?.headers
     }
 });
 
 /**
  * Get library artists
  */
-export const getLibraryArtists = <ThrowOnError extends boolean = false>(options: Options<GetLibraryArtistsData, ThrowOnError>): RequestResult<GetLibraryArtistsResponses, GetLibraryArtistsErrors, ThrowOnError> => (options.client ?? client).post<GetLibraryArtistsResponses, GetLibraryArtistsErrors, ThrowOnError>({
+export const getLibraryArtists = <ThrowOnError extends boolean = false>(options?: Options<GetLibraryArtistsData, ThrowOnError>): RequestResult<GetLibraryArtistsResponses, GetLibraryArtistsErrors, ThrowOnError> => (options?.client ?? client).post<GetLibraryArtistsResponses, GetLibraryArtistsErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
@@ -383,7 +383,7 @@ export const getLibraryArtists = <ThrowOnError extends boolean = false>(options:
     ...options,
     headers: {
         'Content-Type': 'application/json',
-        ...options.headers
+        ...options?.headers
     }
 });
 
@@ -420,7 +420,7 @@ export const getLibrarySearchIndex = <ThrowOnError extends boolean = false>(opti
 /**
  * Get library tracks
  */
-export const getLibraryTracks = <ThrowOnError extends boolean = false>(options: Options<GetLibraryTracksData, ThrowOnError>): RequestResult<GetLibraryTracksResponses, GetLibraryTracksErrors, ThrowOnError> => (options.client ?? client).post<GetLibraryTracksResponses, GetLibraryTracksErrors, ThrowOnError>({
+export const getLibraryTracks = <ThrowOnError extends boolean = false>(options?: Options<GetLibraryTracksData, ThrowOnError>): RequestResult<GetLibraryTracksResponses, GetLibraryTracksErrors, ThrowOnError> => (options?.client ?? client).post<GetLibraryTracksResponses, GetLibraryTracksErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
@@ -430,7 +430,7 @@ export const getLibraryTracks = <ThrowOnError extends boolean = false>(options: 
     ...options,
     headers: {
         'Content-Type': 'application/json',
-        ...options.headers
+        ...options?.headers
     }
 });
 

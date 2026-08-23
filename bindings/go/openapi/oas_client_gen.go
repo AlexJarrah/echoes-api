@@ -225,13 +225,13 @@ type Invoker interface {
 	// Get library albums.
 	//
 	// POST /api/library/albums
-	GetLibraryAlbums(ctx context.Context, request *GetLibraryAlbumsRequest, options ...RequestOption) (GetLibraryAlbumsRes, error)
+	GetLibraryAlbums(ctx context.Context, request OptGetLibraryAlbumsRequest, options ...RequestOption) (GetLibraryAlbumsRes, error)
 	// GetLibraryArtists invokes getLibraryArtists operation.
 	//
 	// Get library artists.
 	//
 	// POST /api/library/artists
-	GetLibraryArtists(ctx context.Context, request *GetLibraryArtistsRequest, options ...RequestOption) (GetLibraryArtistsRes, error)
+	GetLibraryArtists(ctx context.Context, request OptGetLibraryArtistsRequest, options ...RequestOption) (GetLibraryArtistsRes, error)
 	// GetLibrarySearchIndex invokes getLibrarySearchIndex operation.
 	//
 	// Returns the user's library search engine index.
@@ -243,7 +243,7 @@ type Invoker interface {
 	// Get library tracks.
 	//
 	// POST /api/library/tracks
-	GetLibraryTracks(ctx context.Context, request *GetLibraryTracksRequest, options ...RequestOption) (GetLibraryTracksRes, error)
+	GetLibraryTracks(ctx context.Context, request OptGetLibraryTracksRequest, options ...RequestOption) (GetLibraryTracksRes, error)
 	// GetListenSessions invokes getListenSessions operation.
 	//
 	// Get recent listening sessions.
@@ -3774,16 +3774,23 @@ func (c *Client) sendGetGroups(ctx context.Context, requestOptions ...RequestOpt
 // Get library albums.
 //
 // POST /api/library/albums
-func (c *Client) GetLibraryAlbums(ctx context.Context, request *GetLibraryAlbumsRequest, options ...RequestOption) (GetLibraryAlbumsRes, error) {
+func (c *Client) GetLibraryAlbums(ctx context.Context, request OptGetLibraryAlbumsRequest, options ...RequestOption) (GetLibraryAlbumsRes, error) {
 	res, err := c.sendGetLibraryAlbums(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendGetLibraryAlbums(ctx context.Context, request *GetLibraryAlbumsRequest, requestOptions ...RequestOption) (res GetLibraryAlbumsRes, err error) {
+func (c *Client) sendGetLibraryAlbums(ctx context.Context, request OptGetLibraryAlbumsRequest, requestOptions ...RequestOption) (res GetLibraryAlbumsRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
-		if err := request.Validate(); err != nil {
-			return err
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
 		}
 		return nil
 	}(); err != nil {
@@ -3925,16 +3932,23 @@ func (c *Client) sendGetLibraryAlbums(ctx context.Context, request *GetLibraryAl
 // Get library artists.
 //
 // POST /api/library/artists
-func (c *Client) GetLibraryArtists(ctx context.Context, request *GetLibraryArtistsRequest, options ...RequestOption) (GetLibraryArtistsRes, error) {
+func (c *Client) GetLibraryArtists(ctx context.Context, request OptGetLibraryArtistsRequest, options ...RequestOption) (GetLibraryArtistsRes, error) {
 	res, err := c.sendGetLibraryArtists(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendGetLibraryArtists(ctx context.Context, request *GetLibraryArtistsRequest, requestOptions ...RequestOption) (res GetLibraryArtistsRes, err error) {
+func (c *Client) sendGetLibraryArtists(ctx context.Context, request OptGetLibraryArtistsRequest, requestOptions ...RequestOption) (res GetLibraryArtistsRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
-		if err := request.Validate(); err != nil {
-			return err
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
 		}
 		return nil
 	}(); err != nil {
@@ -4215,16 +4229,23 @@ func (c *Client) sendGetLibrarySearchIndex(ctx context.Context, requestOptions .
 // Get library tracks.
 //
 // POST /api/library/tracks
-func (c *Client) GetLibraryTracks(ctx context.Context, request *GetLibraryTracksRequest, options ...RequestOption) (GetLibraryTracksRes, error) {
+func (c *Client) GetLibraryTracks(ctx context.Context, request OptGetLibraryTracksRequest, options ...RequestOption) (GetLibraryTracksRes, error) {
 	res, err := c.sendGetLibraryTracks(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendGetLibraryTracks(ctx context.Context, request *GetLibraryTracksRequest, requestOptions ...RequestOption) (res GetLibraryTracksRes, err error) {
+func (c *Client) sendGetLibraryTracks(ctx context.Context, request OptGetLibraryTracksRequest, requestOptions ...RequestOption) (res GetLibraryTracksRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
-		if err := request.Validate(); err != nil {
-			return err
+		if value, ok := request.Get(); ok {
+			if err := func() error {
+				if err := value.Validate(); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
 		}
 		return nil
 	}(); err != nil {

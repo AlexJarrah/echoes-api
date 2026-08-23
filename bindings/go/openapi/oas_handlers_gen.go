@@ -3943,7 +3943,7 @@ func (s *Server) handleGetLibraryAlbumsRequest(args [0]string, argsEscaped bool,
 		}
 
 		type (
-			Request  = *GetLibraryAlbumsRequest
+			Request  = OptGetLibraryAlbumsRequest
 			Params   = struct{}
 			Response = GetLibraryAlbumsRes
 		)
@@ -4130,7 +4130,7 @@ func (s *Server) handleGetLibraryArtistsRequest(args [0]string, argsEscaped bool
 		}
 
 		type (
-			Request  = *GetLibraryArtistsRequest
+			Request  = OptGetLibraryArtistsRequest
 			Params   = struct{}
 			Response = GetLibraryArtistsRes
 		)
@@ -4489,7 +4489,7 @@ func (s *Server) handleGetLibraryTracksRequest(args [0]string, argsEscaped bool,
 		}
 
 		type (
-			Request  = *GetLibraryTracksRequest
+			Request  = OptGetLibraryTracksRequest
 			Params   = struct{}
 			Response = GetLibraryTracksRes
 		)

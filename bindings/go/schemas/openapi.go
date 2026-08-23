@@ -758,7 +758,7 @@ paths:
       security:
         - CookieAuth: []
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
@@ -787,7 +787,7 @@ paths:
       security:
         - CookieAuth: []
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
@@ -855,7 +855,7 @@ paths:
       security:
         - CookieAuth: []
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:

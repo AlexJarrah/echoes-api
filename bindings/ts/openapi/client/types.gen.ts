@@ -1733,7 +1733,7 @@ export type AddToLibraryResponses = {
 export type AddToLibraryResponse = AddToLibraryResponses[keyof AddToLibraryResponses];
 
 export type GetLibraryAlbumsData = {
-    body: GetLibraryAlbumsRequest;
+    body?: GetLibraryAlbumsRequest;
     path?: never;
     query?: never;
     url: '/api/library/albums';
@@ -1763,7 +1763,7 @@ export type GetLibraryAlbumsResponses = {
 export type GetLibraryAlbumsResponse = GetLibraryAlbumsResponses[keyof GetLibraryAlbumsResponses];
 
 export type GetLibraryArtistsData = {
-    body: GetLibraryArtistsRequest;
+    body?: GetLibraryArtistsRequest;
     path?: never;
     query?: never;
     url: '/api/library/artists';
@@ -1848,7 +1848,7 @@ export type GetLibrarySearchIndexResponses = {
 export type GetLibrarySearchIndexResponse = GetLibrarySearchIndexResponses[keyof GetLibrarySearchIndexResponses];
 
 export type GetLibraryTracksData = {
-    body: GetLibraryTracksRequest;
+    body?: GetLibraryTracksRequest;
     path?: never;
     query?: never;
     url: '/api/library/tracks';

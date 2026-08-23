@@ -3414,6 +3414,52 @@ func (o OptEntityPlays) Or(d EntityPlays) EntityPlays {
 	return d
 }
 
+// NewOptGetLibraryAlbumsRequest returns new OptGetLibraryAlbumsRequest with value set to v.
+func NewOptGetLibraryAlbumsRequest(v GetLibraryAlbumsRequest) OptGetLibraryAlbumsRequest {
+	return OptGetLibraryAlbumsRequest{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryAlbumsRequest is optional GetLibraryAlbumsRequest.
+type OptGetLibraryAlbumsRequest struct {
+	Value GetLibraryAlbumsRequest
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryAlbumsRequest was set.
+func (o OptGetLibraryAlbumsRequest) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryAlbumsRequest) Reset() {
+	var v GetLibraryAlbumsRequest
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryAlbumsRequest) SetTo(v GetLibraryAlbumsRequest) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryAlbumsRequest) Get() (v GetLibraryAlbumsRequest, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryAlbumsRequest) Or(d GetLibraryAlbumsRequest) GetLibraryAlbumsRequest {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptGetLibraryAlbumsRequestExisting returns new OptGetLibraryAlbumsRequestExisting with value set to v.
 func NewOptGetLibraryAlbumsRequestExisting(v GetLibraryAlbumsRequestExisting) OptGetLibraryAlbumsRequestExisting {
 	return OptGetLibraryAlbumsRequestExisting{
@@ -3506,6 +3552,52 @@ func (o OptGetLibraryAlbumsRequestOrder) Or(d GetLibraryAlbumsRequestOrder) GetL
 	return d
 }
 
+// NewOptGetLibraryArtistsRequest returns new OptGetLibraryArtistsRequest with value set to v.
+func NewOptGetLibraryArtistsRequest(v GetLibraryArtistsRequest) OptGetLibraryArtistsRequest {
+	return OptGetLibraryArtistsRequest{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryArtistsRequest is optional GetLibraryArtistsRequest.
+type OptGetLibraryArtistsRequest struct {
+	Value GetLibraryArtistsRequest
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryArtistsRequest was set.
+func (o OptGetLibraryArtistsRequest) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryArtistsRequest) Reset() {
+	var v GetLibraryArtistsRequest
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryArtistsRequest) SetTo(v GetLibraryArtistsRequest) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryArtistsRequest) Get() (v GetLibraryArtistsRequest, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryArtistsRequest) Or(d GetLibraryArtistsRequest) GetLibraryArtistsRequest {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptGetLibraryArtistsRequestExisting returns new OptGetLibraryArtistsRequestExisting with value set to v.
 func NewOptGetLibraryArtistsRequestExisting(v GetLibraryArtistsRequestExisting) OptGetLibraryArtistsRequestExisting {
 	return OptGetLibraryArtistsRequestExisting{
@@ -3592,6 +3684,52 @@ func (o OptGetLibraryArtistsRequestOrder) Get() (v GetLibraryArtistsRequestOrder
 
 // Or returns value if set, or given parameter if does not.
 func (o OptGetLibraryArtistsRequestOrder) Or(d GetLibraryArtistsRequestOrder) GetLibraryArtistsRequestOrder {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryTracksRequest returns new OptGetLibraryTracksRequest with value set to v.
+func NewOptGetLibraryTracksRequest(v GetLibraryTracksRequest) OptGetLibraryTracksRequest {
+	return OptGetLibraryTracksRequest{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryTracksRequest is optional GetLibraryTracksRequest.
+type OptGetLibraryTracksRequest struct {
+	Value GetLibraryTracksRequest
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryTracksRequest was set.
+func (o OptGetLibraryTracksRequest) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryTracksRequest) Reset() {
+	var v GetLibraryTracksRequest
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryTracksRequest) SetTo(v GetLibraryTracksRequest) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryTracksRequest) Get() (v GetLibraryTracksRequest, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryTracksRequest) Or(d GetLibraryTracksRequest) GetLibraryTracksRequest {
 	if v, ok := o.Get(); ok {
 		return v
 	}
