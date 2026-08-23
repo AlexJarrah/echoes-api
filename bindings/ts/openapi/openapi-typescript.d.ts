@@ -1083,6 +1083,8 @@ export interface components {
              */
             order?: 0 | 1 | 2 | 3 | 4;
             descending?: boolean;
+            /** @description Time range in which play statistics are calculated. */
+            time_range?: components["schemas"]["DateTimeRange"];
         };
         GetLibraryArtistsRequest: {
             /** @description ids will not be returned except for those updated since timestamp. */
@@ -1104,6 +1106,8 @@ export interface components {
              */
             order?: 0 | 1 | 2;
             descending?: boolean;
+            /** @description Time range in which play statistics are calculated. */
+            time_range?: components["schemas"]["DateTimeRange"];
         };
         GetLibraryTracksRequest: {
             /** @description ids will not be returned except for those updated since timestamp. */
@@ -1127,6 +1131,8 @@ export interface components {
              */
             order?: 0 | 1 | 2 | 3 | 4;
             descending?: boolean;
+            /** @description Time range in which play statistics are calculated. */
+            time_range?: components["schemas"]["DateTimeRange"];
         };
         Group: {
             /** Format: uuid */
@@ -2488,7 +2494,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Album"][];
+                    "application/json": components["schemas"]["AlbumPlayStats"][];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -2514,7 +2520,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Artist"][];
+                    "application/json": components["schemas"]["ArtistPlayStats"][];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -2579,7 +2585,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Track"][];
+                    "application/json": components["schemas"]["TrackPlayStats"][];
                 };
             };
             400: components["responses"]["BadRequest"];

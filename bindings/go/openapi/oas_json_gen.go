@@ -5237,7 +5237,7 @@ func (s *GetLibraryAlbumsInternalServerError) UnmarshalJSON(data []byte) error {
 
 // Encode encodes GetLibraryAlbumsOKApplicationJSON as json.
 func (s GetLibraryAlbumsOKApplicationJSON) Encode(e *jx.Encoder) {
-	unwrapped := []Album(s)
+	unwrapped := []AlbumPlayStats(s)
 
 	e.ArrStart()
 	for _, elem := range unwrapped {
@@ -5251,11 +5251,11 @@ func (s *GetLibraryAlbumsOKApplicationJSON) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode GetLibraryAlbumsOKApplicationJSON to nil")
 	}
-	var unwrapped []Album
+	var unwrapped []AlbumPlayStats
 	if err := func() error {
-		unwrapped = make([]Album, 0)
+		unwrapped = make([]AlbumPlayStats, 0)
 		if err := d.Arr(func(d *jx.Decoder) error {
-			var elem Album
+			var elem AlbumPlayStats
 			if err := elem.Decode(d); err != nil {
 				return err
 			}
@@ -5324,14 +5324,21 @@ func (s *GetLibraryAlbumsRequest) encodeFields(e *jx.Encoder) {
 			s.Descending.Encode(e)
 		}
 	}
+	{
+		if s.TimeRange.Set {
+			e.FieldStart("time_range")
+			s.TimeRange.Encode(e)
+		}
+	}
 }
 
-var jsonFieldsNameOfGetLibraryAlbumsRequest = [5]string{
+var jsonFieldsNameOfGetLibraryAlbumsRequest = [6]string{
 	0: "existing",
 	1: "limit",
 	2: "offset",
 	3: "order",
 	4: "descending",
+	5: "time_range",
 }
 
 // Decode decodes GetLibraryAlbumsRequest from json.
@@ -5391,6 +5398,16 @@ func (s *GetLibraryAlbumsRequest) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"descending\"")
+			}
+		case "time_range":
+			if err := func() error {
+				s.TimeRange.Reset()
+				if err := s.TimeRange.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"time_range\"")
 			}
 		default:
 			return d.Skip()
@@ -5689,7 +5706,7 @@ func (s *GetLibraryArtistsInternalServerError) UnmarshalJSON(data []byte) error 
 
 // Encode encodes GetLibraryArtistsOKApplicationJSON as json.
 func (s GetLibraryArtistsOKApplicationJSON) Encode(e *jx.Encoder) {
-	unwrapped := []Artist(s)
+	unwrapped := []ArtistPlayStats(s)
 
 	e.ArrStart()
 	for _, elem := range unwrapped {
@@ -5703,11 +5720,11 @@ func (s *GetLibraryArtistsOKApplicationJSON) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode GetLibraryArtistsOKApplicationJSON to nil")
 	}
-	var unwrapped []Artist
+	var unwrapped []ArtistPlayStats
 	if err := func() error {
-		unwrapped = make([]Artist, 0)
+		unwrapped = make([]ArtistPlayStats, 0)
 		if err := d.Arr(func(d *jx.Decoder) error {
-			var elem Artist
+			var elem ArtistPlayStats
 			if err := elem.Decode(d); err != nil {
 				return err
 			}
@@ -5776,14 +5793,21 @@ func (s *GetLibraryArtistsRequest) encodeFields(e *jx.Encoder) {
 			s.Descending.Encode(e)
 		}
 	}
+	{
+		if s.TimeRange.Set {
+			e.FieldStart("time_range")
+			s.TimeRange.Encode(e)
+		}
+	}
 }
 
-var jsonFieldsNameOfGetLibraryArtistsRequest = [5]string{
+var jsonFieldsNameOfGetLibraryArtistsRequest = [6]string{
 	0: "existing",
 	1: "limit",
 	2: "offset",
 	3: "order",
 	4: "descending",
+	5: "time_range",
 }
 
 // Decode decodes GetLibraryArtistsRequest from json.
@@ -5843,6 +5867,16 @@ func (s *GetLibraryArtistsRequest) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"descending\"")
+			}
+		case "time_range":
+			if err := func() error {
+				s.TimeRange.Reset()
+				if err := s.TimeRange.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"time_range\"")
 			}
 		default:
 			return d.Skip()
@@ -6141,7 +6175,7 @@ func (s *GetLibraryTracksInternalServerError) UnmarshalJSON(data []byte) error {
 
 // Encode encodes GetLibraryTracksOKApplicationJSON as json.
 func (s GetLibraryTracksOKApplicationJSON) Encode(e *jx.Encoder) {
-	unwrapped := []Track(s)
+	unwrapped := []TrackPlayStats(s)
 
 	e.ArrStart()
 	for _, elem := range unwrapped {
@@ -6155,11 +6189,11 @@ func (s *GetLibraryTracksOKApplicationJSON) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode GetLibraryTracksOKApplicationJSON to nil")
 	}
-	var unwrapped []Track
+	var unwrapped []TrackPlayStats
 	if err := func() error {
-		unwrapped = make([]Track, 0)
+		unwrapped = make([]TrackPlayStats, 0)
 		if err := d.Arr(func(d *jx.Decoder) error {
-			var elem Track
+			var elem TrackPlayStats
 			if err := elem.Decode(d); err != nil {
 				return err
 			}
@@ -6228,14 +6262,21 @@ func (s *GetLibraryTracksRequest) encodeFields(e *jx.Encoder) {
 			s.Descending.Encode(e)
 		}
 	}
+	{
+		if s.TimeRange.Set {
+			e.FieldStart("time_range")
+			s.TimeRange.Encode(e)
+		}
+	}
 }
 
-var jsonFieldsNameOfGetLibraryTracksRequest = [5]string{
+var jsonFieldsNameOfGetLibraryTracksRequest = [6]string{
 	0: "existing",
 	1: "limit",
 	2: "offset",
 	3: "order",
 	4: "descending",
+	5: "time_range",
 }
 
 // Decode decodes GetLibraryTracksRequest from json.
@@ -6295,6 +6336,16 @@ func (s *GetLibraryTracksRequest) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"descending\"")
+			}
+		case "time_range":
+			if err := func() error {
+				s.TimeRange.Reset()
+				if err := s.TimeRange.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"time_range\"")
 			}
 		default:
 			return d.Skip()
@@ -11942,6 +11993,39 @@ func (s OptDateTime) MarshalJSON() ([]byte, error) {
 func (s *OptDateTime) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d, json.DecodeDateTime)
+}
+
+// Encode encodes DateTimeRange as json.
+func (o OptDateTimeRange) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes DateTimeRange from json.
+func (o *OptDateTimeRange) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptDateTimeRange to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptDateTimeRange) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptDateTimeRange) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
 }
 
 // Encode encodes EntityChange as json.

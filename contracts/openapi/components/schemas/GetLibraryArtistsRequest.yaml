@@ -32,3 +32,6 @@ GetLibraryArtistsRequest:
         2=DateAdded
     descending:
       type: boolean
+    time_range:
+      $ref: "#/components/schemas/DateTimeRange"
+      description: Time range in which play statistics are calculated.

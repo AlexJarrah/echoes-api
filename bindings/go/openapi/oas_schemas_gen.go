@@ -1267,7 +1267,7 @@ type GetLibraryAlbumsInternalServerError ErrorResponse
 
 func (*GetLibraryAlbumsInternalServerError) getLibraryAlbumsRes() {}
 
-type GetLibraryAlbumsOKApplicationJSON []Album
+type GetLibraryAlbumsOKApplicationJSON []AlbumPlayStats
 
 func (*GetLibraryAlbumsOKApplicationJSON) getLibraryAlbumsRes() {}
 
@@ -1280,6 +1280,8 @@ type GetLibraryAlbumsRequest struct {
 	// 0=PlayTime 1=Name 2=Duration 3=ReleaseDate 4=DateAdded.
 	Order      OptGetLibraryAlbumsRequestOrder `json:"order"`
 	Descending OptBool                         `json:"descending"`
+	// Time range in which play statistics are calculated.
+	TimeRange OptDateTimeRange `json:"time_range"`
 }
 
 // GetExisting returns the value of Existing.
@@ -1307,6 +1309,11 @@ func (s *GetLibraryAlbumsRequest) GetDescending() OptBool {
 	return s.Descending
 }
 
+// GetTimeRange returns the value of TimeRange.
+func (s *GetLibraryAlbumsRequest) GetTimeRange() OptDateTimeRange {
+	return s.TimeRange
+}
+
 // SetExisting sets the value of Existing.
 func (s *GetLibraryAlbumsRequest) SetExisting(val OptGetLibraryAlbumsRequestExisting) {
 	s.Existing = val
@@ -1330,6 +1337,11 @@ func (s *GetLibraryAlbumsRequest) SetOrder(val OptGetLibraryAlbumsRequestOrder) 
 // SetDescending sets the value of Descending.
 func (s *GetLibraryAlbumsRequest) SetDescending(val OptBool) {
 	s.Descending = val
+}
+
+// SetTimeRange sets the value of TimeRange.
+func (s *GetLibraryAlbumsRequest) SetTimeRange(val OptDateTimeRange) {
+	s.TimeRange = val
 }
 
 // Ids will not be returned except for those updated since timestamp.
@@ -1392,7 +1404,7 @@ type GetLibraryArtistsInternalServerError ErrorResponse
 
 func (*GetLibraryArtistsInternalServerError) getLibraryArtistsRes() {}
 
-type GetLibraryArtistsOKApplicationJSON []Artist
+type GetLibraryArtistsOKApplicationJSON []ArtistPlayStats
 
 func (*GetLibraryArtistsOKApplicationJSON) getLibraryArtistsRes() {}
 
@@ -1405,6 +1417,8 @@ type GetLibraryArtistsRequest struct {
 	// 0=PlayTime 1=Name 2=DateAdded.
 	Order      OptGetLibraryArtistsRequestOrder `json:"order"`
 	Descending OptBool                          `json:"descending"`
+	// Time range in which play statistics are calculated.
+	TimeRange OptDateTimeRange `json:"time_range"`
 }
 
 // GetExisting returns the value of Existing.
@@ -1432,6 +1446,11 @@ func (s *GetLibraryArtistsRequest) GetDescending() OptBool {
 	return s.Descending
 }
 
+// GetTimeRange returns the value of TimeRange.
+func (s *GetLibraryArtistsRequest) GetTimeRange() OptDateTimeRange {
+	return s.TimeRange
+}
+
 // SetExisting sets the value of Existing.
 func (s *GetLibraryArtistsRequest) SetExisting(val OptGetLibraryArtistsRequestExisting) {
 	s.Existing = val
@@ -1455,6 +1474,11 @@ func (s *GetLibraryArtistsRequest) SetOrder(val OptGetLibraryArtistsRequestOrder
 // SetDescending sets the value of Descending.
 func (s *GetLibraryArtistsRequest) SetDescending(val OptBool) {
 	s.Descending = val
+}
+
+// SetTimeRange sets the value of TimeRange.
+func (s *GetLibraryArtistsRequest) SetTimeRange(val OptDateTimeRange) {
+	s.TimeRange = val
 }
 
 // Ids will not be returned except for those updated since timestamp.
@@ -1513,7 +1537,7 @@ type GetLibraryTracksInternalServerError ErrorResponse
 
 func (*GetLibraryTracksInternalServerError) getLibraryTracksRes() {}
 
-type GetLibraryTracksOKApplicationJSON []Track
+type GetLibraryTracksOKApplicationJSON []TrackPlayStats
 
 func (*GetLibraryTracksOKApplicationJSON) getLibraryTracksRes() {}
 
@@ -1526,6 +1550,8 @@ type GetLibraryTracksRequest struct {
 	// 0=PlayTime 1=Name 2=Duration 3=ReleaseDate 4=DateAdded.
 	Order      OptGetLibraryTracksRequestOrder `json:"order"`
 	Descending OptBool                         `json:"descending"`
+	// Time range in which play statistics are calculated.
+	TimeRange OptDateTimeRange `json:"time_range"`
 }
 
 // GetExisting returns the value of Existing.
@@ -1553,6 +1579,11 @@ func (s *GetLibraryTracksRequest) GetDescending() OptBool {
 	return s.Descending
 }
 
+// GetTimeRange returns the value of TimeRange.
+func (s *GetLibraryTracksRequest) GetTimeRange() OptDateTimeRange {
+	return s.TimeRange
+}
+
 // SetExisting sets the value of Existing.
 func (s *GetLibraryTracksRequest) SetExisting(val OptGetLibraryTracksRequestExisting) {
 	s.Existing = val
@@ -1576,6 +1607,11 @@ func (s *GetLibraryTracksRequest) SetOrder(val OptGetLibraryTracksRequestOrder) 
 // SetDescending sets the value of Descending.
 func (s *GetLibraryTracksRequest) SetDescending(val OptBool) {
 	s.Descending = val
+}
+
+// SetTimeRange sets the value of TimeRange.
+func (s *GetLibraryTracksRequest) SetTimeRange(val OptDateTimeRange) {
+	s.TimeRange = val
 }
 
 // Ids will not be returned except for those updated since timestamp.
@@ -3318,6 +3354,52 @@ func (o OptDateTime) Get() (v time.Time, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptDateTime) Or(d time.Time) time.Time {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptDateTimeRange returns new OptDateTimeRange with value set to v.
+func NewOptDateTimeRange(v DateTimeRange) OptDateTimeRange {
+	return OptDateTimeRange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptDateTimeRange is optional DateTimeRange.
+type OptDateTimeRange struct {
+	Value DateTimeRange
+	Set   bool
+}
+
+// IsSet returns true if OptDateTimeRange was set.
+func (o OptDateTimeRange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptDateTimeRange) Reset() {
+	var v DateTimeRange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptDateTimeRange) SetTo(v DateTimeRange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptDateTimeRange) Get() (v DateTimeRange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptDateTimeRange) Or(d DateTimeRange) DateTimeRange {
 	if v, ok := o.Get(); ok {
 		return v
 	}

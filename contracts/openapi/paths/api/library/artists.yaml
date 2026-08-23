@@ -20,7 +20,7 @@
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/Artist"
+                $ref: "#/components/schemas/ArtistPlayStats"
       "400":
         $ref: "#/components/responses/BadRequest"
       "401":

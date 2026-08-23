@@ -20,7 +20,7 @@
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/Track"
+                $ref: "#/components/schemas/TrackPlayStats"
       "400":
         $ref: "#/components/responses/BadRequest"
       "401":

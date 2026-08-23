@@ -222,6 +222,7 @@ export type GetLibraryAlbumsRequest = {
      */
     order?: 0 | 1 | 2 | 3 | 4;
     descending?: boolean;
+    time_range?: DateTimeRange;
 };
 
 export type GetLibraryArtistsRequest = {
@@ -242,6 +243,7 @@ export type GetLibraryArtistsRequest = {
      */
     order?: 0 | 1 | 2;
     descending?: boolean;
+    time_range?: DateTimeRange;
 };
 
 export type GetLibraryTracksRequest = {
@@ -264,6 +266,7 @@ export type GetLibraryTracksRequest = {
      */
     order?: 0 | 1 | 2 | 3 | 4;
     descending?: boolean;
+    time_range?: DateTimeRange;
 };
 
 export type Group = {
@@ -1758,7 +1761,7 @@ export type GetLibraryAlbumsErrors = {
 export type GetLibraryAlbumsError = GetLibraryAlbumsErrors[keyof GetLibraryAlbumsErrors];
 
 export type GetLibraryAlbumsResponses = {
-    200: Array<Album>;
+    200: Array<AlbumPlayStats>;
 };
 
 export type GetLibraryAlbumsResponse = GetLibraryAlbumsResponses[keyof GetLibraryAlbumsResponses];
@@ -1788,7 +1791,7 @@ export type GetLibraryArtistsErrors = {
 export type GetLibraryArtistsError = GetLibraryArtistsErrors[keyof GetLibraryArtistsErrors];
 
 export type GetLibraryArtistsResponses = {
-    200: Array<Artist>;
+    200: Array<ArtistPlayStats>;
 };
 
 export type GetLibraryArtistsResponse = GetLibraryArtistsResponses[keyof GetLibraryArtistsResponses];
@@ -1873,7 +1876,7 @@ export type GetLibraryTracksErrors = {
 export type GetLibraryTracksError = GetLibraryTracksErrors[keyof GetLibraryTracksErrors];
 
 export type GetLibraryTracksResponses = {
-    200: Array<Track>;
+    200: Array<TrackPlayStats>;
 };
 
 export type GetLibraryTracksResponse = GetLibraryTracksResponses[keyof GetLibraryTracksResponses];

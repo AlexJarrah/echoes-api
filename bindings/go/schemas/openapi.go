@@ -770,7 +770,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Album'
+                  $ref: '#/components/schemas/AlbumPlayStats'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -799,7 +799,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Artist'
+                  $ref: '#/components/schemas/ArtistPlayStats'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -867,7 +867,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Track'
+                  $ref: '#/components/schemas/TrackPlayStats'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2217,6 +2217,9 @@ components:
             4=DateAdded
         descending:
           type: boolean
+        time_range:
+          $ref: '#/components/schemas/DateTimeRange'
+          description: Time range in which play statistics are calculated.
     GetLibraryArtistsRequest:
       type: object
       properties:
@@ -2254,6 +2257,9 @@ components:
             2=DateAdded
         descending:
           type: boolean
+        time_range:
+          $ref: '#/components/schemas/DateTimeRange'
+          description: Time range in which play statistics are calculated.
     GetLibraryTracksRequest:
       type: object
       properties:
@@ -2295,6 +2301,9 @@ components:
             4=DateAdded
         descending:
           type: boolean
+        time_range:
+          $ref: '#/components/schemas/DateTimeRange'
+          description: Time range in which play statistics are calculated.
     Group:
       type: object
       required:
