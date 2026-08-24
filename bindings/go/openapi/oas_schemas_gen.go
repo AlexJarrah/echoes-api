@@ -51,6 +51,110 @@ type AddMessageReactionUnauthorized ErrorResponse
 
 func (*AddMessageReactionUnauthorized) addMessageReactionRes() {}
 
+type AddPlaylistRolesBadRequest ErrorResponse
+
+func (*AddPlaylistRolesBadRequest) addPlaylistRolesRes() {}
+
+type AddPlaylistRolesConflict ErrorResponse
+
+func (*AddPlaylistRolesConflict) addPlaylistRolesRes() {}
+
+type AddPlaylistRolesForbidden ErrorResponse
+
+func (*AddPlaylistRolesForbidden) addPlaylistRolesRes() {}
+
+type AddPlaylistRolesInternalServerError ErrorResponse
+
+func (*AddPlaylistRolesInternalServerError) addPlaylistRolesRes() {}
+
+type AddPlaylistRolesNotFound ErrorResponse
+
+func (*AddPlaylistRolesNotFound) addPlaylistRolesRes() {}
+
+type AddPlaylistRolesOKApplicationJSON []PlaylistRole
+
+func (*AddPlaylistRolesOKApplicationJSON) addPlaylistRolesRes() {}
+
+type AddPlaylistRolesReqItem struct {
+	UserID uuid.UUID        `json:"user_id"`
+	Role   PlaylistRoleType `json:"role"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *AddPlaylistRolesReqItem) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetRole returns the value of Role.
+func (s *AddPlaylistRolesReqItem) GetRole() PlaylistRoleType {
+	return s.Role
+}
+
+// SetUserID sets the value of UserID.
+func (s *AddPlaylistRolesReqItem) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetRole sets the value of Role.
+func (s *AddPlaylistRolesReqItem) SetRole(val PlaylistRoleType) {
+	s.Role = val
+}
+
+type AddPlaylistRolesUnauthorized ErrorResponse
+
+func (*AddPlaylistRolesUnauthorized) addPlaylistRolesRes() {}
+
+type AddPlaylistTracksBadRequest ErrorResponse
+
+func (*AddPlaylistTracksBadRequest) addPlaylistTracksRes() {}
+
+type AddPlaylistTracksForbidden ErrorResponse
+
+func (*AddPlaylistTracksForbidden) addPlaylistTracksRes() {}
+
+type AddPlaylistTracksInternalServerError ErrorResponse
+
+func (*AddPlaylistTracksInternalServerError) addPlaylistTracksRes() {}
+
+type AddPlaylistTracksNotFound ErrorResponse
+
+func (*AddPlaylistTracksNotFound) addPlaylistTracksRes() {}
+
+type AddPlaylistTracksOKApplicationJSON []PlaylistTrack
+
+func (*AddPlaylistTracksOKApplicationJSON) addPlaylistTracksRes() {}
+
+type AddPlaylistTracksReqItem struct {
+	// Track to add to the playlist.
+	TrackID uuid.UUID `json:"track_id"`
+	// Lexicographically sortable string.
+	Position string `json:"position"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *AddPlaylistTracksReqItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetPosition returns the value of Position.
+func (s *AddPlaylistTracksReqItem) GetPosition() string {
+	return s.Position
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *AddPlaylistTracksReqItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *AddPlaylistTracksReqItem) SetPosition(val string) {
+	s.Position = val
+}
+
+type AddPlaylistTracksUnauthorized ErrorResponse
+
+func (*AddPlaylistTracksUnauthorized) addPlaylistTracksRes() {}
+
 type AddToLibraryBadRequest ErrorResponse
 
 func (*AddToLibraryBadRequest) addToLibraryRes() {}
@@ -808,6 +912,55 @@ func (s *CreateGroupRequest) SetMembers(val []uuid.UUID) {
 	s.Members = val
 }
 
+type CreatePlaylistBadRequest ErrorResponse
+
+func (*CreatePlaylistBadRequest) createPlaylistRes() {}
+
+type CreatePlaylistInternalServerError ErrorResponse
+
+func (*CreatePlaylistInternalServerError) createPlaylistRes() {}
+
+// Ref: #/components/schemas/CreatePlaylistRequest
+type CreatePlaylistRequest struct {
+	Name        string       `json:"name"`
+	Description OptNilString `json:"description"`
+	Visibility  Visibility   `json:"visibility"`
+}
+
+// GetName returns the value of Name.
+func (s *CreatePlaylistRequest) GetName() string {
+	return s.Name
+}
+
+// GetDescription returns the value of Description.
+func (s *CreatePlaylistRequest) GetDescription() OptNilString {
+	return s.Description
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *CreatePlaylistRequest) GetVisibility() Visibility {
+	return s.Visibility
+}
+
+// SetName sets the value of Name.
+func (s *CreatePlaylistRequest) SetName(val string) {
+	s.Name = val
+}
+
+// SetDescription sets the value of Description.
+func (s *CreatePlaylistRequest) SetDescription(val OptNilString) {
+	s.Description = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *CreatePlaylistRequest) SetVisibility(val Visibility) {
+	s.Visibility = val
+}
+
+type CreatePlaylistUnauthorized ErrorResponse
+
+func (*CreatePlaylistUnauthorized) createPlaylistRes() {}
+
 // Ref: #/components/schemas/DateTimeRange
 type DateTimeRange struct {
 	Start time.Time `json:"start"`
@@ -915,6 +1068,66 @@ type DeleteMessageReactionUnauthorized ErrorResponse
 
 func (*DeleteMessageReactionUnauthorized) deleteMessageReactionRes() {}
 
+type DeletePlaylistBadRequest ErrorResponse
+
+func (*DeletePlaylistBadRequest) deletePlaylistRes() {}
+
+type DeletePlaylistForbidden ErrorResponse
+
+func (*DeletePlaylistForbidden) deletePlaylistRes() {}
+
+type DeletePlaylistInternalServerError ErrorResponse
+
+func (*DeletePlaylistInternalServerError) deletePlaylistRes() {}
+
+type DeletePlaylistNotFound ErrorResponse
+
+func (*DeletePlaylistNotFound) deletePlaylistRes() {}
+
+type DeletePlaylistRoleBadRequest ErrorResponse
+
+func (*DeletePlaylistRoleBadRequest) deletePlaylistRoleRes() {}
+
+type DeletePlaylistRoleForbidden ErrorResponse
+
+func (*DeletePlaylistRoleForbidden) deletePlaylistRoleRes() {}
+
+type DeletePlaylistRoleInternalServerError ErrorResponse
+
+func (*DeletePlaylistRoleInternalServerError) deletePlaylistRoleRes() {}
+
+type DeletePlaylistRoleNotFound ErrorResponse
+
+func (*DeletePlaylistRoleNotFound) deletePlaylistRoleRes() {}
+
+type DeletePlaylistRoleUnauthorized ErrorResponse
+
+func (*DeletePlaylistRoleUnauthorized) deletePlaylistRoleRes() {}
+
+type DeletePlaylistTrackBadRequest ErrorResponse
+
+func (*DeletePlaylistTrackBadRequest) deletePlaylistTrackRes() {}
+
+type DeletePlaylistTrackForbidden ErrorResponse
+
+func (*DeletePlaylistTrackForbidden) deletePlaylistTrackRes() {}
+
+type DeletePlaylistTrackInternalServerError ErrorResponse
+
+func (*DeletePlaylistTrackInternalServerError) deletePlaylistTrackRes() {}
+
+type DeletePlaylistTrackNotFound ErrorResponse
+
+func (*DeletePlaylistTrackNotFound) deletePlaylistTrackRes() {}
+
+type DeletePlaylistTrackUnauthorized ErrorResponse
+
+func (*DeletePlaylistTrackUnauthorized) deletePlaylistTrackRes() {}
+
+type DeletePlaylistUnauthorized ErrorResponse
+
+func (*DeletePlaylistUnauthorized) deletePlaylistRes() {}
+
 type EditGroupBadRequest ErrorResponse
 
 func (*EditGroupBadRequest) editGroupRes() {}
@@ -981,6 +1194,132 @@ func (s *EditMessageReq) GetBody() OptString {
 func (s *EditMessageReq) SetBody(val OptString) {
 	s.Body = val
 }
+
+type EditPlaylistBadRequest ErrorResponse
+
+func (*EditPlaylistBadRequest) editPlaylistRes() {}
+
+type EditPlaylistForbidden ErrorResponse
+
+func (*EditPlaylistForbidden) editPlaylistRes() {}
+
+type EditPlaylistInternalServerError ErrorResponse
+
+func (*EditPlaylistInternalServerError) editPlaylistRes() {}
+
+type EditPlaylistNotFound ErrorResponse
+
+func (*EditPlaylistNotFound) editPlaylistRes() {}
+
+// Ref: #/components/schemas/EditPlaylistRequest
+type EditPlaylistRequest struct {
+	Name        OptString     `json:"name"`
+	Description OptNilString  `json:"description"`
+	Visibility  OptVisibility `json:"visibility"`
+}
+
+// GetName returns the value of Name.
+func (s *EditPlaylistRequest) GetName() OptString {
+	return s.Name
+}
+
+// GetDescription returns the value of Description.
+func (s *EditPlaylistRequest) GetDescription() OptNilString {
+	return s.Description
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *EditPlaylistRequest) GetVisibility() OptVisibility {
+	return s.Visibility
+}
+
+// SetName sets the value of Name.
+func (s *EditPlaylistRequest) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetDescription sets the value of Description.
+func (s *EditPlaylistRequest) SetDescription(val OptNilString) {
+	s.Description = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *EditPlaylistRequest) SetVisibility(val OptVisibility) {
+	s.Visibility = val
+}
+
+type EditPlaylistRoleBadRequest ErrorResponse
+
+func (*EditPlaylistRoleBadRequest) editPlaylistRoleRes() {}
+
+type EditPlaylistRoleForbidden ErrorResponse
+
+func (*EditPlaylistRoleForbidden) editPlaylistRoleRes() {}
+
+type EditPlaylistRoleInternalServerError ErrorResponse
+
+func (*EditPlaylistRoleInternalServerError) editPlaylistRoleRes() {}
+
+type EditPlaylistRoleNotFound ErrorResponse
+
+func (*EditPlaylistRoleNotFound) editPlaylistRoleRes() {}
+
+type EditPlaylistRoleReq struct {
+	Role PlaylistRoleType `json:"role"`
+}
+
+// GetRole returns the value of Role.
+func (s *EditPlaylistRoleReq) GetRole() PlaylistRoleType {
+	return s.Role
+}
+
+// SetRole sets the value of Role.
+func (s *EditPlaylistRoleReq) SetRole(val PlaylistRoleType) {
+	s.Role = val
+}
+
+type EditPlaylistRoleUnauthorized ErrorResponse
+
+func (*EditPlaylistRoleUnauthorized) editPlaylistRoleRes() {}
+
+type EditPlaylistTrackBadRequest ErrorResponse
+
+func (*EditPlaylistTrackBadRequest) editPlaylistTrackRes() {}
+
+type EditPlaylistTrackForbidden ErrorResponse
+
+func (*EditPlaylistTrackForbidden) editPlaylistTrackRes() {}
+
+type EditPlaylistTrackInternalServerError ErrorResponse
+
+func (*EditPlaylistTrackInternalServerError) editPlaylistTrackRes() {}
+
+type EditPlaylistTrackNotFound ErrorResponse
+
+func (*EditPlaylistTrackNotFound) editPlaylistTrackRes() {}
+
+type EditPlaylistTrackReq struct {
+	// Lexicographically sortable string.
+	Position string `json:"position"`
+}
+
+// GetPosition returns the value of Position.
+func (s *EditPlaylistTrackReq) GetPosition() string {
+	return s.Position
+}
+
+// SetPosition sets the value of Position.
+func (s *EditPlaylistTrackReq) SetPosition(val string) {
+	s.Position = val
+}
+
+type EditPlaylistTrackUnauthorized ErrorResponse
+
+func (*EditPlaylistTrackUnauthorized) editPlaylistTrackRes() {}
+
+type EditPlaylistUnauthorized ErrorResponse
+
+func (*EditPlaylistUnauthorized) editPlaylistRes() {}
 
 // Values change in percentage.
 // Ref: #/components/schemas/EntityChange
@@ -1529,6 +1868,143 @@ type GetLibraryArtistsUnauthorized ErrorResponse
 
 func (*GetLibraryArtistsUnauthorized) getLibraryArtistsRes() {}
 
+type GetLibraryPlaylistsBadRequest ErrorResponse
+
+func (*GetLibraryPlaylistsBadRequest) getLibraryPlaylistsRes() {}
+
+type GetLibraryPlaylistsInternalServerError ErrorResponse
+
+func (*GetLibraryPlaylistsInternalServerError) getLibraryPlaylistsRes() {}
+
+type GetLibraryPlaylistsOKApplicationJSON []PlaylistPlayStats
+
+func (*GetLibraryPlaylistsOKApplicationJSON) getLibraryPlaylistsRes() {}
+
+// Ref: #/components/schemas/GetLibraryPlaylistsRequest
+type GetLibraryPlaylistsRequest struct {
+	// Ids will not be returned except for those updated since timestamp.
+	Existing OptGetLibraryPlaylistsRequestExisting `json:"existing"`
+	Limit    OptUint                               `json:"limit"`
+	Offset   OptUint                               `json:"offset"`
+	// 0=Recency 1=PlayTime 2=Name 3=Duration 4=DateAdded.
+	Order      OptGetLibraryPlaylistsRequestOrder `json:"order"`
+	Descending OptBool                            `json:"descending"`
+	// Time range in which play statistics are calculated.
+	TimeRange OptDateTimeRange `json:"time_range"`
+}
+
+// GetExisting returns the value of Existing.
+func (s *GetLibraryPlaylistsRequest) GetExisting() OptGetLibraryPlaylistsRequestExisting {
+	return s.Existing
+}
+
+// GetLimit returns the value of Limit.
+func (s *GetLibraryPlaylistsRequest) GetLimit() OptUint {
+	return s.Limit
+}
+
+// GetOffset returns the value of Offset.
+func (s *GetLibraryPlaylistsRequest) GetOffset() OptUint {
+	return s.Offset
+}
+
+// GetOrder returns the value of Order.
+func (s *GetLibraryPlaylistsRequest) GetOrder() OptGetLibraryPlaylistsRequestOrder {
+	return s.Order
+}
+
+// GetDescending returns the value of Descending.
+func (s *GetLibraryPlaylistsRequest) GetDescending() OptBool {
+	return s.Descending
+}
+
+// GetTimeRange returns the value of TimeRange.
+func (s *GetLibraryPlaylistsRequest) GetTimeRange() OptDateTimeRange {
+	return s.TimeRange
+}
+
+// SetExisting sets the value of Existing.
+func (s *GetLibraryPlaylistsRequest) SetExisting(val OptGetLibraryPlaylistsRequestExisting) {
+	s.Existing = val
+}
+
+// SetLimit sets the value of Limit.
+func (s *GetLibraryPlaylistsRequest) SetLimit(val OptUint) {
+	s.Limit = val
+}
+
+// SetOffset sets the value of Offset.
+func (s *GetLibraryPlaylistsRequest) SetOffset(val OptUint) {
+	s.Offset = val
+}
+
+// SetOrder sets the value of Order.
+func (s *GetLibraryPlaylistsRequest) SetOrder(val OptGetLibraryPlaylistsRequestOrder) {
+	s.Order = val
+}
+
+// SetDescending sets the value of Descending.
+func (s *GetLibraryPlaylistsRequest) SetDescending(val OptBool) {
+	s.Descending = val
+}
+
+// SetTimeRange sets the value of TimeRange.
+func (s *GetLibraryPlaylistsRequest) SetTimeRange(val OptDateTimeRange) {
+	s.TimeRange = val
+}
+
+// Ids will not be returned except for those updated since timestamp.
+type GetLibraryPlaylistsRequestExisting struct {
+	Ids       []uuid.UUID `json:"ids"`
+	Timestamp time.Time   `json:"timestamp"`
+}
+
+// GetIds returns the value of Ids.
+func (s *GetLibraryPlaylistsRequestExisting) GetIds() []uuid.UUID {
+	return s.Ids
+}
+
+// GetTimestamp returns the value of Timestamp.
+func (s *GetLibraryPlaylistsRequestExisting) GetTimestamp() time.Time {
+	return s.Timestamp
+}
+
+// SetIds sets the value of Ids.
+func (s *GetLibraryPlaylistsRequestExisting) SetIds(val []uuid.UUID) {
+	s.Ids = val
+}
+
+// SetTimestamp sets the value of Timestamp.
+func (s *GetLibraryPlaylistsRequestExisting) SetTimestamp(val time.Time) {
+	s.Timestamp = val
+}
+
+// 0=Recency 1=PlayTime 2=Name 3=Duration 4=DateAdded.
+type GetLibraryPlaylistsRequestOrder uint8
+
+const (
+	GetLibraryPlaylistsRequestOrder0 GetLibraryPlaylistsRequestOrder = 0
+	GetLibraryPlaylistsRequestOrder1 GetLibraryPlaylistsRequestOrder = 1
+	GetLibraryPlaylistsRequestOrder2 GetLibraryPlaylistsRequestOrder = 2
+	GetLibraryPlaylistsRequestOrder3 GetLibraryPlaylistsRequestOrder = 3
+	GetLibraryPlaylistsRequestOrder4 GetLibraryPlaylistsRequestOrder = 4
+)
+
+// AllValues returns all GetLibraryPlaylistsRequestOrder values.
+func (GetLibraryPlaylistsRequestOrder) AllValues() []GetLibraryPlaylistsRequestOrder {
+	return []GetLibraryPlaylistsRequestOrder{
+		GetLibraryPlaylistsRequestOrder0,
+		GetLibraryPlaylistsRequestOrder1,
+		GetLibraryPlaylistsRequestOrder2,
+		GetLibraryPlaylistsRequestOrder3,
+		GetLibraryPlaylistsRequestOrder4,
+	}
+}
+
+type GetLibraryPlaylistsUnauthorized ErrorResponse
+
+func (*GetLibraryPlaylistsUnauthorized) getLibraryPlaylistsRes() {}
+
 type GetLibraryTracksBadRequest ErrorResponse
 
 func (*GetLibraryTracksBadRequest) getLibraryTracksRes() {}
@@ -1719,6 +2195,62 @@ func (s GetOpenAPIOK) Read(p []byte) (n int, err error) {
 	}
 	return s.Data.Read(p)
 }
+
+type GetPlaylistBadRequest ErrorResponse
+
+func (*GetPlaylistBadRequest) getPlaylistRes() {}
+
+type GetPlaylistInternalServerError ErrorResponse
+
+func (*GetPlaylistInternalServerError) getPlaylistRes() {}
+
+type GetPlaylistNotFound ErrorResponse
+
+func (*GetPlaylistNotFound) getPlaylistRes() {}
+
+type GetPlaylistRolesBadRequest ErrorResponse
+
+func (*GetPlaylistRolesBadRequest) getPlaylistRolesRes() {}
+
+type GetPlaylistRolesInternalServerError ErrorResponse
+
+func (*GetPlaylistRolesInternalServerError) getPlaylistRolesRes() {}
+
+type GetPlaylistRolesNotFound ErrorResponse
+
+func (*GetPlaylistRolesNotFound) getPlaylistRolesRes() {}
+
+type GetPlaylistRolesOKApplicationJSON []PlaylistRole
+
+func (*GetPlaylistRolesOKApplicationJSON) getPlaylistRolesRes() {}
+
+type GetPlaylistRolesUnauthorized ErrorResponse
+
+func (*GetPlaylistRolesUnauthorized) getPlaylistRolesRes() {}
+
+type GetPlaylistTracksBadRequest ErrorResponse
+
+func (*GetPlaylistTracksBadRequest) getPlaylistTracksRes() {}
+
+type GetPlaylistTracksInternalServerError ErrorResponse
+
+func (*GetPlaylistTracksInternalServerError) getPlaylistTracksRes() {}
+
+type GetPlaylistTracksNotFound ErrorResponse
+
+func (*GetPlaylistTracksNotFound) getPlaylistTracksRes() {}
+
+type GetPlaylistTracksOKApplicationJSON []PlaylistTrack
+
+func (*GetPlaylistTracksOKApplicationJSON) getPlaylistTracksRes() {}
+
+type GetPlaylistTracksUnauthorized ErrorResponse
+
+func (*GetPlaylistTracksUnauthorized) getPlaylistTracksRes() {}
+
+type GetPlaylistUnauthorized ErrorResponse
+
+func (*GetPlaylistUnauthorized) getPlaylistRes() {}
 
 type GetRelationsDetailsInternalServerError ErrorResponse
 
@@ -3166,6 +3698,9 @@ func (*NoContent) deleteGroupRes()           {}
 func (*NoContent) deleteGroupRoleRes()       {}
 func (*NoContent) deleteMessageReactionRes() {}
 func (*NoContent) deleteMessageRes()         {}
+func (*NoContent) deletePlaylistRes()        {}
+func (*NoContent) deletePlaylistRoleRes()    {}
+func (*NoContent) deletePlaylistTrackRes()   {}
 func (*NoContent) readMessageRes()           {}
 func (*NoContent) removeFriendRes()          {}
 func (*NoContent) removeFromLibraryRes()     {}
@@ -3768,6 +4303,144 @@ func (o OptGetLibraryArtistsRequestOrder) Get() (v GetLibraryArtistsRequestOrder
 
 // Or returns value if set, or given parameter if does not.
 func (o OptGetLibraryArtistsRequestOrder) Or(d GetLibraryArtistsRequestOrder) GetLibraryArtistsRequestOrder {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryPlaylistsRequest returns new OptGetLibraryPlaylistsRequest with value set to v.
+func NewOptGetLibraryPlaylistsRequest(v GetLibraryPlaylistsRequest) OptGetLibraryPlaylistsRequest {
+	return OptGetLibraryPlaylistsRequest{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryPlaylistsRequest is optional GetLibraryPlaylistsRequest.
+type OptGetLibraryPlaylistsRequest struct {
+	Value GetLibraryPlaylistsRequest
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryPlaylistsRequest was set.
+func (o OptGetLibraryPlaylistsRequest) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryPlaylistsRequest) Reset() {
+	var v GetLibraryPlaylistsRequest
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryPlaylistsRequest) SetTo(v GetLibraryPlaylistsRequest) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryPlaylistsRequest) Get() (v GetLibraryPlaylistsRequest, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryPlaylistsRequest) Or(d GetLibraryPlaylistsRequest) GetLibraryPlaylistsRequest {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryPlaylistsRequestExisting returns new OptGetLibraryPlaylistsRequestExisting with value set to v.
+func NewOptGetLibraryPlaylistsRequestExisting(v GetLibraryPlaylistsRequestExisting) OptGetLibraryPlaylistsRequestExisting {
+	return OptGetLibraryPlaylistsRequestExisting{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryPlaylistsRequestExisting is optional GetLibraryPlaylistsRequestExisting.
+type OptGetLibraryPlaylistsRequestExisting struct {
+	Value GetLibraryPlaylistsRequestExisting
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryPlaylistsRequestExisting was set.
+func (o OptGetLibraryPlaylistsRequestExisting) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryPlaylistsRequestExisting) Reset() {
+	var v GetLibraryPlaylistsRequestExisting
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryPlaylistsRequestExisting) SetTo(v GetLibraryPlaylistsRequestExisting) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryPlaylistsRequestExisting) Get() (v GetLibraryPlaylistsRequestExisting, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryPlaylistsRequestExisting) Or(d GetLibraryPlaylistsRequestExisting) GetLibraryPlaylistsRequestExisting {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptGetLibraryPlaylistsRequestOrder returns new OptGetLibraryPlaylistsRequestOrder with value set to v.
+func NewOptGetLibraryPlaylistsRequestOrder(v GetLibraryPlaylistsRequestOrder) OptGetLibraryPlaylistsRequestOrder {
+	return OptGetLibraryPlaylistsRequestOrder{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptGetLibraryPlaylistsRequestOrder is optional GetLibraryPlaylistsRequestOrder.
+type OptGetLibraryPlaylistsRequestOrder struct {
+	Value GetLibraryPlaylistsRequestOrder
+	Set   bool
+}
+
+// IsSet returns true if OptGetLibraryPlaylistsRequestOrder was set.
+func (o OptGetLibraryPlaylistsRequestOrder) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptGetLibraryPlaylistsRequestOrder) Reset() {
+	var v GetLibraryPlaylistsRequestOrder
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptGetLibraryPlaylistsRequestOrder) SetTo(v GetLibraryPlaylistsRequestOrder) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptGetLibraryPlaylistsRequestOrder) Get() (v GetLibraryPlaylistsRequestOrder, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptGetLibraryPlaylistsRequestOrder) Or(d GetLibraryPlaylistsRequestOrder) GetLibraryPlaylistsRequestOrder {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -5077,6 +5750,268 @@ func (o OptVisibility) Or(d Visibility) Visibility {
 	}
 	return d
 }
+
+// Ref: #/components/schemas/Playlist
+type Playlist struct {
+	PlaylistID  uuid.UUID      `json:"playlist_id"`
+	UserID      uuid.UUID      `json:"user_id"`
+	Name        string         `json:"name"`
+	Description OptNilString   `json:"description"`
+	Visibility  Visibility     `json:"visibility"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   OptNilDateTime `json:"updated_at"`
+}
+
+// GetPlaylistID returns the value of PlaylistID.
+func (s *Playlist) GetPlaylistID() uuid.UUID {
+	return s.PlaylistID
+}
+
+// GetUserID returns the value of UserID.
+func (s *Playlist) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *Playlist) GetName() string {
+	return s.Name
+}
+
+// GetDescription returns the value of Description.
+func (s *Playlist) GetDescription() OptNilString {
+	return s.Description
+}
+
+// GetVisibility returns the value of Visibility.
+func (s *Playlist) GetVisibility() Visibility {
+	return s.Visibility
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Playlist) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Playlist) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetPlaylistID sets the value of PlaylistID.
+func (s *Playlist) SetPlaylistID(val uuid.UUID) {
+	s.PlaylistID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *Playlist) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *Playlist) SetName(val string) {
+	s.Name = val
+}
+
+// SetDescription sets the value of Description.
+func (s *Playlist) SetDescription(val OptNilString) {
+	s.Description = val
+}
+
+// SetVisibility sets the value of Visibility.
+func (s *Playlist) SetVisibility(val Visibility) {
+	s.Visibility = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Playlist) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Playlist) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*Playlist) createPlaylistRes() {}
+func (*Playlist) editPlaylistRes()   {}
+func (*Playlist) getPlaylistRes()    {}
+
+// Ref: #/components/schemas/PlaylistPlayStats
+type PlaylistPlayStats struct {
+	Playlist     Playlist `json:"playlist"`
+	PlayCount    uint64   `json:"play_count"`
+	PlayDuration uint64   `json:"play_duration"`
+}
+
+// GetPlaylist returns the value of Playlist.
+func (s *PlaylistPlayStats) GetPlaylist() Playlist {
+	return s.Playlist
+}
+
+// GetPlayCount returns the value of PlayCount.
+func (s *PlaylistPlayStats) GetPlayCount() uint64 {
+	return s.PlayCount
+}
+
+// GetPlayDuration returns the value of PlayDuration.
+func (s *PlaylistPlayStats) GetPlayDuration() uint64 {
+	return s.PlayDuration
+}
+
+// SetPlaylist sets the value of Playlist.
+func (s *PlaylistPlayStats) SetPlaylist(val Playlist) {
+	s.Playlist = val
+}
+
+// SetPlayCount sets the value of PlayCount.
+func (s *PlaylistPlayStats) SetPlayCount(val uint64) {
+	s.PlayCount = val
+}
+
+// SetPlayDuration sets the value of PlayDuration.
+func (s *PlaylistPlayStats) SetPlayDuration(val uint64) {
+	s.PlayDuration = val
+}
+
+// Ref: #/components/schemas/PlaylistRole
+type PlaylistRole struct {
+	PlaylistID uuid.UUID        `json:"playlist_id"`
+	UserID     uuid.UUID        `json:"user_id"`
+	Role       PlaylistRoleType `json:"role"`
+	CreatedAt  time.Time        `json:"created_at"`
+	UpdatedAt  OptNilDateTime   `json:"updated_at"`
+}
+
+// GetPlaylistID returns the value of PlaylistID.
+func (s *PlaylistRole) GetPlaylistID() uuid.UUID {
+	return s.PlaylistID
+}
+
+// GetUserID returns the value of UserID.
+func (s *PlaylistRole) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetRole returns the value of Role.
+func (s *PlaylistRole) GetRole() PlaylistRoleType {
+	return s.Role
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *PlaylistRole) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *PlaylistRole) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetPlaylistID sets the value of PlaylistID.
+func (s *PlaylistRole) SetPlaylistID(val uuid.UUID) {
+	s.PlaylistID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *PlaylistRole) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetRole sets the value of Role.
+func (s *PlaylistRole) SetRole(val PlaylistRoleType) {
+	s.Role = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *PlaylistRole) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *PlaylistRole) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*PlaylistRole) editPlaylistRoleRes() {}
+
+// 0=Editor: write access 1=Viewer: read access.
+// Ref: #/components/schemas/PlaylistRoleType
+type PlaylistRoleType uint8
+
+const (
+	PlaylistRoleType0 PlaylistRoleType = 0
+	PlaylistRoleType1 PlaylistRoleType = 1
+)
+
+// AllValues returns all PlaylistRoleType values.
+func (PlaylistRoleType) AllValues() []PlaylistRoleType {
+	return []PlaylistRoleType{
+		PlaylistRoleType0,
+		PlaylistRoleType1,
+	}
+}
+
+// Ref: #/components/schemas/PlaylistTrack
+type PlaylistTrack struct {
+	PlaylistID uuid.UUID `json:"playlist_id"`
+	TrackID    uuid.UUID `json:"track_id"`
+	// Lexicographically sortable string.
+	Position  string         `json:"position"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt OptNilDateTime `json:"updated_at"`
+}
+
+// GetPlaylistID returns the value of PlaylistID.
+func (s *PlaylistTrack) GetPlaylistID() uuid.UUID {
+	return s.PlaylistID
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *PlaylistTrack) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetPosition returns the value of Position.
+func (s *PlaylistTrack) GetPosition() string {
+	return s.Position
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *PlaylistTrack) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *PlaylistTrack) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetPlaylistID sets the value of PlaylistID.
+func (s *PlaylistTrack) SetPlaylistID(val uuid.UUID) {
+	s.PlaylistID = val
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *PlaylistTrack) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *PlaylistTrack) SetPosition(val string) {
+	s.Position = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *PlaylistTrack) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *PlaylistTrack) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*PlaylistTrack) editPlaylistTrackRes() {}
 
 type ReadMessageBadRequest ErrorResponse
 

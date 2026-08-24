@@ -1,0 +1,88 @@
+/api/playlists/{id}/tracks:
+  get:
+    summary: Get playlist tracks
+    operationId: getPlaylistTracks
+    tags:
+      - Playlists
+      - Tracks
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "200":
+        description: Playlist tracks retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/PlaylistTrack"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  post:
+    summary: Add playlist tracks
+    operationId: addPlaylistTracks
+    tags:
+      - Playlists
+      - Tracks
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              required:
+                - track_id
+                - position
+              properties:
+                track_id:
+                  type: string
+                  format: uuid
+                  description: Track to add to the playlist.
+                position:
+                  type: string
+                  pattern: "^[0-9a-z._-]+$"
+                  maxLength: 64
+                  description: Lexicographically sortable string.
+    responses:
+      "200":
+        description: Playlist tracks added successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/PlaylistTrack"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

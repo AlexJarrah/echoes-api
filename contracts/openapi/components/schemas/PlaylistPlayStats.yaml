@@ -1,0 +1,15 @@
+PlaylistPlayStats:
+  type: object
+  required:
+    - playlist
+    - play_count
+    - play_duration
+  properties:
+    playlist:
+      $ref: "#/components/schemas/Playlist"
+    play_count:
+      type: integer
+      format: uint64
+    play_duration:
+      type: integer
+      format: uint64

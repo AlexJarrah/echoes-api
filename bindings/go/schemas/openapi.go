@@ -806,6 +806,36 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/library/playlists:
+    post:
+      summary: Get library playlists
+      operationId: getLibraryPlaylists
+      tags:
+        - Library
+        - Playlists
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLibraryPlaylistsRequest'
+      responses:
+        '200':
+          description: Playlists retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlaylistPlayStats'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/library/remove:
     post:
       summary: Remove items from library
@@ -922,6 +952,472 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SessionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/playlists/{id}/roles/{user_id}:
+    patch:
+      summary: Update a playlist role
+      operationId: editPlaylistRole
+      tags:
+        - Playlists
+        - Roles
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                role:
+                  $ref: '#/components/schemas/PlaylistRoleType'
+      responses:
+        '200':
+          description: Playlist role updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaylistRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remove a playlist role
+      operationId: deletePlaylistRole
+      tags:
+        - Playlists
+        - Roles
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/playlists/{id}/roles:
+    get:
+      summary: Get playlist roles
+      operationId: getPlaylistRoles
+      tags:
+        - Playlists
+        - Roles
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Playlist roles retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlaylistRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Add playlist roles
+      operationId: addPlaylistRoles
+      tags:
+        - Playlists
+        - Roles
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - user_id
+                  - role
+                properties:
+                  user_id:
+                    type: string
+                    format: uuid
+                  role:
+                    $ref: '#/components/schemas/PlaylistRoleType'
+      responses:
+        '200':
+          description: Playlist roles added successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlaylistRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/playlists/{id}/tracks/{track_id}:
+    patch:
+      summary: Update a playlist track
+      operationId: editPlaylistTrack
+      tags:
+        - Playlists
+        - Tracks
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: track_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - position
+              properties:
+                position:
+                  type: string
+                  pattern: ^[0-9a-z._-]+$
+                  maxLength: 64
+                  description: Lexicographically sortable string
+      responses:
+        '200':
+          description: Playlist track updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaylistTrack'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remove a playlist track
+      operationId: deletePlaylistTrack
+      tags:
+        - Playlists
+        - Tracks
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: track_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/playlists/{id}/tracks:
+    get:
+      summary: Get playlist tracks
+      operationId: getPlaylistTracks
+      tags:
+        - Playlists
+        - Tracks
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Playlist tracks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlaylistTrack'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Add playlist tracks
+      operationId: addPlaylistTracks
+      tags:
+        - Playlists
+        - Tracks
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - track_id
+                  - position
+                properties:
+                  track_id:
+                    type: string
+                    format: uuid
+                    description: Track to add to the playlist.
+                  position:
+                    type: string
+                    pattern: ^[0-9a-z._-]+$
+                    maxLength: 64
+                    description: Lexicographically sortable string.
+      responses:
+        '200':
+          description: Playlist tracks added successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlaylistTrack'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/playlists/{id}:
+    get:
+      summary: Get playlist details
+      operationId: getPlaylist
+      tags:
+        - Playlists
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Playlist details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      summary: Update playlist details
+      operationId: editPlaylist
+      tags:
+        - Playlists
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditPlaylistRequest'
+      responses:
+        '200':
+          description: Playlist updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete a playlist
+      operationId: deletePlaylist
+      tags:
+        - Playlists
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/playlists:
+    post:
+      summary: Create a playlist
+      operationId: createPlaylist
+      tags:
+        - Playlists
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlaylistRequest'
+      responses:
+        '200':
+          description: Playlist created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2089,6 +2585,19 @@ components:
           items:
             type: string
             format: uuid
+    CreatePlaylistRequest:
+      type: object
+      required:
+        - name
+        - visibility
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        visibility:
+          $ref: '#/components/schemas/Visibility'
     DateTimeRange:
       type: object
       required:
@@ -2124,6 +2633,16 @@ components:
           type: string
         description:
           type: string
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+    EditPlaylistRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
         visibility:
           $ref: '#/components/schemas/Visibility'
     EntityChange:
@@ -2255,6 +2774,50 @@ components:
             0=PlayTime
             1=Name
             2=DateAdded
+        descending:
+          type: boolean
+        time_range:
+          $ref: '#/components/schemas/DateTimeRange'
+          description: Time range in which play statistics are calculated.
+    GetLibraryPlaylistsRequest:
+      type: object
+      properties:
+        existing:
+          type: object
+          required:
+            - ids
+            - timestamp
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+            timestamp:
+              type: string
+              format: date-time
+          description: ids will not be returned except for those updated since timestamp.
+        limit:
+          type: integer
+          format: uint
+        offset:
+          type: integer
+          format: uint
+        order:
+          type: integer
+          format: uint8
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          description: |
+            0=Recency
+            1=PlayTime
+            2=Name
+            3=Duration
+            4=DateAdded
         descending:
           type: boolean
         time_range:
@@ -2865,6 +3428,108 @@ components:
         created_at:
           type: string
           format: date-time
+    Playlist:
+      type: object
+      required:
+        - playlist_id
+        - user_id
+        - name
+        - visibility
+        - created_at
+      properties:
+        playlist_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        visibility:
+          $ref: '#/components/schemas/Visibility'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    PlaylistPlayStats:
+      type: object
+      required:
+        - playlist
+        - play_count
+        - play_duration
+      properties:
+        playlist:
+          $ref: '#/components/schemas/Playlist'
+        play_count:
+          type: integer
+          format: uint64
+        play_duration:
+          type: integer
+          format: uint64
+    PlaylistRole:
+      type: object
+      required:
+        - playlist_id
+        - user_id
+        - role
+        - created_at
+      properties:
+        playlist_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/PlaylistRoleType'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    PlaylistRoleType:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+      description: |
+        0=Editor: write access
+        1=Viewer: read access
+    PlaylistTrack:
+      type: object
+      required:
+        - playlist_id
+        - track_id
+        - position
+        - created_at
+      properties:
+        playlist_id:
+          type: string
+          format: uuid
+        track_id:
+          type: string
+          format: uuid
+        position:
+          type: string
+          pattern: ^[0-9a-z._-]+$
+          maxLength: 64
+          description: Lexicographically sortable string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
     RegisterRequest:
       type: object
       required:

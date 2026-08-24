@@ -1,0 +1,84 @@
+/api/playlists/{id}/roles/{user_id}:
+  patch:
+    summary: Update a playlist role
+    operationId: editPlaylistRole
+    tags:
+      - Playlists
+      - Roles
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - role
+            properties:
+              role:
+                $ref: "#/components/schemas/PlaylistRoleType"
+    responses:
+      "200":
+        description: Playlist role updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistRole"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    summary: Remove a playlist role
+    operationId: deletePlaylistRole
+    tags:
+      - Playlists
+      - Roles
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

@@ -1,0 +1,26 @@
+PlaylistTrack:
+  type: object
+  required:
+    - playlist_id
+    - track_id
+    - position
+    - created_at
+  properties:
+    playlist_id:
+      type: string
+      format: uuid
+    track_id:
+      type: string
+      format: uuid
+    position:
+      type: string
+      pattern: "^[0-9a-z._-]+$"
+      maxLength: 64
+      description: Lexicographically sortable string
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

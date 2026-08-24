@@ -301,6 +301,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/library/playlists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get library playlists */
+        post: operations["getLibraryPlaylists"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/library/remove": {
         parameters: {
             query?: never;
@@ -380,6 +397,114 @@ export interface paths {
         put?: never;
         /** Get recent listening sessions */
         post: operations["getListenSessions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/playlists/{id}/roles/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a playlist role */
+        delete: operations["deletePlaylistRole"];
+        options?: never;
+        head?: never;
+        /** Update a playlist role */
+        patch: operations["editPlaylistRole"];
+        trace?: never;
+    };
+    "/api/playlists/{id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get playlist roles */
+        get: operations["getPlaylistRoles"];
+        put?: never;
+        /** Add playlist roles */
+        post: operations["addPlaylistRoles"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/playlists/{id}/tracks/{track_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a playlist track */
+        delete: operations["deletePlaylistTrack"];
+        options?: never;
+        head?: never;
+        /** Update a playlist track */
+        patch: operations["editPlaylistTrack"];
+        trace?: never;
+    };
+    "/api/playlists/{id}/tracks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get playlist tracks */
+        get: operations["getPlaylistTracks"];
+        put?: never;
+        /** Add playlist tracks */
+        post: operations["addPlaylistTracks"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/playlists/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get playlist details */
+        get: operations["getPlaylist"];
+        put?: never;
+        post?: never;
+        /** Delete a playlist */
+        delete: operations["deletePlaylist"];
+        options?: never;
+        head?: never;
+        /** Update playlist details */
+        patch: operations["editPlaylist"];
+        trace?: never;
+    };
+    "/api/playlists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a playlist */
+        post: operations["createPlaylist"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1006,6 +1131,11 @@ export interface components {
             visibility: components["schemas"]["Visibility"];
             members: string[];
         };
+        CreatePlaylistRequest: {
+            name: string;
+            description?: string | null;
+            visibility: components["schemas"]["Visibility"];
+        };
         DateTimeRange: {
             /** Format: date-time */
             start: string;
@@ -1023,6 +1153,11 @@ export interface components {
         EditGroupRequest: {
             name?: string;
             description?: string;
+            visibility?: components["schemas"]["Visibility"];
+        };
+        EditPlaylistRequest: {
+            name?: string;
+            description?: string | null;
             visibility?: components["schemas"]["Visibility"];
         };
         /** @description Values change in percentage. */
@@ -1105,6 +1240,31 @@ export interface components {
              * @enum {integer}
              */
             order?: 0 | 1 | 2;
+            descending?: boolean;
+            /** @description Time range in which play statistics are calculated. */
+            time_range?: components["schemas"]["DateTimeRange"];
+        };
+        GetLibraryPlaylistsRequest: {
+            /** @description ids will not be returned except for those updated since timestamp. */
+            existing?: {
+                ids: string[];
+                /** Format: date-time */
+                timestamp: string;
+            };
+            /** Format: uint */
+            limit?: number;
+            /** Format: uint */
+            offset?: number;
+            /**
+             * Format: uint8
+             * @description 0=Recency
+             *     1=PlayTime
+             *     2=Name
+             *     3=Duration
+             *     4=DateAdded
+             * @enum {integer}
+             */
+            order?: 0 | 1 | 2 | 3 | 4;
             descending?: boolean;
             /** @description Time range in which play statistics are calculated. */
             time_range?: components["schemas"]["DateTimeRange"];
@@ -1433,6 +1593,56 @@ export interface components {
             emoji: string;
             /** Format: date-time */
             created_at: string;
+        };
+        Playlist: {
+            /** Format: uuid */
+            playlist_id: string;
+            /** Format: uuid */
+            user_id: string;
+            name: string;
+            description?: string | null;
+            visibility: components["schemas"]["Visibility"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        PlaylistPlayStats: {
+            playlist: components["schemas"]["Playlist"];
+            /** Format: uint64 */
+            play_count: number;
+            /** Format: uint64 */
+            play_duration: number;
+        };
+        PlaylistRole: {
+            /** Format: uuid */
+            playlist_id: string;
+            /** Format: uuid */
+            user_id: string;
+            role: components["schemas"]["PlaylistRoleType"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        /**
+         * Format: uint8
+         * @description 0=Editor: write access
+         *     1=Viewer: read access
+         * @enum {integer}
+         */
+        PlaylistRoleType: 0 | 1;
+        PlaylistTrack: {
+            /** Format: uuid */
+            playlist_id: string;
+            /** Format: uuid */
+            track_id: string;
+            /** @description Lexicographically sortable string */
+            position: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
         };
         RegisterRequest: {
             /** @description 2+ Unicode letters, spaces allowed */
@@ -2528,6 +2738,33 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
+    getLibraryPlaylists: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["GetLibraryPlaylistsRequest"];
+            };
+        };
+        responses: {
+            /** @description Playlists retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistPlayStats"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
     removeFromLibrary: {
         parameters: {
             query?: never;
@@ -2640,6 +2877,345 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SessionsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deletePlaylistRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editPlaylistRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    role: components["schemas"]["PlaylistRoleType"];
+                };
+            };
+        };
+        responses: {
+            /** @description Playlist role updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistRole"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getPlaylistRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Playlist roles retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistRole"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    addPlaylistRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    user_id: string;
+                    role: components["schemas"]["PlaylistRoleType"];
+                }[];
+            };
+        };
+        responses: {
+            /** @description Playlist roles added successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistRole"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deletePlaylistTrack: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editPlaylistTrack: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @description Lexicographically sortable string */
+                    position: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Playlist track updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistTrack"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getPlaylistTracks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Playlist tracks retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistTrack"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    addPlaylistTracks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * Format: uuid
+                     * @description Track to add to the playlist.
+                     */
+                    track_id: string;
+                    /** @description Lexicographically sortable string. */
+                    position: string;
+                }[];
+            };
+        };
+        responses: {
+            /** @description Playlist tracks added successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlaylistTrack"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getPlaylist: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Playlist details retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Playlist"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deletePlaylist: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editPlaylist: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditPlaylistRequest"];
+            };
+        };
+        responses: {
+            /** @description Playlist updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Playlist"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    createPlaylist: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePlaylistRequest"];
+            };
+        };
+        responses: {
+            /** @description Playlist created successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Playlist"];
                 };
             };
             400: components["responses"]["BadRequest"];

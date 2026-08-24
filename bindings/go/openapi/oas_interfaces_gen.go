@@ -13,12 +13,24 @@ type AddMessageReactionRes interface {
 	addMessageReactionRes()
 }
 
+type AddPlaylistRolesRes interface {
+	addPlaylistRolesRes()
+}
+
+type AddPlaylistTracksRes interface {
+	addPlaylistTracksRes()
+}
+
 type AddToLibraryRes interface {
 	addToLibraryRes()
 }
 
 type CreateGroupRes interface {
 	createGroupRes()
+}
+
+type CreatePlaylistRes interface {
+	createPlaylistRes()
 }
 
 type DeleteGroupRes interface {
@@ -37,12 +49,36 @@ type DeleteMessageRes interface {
 	deleteMessageRes()
 }
 
+type DeletePlaylistRes interface {
+	deletePlaylistRes()
+}
+
+type DeletePlaylistRoleRes interface {
+	deletePlaylistRoleRes()
+}
+
+type DeletePlaylistTrackRes interface {
+	deletePlaylistTrackRes()
+}
+
 type EditGroupRes interface {
 	editGroupRes()
 }
 
 type EditMessageRes interface {
 	editMessageRes()
+}
+
+type EditPlaylistRes interface {
+	editPlaylistRes()
+}
+
+type EditPlaylistRoleRes interface {
+	editPlaylistRoleRes()
+}
+
+type EditPlaylistTrackRes interface {
+	editPlaylistTrackRes()
 }
 
 type GetAlbumRes interface {
@@ -89,6 +125,10 @@ type GetLibraryArtistsRes interface {
 	getLibraryArtistsRes()
 }
 
+type GetLibraryPlaylistsRes interface {
+	getLibraryPlaylistsRes()
+}
+
 type GetLibrarySearchIndexRes interface {
 	getLibrarySearchIndexRes()
 }
@@ -107,6 +147,18 @@ type GetMessageThreadRes interface {
 
 type GetMessagesRes interface {
 	getMessagesRes()
+}
+
+type GetPlaylistRes interface {
+	getPlaylistRes()
+}
+
+type GetPlaylistRolesRes interface {
+	getPlaylistRolesRes()
+}
+
+type GetPlaylistTracksRes interface {
+	getPlaylistTracksRes()
 }
 
 type GetRelationsDetailsRes interface {

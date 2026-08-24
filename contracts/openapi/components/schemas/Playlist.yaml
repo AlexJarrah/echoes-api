@@ -1,0 +1,29 @@
+Playlist:
+  type: object
+  required:
+    - playlist_id
+    - user_id
+    - name
+    - visibility
+    - created_at
+  properties:
+    playlist_id:
+      type: string
+      format: uuid
+    user_id:
+      type: string
+      format: uuid
+    name:
+      type: string
+    description:
+      type: string
+      nullable: true
+    visibility:
+      $ref: "#/components/schemas/Visibility"
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

@@ -1,0 +1,39 @@
+GetLibraryPlaylistsRequest:
+  type: object
+  properties:
+    existing:
+      type: object
+      required:
+        - ids
+        - timestamp
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        timestamp:
+          type: string
+          format: date-time
+      description: ids will not be returned except for those updated since timestamp.
+    limit:
+      type: integer
+      format: uint
+    offset:
+      type: integer
+      format: uint
+    order:
+      type: integer
+      format: uint8
+      enum: [0, 1, 2, 3, 4]
+      description: |
+        0=Recency
+        1=PlayTime
+        2=Name
+        3=Duration
+        4=DateAdded
+    descending:
+      type: boolean
+    time_range:
+      $ref: "#/components/schemas/DateTimeRange"
+      description: Time range in which play statistics are calculated.

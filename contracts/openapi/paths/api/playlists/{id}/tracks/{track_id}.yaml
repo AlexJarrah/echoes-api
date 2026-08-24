@@ -1,0 +1,87 @@
+/api/playlists/{id}/tracks/{track_id}:
+  patch:
+    summary: Update a playlist track
+    operationId: editPlaylistTrack
+    tags:
+      - Playlists
+      - Tracks
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: track_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - position
+            properties:
+              position:
+                type: string
+                pattern: "^[0-9a-z._-]+$"
+                maxLength: 64
+                description: Lexicographically sortable string
+    responses:
+      "200":
+        description: Playlist track updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistTrack"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+  delete:
+    summary: Remove a playlist track
+    operationId: deletePlaylistTrack
+    tags:
+      - Playlists
+      - Tracks
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: track_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "204":
+        $ref: "#/components/responses/NoContent"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

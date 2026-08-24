@@ -1,0 +1,7 @@
+PlaylistRoleType:
+  type: integer
+  format: uint8
+  enum: [0, 1]
+  description: |
+    0=Editor: write access
+    1=Viewer: read access

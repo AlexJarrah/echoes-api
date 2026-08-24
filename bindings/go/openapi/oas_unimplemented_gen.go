@@ -40,6 +40,24 @@ func (UnimplementedHandler) AddMessageReaction(ctx context.Context, params AddMe
 	return r, ht.ErrNotImplemented
 }
 
+// AddPlaylistRoles implements addPlaylistRoles operation.
+//
+// Add playlist roles.
+//
+// POST /api/playlists/{id}/roles
+func (UnimplementedHandler) AddPlaylistRoles(ctx context.Context, req []AddPlaylistRolesReqItem, params AddPlaylistRolesParams) (r AddPlaylistRolesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// AddPlaylistTracks implements addPlaylistTracks operation.
+//
+// Add playlist tracks.
+//
+// POST /api/playlists/{id}/tracks
+func (UnimplementedHandler) AddPlaylistTracks(ctx context.Context, req []AddPlaylistTracksReqItem, params AddPlaylistTracksParams) (r AddPlaylistTracksRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // AddToLibrary implements addToLibrary operation.
 //
 // Add items to library.
@@ -55,6 +73,15 @@ func (UnimplementedHandler) AddToLibrary(ctx context.Context, req *LibraryAddReq
 //
 // POST /api/groups
 func (UnimplementedHandler) CreateGroup(ctx context.Context, req *CreateGroupRequest) (r CreateGroupRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// CreatePlaylist implements createPlaylist operation.
+//
+// Create a playlist.
+//
+// POST /api/playlists
+func (UnimplementedHandler) CreatePlaylist(ctx context.Context, req *CreatePlaylistRequest) (r CreatePlaylistRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -94,6 +121,33 @@ func (UnimplementedHandler) DeleteMessageReaction(ctx context.Context, params De
 	return r, ht.ErrNotImplemented
 }
 
+// DeletePlaylist implements deletePlaylist operation.
+//
+// Delete a playlist.
+//
+// DELETE /api/playlists/{id}
+func (UnimplementedHandler) DeletePlaylist(ctx context.Context, params DeletePlaylistParams) (r DeletePlaylistRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DeletePlaylistRole implements deletePlaylistRole operation.
+//
+// Remove a playlist role.
+//
+// DELETE /api/playlists/{id}/roles/{user_id}
+func (UnimplementedHandler) DeletePlaylistRole(ctx context.Context, params DeletePlaylistRoleParams) (r DeletePlaylistRoleRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DeletePlaylistTrack implements deletePlaylistTrack operation.
+//
+// Remove a playlist track.
+//
+// DELETE /api/playlists/{id}/tracks/{track_id}
+func (UnimplementedHandler) DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams) (r DeletePlaylistTrackRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // EditGroup implements editGroup operation.
 //
 // Edit a group.
@@ -109,6 +163,33 @@ func (UnimplementedHandler) EditGroup(ctx context.Context, req *EditGroupRequest
 //
 // PATCH /api/conversations/{conversation_id}/messages/{message_id}
 func (UnimplementedHandler) EditMessage(ctx context.Context, req *EditMessageReq, params EditMessageParams) (r EditMessageRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// EditPlaylist implements editPlaylist operation.
+//
+// Update playlist details.
+//
+// PATCH /api/playlists/{id}
+func (UnimplementedHandler) EditPlaylist(ctx context.Context, req *EditPlaylistRequest, params EditPlaylistParams) (r EditPlaylistRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// EditPlaylistRole implements editPlaylistRole operation.
+//
+// Update a playlist role.
+//
+// PATCH /api/playlists/{id}/roles/{user_id}
+func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleReq, params EditPlaylistRoleParams) (r EditPlaylistRoleRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// EditPlaylistTrack implements editPlaylistTrack operation.
+//
+// Update a playlist track.
+//
+// PATCH /api/playlists/{id}/tracks/{track_id}
+func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (r EditPlaylistTrackRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -224,6 +305,15 @@ func (UnimplementedHandler) GetLibraryArtists(ctx context.Context, req OptGetLib
 	return r, ht.ErrNotImplemented
 }
 
+// GetLibraryPlaylists implements getLibraryPlaylists operation.
+//
+// Get library playlists.
+//
+// POST /api/library/playlists
+func (UnimplementedHandler) GetLibraryPlaylists(ctx context.Context, req OptGetLibraryPlaylistsRequest) (r GetLibraryPlaylistsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 //
 // Returns the user's library search engine index.
@@ -275,6 +365,33 @@ func (UnimplementedHandler) GetMessages(ctx context.Context, params GetMessagesP
 //
 // GET /openapi.yaml
 func (UnimplementedHandler) GetOpenAPI(ctx context.Context) (r GetOpenAPIOK, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetPlaylist implements getPlaylist operation.
+//
+// Get playlist details.
+//
+// GET /api/playlists/{id}
+func (UnimplementedHandler) GetPlaylist(ctx context.Context, params GetPlaylistParams) (r GetPlaylistRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetPlaylistRoles implements getPlaylistRoles operation.
+//
+// Get playlist roles.
+//
+// GET /api/playlists/{id}/roles
+func (UnimplementedHandler) GetPlaylistRoles(ctx context.Context, params GetPlaylistRolesParams) (r GetPlaylistRolesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetPlaylistTracks implements getPlaylistTracks operation.
+//
+// Get playlist tracks.
+//
+// GET /api/playlists/{id}/tracks
+func (UnimplementedHandler) GetPlaylistTracks(ctx context.Context, params GetPlaylistTracksParams) (r GetPlaylistTracksRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

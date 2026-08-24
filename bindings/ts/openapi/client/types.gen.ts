@@ -143,6 +143,12 @@ export type CreateGroupRequest = {
     members: Array<string>;
 };
 
+export type CreatePlaylistRequest = {
+    name: string;
+    description?: string | null;
+    visibility: Visibility;
+};
+
 export type DateTimeRange = {
     start: string;
     end: string;
@@ -157,6 +163,12 @@ export type DayListenDetails = {
 export type EditGroupRequest = {
     name?: string;
     description?: string;
+    visibility?: Visibility;
+};
+
+export type EditPlaylistRequest = {
+    name?: string;
+    description?: string | null;
     visibility?: Visibility;
 };
 
@@ -242,6 +254,29 @@ export type GetLibraryArtistsRequest = {
      *
      */
     order?: 0 | 1 | 2;
+    descending?: boolean;
+    time_range?: DateTimeRange;
+};
+
+export type GetLibraryPlaylistsRequest = {
+    /**
+     * ids will not be returned except for those updated since timestamp.
+     */
+    existing?: {
+        ids: Array<string>;
+        timestamp: string;
+    };
+    limit?: number;
+    offset?: number;
+    /**
+     * 0=Recency
+     * 1=PlayTime
+     * 2=Name
+     * 3=Duration
+     * 4=DateAdded
+     *
+     */
+    order?: 0 | 1 | 2 | 3 | 4;
     descending?: boolean;
     time_range?: DateTimeRange;
 };
@@ -535,6 +570,48 @@ export type MessageReaction = {
     message_id: number;
     emoji: string;
     created_at: string;
+};
+
+export type Playlist = {
+    playlist_id: string;
+    user_id: string;
+    name: string;
+    description?: string | null;
+    visibility: Visibility;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+export type PlaylistPlayStats = {
+    playlist: Playlist;
+    play_count: number;
+    play_duration: number;
+};
+
+export type PlaylistRole = {
+    playlist_id: string;
+    user_id: string;
+    role: PlaylistRoleType;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+/**
+ * 0=Editor: write access
+ * 1=Viewer: read access
+ *
+ */
+export type PlaylistRoleType = 0 | 1;
+
+export type PlaylistTrack = {
+    playlist_id: string;
+    track_id: string;
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
+    created_at: string;
+    updated_at?: string | null;
 };
 
 export type RegisterRequest = {
@@ -1796,6 +1873,39 @@ export type GetLibraryArtistsResponses = {
 
 export type GetLibraryArtistsResponse = GetLibraryArtistsResponses[keyof GetLibraryArtistsResponses];
 
+export type GetLibraryPlaylistsData = {
+    body?: GetLibraryPlaylistsRequest;
+    path?: never;
+    query?: never;
+    url: '/api/library/playlists';
+};
+
+export type GetLibraryPlaylistsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLibraryPlaylistsError = GetLibraryPlaylistsErrors[keyof GetLibraryPlaylistsErrors];
+
+export type GetLibraryPlaylistsResponses = {
+    /**
+     * Playlists retrieved successfully
+     */
+    200: Array<PlaylistPlayStats>;
+};
+
+export type GetLibraryPlaylistsResponse = GetLibraryPlaylistsResponses[keyof GetLibraryPlaylistsResponses];
+
 export type RemoveFromLibraryData = {
     body: LibraryRemoveRequest;
     path?: never;
@@ -1946,6 +2056,527 @@ export type GetListenSessionsResponses = {
 };
 
 export type GetListenSessionsResponse = GetListenSessionsResponses[keyof GetListenSessionsResponses];
+
+export type DeletePlaylistRoleData = {
+    body?: never;
+    path: {
+        id: string;
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/roles/{user_id}';
+};
+
+export type DeletePlaylistRoleErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeletePlaylistRoleError = DeletePlaylistRoleErrors[keyof DeletePlaylistRoleErrors];
+
+export type DeletePlaylistRoleResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeletePlaylistRoleResponse = DeletePlaylistRoleResponses[keyof DeletePlaylistRoleResponses];
+
+export type EditPlaylistRoleData = {
+    body: {
+        role: PlaylistRoleType;
+    };
+    path: {
+        id: string;
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/roles/{user_id}';
+};
+
+export type EditPlaylistRoleErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditPlaylistRoleError = EditPlaylistRoleErrors[keyof EditPlaylistRoleErrors];
+
+export type EditPlaylistRoleResponses = {
+    /**
+     * Playlist role updated successfully
+     */
+    200: PlaylistRole;
+};
+
+export type EditPlaylistRoleResponse = EditPlaylistRoleResponses[keyof EditPlaylistRoleResponses];
+
+export type GetPlaylistRolesData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/roles';
+};
+
+export type GetPlaylistRolesErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetPlaylistRolesError = GetPlaylistRolesErrors[keyof GetPlaylistRolesErrors];
+
+export type GetPlaylistRolesResponses = {
+    /**
+     * Playlist roles retrieved successfully
+     */
+    200: Array<PlaylistRole>;
+};
+
+export type GetPlaylistRolesResponse = GetPlaylistRolesResponses[keyof GetPlaylistRolesResponses];
+
+export type AddPlaylistRolesData = {
+    body: Array<{
+        user_id: string;
+        role: PlaylistRoleType;
+    }>;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/roles';
+};
+
+export type AddPlaylistRolesErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type AddPlaylistRolesError = AddPlaylistRolesErrors[keyof AddPlaylistRolesErrors];
+
+export type AddPlaylistRolesResponses = {
+    /**
+     * Playlist roles added successfully
+     */
+    200: Array<PlaylistRole>;
+};
+
+export type AddPlaylistRolesResponse = AddPlaylistRolesResponses[keyof AddPlaylistRolesResponses];
+
+export type DeletePlaylistTrackData = {
+    body?: never;
+    path: {
+        id: string;
+        track_id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/tracks/{track_id}';
+};
+
+export type DeletePlaylistTrackErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeletePlaylistTrackError = DeletePlaylistTrackErrors[keyof DeletePlaylistTrackErrors];
+
+export type DeletePlaylistTrackResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeletePlaylistTrackResponse = DeletePlaylistTrackResponses[keyof DeletePlaylistTrackResponses];
+
+export type EditPlaylistTrackData = {
+    body: {
+        /**
+         * Lexicographically sortable string
+         */
+        position: string;
+    };
+    path: {
+        id: string;
+        track_id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/tracks/{track_id}';
+};
+
+export type EditPlaylistTrackErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditPlaylistTrackError = EditPlaylistTrackErrors[keyof EditPlaylistTrackErrors];
+
+export type EditPlaylistTrackResponses = {
+    /**
+     * Playlist track updated successfully
+     */
+    200: PlaylistTrack;
+};
+
+export type EditPlaylistTrackResponse = EditPlaylistTrackResponses[keyof EditPlaylistTrackResponses];
+
+export type GetPlaylistTracksData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/tracks';
+};
+
+export type GetPlaylistTracksErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetPlaylistTracksError = GetPlaylistTracksErrors[keyof GetPlaylistTracksErrors];
+
+export type GetPlaylistTracksResponses = {
+    /**
+     * Playlist tracks retrieved successfully
+     */
+    200: Array<PlaylistTrack>;
+};
+
+export type GetPlaylistTracksResponse = GetPlaylistTracksResponses[keyof GetPlaylistTracksResponses];
+
+export type AddPlaylistTracksData = {
+    body: Array<{
+        /**
+         * Track to add to the playlist.
+         */
+        track_id: string;
+        /**
+         * Lexicographically sortable string.
+         */
+        position: string;
+    }>;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}/tracks';
+};
+
+export type AddPlaylistTracksErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type AddPlaylistTracksError = AddPlaylistTracksErrors[keyof AddPlaylistTracksErrors];
+
+export type AddPlaylistTracksResponses = {
+    /**
+     * Playlist tracks added successfully
+     */
+    200: Array<PlaylistTrack>;
+};
+
+export type AddPlaylistTracksResponse = AddPlaylistTracksResponses[keyof AddPlaylistTracksResponses];
+
+export type DeletePlaylistData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}';
+};
+
+export type DeletePlaylistErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeletePlaylistError = DeletePlaylistErrors[keyof DeletePlaylistErrors];
+
+export type DeletePlaylistResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeletePlaylistResponse = DeletePlaylistResponses[keyof DeletePlaylistResponses];
+
+export type GetPlaylistData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}';
+};
+
+export type GetPlaylistErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetPlaylistError = GetPlaylistErrors[keyof GetPlaylistErrors];
+
+export type GetPlaylistResponses = {
+    /**
+     * Playlist details retrieved successfully
+     */
+    200: Playlist;
+};
+
+export type GetPlaylistResponse = GetPlaylistResponses[keyof GetPlaylistResponses];
+
+export type EditPlaylistData = {
+    body: EditPlaylistRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/playlists/{id}';
+};
+
+export type EditPlaylistErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditPlaylistError = EditPlaylistErrors[keyof EditPlaylistErrors];
+
+export type EditPlaylistResponses = {
+    /**
+     * Playlist updated successfully
+     */
+    200: Playlist;
+};
+
+export type EditPlaylistResponse = EditPlaylistResponses[keyof EditPlaylistResponses];
+
+export type CreatePlaylistData = {
+    body: CreatePlaylistRequest;
+    path?: never;
+    query?: never;
+    url: '/api/playlists';
+};
+
+export type CreatePlaylistErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type CreatePlaylistError = CreatePlaylistErrors[keyof CreatePlaylistErrors];
+
+export type CreatePlaylistResponses = {
+    /**
+     * Playlist created successfully
+     */
+    200: Playlist;
+};
+
+export type CreatePlaylistResponse = CreatePlaylistResponses[keyof CreatePlaylistResponses];
 
 export type RegisterData = {
     body: RegisterRequest;

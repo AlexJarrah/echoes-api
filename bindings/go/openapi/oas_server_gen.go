@@ -26,6 +26,18 @@ type Handler interface {
 	//
 	// PUT /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
 	AddMessageReaction(ctx context.Context, params AddMessageReactionParams) (AddMessageReactionRes, error)
+	// AddPlaylistRoles implements addPlaylistRoles operation.
+	//
+	// Add playlist roles.
+	//
+	// POST /api/playlists/{id}/roles
+	AddPlaylistRoles(ctx context.Context, req []AddPlaylistRolesReqItem, params AddPlaylistRolesParams) (AddPlaylistRolesRes, error)
+	// AddPlaylistTracks implements addPlaylistTracks operation.
+	//
+	// Add playlist tracks.
+	//
+	// POST /api/playlists/{id}/tracks
+	AddPlaylistTracks(ctx context.Context, req []AddPlaylistTracksReqItem, params AddPlaylistTracksParams) (AddPlaylistTracksRes, error)
 	// AddToLibrary implements addToLibrary operation.
 	//
 	// Add items to library.
@@ -38,6 +50,12 @@ type Handler interface {
 	//
 	// POST /api/groups
 	CreateGroup(ctx context.Context, req *CreateGroupRequest) (CreateGroupRes, error)
+	// CreatePlaylist implements createPlaylist operation.
+	//
+	// Create a playlist.
+	//
+	// POST /api/playlists
+	CreatePlaylist(ctx context.Context, req *CreatePlaylistRequest) (CreatePlaylistRes, error)
 	// DeleteGroup implements deleteGroup operation.
 	//
 	// Delete a group if owned by the user.
@@ -62,6 +80,24 @@ type Handler interface {
 	//
 	// DELETE /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
 	DeleteMessageReaction(ctx context.Context, params DeleteMessageReactionParams) (DeleteMessageReactionRes, error)
+	// DeletePlaylist implements deletePlaylist operation.
+	//
+	// Delete a playlist.
+	//
+	// DELETE /api/playlists/{id}
+	DeletePlaylist(ctx context.Context, params DeletePlaylistParams) (DeletePlaylistRes, error)
+	// DeletePlaylistRole implements deletePlaylistRole operation.
+	//
+	// Remove a playlist role.
+	//
+	// DELETE /api/playlists/{id}/roles/{user_id}
+	DeletePlaylistRole(ctx context.Context, params DeletePlaylistRoleParams) (DeletePlaylistRoleRes, error)
+	// DeletePlaylistTrack implements deletePlaylistTrack operation.
+	//
+	// Remove a playlist track.
+	//
+	// DELETE /api/playlists/{id}/tracks/{track_id}
+	DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams) (DeletePlaylistTrackRes, error)
 	// EditGroup implements editGroup operation.
 	//
 	// Edit a group.
@@ -74,6 +110,24 @@ type Handler interface {
 	//
 	// PATCH /api/conversations/{conversation_id}/messages/{message_id}
 	EditMessage(ctx context.Context, req *EditMessageReq, params EditMessageParams) (EditMessageRes, error)
+	// EditPlaylist implements editPlaylist operation.
+	//
+	// Update playlist details.
+	//
+	// PATCH /api/playlists/{id}
+	EditPlaylist(ctx context.Context, req *EditPlaylistRequest, params EditPlaylistParams) (EditPlaylistRes, error)
+	// EditPlaylistRole implements editPlaylistRole operation.
+	//
+	// Update a playlist role.
+	//
+	// PATCH /api/playlists/{id}/roles/{user_id}
+	EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleReq, params EditPlaylistRoleParams) (EditPlaylistRoleRes, error)
+	// EditPlaylistTrack implements editPlaylistTrack operation.
+	//
+	// Update a playlist track.
+	//
+	// PATCH /api/playlists/{id}/tracks/{track_id}
+	EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (EditPlaylistTrackRes, error)
 	// GetAlbum implements getAlbum operation.
 	//
 	// Get album details.
@@ -150,6 +204,12 @@ type Handler interface {
 	//
 	// POST /api/library/artists
 	GetLibraryArtists(ctx context.Context, req OptGetLibraryArtistsRequest) (GetLibraryArtistsRes, error)
+	// GetLibraryPlaylists implements getLibraryPlaylists operation.
+	//
+	// Get library playlists.
+	//
+	// POST /api/library/playlists
+	GetLibraryPlaylists(ctx context.Context, req OptGetLibraryPlaylistsRequest) (GetLibraryPlaylistsRes, error)
 	// GetLibrarySearchIndex implements getLibrarySearchIndex operation.
 	//
 	// Returns the user's library search engine index.
@@ -186,6 +246,24 @@ type Handler interface {
 	//
 	// GET /openapi.yaml
 	GetOpenAPI(ctx context.Context) (GetOpenAPIOK, error)
+	// GetPlaylist implements getPlaylist operation.
+	//
+	// Get playlist details.
+	//
+	// GET /api/playlists/{id}
+	GetPlaylist(ctx context.Context, params GetPlaylistParams) (GetPlaylistRes, error)
+	// GetPlaylistRoles implements getPlaylistRoles operation.
+	//
+	// Get playlist roles.
+	//
+	// GET /api/playlists/{id}/roles
+	GetPlaylistRoles(ctx context.Context, params GetPlaylistRolesParams) (GetPlaylistRolesRes, error)
+	// GetPlaylistTracks implements getPlaylistTracks operation.
+	//
+	// Get playlist tracks.
+	//
+	// GET /api/playlists/{id}/tracks
+	GetPlaylistTracks(ctx context.Context, params GetPlaylistTracksParams) (GetPlaylistTracksRes, error)
 	// GetRelationsDetails implements getRelationsDetails operation.
 	//
 	// Get user relations with visible activity details.

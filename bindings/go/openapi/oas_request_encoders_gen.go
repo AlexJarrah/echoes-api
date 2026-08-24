@@ -46,6 +46,42 @@ func encodeAddGroupRolesRequest(
 	return nil
 }
 
+func encodeAddPlaylistRolesRequest(
+	req []AddPlaylistRolesReqItem,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		e.ArrStart()
+		for _, elem := range req {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeAddPlaylistTracksRequest(
+	req []AddPlaylistTracksReqItem,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		e.ArrStart()
+		for _, elem := range req {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
 func encodeAddToLibraryRequest(
 	req *LibraryAddRequest,
 	r *http.Request,
@@ -74,6 +110,20 @@ func encodeCreateGroupRequest(
 	return nil
 }
 
+func encodeCreatePlaylistRequest(
+	req *CreatePlaylistRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
 func encodeEditGroupRequest(
 	req *EditGroupRequest,
 	r *http.Request,
@@ -90,6 +140,48 @@ func encodeEditGroupRequest(
 
 func encodeEditMessageRequest(
 	req *EditMessageReq,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeEditPlaylistRequest(
+	req *EditPlaylistRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeEditPlaylistRoleRequest(
+	req *EditPlaylistRoleReq,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeEditPlaylistTrackRequest(
+	req *EditPlaylistTrackReq,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -184,6 +276,26 @@ func encodeGetLibraryAlbumsRequest(
 
 func encodeGetLibraryArtistsRequest(
 	req OptGetLibraryArtistsRequest,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	if !req.Set {
+		// Keep request with empty body if value is not set.
+		return nil
+	}
+	e := new(jx.Encoder)
+	{
+		if req.Set {
+			req.Encode(e)
+		}
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeGetLibraryPlaylistsRequest(
+	req OptGetLibraryPlaylistsRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"

@@ -1,0 +1,13 @@
+CreatePlaylistRequest:
+  type: object
+  required:
+    - name
+    - visibility
+  properties:
+    name:
+      type: string
+    description:
+      type: string
+      nullable: true
+    visibility:
+      $ref: "#/components/schemas/Visibility"
