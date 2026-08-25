@@ -46,24 +46,6 @@ func encodeAddGroupRolesRequest(
 	return nil
 }
 
-func encodeAddPlaylistRolesRequest(
-	req []AddPlaylistRolesReqItem,
-	r *http.Request,
-) error {
-	const contentType = "application/json"
-	e := new(jx.Encoder)
-	{
-		e.ArrStart()
-		for _, elem := range req {
-			elem.Encode(e)
-		}
-		e.ArrEnd()
-	}
-	encoded := e.Bytes()
-	ht.SetBody(r, bytes.NewReader(encoded), contentType)
-	return nil
-}
-
 func encodeAddPlaylistTracksRequest(
 	req []AddPlaylistTracksReqItem,
 	r *http.Request,
@@ -530,6 +512,24 @@ func encodeSetBlockedRequest(
 	e := new(jx.Encoder)
 	{
 		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeSetPlaylistRolesRequest(
+	req []SetPlaylistRolesReqItem,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		e.ArrStart()
+		for _, elem := range req {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
 	}
 	encoded := e.Bytes()
 	ht.SetBody(r, bytes.NewReader(encoded), contentType)

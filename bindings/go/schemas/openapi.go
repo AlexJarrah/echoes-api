@@ -1076,8 +1076,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
-      summary: Add playlist roles
-      operationId: addPlaylistRoles
+      summary: Set playlist roles
+      operationId: setPlaylistRoles
       tags:
         - Playlists
         - Roles
@@ -1108,8 +1108,8 @@ paths:
                   role:
                     $ref: '#/components/schemas/PlaylistRoleType'
       responses:
-        '200':
-          description: Playlist roles added successfully
+        '204':
+          description: Playlist roles set successfully
           content:
             application/json:
               schema:
@@ -1285,14 +1285,8 @@ paths:
                     maxLength: 64
                     description: Lexicographically sortable string.
       responses:
-        '200':
+        '204':
           description: Playlist tracks added successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PlaylistTrack'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':

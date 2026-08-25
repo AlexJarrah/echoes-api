@@ -13,10 +13,6 @@ type AddMessageReactionRes interface {
 	addMessageReactionRes()
 }
 
-type AddPlaylistRolesRes interface {
-	addPlaylistRolesRes()
-}
-
 type AddPlaylistTracksRes interface {
 	addPlaylistTracksRes()
 }
@@ -235,6 +231,10 @@ type SetBestFriendRes interface {
 
 type SetBlockedRes interface {
 	setBlockedRes()
+}
+
+type SetPlaylistRolesRes interface {
+	setPlaylistRolesRes()
 }
 
 type SignInRes interface {

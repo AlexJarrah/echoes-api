@@ -40,15 +40,6 @@ func (UnimplementedHandler) AddMessageReaction(ctx context.Context, params AddMe
 	return r, ht.ErrNotImplemented
 }
 
-// AddPlaylistRoles implements addPlaylistRoles operation.
-//
-// Add playlist roles.
-//
-// POST /api/playlists/{id}/roles
-func (UnimplementedHandler) AddPlaylistRoles(ctx context.Context, req []AddPlaylistRolesReqItem, params AddPlaylistRolesParams) (r AddPlaylistRolesRes, _ error) {
-	return r, ht.ErrNotImplemented
-}
-
 // AddPlaylistTracks implements addPlaylistTracks operation.
 //
 // Add playlist tracks.
@@ -563,6 +554,15 @@ func (UnimplementedHandler) SetBestFriend(ctx context.Context, req *BestFriendAc
 //
 // POST /api/set-blocked
 func (UnimplementedHandler) SetBlocked(ctx context.Context, req *BlockedActionRequest) (r SetBlockedRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// SetPlaylistRoles implements setPlaylistRoles operation.
+//
+// Set playlist roles.
+//
+// POST /api/playlists/{id}/roles
+func (UnimplementedHandler) SetPlaylistRoles(ctx context.Context, req []SetPlaylistRolesReqItem, params SetPlaylistRolesParams) (r SetPlaylistRolesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

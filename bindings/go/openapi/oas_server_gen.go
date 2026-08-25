@@ -26,12 +26,6 @@ type Handler interface {
 	//
 	// PUT /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}
 	AddMessageReaction(ctx context.Context, params AddMessageReactionParams) (AddMessageReactionRes, error)
-	// AddPlaylistRoles implements addPlaylistRoles operation.
-	//
-	// Add playlist roles.
-	//
-	// POST /api/playlists/{id}/roles
-	AddPlaylistRoles(ctx context.Context, req []AddPlaylistRolesReqItem, params AddPlaylistRolesParams) (AddPlaylistRolesRes, error)
 	// AddPlaylistTracks implements addPlaylistTracks operation.
 	//
 	// Add playlist tracks.
@@ -378,6 +372,12 @@ type Handler interface {
 	//
 	// POST /api/set-blocked
 	SetBlocked(ctx context.Context, req *BlockedActionRequest) (SetBlockedRes, error)
+	// SetPlaylistRoles implements setPlaylistRoles operation.
+	//
+	// Set playlist roles.
+	//
+	// POST /api/playlists/{id}/roles
+	SetPlaylistRoles(ctx context.Context, req []SetPlaylistRolesReqItem, params SetPlaylistRolesParams) (SetPlaylistRolesRes, error)
 	// SignIn implements signIn operation.
 	//
 	// Sign in with email and password.

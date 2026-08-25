@@ -51,59 +51,6 @@ type AddMessageReactionUnauthorized ErrorResponse
 
 func (*AddMessageReactionUnauthorized) addMessageReactionRes() {}
 
-type AddPlaylistRolesBadRequest ErrorResponse
-
-func (*AddPlaylistRolesBadRequest) addPlaylistRolesRes() {}
-
-type AddPlaylistRolesConflict ErrorResponse
-
-func (*AddPlaylistRolesConflict) addPlaylistRolesRes() {}
-
-type AddPlaylistRolesForbidden ErrorResponse
-
-func (*AddPlaylistRolesForbidden) addPlaylistRolesRes() {}
-
-type AddPlaylistRolesInternalServerError ErrorResponse
-
-func (*AddPlaylistRolesInternalServerError) addPlaylistRolesRes() {}
-
-type AddPlaylistRolesNotFound ErrorResponse
-
-func (*AddPlaylistRolesNotFound) addPlaylistRolesRes() {}
-
-type AddPlaylistRolesOKApplicationJSON []PlaylistRole
-
-func (*AddPlaylistRolesOKApplicationJSON) addPlaylistRolesRes() {}
-
-type AddPlaylistRolesReqItem struct {
-	UserID uuid.UUID        `json:"user_id"`
-	Role   PlaylistRoleType `json:"role"`
-}
-
-// GetUserID returns the value of UserID.
-func (s *AddPlaylistRolesReqItem) GetUserID() uuid.UUID {
-	return s.UserID
-}
-
-// GetRole returns the value of Role.
-func (s *AddPlaylistRolesReqItem) GetRole() PlaylistRoleType {
-	return s.Role
-}
-
-// SetUserID sets the value of UserID.
-func (s *AddPlaylistRolesReqItem) SetUserID(val uuid.UUID) {
-	s.UserID = val
-}
-
-// SetRole sets the value of Role.
-func (s *AddPlaylistRolesReqItem) SetRole(val PlaylistRoleType) {
-	s.Role = val
-}
-
-type AddPlaylistRolesUnauthorized ErrorResponse
-
-func (*AddPlaylistRolesUnauthorized) addPlaylistRolesRes() {}
-
 type AddPlaylistTracksBadRequest ErrorResponse
 
 func (*AddPlaylistTracksBadRequest) addPlaylistTracksRes() {}
@@ -116,13 +63,14 @@ type AddPlaylistTracksInternalServerError ErrorResponse
 
 func (*AddPlaylistTracksInternalServerError) addPlaylistTracksRes() {}
 
+// AddPlaylistTracksNoContent is response for AddPlaylistTracks operation.
+type AddPlaylistTracksNoContent struct{}
+
+func (*AddPlaylistTracksNoContent) addPlaylistTracksRes() {}
+
 type AddPlaylistTracksNotFound ErrorResponse
 
 func (*AddPlaylistTracksNotFound) addPlaylistTracksRes() {}
-
-type AddPlaylistTracksOKApplicationJSON []PlaylistTrack
-
-func (*AddPlaylistTracksOKApplicationJSON) addPlaylistTracksRes() {}
 
 type AddPlaylistTracksReqItem struct {
 	// Track to add to the playlist.
@@ -7265,6 +7213,59 @@ func (*SetBlockedInternalServerError) setBlockedRes() {}
 type SetBlockedUnauthorized ErrorResponse
 
 func (*SetBlockedUnauthorized) setBlockedRes() {}
+
+type SetPlaylistRolesBadRequest ErrorResponse
+
+func (*SetPlaylistRolesBadRequest) setPlaylistRolesRes() {}
+
+type SetPlaylistRolesConflict ErrorResponse
+
+func (*SetPlaylistRolesConflict) setPlaylistRolesRes() {}
+
+type SetPlaylistRolesForbidden ErrorResponse
+
+func (*SetPlaylistRolesForbidden) setPlaylistRolesRes() {}
+
+type SetPlaylistRolesInternalServerError ErrorResponse
+
+func (*SetPlaylistRolesInternalServerError) setPlaylistRolesRes() {}
+
+type SetPlaylistRolesNoContentApplicationJSON []PlaylistRole
+
+func (*SetPlaylistRolesNoContentApplicationJSON) setPlaylistRolesRes() {}
+
+type SetPlaylistRolesNotFound ErrorResponse
+
+func (*SetPlaylistRolesNotFound) setPlaylistRolesRes() {}
+
+type SetPlaylistRolesReqItem struct {
+	UserID uuid.UUID        `json:"user_id"`
+	Role   PlaylistRoleType `json:"role"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *SetPlaylistRolesReqItem) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetRole returns the value of Role.
+func (s *SetPlaylistRolesReqItem) GetRole() PlaylistRoleType {
+	return s.Role
+}
+
+// SetUserID sets the value of UserID.
+func (s *SetPlaylistRolesReqItem) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetRole sets the value of Role.
+func (s *SetPlaylistRolesReqItem) SetRole(val PlaylistRoleType) {
+	s.Role = val
+}
+
+type SetPlaylistRolesUnauthorized ErrorResponse
+
+func (*SetPlaylistRolesUnauthorized) setPlaylistRolesRes() {}
 
 type SignInBadRequest ErrorResponse
 

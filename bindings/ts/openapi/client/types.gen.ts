@@ -2186,7 +2186,7 @@ export type GetPlaylistRolesResponses = {
 
 export type GetPlaylistRolesResponse = GetPlaylistRolesResponses[keyof GetPlaylistRolesResponses];
 
-export type AddPlaylistRolesData = {
+export type SetPlaylistRolesData = {
     body: Array<{
         user_id: string;
         role: PlaylistRoleType;
@@ -2198,7 +2198,7 @@ export type AddPlaylistRolesData = {
     url: '/api/playlists/{id}/roles';
 };
 
-export type AddPlaylistRolesErrors = {
+export type SetPlaylistRolesErrors = {
     /**
      * Bad request
      */
@@ -2225,16 +2225,16 @@ export type AddPlaylistRolesErrors = {
     500: ErrorResponse;
 };
 
-export type AddPlaylistRolesError = AddPlaylistRolesErrors[keyof AddPlaylistRolesErrors];
+export type SetPlaylistRolesError = SetPlaylistRolesErrors[keyof SetPlaylistRolesErrors];
 
-export type AddPlaylistRolesResponses = {
+export type SetPlaylistRolesResponses = {
     /**
-     * Playlist roles added successfully
+     * Playlist roles set successfully
      */
-    200: Array<PlaylistRole>;
+    204: Array<PlaylistRole>;
 };
 
-export type AddPlaylistRolesResponse = AddPlaylistRolesResponses[keyof AddPlaylistRolesResponses];
+export type SetPlaylistRolesResponse = SetPlaylistRolesResponses[keyof SetPlaylistRolesResponses];
 
 export type DeletePlaylistTrackData = {
     body?: never;
@@ -2415,7 +2415,7 @@ export type AddPlaylistTracksResponses = {
     /**
      * Playlist tracks added successfully
      */
-    200: Array<PlaylistTrack>;
+    204: void;
 };
 
 export type AddPlaylistTracksResponse = AddPlaylistTracksResponses[keyof AddPlaylistTracksResponses];

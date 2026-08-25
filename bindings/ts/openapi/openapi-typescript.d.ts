@@ -431,8 +431,8 @@ export interface paths {
         /** Get playlist roles */
         get: operations["getPlaylistRoles"];
         put?: never;
-        /** Add playlist roles */
-        post: operations["addPlaylistRoles"];
+        /** Set playlist roles */
+        post: operations["setPlaylistRoles"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2964,7 +2964,7 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    addPlaylistRoles: {
+    setPlaylistRoles: {
         parameters: {
             query?: never;
             header?: never;
@@ -2983,8 +2983,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Playlist roles added successfully */
-            200: {
+            /** @description Playlist roles set successfully */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3105,13 +3105,11 @@ export interface operations {
         };
         responses: {
             /** @description Playlist tracks added successfully */
-            200: {
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["PlaylistTrack"][];
-                };
+                content?: never;
             };
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
