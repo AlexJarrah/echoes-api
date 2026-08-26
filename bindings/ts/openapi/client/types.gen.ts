@@ -2231,7 +2231,7 @@ export type SetPlaylistRolesResponses = {
     /**
      * Playlist roles set successfully
      */
-    204: Array<PlaylistRole>;
+    204: void;
 };
 
 export type SetPlaylistRolesResponse = SetPlaylistRolesResponses[keyof SetPlaylistRolesResponses];

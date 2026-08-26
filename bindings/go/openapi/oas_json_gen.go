@@ -21584,56 +21584,6 @@ func (s *SetPlaylistRolesInternalServerError) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes SetPlaylistRolesNoContentApplicationJSON as json.
-func (s SetPlaylistRolesNoContentApplicationJSON) Encode(e *jx.Encoder) {
-	unwrapped := []PlaylistRole(s)
-
-	e.ArrStart()
-	for _, elem := range unwrapped {
-		elem.Encode(e)
-	}
-	e.ArrEnd()
-}
-
-// Decode decodes SetPlaylistRolesNoContentApplicationJSON from json.
-func (s *SetPlaylistRolesNoContentApplicationJSON) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode SetPlaylistRolesNoContentApplicationJSON to nil")
-	}
-	var unwrapped []PlaylistRole
-	if err := func() error {
-		unwrapped = make([]PlaylistRole, 0)
-		if err := d.Arr(func(d *jx.Decoder) error {
-			var elem PlaylistRole
-			if err := elem.Decode(d); err != nil {
-				return err
-			}
-			unwrapped = append(unwrapped, elem)
-			return nil
-		}); err != nil {
-			return err
-		}
-		return nil
-	}(); err != nil {
-		return errors.Wrap(err, "alias")
-	}
-	*s = SetPlaylistRolesNoContentApplicationJSON(unwrapped)
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s SetPlaylistRolesNoContentApplicationJSON) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *SetPlaylistRolesNoContentApplicationJSON) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
 // Encode encodes SetPlaylistRolesNotFound as json.
 func (s *SetPlaylistRolesNotFound) Encode(e *jx.Encoder) {
 	unwrapped := (*ErrorResponse)(s)

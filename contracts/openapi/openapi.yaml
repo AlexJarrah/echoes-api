@@ -3279,12 +3279,6 @@ paths:
       responses:
         "204":
           description: Playlist roles set successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PlaylistRole"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":

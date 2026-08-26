@@ -7230,9 +7230,10 @@ type SetPlaylistRolesInternalServerError ErrorResponse
 
 func (*SetPlaylistRolesInternalServerError) setPlaylistRolesRes() {}
 
-type SetPlaylistRolesNoContentApplicationJSON []PlaylistRole
+// SetPlaylistRolesNoContent is response for SetPlaylistRoles operation.
+type SetPlaylistRolesNoContent struct{}
 
-func (*SetPlaylistRolesNoContentApplicationJSON) setPlaylistRolesRes() {}
+func (*SetPlaylistRolesNoContent) setPlaylistRolesRes() {}
 
 type SetPlaylistRolesNotFound ErrorResponse
 

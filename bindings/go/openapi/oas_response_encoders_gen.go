@@ -3602,23 +3602,8 @@ func encodeSetBlockedResponse(response SetBlockedRes, w http.ResponseWriter, spa
 
 func encodeSetPlaylistRolesResponse(response SetPlaylistRolesRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *SetPlaylistRolesNoContentApplicationJSON:
-		if err := func() error {
-			if err := response.Validate(); err != nil {
-				return err
-			}
-			return nil
-		}(); err != nil {
-			return errors.Wrap(err, "validate")
-		}
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	case *SetPlaylistRolesNoContent:
 		w.WriteHeader(204)
-
-		e := new(jx.Encoder)
-		response.Encode(e)
-		if _, err := e.WriteTo(w); err != nil {
-			return errors.Wrap(err, "write")
-		}
 
 		return nil
 
