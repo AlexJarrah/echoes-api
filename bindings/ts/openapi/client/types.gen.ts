@@ -1110,10 +1110,10 @@ export type AddFriendResponse = AddFriendResponses[keyof AddFriendResponses];
 export type GetAlbumData = {
     body?: never;
     path: {
-        id: string;
+        album_id: string;
     };
     query?: never;
-    url: '/api/albums/{id}';
+    url: '/api/albums/{album_id}';
 };
 
 export type GetAlbumErrors = {
@@ -1149,10 +1149,10 @@ export type GetAlbumResponse = GetAlbumResponses[keyof GetAlbumResponses];
 export type GetArtistData = {
     body?: never;
     path: {
-        id: string;
+        artist_id: string;
     };
     query?: never;
-    url: '/api/artists/{id}';
+    url: '/api/artists/{artist_id}';
 };
 
 export type GetArtistErrors = {
@@ -2060,11 +2060,11 @@ export type GetListenSessionsResponse = GetListenSessionsResponses[keyof GetList
 export type DeletePlaylistRoleData = {
     body?: never;
     path: {
-        id: string;
+        playlist_id: string;
         user_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/roles/{user_id}';
+    url: '/api/playlists/{playlist_id}/roles/{user_id}';
 };
 
 export type DeletePlaylistRoleErrors = {
@@ -2106,11 +2106,11 @@ export type EditPlaylistRoleData = {
         role: PlaylistRoleType;
     };
     path: {
-        id: string;
+        playlist_id: string;
         user_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/roles/{user_id}';
+    url: '/api/playlists/{playlist_id}/roles/{user_id}';
 };
 
 export type EditPlaylistRoleErrors = {
@@ -2150,10 +2150,10 @@ export type EditPlaylistRoleResponse = EditPlaylistRoleResponses[keyof EditPlayl
 export type GetPlaylistRolesData = {
     body?: never;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/roles';
+    url: '/api/playlists/{playlist_id}/roles';
 };
 
 export type GetPlaylistRolesErrors = {
@@ -2192,10 +2192,10 @@ export type SetPlaylistRolesData = {
         role: PlaylistRoleType;
     }>;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/roles';
+    url: '/api/playlists/{playlist_id}/roles';
 };
 
 export type SetPlaylistRolesErrors = {
@@ -2239,11 +2239,11 @@ export type SetPlaylistRolesResponse = SetPlaylistRolesResponses[keyof SetPlayli
 export type DeletePlaylistTrackData = {
     body?: never;
     path: {
-        id: string;
+        playlist_id: string;
         track_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/tracks/{track_id}';
+    url: '/api/playlists/{playlist_id}/tracks/{track_id}';
 };
 
 export type DeletePlaylistTrackErrors = {
@@ -2288,11 +2288,11 @@ export type EditPlaylistTrackData = {
         position: string;
     };
     path: {
-        id: string;
+        playlist_id: string;
         track_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/tracks/{track_id}';
+    url: '/api/playlists/{playlist_id}/tracks/{track_id}';
 };
 
 export type EditPlaylistTrackErrors = {
@@ -2332,10 +2332,10 @@ export type EditPlaylistTrackResponse = EditPlaylistTrackResponses[keyof EditPla
 export type GetPlaylistTracksData = {
     body?: never;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/tracks';
+    url: '/api/playlists/{playlist_id}/tracks';
 };
 
 export type GetPlaylistTracksErrors = {
@@ -2380,10 +2380,10 @@ export type AddPlaylistTracksData = {
         position: string;
     }>;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}/tracks';
+    url: '/api/playlists/{playlist_id}/tracks';
 };
 
 export type AddPlaylistTracksErrors = {
@@ -2423,10 +2423,10 @@ export type AddPlaylistTracksResponse = AddPlaylistTracksResponses[keyof AddPlay
 export type DeletePlaylistData = {
     body?: never;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}';
+    url: '/api/playlists/{playlist_id}';
 };
 
 export type DeletePlaylistErrors = {
@@ -2466,10 +2466,10 @@ export type DeletePlaylistResponse = DeletePlaylistResponses[keyof DeletePlaylis
 export type GetPlaylistData = {
     body?: never;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}';
+    url: '/api/playlists/{playlist_id}';
 };
 
 export type GetPlaylistErrors = {
@@ -2505,10 +2505,10 @@ export type GetPlaylistResponse = GetPlaylistResponses[keyof GetPlaylistResponse
 export type EditPlaylistData = {
     body: EditPlaylistRequest;
     path: {
-        id: string;
+        playlist_id: string;
     };
     query?: never;
-    url: '/api/playlists/{id}';
+    url: '/api/playlists/{playlist_id}';
 };
 
 export type EditPlaylistErrors = {
@@ -3159,10 +3159,10 @@ export type SearchTracksResponse = SearchTracksResponses[keyof SearchTracksRespo
 export type GetTrackData = {
     body?: never;
     path: {
-        id: string;
+        track_id: string;
     };
     query?: never;
-    url: '/api/tracks/{id}';
+    url: '/api/tracks/{track_id}';
 };
 
 export type GetTrackErrors = {

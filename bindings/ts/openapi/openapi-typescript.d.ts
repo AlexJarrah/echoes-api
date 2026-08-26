@@ -38,7 +38,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/albums/{id}": {
+    "/api/albums/{album_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -55,7 +55,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/artists/{id}": {
+    "/api/artists/{artist_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -403,7 +403,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/playlists/{id}/roles/{user_id}": {
+    "/api/playlists/{playlist_id}/roles/{user_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -421,7 +421,7 @@ export interface paths {
         patch: operations["editPlaylistRole"];
         trace?: never;
     };
-    "/api/playlists/{id}/roles": {
+    "/api/playlists/{playlist_id}/roles": {
         parameters: {
             query?: never;
             header?: never;
@@ -439,7 +439,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/playlists/{id}/tracks/{track_id}": {
+    "/api/playlists/{playlist_id}/tracks/{track_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -457,7 +457,7 @@ export interface paths {
         patch: operations["editPlaylistTrack"];
         trace?: never;
     };
-    "/api/playlists/{id}/tracks": {
+    "/api/playlists/{playlist_id}/tracks": {
         parameters: {
             query?: never;
             header?: never;
@@ -475,7 +475,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/playlists/{id}": {
+    "/api/playlists/{playlist_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -783,7 +783,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/tracks/{id}": {
+    "/api/tracks/{track_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2173,7 +2173,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                album_id: string;
             };
             cookie?: never;
         };
@@ -2199,7 +2199,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                artist_id: string;
             };
             cookie?: never;
         };
@@ -2889,7 +2889,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
                 user_id: string;
             };
             cookie?: never;
@@ -2909,7 +2909,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
                 user_id: string;
             };
             cookie?: never;
@@ -2943,7 +2943,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -2969,7 +2969,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -3003,7 +3003,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
                 track_id: string;
             };
             cookie?: never;
@@ -3023,7 +3023,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
                 track_id: string;
             };
             cookie?: never;
@@ -3058,7 +3058,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -3084,7 +3084,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -3121,7 +3121,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -3147,7 +3147,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -3166,7 +3166,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                playlist_id: string;
             };
             cookie?: never;
         };
@@ -3657,7 +3657,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: string;
+                track_id: string;
             };
             cookie?: never;
         };

@@ -44,7 +44,7 @@ func (UnimplementedHandler) AddMessageReaction(ctx context.Context, params AddMe
 //
 // Add playlist tracks.
 //
-// POST /api/playlists/{id}/tracks
+// POST /api/playlists/{playlist_id}/tracks
 func (UnimplementedHandler) AddPlaylistTracks(ctx context.Context, req []AddPlaylistTracksReqItem, params AddPlaylistTracksParams) (r AddPlaylistTracksRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -116,7 +116,7 @@ func (UnimplementedHandler) DeleteMessageReaction(ctx context.Context, params De
 //
 // Delete a playlist.
 //
-// DELETE /api/playlists/{id}
+// DELETE /api/playlists/{playlist_id}
 func (UnimplementedHandler) DeletePlaylist(ctx context.Context, params DeletePlaylistParams) (r DeletePlaylistRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -125,7 +125,7 @@ func (UnimplementedHandler) DeletePlaylist(ctx context.Context, params DeletePla
 //
 // Remove a playlist role.
 //
-// DELETE /api/playlists/{id}/roles/{user_id}
+// DELETE /api/playlists/{playlist_id}/roles/{user_id}
 func (UnimplementedHandler) DeletePlaylistRole(ctx context.Context, params DeletePlaylistRoleParams) (r DeletePlaylistRoleRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -134,7 +134,7 @@ func (UnimplementedHandler) DeletePlaylistRole(ctx context.Context, params Delet
 //
 // Remove a playlist track.
 //
-// DELETE /api/playlists/{id}/tracks/{track_id}
+// DELETE /api/playlists/{playlist_id}/tracks/{track_id}
 func (UnimplementedHandler) DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams) (r DeletePlaylistTrackRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -161,7 +161,7 @@ func (UnimplementedHandler) EditMessage(ctx context.Context, req *EditMessageReq
 //
 // Update playlist details.
 //
-// PATCH /api/playlists/{id}
+// PATCH /api/playlists/{playlist_id}
 func (UnimplementedHandler) EditPlaylist(ctx context.Context, req *EditPlaylistRequest, params EditPlaylistParams) (r EditPlaylistRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -170,7 +170,7 @@ func (UnimplementedHandler) EditPlaylist(ctx context.Context, req *EditPlaylistR
 //
 // Update a playlist role.
 //
-// PATCH /api/playlists/{id}/roles/{user_id}
+// PATCH /api/playlists/{playlist_id}/roles/{user_id}
 func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleReq, params EditPlaylistRoleParams) (r EditPlaylistRoleRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -179,7 +179,7 @@ func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlayl
 //
 // Update a playlist track.
 //
-// PATCH /api/playlists/{id}/tracks/{track_id}
+// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (r EditPlaylistTrackRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -188,7 +188,7 @@ func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlay
 //
 // Get album details.
 //
-// GET /api/albums/{id}
+// GET /api/albums/{album_id}
 func (UnimplementedHandler) GetAlbum(ctx context.Context, params GetAlbumParams) (r GetAlbumRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -197,7 +197,7 @@ func (UnimplementedHandler) GetAlbum(ctx context.Context, params GetAlbumParams)
 //
 // Get artist details.
 //
-// GET /api/artists/{id}
+// GET /api/artists/{artist_id}
 func (UnimplementedHandler) GetArtist(ctx context.Context, params GetArtistParams) (r GetArtistRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -363,7 +363,7 @@ func (UnimplementedHandler) GetOpenAPI(ctx context.Context) (r GetOpenAPIOK, _ e
 //
 // Get playlist details.
 //
-// GET /api/playlists/{id}
+// GET /api/playlists/{playlist_id}
 func (UnimplementedHandler) GetPlaylist(ctx context.Context, params GetPlaylistParams) (r GetPlaylistRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -372,7 +372,7 @@ func (UnimplementedHandler) GetPlaylist(ctx context.Context, params GetPlaylistP
 //
 // Get playlist roles.
 //
-// GET /api/playlists/{id}/roles
+// GET /api/playlists/{playlist_id}/roles
 func (UnimplementedHandler) GetPlaylistRoles(ctx context.Context, params GetPlaylistRolesParams) (r GetPlaylistRolesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -381,7 +381,7 @@ func (UnimplementedHandler) GetPlaylistRoles(ctx context.Context, params GetPlay
 //
 // Get playlist tracks.
 //
-// GET /api/playlists/{id}/tracks
+// GET /api/playlists/{playlist_id}/tracks
 func (UnimplementedHandler) GetPlaylistTracks(ctx context.Context, params GetPlaylistTracksParams) (r GetPlaylistTracksRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -399,7 +399,7 @@ func (UnimplementedHandler) GetRelationsDetails(ctx context.Context) (r GetRelat
 //
 // Get track details.
 //
-// GET /api/tracks/{id}
+// GET /api/tracks/{track_id}
 func (UnimplementedHandler) GetTrack(ctx context.Context, params GetTrackParams) (r GetTrackRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -561,7 +561,7 @@ func (UnimplementedHandler) SetBlocked(ctx context.Context, req *BlockedActionRe
 //
 // Set playlist roles.
 //
-// POST /api/playlists/{id}/roles
+// POST /api/playlists/{playlist_id}/roles
 func (UnimplementedHandler) SetPlaylistRoles(ctx context.Context, req []SetPlaylistRolesReqItem, params SetPlaylistRolesParams) (r SetPlaylistRolesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }

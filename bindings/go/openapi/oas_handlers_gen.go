@@ -621,14 +621,14 @@ func (s *Server) handleAddMessageReactionRequest(args [3]string, argsEscaped boo
 //
 // Add playlist tracks.
 //
-// POST /api/playlists/{id}/tracks
+// POST /api/playlists/{playlist_id}/tracks
 func (s *Server) handleAddPlaylistTracksRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("addPlaylistTracks"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/tracks"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/tracks"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -776,9 +776,9 @@ func (s *Server) handleAddPlaylistTracksRequest(args [1]string, argsEscaped bool
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}
@@ -2148,14 +2148,14 @@ func (s *Server) handleDeleteMessageReactionRequest(args [3]string, argsEscaped 
 //
 // Delete a playlist.
 //
-// DELETE /api/playlists/{id}
+// DELETE /api/playlists/{playlist_id}
 func (s *Server) handleDeletePlaylistRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deletePlaylist"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -2288,9 +2288,9 @@ func (s *Server) handleDeletePlaylistRequest(args [1]string, argsEscaped bool, w
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}
@@ -2335,14 +2335,14 @@ func (s *Server) handleDeletePlaylistRequest(args [1]string, argsEscaped bool, w
 //
 // Remove a playlist role.
 //
-// DELETE /api/playlists/{id}/roles/{user_id}
+// DELETE /api/playlists/{playlist_id}/roles/{user_id}
 func (s *Server) handleDeletePlaylistRoleRequest(args [2]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deletePlaylistRole"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/roles/{user_id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/roles/{user_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -2475,9 +2475,9 @@ func (s *Server) handleDeletePlaylistRoleRequest(args [2]string, argsEscaped boo
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 				{
 					Name: "user_id",
 					In:   "path",
@@ -2526,14 +2526,14 @@ func (s *Server) handleDeletePlaylistRoleRequest(args [2]string, argsEscaped boo
 //
 // Remove a playlist track.
 //
-// DELETE /api/playlists/{id}/tracks/{track_id}
+// DELETE /api/playlists/{playlist_id}/tracks/{track_id}
 func (s *Server) handleDeletePlaylistTrackRequest(args [2]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deletePlaylistTrack"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/tracks/{track_id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/tracks/{track_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -2666,9 +2666,9 @@ func (s *Server) handleDeletePlaylistTrackRequest(args [2]string, argsEscaped bo
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 				{
 					Name: "track_id",
 					In:   "path",
@@ -3125,14 +3125,14 @@ func (s *Server) handleEditMessageRequest(args [2]string, argsEscaped bool, w ht
 //
 // Update playlist details.
 //
-// PATCH /api/playlists/{id}
+// PATCH /api/playlists/{playlist_id}
 func (s *Server) handleEditPlaylistRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editPlaylist"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -3280,9 +3280,9 @@ func (s *Server) handleEditPlaylistRequest(args [1]string, argsEscaped bool, w h
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}
@@ -3327,14 +3327,14 @@ func (s *Server) handleEditPlaylistRequest(args [1]string, argsEscaped bool, w h
 //
 // Update a playlist role.
 //
-// PATCH /api/playlists/{id}/roles/{user_id}
+// PATCH /api/playlists/{playlist_id}/roles/{user_id}
 func (s *Server) handleEditPlaylistRoleRequest(args [2]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editPlaylistRole"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/roles/{user_id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/roles/{user_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -3482,9 +3482,9 @@ func (s *Server) handleEditPlaylistRoleRequest(args [2]string, argsEscaped bool,
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 				{
 					Name: "user_id",
 					In:   "path",
@@ -3533,14 +3533,14 @@ func (s *Server) handleEditPlaylistRoleRequest(args [2]string, argsEscaped bool,
 //
 // Update a playlist track.
 //
-// PATCH /api/playlists/{id}/tracks/{track_id}
+// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 func (s *Server) handleEditPlaylistTrackRequest(args [2]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editPlaylistTrack"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/tracks/{track_id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/tracks/{track_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -3688,9 +3688,9 @@ func (s *Server) handleEditPlaylistTrackRequest(args [2]string, argsEscaped bool
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 				{
 					Name: "track_id",
 					In:   "path",
@@ -3739,14 +3739,14 @@ func (s *Server) handleEditPlaylistTrackRequest(args [2]string, argsEscaped bool
 //
 // Get album details.
 //
-// GET /api/albums/{id}
+// GET /api/albums/{album_id}
 func (s *Server) handleGetAlbumRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getAlbum"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/albums/{id}"),
+		semconv.HTTPRouteKey.String("/api/albums/{album_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -3879,9 +3879,9 @@ func (s *Server) handleGetAlbumRequest(args [1]string, argsEscaped bool, w http.
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "album_id",
 					In:   "path",
-				}: params.ID,
+				}: params.AlbumID,
 			},
 			Raw: r,
 		}
@@ -3926,14 +3926,14 @@ func (s *Server) handleGetAlbumRequest(args [1]string, argsEscaped bool, w http.
 //
 // Get artist details.
 //
-// GET /api/artists/{id}
+// GET /api/artists/{artist_id}
 func (s *Server) handleGetArtistRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getArtist"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/artists/{id}"),
+		semconv.HTTPRouteKey.String("/api/artists/{artist_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -4066,9 +4066,9 @@ func (s *Server) handleGetArtistRequest(args [1]string, argsEscaped bool, w http
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "artist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.ArtistID,
 			},
 			Raw: r,
 		}
@@ -6992,14 +6992,14 @@ func (s *Server) handleGetOpenAPIRequest(args [0]string, argsEscaped bool, w htt
 //
 // Get playlist details.
 //
-// GET /api/playlists/{id}
+// GET /api/playlists/{playlist_id}
 func (s *Server) handleGetPlaylistRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getPlaylist"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -7132,9 +7132,9 @@ func (s *Server) handleGetPlaylistRequest(args [1]string, argsEscaped bool, w ht
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}
@@ -7179,14 +7179,14 @@ func (s *Server) handleGetPlaylistRequest(args [1]string, argsEscaped bool, w ht
 //
 // Get playlist roles.
 //
-// GET /api/playlists/{id}/roles
+// GET /api/playlists/{playlist_id}/roles
 func (s *Server) handleGetPlaylistRolesRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getPlaylistRoles"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/roles"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/roles"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -7319,9 +7319,9 @@ func (s *Server) handleGetPlaylistRolesRequest(args [1]string, argsEscaped bool,
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}
@@ -7366,14 +7366,14 @@ func (s *Server) handleGetPlaylistRolesRequest(args [1]string, argsEscaped bool,
 //
 // Get playlist tracks.
 //
-// GET /api/playlists/{id}/tracks
+// GET /api/playlists/{playlist_id}/tracks
 func (s *Server) handleGetPlaylistTracksRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getPlaylistTracks"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/tracks"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/tracks"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -7506,9 +7506,9 @@ func (s *Server) handleGetPlaylistTracksRequest(args [1]string, argsEscaped bool
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}
@@ -7725,14 +7725,14 @@ func (s *Server) handleGetRelationsDetailsRequest(args [0]string, argsEscaped bo
 //
 // Get track details.
 //
-// GET /api/tracks/{id}
+// GET /api/tracks/{track_id}
 func (s *Server) handleGetTrackRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getTrack"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/tracks/{id}"),
+		semconv.HTTPRouteKey.String("/api/tracks/{track_id}"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -7865,9 +7865,9 @@ func (s *Server) handleGetTrackRequest(args [1]string, argsEscaped bool, w http.
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "track_id",
 					In:   "path",
-				}: params.ID,
+				}: params.TrackID,
 			},
 			Raw: r,
 		}
@@ -11021,14 +11021,14 @@ func (s *Server) handleSetBlockedRequest(args [0]string, argsEscaped bool, w htt
 //
 // Set playlist roles.
 //
-// POST /api/playlists/{id}/roles
+// POST /api/playlists/{playlist_id}/roles
 func (s *Server) handleSetPlaylistRolesRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("setPlaylistRoles"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/playlists/{id}/roles"),
+		semconv.HTTPRouteKey.String("/api/playlists/{playlist_id}/roles"),
 	}
 	// Add attributes from config.
 	otelAttrs = append(otelAttrs, s.cfg.Attributes...)
@@ -11176,9 +11176,9 @@ func (s *Server) handleSetPlaylistRolesRequest(args [1]string, argsEscaped bool,
 			RawBody:          rawBody,
 			Params: middleware.Parameters{
 				{
-					Name: "id",
+					Name: "playlist_id",
 					In:   "path",
-				}: params.ID,
+				}: params.PlaylistID,
 			},
 			Raw: r,
 		}

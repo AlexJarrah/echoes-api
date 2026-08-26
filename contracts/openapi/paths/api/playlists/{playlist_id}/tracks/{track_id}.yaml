@@ -1,4 +1,4 @@
-/api/playlists/{id}/tracks/{track_id}:
+/api/playlists/{playlist_id}/tracks/{track_id}:
   patch:
     summary: Update a playlist track
     operationId: editPlaylistTrack
@@ -8,7 +8,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:
@@ -60,7 +60,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:

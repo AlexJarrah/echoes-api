@@ -1,4 +1,4 @@
-/api/playlists/{id}:
+/api/playlists/{playlist_id}:
   get:
     summary: Get playlist details
     operationId: getPlaylist
@@ -7,7 +7,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:
@@ -37,7 +37,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:
@@ -75,7 +75,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:

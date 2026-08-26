@@ -1,4 +1,4 @@
-/api/tracks/{id}:
+/api/tracks/{track_id}:
   get:
     summary: Get track details
     operationId: getTrack
@@ -7,7 +7,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: track_id
         in: path
         required: true
         schema:

@@ -1,4 +1,4 @@
-/api/playlists/{id}/roles/{user_id}:
+/api/playlists/{playlist_id}/roles/{user_id}:
   patch:
     summary: Update a playlist role
     operationId: editPlaylistRole
@@ -8,7 +8,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:
@@ -57,7 +57,7 @@
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: playlist_id
         in: path
         required: true
         schema:

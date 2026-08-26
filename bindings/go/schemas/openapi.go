@@ -80,7 +80,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/albums/{id}:
+  /api/albums/{album_id}:
     get:
       summary: Get album details
       operationId: getAlbum
@@ -89,7 +89,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: album_id
           in: path
           required: true
           schema:
@@ -110,7 +110,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/artists/{id}:
+  /api/artists/{artist_id}:
     get:
       summary: Get artist details
       operationId: getArtist
@@ -119,7 +119,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: artist_id
           in: path
           required: true
           schema:
@@ -958,7 +958,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/playlists/{id}/roles/{user_id}:
+  /api/playlists/{playlist_id}/roles/{user_id}:
     patch:
       summary: Update a playlist role
       operationId: editPlaylistRole
@@ -968,7 +968,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1017,7 +1017,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1042,7 +1042,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/playlists/{id}/roles:
+  /api/playlists/{playlist_id}/roles:
     get:
       summary: Get playlist roles
       operationId: getPlaylistRoles
@@ -1052,7 +1052,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1084,7 +1084,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1122,7 +1122,7 @@ paths:
           $ref: '#/components/responses/Conflict'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/playlists/{id}/tracks/{track_id}:
+  /api/playlists/{playlist_id}/tracks/{track_id}:
     patch:
       summary: Update a playlist track
       operationId: editPlaylistTrack
@@ -1132,7 +1132,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1184,7 +1184,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1209,7 +1209,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/playlists/{id}/tracks:
+  /api/playlists/{playlist_id}/tracks:
     get:
       summary: Get playlist tracks
       operationId: getPlaylistTracks
@@ -1219,7 +1219,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1251,7 +1251,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1291,7 +1291,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/playlists/{id}:
+  /api/playlists/{playlist_id}:
     get:
       summary: Get playlist details
       operationId: getPlaylist
@@ -1300,7 +1300,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1329,7 +1329,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1366,7 +1366,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: playlist_id
           in: path
           required: true
           schema:
@@ -1921,7 +1921,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /api/tracks/{id}:
+  /api/tracks/{track_id}:
     get:
       summary: Get track details
       operationId: getTrack
@@ -1930,7 +1930,7 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: id
+        - name: track_id
           in: path
           required: true
           schema:

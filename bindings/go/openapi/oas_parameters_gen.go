@@ -253,22 +253,22 @@ func decodeAddMessageReactionParams(args [3]string, argsEscaped bool, r *http.Re
 
 // AddPlaylistTracksParams is parameters of addPlaylistTracks operation.
 type AddPlaylistTracksParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackAddPlaylistTracksParams(packed middleware.Parameters) (params AddPlaylistTracksParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeAddPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Request) (params AddPlaylistTracksParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -280,7 +280,7 @@ func decodeAddPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -297,7 +297,7 @@ func decodeAddPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -308,7 +308,7 @@ func decodeAddPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -790,22 +790,22 @@ func decodeDeleteMessageReactionParams(args [3]string, argsEscaped bool, r *http
 
 // DeletePlaylistParams is parameters of deletePlaylist operation.
 type DeletePlaylistParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackDeletePlaylistParams(packed middleware.Parameters) (params DeletePlaylistParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeDeletePlaylistParams(args [1]string, argsEscaped bool, r *http.Request) (params DeletePlaylistParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -817,7 +817,7 @@ func decodeDeletePlaylistParams(args [1]string, argsEscaped bool, r *http.Reques
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -834,7 +834,7 @@ func decodeDeletePlaylistParams(args [1]string, argsEscaped bool, r *http.Reques
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -845,7 +845,7 @@ func decodeDeletePlaylistParams(args [1]string, argsEscaped bool, r *http.Reques
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -855,17 +855,17 @@ func decodeDeletePlaylistParams(args [1]string, argsEscaped bool, r *http.Reques
 
 // DeletePlaylistRoleParams is parameters of deletePlaylistRole operation.
 type DeletePlaylistRoleParams struct {
-	ID     uuid.UUID
-	UserID uuid.UUID
+	PlaylistID uuid.UUID
+	UserID     uuid.UUID
 }
 
 func unpackDeletePlaylistRoleParams(packed middleware.Parameters) (params DeletePlaylistRoleParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	{
 		key := middleware.ParameterKey{
@@ -878,7 +878,7 @@ func unpackDeletePlaylistRoleParams(packed middleware.Parameters) (params Delete
 }
 
 func decodeDeletePlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Request) (params DeletePlaylistRoleParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -890,7 +890,7 @@ func decodeDeletePlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Re
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -907,7 +907,7 @@ func decodeDeletePlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Re
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -918,7 +918,7 @@ func decodeDeletePlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Re
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -973,17 +973,17 @@ func decodeDeletePlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Re
 
 // DeletePlaylistTrackParams is parameters of deletePlaylistTrack operation.
 type DeletePlaylistTrackParams struct {
-	ID      uuid.UUID
-	TrackID uuid.UUID
+	PlaylistID uuid.UUID
+	TrackID    uuid.UUID
 }
 
 func unpackDeletePlaylistTrackParams(packed middleware.Parameters) (params DeletePlaylistTrackParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	{
 		key := middleware.ParameterKey{
@@ -996,7 +996,7 @@ func unpackDeletePlaylistTrackParams(packed middleware.Parameters) (params Delet
 }
 
 func decodeDeletePlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Request) (params DeletePlaylistTrackParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -1008,7 +1008,7 @@ func decodeDeletePlaylistTrackParams(args [2]string, argsEscaped bool, r *http.R
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -1025,7 +1025,7 @@ func decodeDeletePlaylistTrackParams(args [2]string, argsEscaped bool, r *http.R
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -1036,7 +1036,7 @@ func decodeDeletePlaylistTrackParams(args [2]string, argsEscaped bool, r *http.R
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -1274,22 +1274,22 @@ func decodeEditMessageParams(args [2]string, argsEscaped bool, r *http.Request) 
 
 // EditPlaylistParams is parameters of editPlaylist operation.
 type EditPlaylistParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackEditPlaylistParams(packed middleware.Parameters) (params EditPlaylistParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeEditPlaylistParams(args [1]string, argsEscaped bool, r *http.Request) (params EditPlaylistParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -1301,7 +1301,7 @@ func decodeEditPlaylistParams(args [1]string, argsEscaped bool, r *http.Request)
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -1318,7 +1318,7 @@ func decodeEditPlaylistParams(args [1]string, argsEscaped bool, r *http.Request)
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -1329,7 +1329,7 @@ func decodeEditPlaylistParams(args [1]string, argsEscaped bool, r *http.Request)
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -1339,17 +1339,17 @@ func decodeEditPlaylistParams(args [1]string, argsEscaped bool, r *http.Request)
 
 // EditPlaylistRoleParams is parameters of editPlaylistRole operation.
 type EditPlaylistRoleParams struct {
-	ID     uuid.UUID
-	UserID uuid.UUID
+	PlaylistID uuid.UUID
+	UserID     uuid.UUID
 }
 
 func unpackEditPlaylistRoleParams(packed middleware.Parameters) (params EditPlaylistRoleParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	{
 		key := middleware.ParameterKey{
@@ -1362,7 +1362,7 @@ func unpackEditPlaylistRoleParams(packed middleware.Parameters) (params EditPlay
 }
 
 func decodeEditPlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Request) (params EditPlaylistRoleParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -1374,7 +1374,7 @@ func decodeEditPlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Requ
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -1391,7 +1391,7 @@ func decodeEditPlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Requ
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -1402,7 +1402,7 @@ func decodeEditPlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Requ
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -1457,17 +1457,17 @@ func decodeEditPlaylistRoleParams(args [2]string, argsEscaped bool, r *http.Requ
 
 // EditPlaylistTrackParams is parameters of editPlaylistTrack operation.
 type EditPlaylistTrackParams struct {
-	ID      uuid.UUID
-	TrackID uuid.UUID
+	PlaylistID uuid.UUID
+	TrackID    uuid.UUID
 }
 
 func unpackEditPlaylistTrackParams(packed middleware.Parameters) (params EditPlaylistTrackParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	{
 		key := middleware.ParameterKey{
@@ -1480,7 +1480,7 @@ func unpackEditPlaylistTrackParams(packed middleware.Parameters) (params EditPla
 }
 
 func decodeEditPlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Request) (params EditPlaylistTrackParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -1492,7 +1492,7 @@ func decodeEditPlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Req
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -1509,7 +1509,7 @@ func decodeEditPlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Req
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -1520,7 +1520,7 @@ func decodeEditPlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Req
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -1575,22 +1575,22 @@ func decodeEditPlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Req
 
 // GetAlbumParams is parameters of getAlbum operation.
 type GetAlbumParams struct {
-	ID uuid.UUID
+	AlbumID uuid.UUID
 }
 
 func unpackGetAlbumParams(packed middleware.Parameters) (params GetAlbumParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "album_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.AlbumID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeGetAlbumParams(args [1]string, argsEscaped bool, r *http.Request) (params GetAlbumParams, _ error) {
-	// Decode path: id.
+	// Decode path: album_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -1602,7 +1602,7 @@ func decodeGetAlbumParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "album_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -1619,7 +1619,7 @@ func decodeGetAlbumParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 					return err
 				}
 
-				params.ID = c
+				params.AlbumID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -1630,7 +1630,7 @@ func decodeGetAlbumParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "album_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -1640,22 +1640,22 @@ func decodeGetAlbumParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 
 // GetArtistParams is parameters of getArtist operation.
 type GetArtistParams struct {
-	ID uuid.UUID
+	ArtistID uuid.UUID
 }
 
 func unpackGetArtistParams(packed middleware.Parameters) (params GetArtistParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "artist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.ArtistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeGetArtistParams(args [1]string, argsEscaped bool, r *http.Request) (params GetArtistParams, _ error) {
-	// Decode path: id.
+	// Decode path: artist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -1667,7 +1667,7 @@ func decodeGetArtistParams(args [1]string, argsEscaped bool, r *http.Request) (p
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "artist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -1684,7 +1684,7 @@ func decodeGetArtistParams(args [1]string, argsEscaped bool, r *http.Request) (p
 					return err
 				}
 
-				params.ID = c
+				params.ArtistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -1695,7 +1695,7 @@ func decodeGetArtistParams(args [1]string, argsEscaped bool, r *http.Request) (p
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "artist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -2455,22 +2455,22 @@ func decodeGetMessagesParams(args [1]string, argsEscaped bool, r *http.Request) 
 
 // GetPlaylistParams is parameters of getPlaylist operation.
 type GetPlaylistParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackGetPlaylistParams(packed middleware.Parameters) (params GetPlaylistParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeGetPlaylistParams(args [1]string, argsEscaped bool, r *http.Request) (params GetPlaylistParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -2482,7 +2482,7 @@ func decodeGetPlaylistParams(args [1]string, argsEscaped bool, r *http.Request) 
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -2499,7 +2499,7 @@ func decodeGetPlaylistParams(args [1]string, argsEscaped bool, r *http.Request) 
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -2510,7 +2510,7 @@ func decodeGetPlaylistParams(args [1]string, argsEscaped bool, r *http.Request) 
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -2520,22 +2520,22 @@ func decodeGetPlaylistParams(args [1]string, argsEscaped bool, r *http.Request) 
 
 // GetPlaylistRolesParams is parameters of getPlaylistRoles operation.
 type GetPlaylistRolesParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackGetPlaylistRolesParams(packed middleware.Parameters) (params GetPlaylistRolesParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeGetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Request) (params GetPlaylistRolesParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -2547,7 +2547,7 @@ func decodeGetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -2564,7 +2564,7 @@ func decodeGetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -2575,7 +2575,7 @@ func decodeGetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -2585,22 +2585,22 @@ func decodeGetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 
 // GetPlaylistTracksParams is parameters of getPlaylistTracks operation.
 type GetPlaylistTracksParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackGetPlaylistTracksParams(packed middleware.Parameters) (params GetPlaylistTracksParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeGetPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Request) (params GetPlaylistTracksParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -2612,7 +2612,7 @@ func decodeGetPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -2629,7 +2629,7 @@ func decodeGetPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -2640,7 +2640,7 @@ func decodeGetPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -2650,22 +2650,22 @@ func decodeGetPlaylistTracksParams(args [1]string, argsEscaped bool, r *http.Req
 
 // GetTrackParams is parameters of getTrack operation.
 type GetTrackParams struct {
-	ID uuid.UUID
+	TrackID uuid.UUID
 }
 
 func unpackGetTrackParams(packed middleware.Parameters) (params GetTrackParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "track_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.TrackID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeGetTrackParams(args [1]string, argsEscaped bool, r *http.Request) (params GetTrackParams, _ error) {
-	// Decode path: id.
+	// Decode path: track_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -2677,7 +2677,7 @@ func decodeGetTrackParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "track_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -2694,7 +2694,7 @@ func decodeGetTrackParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 					return err
 				}
 
-				params.ID = c
+				params.TrackID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -2705,7 +2705,7 @@ func decodeGetTrackParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "track_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -2963,22 +2963,22 @@ func decodeSendMessageParams(args [1]string, argsEscaped bool, r *http.Request) 
 
 // SetPlaylistRolesParams is parameters of setPlaylistRoles operation.
 type SetPlaylistRolesParams struct {
-	ID uuid.UUID
+	PlaylistID uuid.UUID
 }
 
 func unpackSetPlaylistRolesParams(packed middleware.Parameters) (params SetPlaylistRolesParams) {
 	{
 		key := middleware.ParameterKey{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 		}
-		params.ID = packed[key].(uuid.UUID)
+		params.PlaylistID = packed[key].(uuid.UUID)
 	}
 	return params
 }
 
 func decodeSetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Request) (params SetPlaylistRolesParams, _ error) {
-	// Decode path: id.
+	// Decode path: playlist_id.
 	if err := func() error {
 		param := args[0]
 		if argsEscaped {
@@ -2990,7 +2990,7 @@ func decodeSetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 		}
 		if len(param) > 0 {
 			d := uri.NewPathDecoder(uri.PathDecoderConfig{
-				Param:   "id",
+				Param:   "playlist_id",
 				Value:   param,
 				Style:   uri.PathStyleSimple,
 				Explode: false,
@@ -3007,7 +3007,7 @@ func decodeSetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 					return err
 				}
 
-				params.ID = c
+				params.PlaylistID = c
 				return nil
 			}(); err != nil {
 				return err
@@ -3018,7 +3018,7 @@ func decodeSetPlaylistRolesParams(args [1]string, argsEscaped bool, r *http.Requ
 		return nil
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
-			Name: "id",
+			Name: "playlist_id",
 			In:   "path",
 			Err:  err,
 		}

@@ -112,7 +112,7 @@ type Invoker interface {
 	//
 	// Add playlist tracks.
 	//
-	// POST /api/playlists/{id}/tracks
+	// POST /api/playlists/{playlist_id}/tracks
 	AddPlaylistTracks(ctx context.Context, request []AddPlaylistTracksReqItem, params AddPlaylistTracksParams, options ...RequestOption) (AddPlaylistTracksRes, error)
 	// AddToLibrary invokes addToLibrary operation.
 	//
@@ -160,19 +160,19 @@ type Invoker interface {
 	//
 	// Delete a playlist.
 	//
-	// DELETE /api/playlists/{id}
+	// DELETE /api/playlists/{playlist_id}
 	DeletePlaylist(ctx context.Context, params DeletePlaylistParams, options ...RequestOption) (DeletePlaylistRes, error)
 	// DeletePlaylistRole invokes deletePlaylistRole operation.
 	//
 	// Remove a playlist role.
 	//
-	// DELETE /api/playlists/{id}/roles/{user_id}
+	// DELETE /api/playlists/{playlist_id}/roles/{user_id}
 	DeletePlaylistRole(ctx context.Context, params DeletePlaylistRoleParams, options ...RequestOption) (DeletePlaylistRoleRes, error)
 	// DeletePlaylistTrack invokes deletePlaylistTrack operation.
 	//
 	// Remove a playlist track.
 	//
-	// DELETE /api/playlists/{id}/tracks/{track_id}
+	// DELETE /api/playlists/{playlist_id}/tracks/{track_id}
 	DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams, options ...RequestOption) (DeletePlaylistTrackRes, error)
 	// EditGroup invokes editGroup operation.
 	//
@@ -190,31 +190,31 @@ type Invoker interface {
 	//
 	// Update playlist details.
 	//
-	// PATCH /api/playlists/{id}
+	// PATCH /api/playlists/{playlist_id}
 	EditPlaylist(ctx context.Context, request *EditPlaylistRequest, params EditPlaylistParams, options ...RequestOption) (EditPlaylistRes, error)
 	// EditPlaylistRole invokes editPlaylistRole operation.
 	//
 	// Update a playlist role.
 	//
-	// PATCH /api/playlists/{id}/roles/{user_id}
+	// PATCH /api/playlists/{playlist_id}/roles/{user_id}
 	EditPlaylistRole(ctx context.Context, request *EditPlaylistRoleReq, params EditPlaylistRoleParams, options ...RequestOption) (EditPlaylistRoleRes, error)
 	// EditPlaylistTrack invokes editPlaylistTrack operation.
 	//
 	// Update a playlist track.
 	//
-	// PATCH /api/playlists/{id}/tracks/{track_id}
+	// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 	EditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackReq, params EditPlaylistTrackParams, options ...RequestOption) (EditPlaylistTrackRes, error)
 	// GetAlbum invokes getAlbum operation.
 	//
 	// Get album details.
 	//
-	// GET /api/albums/{id}
+	// GET /api/albums/{album_id}
 	GetAlbum(ctx context.Context, params GetAlbumParams, options ...RequestOption) (GetAlbumRes, error)
 	// GetArtist invokes getArtist operation.
 	//
 	// Get artist details.
 	//
-	// GET /api/artists/{id}
+	// GET /api/artists/{artist_id}
 	GetArtist(ctx context.Context, params GetArtistParams, options ...RequestOption) (GetArtistRes, error)
 	// GetAsyncAPI invokes getAsyncAPI operation.
 	//
@@ -326,19 +326,19 @@ type Invoker interface {
 	//
 	// Get playlist details.
 	//
-	// GET /api/playlists/{id}
+	// GET /api/playlists/{playlist_id}
 	GetPlaylist(ctx context.Context, params GetPlaylistParams, options ...RequestOption) (GetPlaylistRes, error)
 	// GetPlaylistRoles invokes getPlaylistRoles operation.
 	//
 	// Get playlist roles.
 	//
-	// GET /api/playlists/{id}/roles
+	// GET /api/playlists/{playlist_id}/roles
 	GetPlaylistRoles(ctx context.Context, params GetPlaylistRolesParams, options ...RequestOption) (GetPlaylistRolesRes, error)
 	// GetPlaylistTracks invokes getPlaylistTracks operation.
 	//
 	// Get playlist tracks.
 	//
-	// GET /api/playlists/{id}/tracks
+	// GET /api/playlists/{playlist_id}/tracks
 	GetPlaylistTracks(ctx context.Context, params GetPlaylistTracksParams, options ...RequestOption) (GetPlaylistTracksRes, error)
 	// GetRelationsDetails invokes getRelationsDetails operation.
 	//
@@ -350,7 +350,7 @@ type Invoker interface {
 	//
 	// Get track details.
 	//
-	// GET /api/tracks/{id}
+	// GET /api/tracks/{track_id}
 	GetTrack(ctx context.Context, params GetTrackParams, options ...RequestOption) (GetTrackRes, error)
 	// GetTracksPlayStats invokes getTracksPlayStats operation.
 	//
@@ -458,7 +458,7 @@ type Invoker interface {
 	//
 	// Set playlist roles.
 	//
-	// POST /api/playlists/{id}/roles
+	// POST /api/playlists/{playlist_id}/roles
 	SetPlaylistRoles(ctx context.Context, request []SetPlaylistRolesReqItem, params SetPlaylistRolesParams, options ...RequestOption) (SetPlaylistRolesRes, error)
 	// SignIn invokes signIn operation.
 	//
@@ -1081,7 +1081,7 @@ func (c *Client) sendAddMessageReaction(ctx context.Context, params AddMessageRe
 //
 // Add playlist tracks.
 //
-// POST /api/playlists/{id}/tracks
+// POST /api/playlists/{playlist_id}/tracks
 func (c *Client) AddPlaylistTracks(ctx context.Context, request []AddPlaylistTracksReqItem, params AddPlaylistTracksParams, options ...RequestOption) (AddPlaylistTracksRes, error) {
 	res, err := c.sendAddPlaylistTracks(ctx, request, params, options...)
 	return res, err
@@ -1117,7 +1117,7 @@ func (c *Client) sendAddPlaylistTracks(ctx context.Context, request []AddPlaylis
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("addPlaylistTracks"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/tracks"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/tracks"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -1163,14 +1163,14 @@ func (c *Client) sendAddPlaylistTracks(ctx context.Context, request []AddPlaylis
 	var pathParts [3]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -2425,7 +2425,7 @@ func (c *Client) sendDeleteMessageReaction(ctx context.Context, params DeleteMes
 //
 // Delete a playlist.
 //
-// DELETE /api/playlists/{id}
+// DELETE /api/playlists/{playlist_id}
 func (c *Client) DeletePlaylist(ctx context.Context, params DeletePlaylistParams, options ...RequestOption) (DeletePlaylistRes, error) {
 	res, err := c.sendDeletePlaylist(ctx, params, options...)
 	return res, err
@@ -2435,7 +2435,7 @@ func (c *Client) sendDeletePlaylist(ctx context.Context, params DeletePlaylistPa
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deletePlaylist"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -2481,14 +2481,14 @@ func (c *Client) sendDeletePlaylist(ctx context.Context, params DeletePlaylistPa
 	var pathParts [2]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -2582,7 +2582,7 @@ func (c *Client) sendDeletePlaylist(ctx context.Context, params DeletePlaylistPa
 //
 // Remove a playlist role.
 //
-// DELETE /api/playlists/{id}/roles/{user_id}
+// DELETE /api/playlists/{playlist_id}/roles/{user_id}
 func (c *Client) DeletePlaylistRole(ctx context.Context, params DeletePlaylistRoleParams, options ...RequestOption) (DeletePlaylistRoleRes, error) {
 	res, err := c.sendDeletePlaylistRole(ctx, params, options...)
 	return res, err
@@ -2592,7 +2592,7 @@ func (c *Client) sendDeletePlaylistRole(ctx context.Context, params DeletePlayli
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deletePlaylistRole"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/roles/{user_id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/roles/{user_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -2638,14 +2638,14 @@ func (c *Client) sendDeletePlaylistRole(ctx context.Context, params DeletePlayli
 	var pathParts [4]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -2758,7 +2758,7 @@ func (c *Client) sendDeletePlaylistRole(ctx context.Context, params DeletePlayli
 //
 // Remove a playlist track.
 //
-// DELETE /api/playlists/{id}/tracks/{track_id}
+// DELETE /api/playlists/{playlist_id}/tracks/{track_id}
 func (c *Client) DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams, options ...RequestOption) (DeletePlaylistTrackRes, error) {
 	res, err := c.sendDeletePlaylistTrack(ctx, params, options...)
 	return res, err
@@ -2768,7 +2768,7 @@ func (c *Client) sendDeletePlaylistTrack(ctx context.Context, params DeletePlayl
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deletePlaylistTrack"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/tracks/{track_id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/tracks/{track_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -2814,14 +2814,14 @@ func (c *Client) sendDeletePlaylistTrack(ctx context.Context, params DeletePlayl
 	var pathParts [4]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -3282,7 +3282,7 @@ func (c *Client) sendEditMessage(ctx context.Context, request *EditMessageReq, p
 //
 // Update playlist details.
 //
-// PATCH /api/playlists/{id}
+// PATCH /api/playlists/{playlist_id}
 func (c *Client) EditPlaylist(ctx context.Context, request *EditPlaylistRequest, params EditPlaylistParams, options ...RequestOption) (EditPlaylistRes, error) {
 	res, err := c.sendEditPlaylist(ctx, request, params, options...)
 	return res, err
@@ -3301,7 +3301,7 @@ func (c *Client) sendEditPlaylist(ctx context.Context, request *EditPlaylistRequ
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editPlaylist"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3347,14 +3347,14 @@ func (c *Client) sendEditPlaylist(ctx context.Context, request *EditPlaylistRequ
 	var pathParts [2]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -3451,7 +3451,7 @@ func (c *Client) sendEditPlaylist(ctx context.Context, request *EditPlaylistRequ
 //
 // Update a playlist role.
 //
-// PATCH /api/playlists/{id}/roles/{user_id}
+// PATCH /api/playlists/{playlist_id}/roles/{user_id}
 func (c *Client) EditPlaylistRole(ctx context.Context, request *EditPlaylistRoleReq, params EditPlaylistRoleParams, options ...RequestOption) (EditPlaylistRoleRes, error) {
 	res, err := c.sendEditPlaylistRole(ctx, request, params, options...)
 	return res, err
@@ -3470,7 +3470,7 @@ func (c *Client) sendEditPlaylistRole(ctx context.Context, request *EditPlaylist
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editPlaylistRole"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/roles/{user_id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/roles/{user_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3516,14 +3516,14 @@ func (c *Client) sendEditPlaylistRole(ctx context.Context, request *EditPlaylist
 	var pathParts [4]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -3639,7 +3639,7 @@ func (c *Client) sendEditPlaylistRole(ctx context.Context, request *EditPlaylist
 //
 // Update a playlist track.
 //
-// PATCH /api/playlists/{id}/tracks/{track_id}
+// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 func (c *Client) EditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackReq, params EditPlaylistTrackParams, options ...RequestOption) (EditPlaylistTrackRes, error) {
 	res, err := c.sendEditPlaylistTrack(ctx, request, params, options...)
 	return res, err
@@ -3658,7 +3658,7 @@ func (c *Client) sendEditPlaylistTrack(ctx context.Context, request *EditPlaylis
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editPlaylistTrack"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/tracks/{track_id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/tracks/{track_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3704,14 +3704,14 @@ func (c *Client) sendEditPlaylistTrack(ctx context.Context, request *EditPlaylis
 	var pathParts [4]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -3827,7 +3827,7 @@ func (c *Client) sendEditPlaylistTrack(ctx context.Context, request *EditPlaylis
 //
 // Get album details.
 //
-// GET /api/albums/{id}
+// GET /api/albums/{album_id}
 func (c *Client) GetAlbum(ctx context.Context, params GetAlbumParams, options ...RequestOption) (GetAlbumRes, error) {
 	res, err := c.sendGetAlbum(ctx, params, options...)
 	return res, err
@@ -3837,7 +3837,7 @@ func (c *Client) sendGetAlbum(ctx context.Context, params GetAlbumParams, reques
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getAlbum"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/albums/{id}"),
+		semconv.URLTemplateKey.String("/api/albums/{album_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3883,14 +3883,14 @@ func (c *Client) sendGetAlbum(ctx context.Context, params GetAlbumParams, reques
 	var pathParts [2]string
 	pathParts[0] = "/api/albums/"
 	{
-		// Encode "id" parameter.
+		// Encode "album_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "album_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.AlbumID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -3984,7 +3984,7 @@ func (c *Client) sendGetAlbum(ctx context.Context, params GetAlbumParams, reques
 //
 // Get artist details.
 //
-// GET /api/artists/{id}
+// GET /api/artists/{artist_id}
 func (c *Client) GetArtist(ctx context.Context, params GetArtistParams, options ...RequestOption) (GetArtistRes, error) {
 	res, err := c.sendGetArtist(ctx, params, options...)
 	return res, err
@@ -3994,7 +3994,7 @@ func (c *Client) sendGetArtist(ctx context.Context, params GetArtistParams, requ
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getArtist"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/artists/{id}"),
+		semconv.URLTemplateKey.String("/api/artists/{artist_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -4040,14 +4040,14 @@ func (c *Client) sendGetArtist(ctx context.Context, params GetArtistParams, requ
 	var pathParts [2]string
 	pathParts[0] = "/api/artists/"
 	{
-		// Encode "id" parameter.
+		// Encode "artist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "artist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.ArtistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -6682,7 +6682,7 @@ func (c *Client) sendGetOpenAPI(ctx context.Context, requestOptions ...RequestOp
 //
 // Get playlist details.
 //
-// GET /api/playlists/{id}
+// GET /api/playlists/{playlist_id}
 func (c *Client) GetPlaylist(ctx context.Context, params GetPlaylistParams, options ...RequestOption) (GetPlaylistRes, error) {
 	res, err := c.sendGetPlaylist(ctx, params, options...)
 	return res, err
@@ -6692,7 +6692,7 @@ func (c *Client) sendGetPlaylist(ctx context.Context, params GetPlaylistParams, 
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getPlaylist"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -6738,14 +6738,14 @@ func (c *Client) sendGetPlaylist(ctx context.Context, params GetPlaylistParams, 
 	var pathParts [2]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -6839,7 +6839,7 @@ func (c *Client) sendGetPlaylist(ctx context.Context, params GetPlaylistParams, 
 //
 // Get playlist roles.
 //
-// GET /api/playlists/{id}/roles
+// GET /api/playlists/{playlist_id}/roles
 func (c *Client) GetPlaylistRoles(ctx context.Context, params GetPlaylistRolesParams, options ...RequestOption) (GetPlaylistRolesRes, error) {
 	res, err := c.sendGetPlaylistRoles(ctx, params, options...)
 	return res, err
@@ -6849,7 +6849,7 @@ func (c *Client) sendGetPlaylistRoles(ctx context.Context, params GetPlaylistRol
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getPlaylistRoles"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/roles"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/roles"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -6895,14 +6895,14 @@ func (c *Client) sendGetPlaylistRoles(ctx context.Context, params GetPlaylistRol
 	var pathParts [3]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -6997,7 +6997,7 @@ func (c *Client) sendGetPlaylistRoles(ctx context.Context, params GetPlaylistRol
 //
 // Get playlist tracks.
 //
-// GET /api/playlists/{id}/tracks
+// GET /api/playlists/{playlist_id}/tracks
 func (c *Client) GetPlaylistTracks(ctx context.Context, params GetPlaylistTracksParams, options ...RequestOption) (GetPlaylistTracksRes, error) {
 	res, err := c.sendGetPlaylistTracks(ctx, params, options...)
 	return res, err
@@ -7007,7 +7007,7 @@ func (c *Client) sendGetPlaylistTracks(ctx context.Context, params GetPlaylistTr
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getPlaylistTracks"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/tracks"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/tracks"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -7053,14 +7053,14 @@ func (c *Client) sendGetPlaylistTracks(ctx context.Context, params GetPlaylistTr
 	var pathParts [3]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -7294,7 +7294,7 @@ func (c *Client) sendGetRelationsDetails(ctx context.Context, requestOptions ...
 //
 // Get track details.
 //
-// GET /api/tracks/{id}
+// GET /api/tracks/{track_id}
 func (c *Client) GetTrack(ctx context.Context, params GetTrackParams, options ...RequestOption) (GetTrackRes, error) {
 	res, err := c.sendGetTrack(ctx, params, options...)
 	return res, err
@@ -7304,7 +7304,7 @@ func (c *Client) sendGetTrack(ctx context.Context, params GetTrackParams, reques
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getTrack"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/tracks/{id}"),
+		semconv.URLTemplateKey.String("/api/tracks/{track_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -7350,14 +7350,14 @@ func (c *Client) sendGetTrack(ctx context.Context, params GetTrackParams, reques
 	var pathParts [2]string
 	pathParts[0] = "/api/tracks/"
 	{
-		// Encode "id" parameter.
+		// Encode "track_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "track_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.TrackID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}
@@ -9969,7 +9969,7 @@ func (c *Client) sendSetBlocked(ctx context.Context, request *BlockedActionReque
 //
 // Set playlist roles.
 //
-// POST /api/playlists/{id}/roles
+// POST /api/playlists/{playlist_id}/roles
 func (c *Client) SetPlaylistRoles(ctx context.Context, request []SetPlaylistRolesReqItem, params SetPlaylistRolesParams, options ...RequestOption) (SetPlaylistRolesRes, error) {
 	res, err := c.sendSetPlaylistRoles(ctx, request, params, options...)
 	return res, err
@@ -10005,7 +10005,7 @@ func (c *Client) sendSetPlaylistRoles(ctx context.Context, request []SetPlaylist
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("setPlaylistRoles"),
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.URLTemplateKey.String("/api/playlists/{id}/roles"),
+		semconv.URLTemplateKey.String("/api/playlists/{playlist_id}/roles"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -10051,14 +10051,14 @@ func (c *Client) sendSetPlaylistRoles(ctx context.Context, request []SetPlaylist
 	var pathParts [3]string
 	pathParts[0] = "/api/playlists/"
 	{
-		// Encode "id" parameter.
+		// Encode "playlist_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
-			Param:   "id",
+			Param:   "playlist_id",
 			Style:   uri.PathStyleSimple,
 			Explode: false,
 		})
 		if err := func() error {
-			return e.EncodeValue(conv.UUIDToString(params.ID))
+			return e.EncodeValue(conv.UUIDToString(params.PlaylistID))
 		}(); err != nil {
 			return res, errors.Wrap(err, "encode path")
 		}

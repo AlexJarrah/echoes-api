@@ -30,7 +30,7 @@ type Handler interface {
 	//
 	// Add playlist tracks.
 	//
-	// POST /api/playlists/{id}/tracks
+	// POST /api/playlists/{playlist_id}/tracks
 	AddPlaylistTracks(ctx context.Context, req []AddPlaylistTracksReqItem, params AddPlaylistTracksParams) (AddPlaylistTracksRes, error)
 	// AddToLibrary implements addToLibrary operation.
 	//
@@ -78,19 +78,19 @@ type Handler interface {
 	//
 	// Delete a playlist.
 	//
-	// DELETE /api/playlists/{id}
+	// DELETE /api/playlists/{playlist_id}
 	DeletePlaylist(ctx context.Context, params DeletePlaylistParams) (DeletePlaylistRes, error)
 	// DeletePlaylistRole implements deletePlaylistRole operation.
 	//
 	// Remove a playlist role.
 	//
-	// DELETE /api/playlists/{id}/roles/{user_id}
+	// DELETE /api/playlists/{playlist_id}/roles/{user_id}
 	DeletePlaylistRole(ctx context.Context, params DeletePlaylistRoleParams) (DeletePlaylistRoleRes, error)
 	// DeletePlaylistTrack implements deletePlaylistTrack operation.
 	//
 	// Remove a playlist track.
 	//
-	// DELETE /api/playlists/{id}/tracks/{track_id}
+	// DELETE /api/playlists/{playlist_id}/tracks/{track_id}
 	DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams) (DeletePlaylistTrackRes, error)
 	// EditGroup implements editGroup operation.
 	//
@@ -108,31 +108,31 @@ type Handler interface {
 	//
 	// Update playlist details.
 	//
-	// PATCH /api/playlists/{id}
+	// PATCH /api/playlists/{playlist_id}
 	EditPlaylist(ctx context.Context, req *EditPlaylistRequest, params EditPlaylistParams) (EditPlaylistRes, error)
 	// EditPlaylistRole implements editPlaylistRole operation.
 	//
 	// Update a playlist role.
 	//
-	// PATCH /api/playlists/{id}/roles/{user_id}
+	// PATCH /api/playlists/{playlist_id}/roles/{user_id}
 	EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleReq, params EditPlaylistRoleParams) (EditPlaylistRoleRes, error)
 	// EditPlaylistTrack implements editPlaylistTrack operation.
 	//
 	// Update a playlist track.
 	//
-	// PATCH /api/playlists/{id}/tracks/{track_id}
+	// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 	EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (EditPlaylistTrackRes, error)
 	// GetAlbum implements getAlbum operation.
 	//
 	// Get album details.
 	//
-	// GET /api/albums/{id}
+	// GET /api/albums/{album_id}
 	GetAlbum(ctx context.Context, params GetAlbumParams) (GetAlbumRes, error)
 	// GetArtist implements getArtist operation.
 	//
 	// Get artist details.
 	//
-	// GET /api/artists/{id}
+	// GET /api/artists/{artist_id}
 	GetArtist(ctx context.Context, params GetArtistParams) (GetArtistRes, error)
 	// GetAsyncAPI implements getAsyncAPI operation.
 	//
@@ -244,19 +244,19 @@ type Handler interface {
 	//
 	// Get playlist details.
 	//
-	// GET /api/playlists/{id}
+	// GET /api/playlists/{playlist_id}
 	GetPlaylist(ctx context.Context, params GetPlaylistParams) (GetPlaylistRes, error)
 	// GetPlaylistRoles implements getPlaylistRoles operation.
 	//
 	// Get playlist roles.
 	//
-	// GET /api/playlists/{id}/roles
+	// GET /api/playlists/{playlist_id}/roles
 	GetPlaylistRoles(ctx context.Context, params GetPlaylistRolesParams) (GetPlaylistRolesRes, error)
 	// GetPlaylistTracks implements getPlaylistTracks operation.
 	//
 	// Get playlist tracks.
 	//
-	// GET /api/playlists/{id}/tracks
+	// GET /api/playlists/{playlist_id}/tracks
 	GetPlaylistTracks(ctx context.Context, params GetPlaylistTracksParams) (GetPlaylistTracksRes, error)
 	// GetRelationsDetails implements getRelationsDetails operation.
 	//
@@ -268,7 +268,7 @@ type Handler interface {
 	//
 	// Get track details.
 	//
-	// GET /api/tracks/{id}
+	// GET /api/tracks/{track_id}
 	GetTrack(ctx context.Context, params GetTrackParams) (GetTrackRes, error)
 	// GetTracksPlayStats implements getTracksPlayStats operation.
 	//
@@ -376,7 +376,7 @@ type Handler interface {
 	//
 	// Set playlist roles.
 	//
-	// POST /api/playlists/{id}/roles
+	// POST /api/playlists/{playlist_id}/roles
 	SetPlaylistRoles(ctx context.Context, req []SetPlaylistRolesReqItem, params SetPlaylistRolesParams) (SetPlaylistRolesRes, error)
 	// SignIn implements signIn operation.
 	//

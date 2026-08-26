@@ -295,7 +295,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 								break
 							}
 
-							// Param: "id"
+							// Param: "album_id"
 							// Leaf parameter, slashes are prohibited
 							idx := strings.IndexByte(elem, '/')
 							if idx >= 0 {
@@ -331,7 +331,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 								break
 							}
 
-							// Param: "id"
+							// Param: "artist_id"
 							// Leaf parameter, slashes are prohibited
 							idx := strings.IndexByte(elem, '/')
 							if idx >= 0 {
@@ -1063,7 +1063,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 								break
 							}
 
-							// Param: "id"
+							// Param: "playlist_id"
 							// Match until "/"
 							idx := strings.IndexByte(elem, '/')
 							if idx < 0 {
@@ -1821,7 +1821,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 							elem = origElem
 						}
-						// Param: "id"
+						// Param: "track_id"
 						// Leaf parameter, slashes are prohibited
 						idx := strings.IndexByte(elem, '/')
 						if idx >= 0 {
@@ -2368,7 +2368,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 								break
 							}
 
-							// Param: "id"
+							// Param: "album_id"
 							// Leaf parameter, slashes are prohibited
 							idx := strings.IndexByte(elem, '/')
 							if idx >= 0 {
@@ -2385,7 +2385,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									r.summary = "Get album details"
 									r.operationID = "getAlbum"
 									r.operationGroup = ""
-									r.pathPattern = "/api/albums/{id}"
+									r.pathPattern = "/api/albums/{album_id}"
 									r.args = args
 									r.count = 1
 									return r, true
@@ -2402,7 +2402,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 								break
 							}
 
-							// Param: "id"
+							// Param: "artist_id"
 							// Leaf parameter, slashes are prohibited
 							idx := strings.IndexByte(elem, '/')
 							if idx >= 0 {
@@ -2419,7 +2419,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									r.summary = "Get artist details"
 									r.operationID = "getArtist"
 									r.operationGroup = ""
-									r.pathPattern = "/api/artists/{id}"
+									r.pathPattern = "/api/artists/{artist_id}"
 									r.args = args
 									r.count = 1
 									return r, true
@@ -3148,7 +3148,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 								break
 							}
 
-							// Param: "id"
+							// Param: "playlist_id"
 							// Match until "/"
 							idx := strings.IndexByte(elem, '/')
 							if idx < 0 {
@@ -3164,7 +3164,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									r.summary = "Delete a playlist"
 									r.operationID = "deletePlaylist"
 									r.operationGroup = ""
-									r.pathPattern = "/api/playlists/{id}"
+									r.pathPattern = "/api/playlists/{playlist_id}"
 									r.args = args
 									r.count = 1
 									return r, true
@@ -3173,7 +3173,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									r.summary = "Get playlist details"
 									r.operationID = "getPlaylist"
 									r.operationGroup = ""
-									r.pathPattern = "/api/playlists/{id}"
+									r.pathPattern = "/api/playlists/{playlist_id}"
 									r.args = args
 									r.count = 1
 									return r, true
@@ -3182,7 +3182,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									r.summary = "Update playlist details"
 									r.operationID = "editPlaylist"
 									r.operationGroup = ""
-									r.pathPattern = "/api/playlists/{id}"
+									r.pathPattern = "/api/playlists/{playlist_id}"
 									r.args = args
 									r.count = 1
 									return r, true
@@ -3218,7 +3218,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 											r.summary = "Get playlist roles"
 											r.operationID = "getPlaylistRoles"
 											r.operationGroup = ""
-											r.pathPattern = "/api/playlists/{id}/roles"
+											r.pathPattern = "/api/playlists/{playlist_id}/roles"
 											r.args = args
 											r.count = 1
 											return r, true
@@ -3227,7 +3227,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 											r.summary = "Set playlist roles"
 											r.operationID = "setPlaylistRoles"
 											r.operationGroup = ""
-											r.pathPattern = "/api/playlists/{id}/roles"
+											r.pathPattern = "/api/playlists/{playlist_id}/roles"
 											r.args = args
 											r.count = 1
 											return r, true
@@ -3261,7 +3261,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 												r.summary = "Remove a playlist role"
 												r.operationID = "deletePlaylistRole"
 												r.operationGroup = ""
-												r.pathPattern = "/api/playlists/{id}/roles/{user_id}"
+												r.pathPattern = "/api/playlists/{playlist_id}/roles/{user_id}"
 												r.args = args
 												r.count = 2
 												return r, true
@@ -3270,7 +3270,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 												r.summary = "Update a playlist role"
 												r.operationID = "editPlaylistRole"
 												r.operationGroup = ""
-												r.pathPattern = "/api/playlists/{id}/roles/{user_id}"
+												r.pathPattern = "/api/playlists/{playlist_id}/roles/{user_id}"
 												r.args = args
 												r.count = 2
 												return r, true
@@ -3296,7 +3296,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 											r.summary = "Get playlist tracks"
 											r.operationID = "getPlaylistTracks"
 											r.operationGroup = ""
-											r.pathPattern = "/api/playlists/{id}/tracks"
+											r.pathPattern = "/api/playlists/{playlist_id}/tracks"
 											r.args = args
 											r.count = 1
 											return r, true
@@ -3305,7 +3305,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 											r.summary = "Add playlist tracks"
 											r.operationID = "addPlaylistTracks"
 											r.operationGroup = ""
-											r.pathPattern = "/api/playlists/{id}/tracks"
+											r.pathPattern = "/api/playlists/{playlist_id}/tracks"
 											r.args = args
 											r.count = 1
 											return r, true
@@ -3339,7 +3339,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 												r.summary = "Remove a playlist track"
 												r.operationID = "deletePlaylistTrack"
 												r.operationGroup = ""
-												r.pathPattern = "/api/playlists/{id}/tracks/{track_id}"
+												r.pathPattern = "/api/playlists/{playlist_id}/tracks/{track_id}"
 												r.args = args
 												r.count = 2
 												return r, true
@@ -3348,7 +3348,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 												r.summary = "Update a playlist track"
 												r.operationID = "editPlaylistTrack"
 												r.operationGroup = ""
-												r.pathPattern = "/api/playlists/{id}/tracks/{track_id}"
+												r.pathPattern = "/api/playlists/{playlist_id}/tracks/{track_id}"
 												r.args = args
 												r.count = 2
 												return r, true
@@ -3922,7 +3922,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 
 							elem = origElem
 						}
-						// Param: "id"
+						// Param: "track_id"
 						// Leaf parameter, slashes are prohibited
 						idx := strings.IndexByte(elem, '/')
 						if idx >= 0 {
@@ -3939,7 +3939,7 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 								r.summary = "Get track details"
 								r.operationID = "getTrack"
 								r.operationGroup = ""
-								r.pathPattern = "/api/tracks/{id}"
+								r.pathPattern = "/api/tracks/{track_id}"
 								r.args = args
 								r.count = 1
 								return r, true

@@ -1,13 +1,13 @@
-/api/artists/{id}:
+/api/albums/{album_id}:
   get:
-    summary: Get artist details
-    operationId: getArtist
+    summary: Get album details
+    operationId: getAlbum
     tags:
       - Library
     security:
       - CookieAuth: []
     parameters:
-      - name: id
+      - name: album_id
         in: path
         required: true
         schema:
@@ -15,11 +15,11 @@
           format: uuid
     responses:
       "200":
-        description: Artist details
+        description: Album details
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Artist"
+              $ref: "#/components/schemas/Album"
       "400":
         $ref: "#/components/responses/BadRequest"
       "401":

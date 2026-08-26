@@ -61,7 +61,7 @@ export const getAlbum = <ThrowOnError extends boolean = false>(options: Options<
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/albums/{id}',
+    url: '/api/albums/{album_id}',
     ...options
 });
 
@@ -74,7 +74,7 @@ export const getArtist = <ThrowOnError extends boolean = false>(options: Options
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/artists/{id}',
+    url: '/api/artists/{artist_id}',
     ...options
 });
 
@@ -494,7 +494,7 @@ export const deletePlaylistRole = <ThrowOnError extends boolean = false>(options
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/roles/{user_id}',
+    url: '/api/playlists/{playlist_id}/roles/{user_id}',
     ...options
 });
 
@@ -507,7 +507,7 @@ export const editPlaylistRole = <ThrowOnError extends boolean = false>(options: 
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/roles/{user_id}',
+    url: '/api/playlists/{playlist_id}/roles/{user_id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -524,7 +524,7 @@ export const getPlaylistRoles = <ThrowOnError extends boolean = false>(options: 
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/roles',
+    url: '/api/playlists/{playlist_id}/roles',
     ...options
 });
 
@@ -537,7 +537,7 @@ export const setPlaylistRoles = <ThrowOnError extends boolean = false>(options: 
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/roles',
+    url: '/api/playlists/{playlist_id}/roles',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -554,7 +554,7 @@ export const deletePlaylistTrack = <ThrowOnError extends boolean = false>(option
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/tracks/{track_id}',
+    url: '/api/playlists/{playlist_id}/tracks/{track_id}',
     ...options
 });
 
@@ -567,7 +567,7 @@ export const editPlaylistTrack = <ThrowOnError extends boolean = false>(options:
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/tracks/{track_id}',
+    url: '/api/playlists/{playlist_id}/tracks/{track_id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -584,7 +584,7 @@ export const getPlaylistTracks = <ThrowOnError extends boolean = false>(options:
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/tracks',
+    url: '/api/playlists/{playlist_id}/tracks',
     ...options
 });
 
@@ -597,7 +597,7 @@ export const addPlaylistTracks = <ThrowOnError extends boolean = false>(options:
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}/tracks',
+    url: '/api/playlists/{playlist_id}/tracks',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -614,7 +614,7 @@ export const deletePlaylist = <ThrowOnError extends boolean = false>(options: Op
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}',
+    url: '/api/playlists/{playlist_id}',
     ...options
 });
 
@@ -627,7 +627,7 @@ export const getPlaylist = <ThrowOnError extends boolean = false>(options: Optio
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}',
+    url: '/api/playlists/{playlist_id}',
     ...options
 });
 
@@ -640,7 +640,7 @@ export const editPlaylist = <ThrowOnError extends boolean = false>(options: Opti
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/playlists/{id}',
+    url: '/api/playlists/{playlist_id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -893,7 +893,7 @@ export const getTrack = <ThrowOnError extends boolean = false>(options: Options<
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/tracks/{id}',
+    url: '/api/tracks/{track_id}',
     ...options
 });
 
