@@ -118,6 +118,22 @@ export type BlockedActionRequest = {
     blocked: boolean;
 };
 
+export type Change = {
+    sequence: number;
+    entity: string;
+    operation: ChangeOperation;
+    object: string;
+    created_at: string;
+};
+
+/**
+ * 0=Create
+ * 1=Update
+ * 2=Delete
+ *
+ */
+export type ChangeOperation = 0 | 1 | 2;
+
 export type Conversation = {
     conversation_id: string;
     created_at: string;
@@ -1184,6 +1200,37 @@ export type GetArtistResponses = {
 };
 
 export type GetArtistResponse = GetArtistResponses[keyof GetArtistResponses];
+
+export type GetChangesData = {
+    body?: never;
+    path?: never;
+    query: {
+        since: number;
+    };
+    url: '/api/changes';
+};
+
+export type GetChangesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetChangesError = GetChangesErrors[keyof GetChangesErrors];
+
+export type GetChangesResponses = {
+    /**
+     * Changes retrieved successfully.
+     */
+    200: Array<Change>;
+};
+
+export type GetChangesResponse = GetChangesResponses[keyof GetChangesResponses];
 
 export type DeleteMessageReactionData = {
     body?: never;

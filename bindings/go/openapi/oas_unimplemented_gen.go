@@ -221,6 +221,15 @@ func (UnimplementedHandler) GetCalendarListens(ctx context.Context, params GetCa
 	return r, ht.ErrNotImplemented
 }
 
+// GetChanges implements getChanges operation.
+//
+// Get changes visible to the user.
+//
+// GET /api/changes
+func (UnimplementedHandler) GetChanges(ctx context.Context, params GetChangesParams) (r GetChangesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetGlobalTopAlbums implements getGlobalTopAlbums operation.
 //
 // Get global top albums in the specified time range. Time range values default to the range of the

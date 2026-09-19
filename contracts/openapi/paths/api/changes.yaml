@@ -1,0 +1,28 @@
+/api/changes:
+  get:
+    summary: Get changes visible to the user.
+    operationId: getChanges
+    tags:
+      - Changes
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: since
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Changes retrieved successfully.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Change"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

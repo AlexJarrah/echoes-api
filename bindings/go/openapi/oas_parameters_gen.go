@@ -1874,6 +1874,63 @@ func decodeGetCalendarListensParams(args [1]string, argsEscaped bool, r *http.Re
 	return params, nil
 }
 
+// GetChangesParams is parameters of getChanges operation.
+type GetChangesParams struct {
+	Since uint64
+}
+
+func unpackGetChangesParams(packed middleware.Parameters) (params GetChangesParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "since",
+			In:   "query",
+		}
+		params.Since = packed[key].(uint64)
+	}
+	return params
+}
+
+func decodeGetChangesParams(args [0]string, argsEscaped bool, r *http.Request) (params GetChangesParams, _ error) {
+	q := uri.NewQueryDecoder(r.URL.Query())
+	// Decode query: since.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "since",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUint64(val)
+				if err != nil {
+					return err
+				}
+
+				params.Since = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "since",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // GetGroupParams is parameters of getGroup operation.
 type GetGroupParams struct {
 	GroupID uuid.UUID

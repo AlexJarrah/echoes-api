@@ -89,6 +89,10 @@ type GetCalendarListensRes interface {
 	getCalendarListensRes()
 }
 
+type GetChangesRes interface {
+	getChangesRes()
+}
+
 type GetGlobalTopAlbumsRes interface {
 	getGlobalTopAlbumsRes()
 }

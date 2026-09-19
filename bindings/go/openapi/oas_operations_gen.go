@@ -29,6 +29,7 @@ const (
 	GetArtistOperation                 OperationName = "GetArtist"
 	GetAsyncAPIOperation               OperationName = "GetAsyncAPI"
 	GetCalendarListensOperation        OperationName = "GetCalendarListens"
+	GetChangesOperation                OperationName = "GetChanges"
 	GetGlobalTopAlbumsOperation        OperationName = "GetGlobalTopAlbums"
 	GetGlobalTopArtistsOperation       OperationName = "GetGlobalTopArtists"
 	GetGlobalTopTracksOperation        OperationName = "GetGlobalTopTracks"

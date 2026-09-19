@@ -147,6 +147,12 @@ type Handler interface {
 	//
 	// GET /api/{user_id}/calendar/listens
 	GetCalendarListens(ctx context.Context, params GetCalendarListensParams) (GetCalendarListensRes, error)
+	// GetChanges implements getChanges operation.
+	//
+	// Get changes visible to the user.
+	//
+	// GET /api/changes
+	GetChanges(ctx context.Context, params GetChangesParams) (GetChangesRes, error)
 	// GetGlobalTopAlbums implements getGlobalTopAlbums operation.
 	//
 	// Get global top albums in the specified time range. Time range values default to the range of the

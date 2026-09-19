@@ -140,6 +140,34 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/changes:
+    get:
+      summary: Get changes visible to the user.
+      operationId: getChanges
+      tags:
+        - Changes
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: since
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: uint64
+      responses:
+        '200':
+          description: Changes retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Change'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
     put:
       summary: Add a reaction to a message.
@@ -2507,6 +2535,38 @@ components:
           format: uuid
         blocked:
           type: boolean
+    Change:
+      type: object
+      required:
+        - sequence
+        - entity
+        - operation
+        - object
+        - created_at
+      properties:
+        sequence:
+          type: integer
+          format: uint64
+        entity:
+          type: string
+        operation:
+          $ref: '#/components/schemas/ChangeOperation'
+        object:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    ChangeOperation:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+      description: |
+        0=Create
+        1=Update
+        2=Delete
     Conversation:
       type: object
       required:

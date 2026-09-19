@@ -753,6 +753,84 @@ func (s *BlockedActionRequest) SetBlocked(val bool) {
 	s.Blocked = val
 }
 
+// Ref: #/components/schemas/Change
+type Change struct {
+	Sequence  uint64          `json:"sequence"`
+	Entity    string          `json:"entity"`
+	Operation ChangeOperation `json:"operation"`
+	Object    string          `json:"object"`
+	CreatedAt time.Time       `json:"created_at"`
+}
+
+// GetSequence returns the value of Sequence.
+func (s *Change) GetSequence() uint64 {
+	return s.Sequence
+}
+
+// GetEntity returns the value of Entity.
+func (s *Change) GetEntity() string {
+	return s.Entity
+}
+
+// GetOperation returns the value of Operation.
+func (s *Change) GetOperation() ChangeOperation {
+	return s.Operation
+}
+
+// GetObject returns the value of Object.
+func (s *Change) GetObject() string {
+	return s.Object
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Change) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// SetSequence sets the value of Sequence.
+func (s *Change) SetSequence(val uint64) {
+	s.Sequence = val
+}
+
+// SetEntity sets the value of Entity.
+func (s *Change) SetEntity(val string) {
+	s.Entity = val
+}
+
+// SetOperation sets the value of Operation.
+func (s *Change) SetOperation(val ChangeOperation) {
+	s.Operation = val
+}
+
+// SetObject sets the value of Object.
+func (s *Change) SetObject(val string) {
+	s.Object = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Change) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// 0=Create 1=Update 2=Delete.
+// Ref: #/components/schemas/ChangeOperation
+type ChangeOperation uint8
+
+const (
+	ChangeOperation0 ChangeOperation = 0
+	ChangeOperation1 ChangeOperation = 1
+	ChangeOperation2 ChangeOperation = 2
+)
+
+// AllValues returns all ChangeOperation values.
+func (ChangeOperation) AllValues() []ChangeOperation {
+	return []ChangeOperation{
+		ChangeOperation0,
+		ChangeOperation1,
+		ChangeOperation2,
+	}
+}
+
 // Ref: #/components/schemas/Conversation
 type Conversation struct {
 	ConversationID uuid.UUID `json:"conversation_id"`
@@ -1477,6 +1555,18 @@ func (s *GetCalendarListensOKHeaders) SetResponse(val GetCalendarListensOK) {
 }
 
 func (*GetCalendarListensOKHeaders) getCalendarListensRes() {}
+
+type GetChangesInternalServerError ErrorResponse
+
+func (*GetChangesInternalServerError) getChangesRes() {}
+
+type GetChangesOKApplicationJSON []Change
+
+func (*GetChangesOKApplicationJSON) getChangesRes() {}
+
+type GetChangesUnauthorized ErrorResponse
+
+func (*GetChangesUnauthorized) getChangesRes() {}
 
 type GetGlobalTopAlbumsBadRequest ErrorResponse
 

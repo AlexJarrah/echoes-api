@@ -1,0 +1,21 @@
+Change:
+  type: object
+  required:
+    - sequence
+    - entity
+    - operation
+    - object
+    - created_at
+  properties:
+    sequence:
+      type: integer
+      format: uint64
+    entity:
+      type: string
+    operation:
+      $ref: "#/components/schemas/ChangeOperation"
+    object:
+      type: string
+    created_at:
+      type: string
+      format: date-time

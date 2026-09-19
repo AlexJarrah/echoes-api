@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/changes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get changes visible to the user. */
+        get: operations["getChanges"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}": {
         parameters: {
             query?: never;
@@ -1101,6 +1118,23 @@ export interface components {
             id: string;
             blocked: boolean;
         };
+        Change: {
+            /** Format: uint64 */
+            sequence: number;
+            entity: string;
+            operation: components["schemas"]["ChangeOperation"];
+            object: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        /**
+         * Format: uint8
+         * @description 0=Create
+         *     1=Update
+         *     2=Delete
+         * @enum {integer}
+         */
+        ChangeOperation: 0 | 1 | 2;
         Conversation: {
             /** Format: uuid */
             conversation_id: string;
@@ -2217,6 +2251,30 @@ export interface operations {
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getChanges: {
+        parameters: {
+            query: {
+                since: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Changes retrieved successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Change"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };
