@@ -22944,13 +22944,46 @@ func (s *SyncResponse) encodeFields(e *jx.Encoder) {
 			e.ArrEnd()
 		}
 	}
+	{
+		if s.TrackArtists != nil {
+			e.FieldStart("track_artists")
+			e.ArrStart()
+			for _, elem := range s.TrackArtists {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
+		if s.AlbumTracks != nil {
+			e.FieldStart("album_tracks")
+			e.ArrStart()
+			for _, elem := range s.AlbumTracks {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
+		if s.AlbumArtists != nil {
+			e.FieldStart("album_artists")
+			e.ArrStart()
+			for _, elem := range s.AlbumArtists {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
 }
 
-var jsonFieldsNameOfSyncResponse = [4]string{
+var jsonFieldsNameOfSyncResponse = [7]string{
 	0: "tracks",
 	1: "artists",
 	2: "albums",
 	3: "playlists",
+	4: "track_artists",
+	5: "album_tracks",
+	6: "album_artists",
 }
 
 // Decode decodes SyncResponse from json.
@@ -23028,6 +23061,57 @@ func (s *SyncResponse) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"playlists\"")
+			}
+		case "track_artists":
+			if err := func() error {
+				s.TrackArtists = make([]TrackArtist, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem TrackArtist
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.TrackArtists = append(s.TrackArtists, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track_artists\"")
+			}
+		case "album_tracks":
+			if err := func() error {
+				s.AlbumTracks = make([]AlbumTrack, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem AlbumTrack
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.AlbumTracks = append(s.AlbumTracks, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album_tracks\"")
+			}
+		case "album_artists":
+			if err := func() error {
+				s.AlbumArtists = make([]AlbumArtist, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem AlbumArtist
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.AlbumArtists = append(s.AlbumArtists, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album_artists\"")
 			}
 		default:
 			return d.Skip()

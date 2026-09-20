@@ -7793,10 +7793,13 @@ func (s *SyncRequest) SetPlaylists(val []uuid.UUID) {
 
 // Ref: #/components/schemas/SyncResponse
 type SyncResponse struct {
-	Tracks    []SyncResponseTracksItem    `json:"tracks"`
-	Artists   []SyncResponseArtistsItem   `json:"artists"`
-	Albums    []SyncResponseAlbumsItem    `json:"albums"`
-	Playlists []SyncResponsePlaylistsItem `json:"playlists"`
+	Tracks       []SyncResponseTracksItem    `json:"tracks"`
+	Artists      []SyncResponseArtistsItem   `json:"artists"`
+	Albums       []SyncResponseAlbumsItem    `json:"albums"`
+	Playlists    []SyncResponsePlaylistsItem `json:"playlists"`
+	TrackArtists []TrackArtist               `json:"track_artists"`
+	AlbumTracks  []AlbumTrack                `json:"album_tracks"`
+	AlbumArtists []AlbumArtist               `json:"album_artists"`
 }
 
 // GetTracks returns the value of Tracks.
@@ -7819,6 +7822,21 @@ func (s *SyncResponse) GetPlaylists() []SyncResponsePlaylistsItem {
 	return s.Playlists
 }
 
+// GetTrackArtists returns the value of TrackArtists.
+func (s *SyncResponse) GetTrackArtists() []TrackArtist {
+	return s.TrackArtists
+}
+
+// GetAlbumTracks returns the value of AlbumTracks.
+func (s *SyncResponse) GetAlbumTracks() []AlbumTrack {
+	return s.AlbumTracks
+}
+
+// GetAlbumArtists returns the value of AlbumArtists.
+func (s *SyncResponse) GetAlbumArtists() []AlbumArtist {
+	return s.AlbumArtists
+}
+
 // SetTracks sets the value of Tracks.
 func (s *SyncResponse) SetTracks(val []SyncResponseTracksItem) {
 	s.Tracks = val
@@ -7837,6 +7855,21 @@ func (s *SyncResponse) SetAlbums(val []SyncResponseAlbumsItem) {
 // SetPlaylists sets the value of Playlists.
 func (s *SyncResponse) SetPlaylists(val []SyncResponsePlaylistsItem) {
 	s.Playlists = val
+}
+
+// SetTrackArtists sets the value of TrackArtists.
+func (s *SyncResponse) SetTrackArtists(val []TrackArtist) {
+	s.TrackArtists = val
+}
+
+// SetAlbumTracks sets the value of AlbumTracks.
+func (s *SyncResponse) SetAlbumTracks(val []AlbumTrack) {
+	s.AlbumTracks = val
+}
+
+// SetAlbumArtists sets the value of AlbumArtists.
+func (s *SyncResponse) SetAlbumArtists(val []AlbumArtist) {
+	s.AlbumArtists = val
 }
 
 func (*SyncResponse) syncRes() {}

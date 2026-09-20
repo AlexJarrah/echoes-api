@@ -1980,6 +1980,9 @@ export interface components {
                 updated?: components["schemas"]["Playlist"][];
                 deleted?: string[];
             }[];
+            track_artists?: components["schemas"]["TrackArtist"][];
+            album_tracks?: components["schemas"]["AlbumTrack"][];
+            album_artists?: components["schemas"]["AlbumArtist"][];
         };
         TopAlbumEntry: {
             /** Format: uuid */

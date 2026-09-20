@@ -4137,6 +4137,18 @@ components:
                 items:
                   type: string
                   format: uuid
+        track_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackArtist'
+        album_tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumTrack'
+        album_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumArtist'
     TopAlbumEntry:
       type: object
       required:

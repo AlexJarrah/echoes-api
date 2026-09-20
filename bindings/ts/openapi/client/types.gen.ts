@@ -929,6 +929,9 @@ export type SyncResponse = {
         updated?: Array<Playlist>;
         deleted?: Array<string>;
     }>;
+    track_artists?: Array<TrackArtist>;
+    album_tracks?: Array<AlbumTrack>;
+    album_artists?: Array<AlbumArtist>;
 };
 
 export type TopAlbumEntry = {
