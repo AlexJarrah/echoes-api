@@ -3560,7 +3560,7 @@ func decodeGetChangesResponse(resp *http.Response) (res GetChangesRes, _ error) 
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetChangesOKApplicationJSON
+			var response GetChangesOK
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

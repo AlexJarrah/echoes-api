@@ -1227,7 +1227,10 @@ export type GetChangesResponses = {
     /**
      * Changes retrieved successfully.
      */
-    200: Array<Change>;
+    200: {
+        current_sequence: number;
+        changes: Array<Change>;
+    };
 };
 
 export type GetChangesResponse = GetChangesResponses[keyof GetChangesResponses];

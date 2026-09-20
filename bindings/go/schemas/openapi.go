@@ -161,9 +161,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Change'
+                type: object
+                required:
+                  - current_sequence
+                  - changes
+                properties:
+                  current_sequence:
+                    type: integer
+                    format: uint64
+                  changes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Change'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':

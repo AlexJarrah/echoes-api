@@ -1446,7 +1446,7 @@ func encodeGetCalendarListensResponse(response GetCalendarListensRes, w http.Res
 
 func encodeGetChangesResponse(response GetChangesRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *GetChangesOKApplicationJSON:
+	case *GetChangesOK:
 		if err := func() error {
 			if err := response.Validate(); err != nil {
 				return err

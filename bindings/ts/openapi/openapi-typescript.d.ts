@@ -2271,7 +2271,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Change"][];
+                    "application/json": {
+                        /** Format: uint64 */
+                        current_sequence: number;
+                        changes: components["schemas"]["Change"][];
+                    };
                 };
             };
             401: components["responses"]["Unauthorized"];

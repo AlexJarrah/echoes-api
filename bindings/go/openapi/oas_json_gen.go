@@ -6657,52 +6657,125 @@ func (s *GetChangesInternalServerError) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes GetChangesOKApplicationJSON as json.
-func (s GetChangesOKApplicationJSON) Encode(e *jx.Encoder) {
-	unwrapped := []Change(s)
-
-	e.ArrStart()
-	for _, elem := range unwrapped {
-		elem.Encode(e)
-	}
-	e.ArrEnd()
+// Encode implements json.Marshaler.
+func (s *GetChangesOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
 }
 
-// Decode decodes GetChangesOKApplicationJSON from json.
-func (s *GetChangesOKApplicationJSON) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode GetChangesOKApplicationJSON to nil")
+// encodeFields encodes fields.
+func (s *GetChangesOK) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("current_sequence")
+		e.UInt64(s.CurrentSequence)
 	}
-	var unwrapped []Change
-	if err := func() error {
-		unwrapped = make([]Change, 0)
-		if err := d.Arr(func(d *jx.Decoder) error {
-			var elem Change
-			if err := elem.Decode(d); err != nil {
-				return err
+	{
+		e.FieldStart("changes")
+		e.ArrStart()
+		for _, elem := range s.Changes {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+}
+
+var jsonFieldsNameOfGetChangesOK = [2]string{
+	0: "current_sequence",
+	1: "changes",
+}
+
+// Decode decodes GetChangesOK from json.
+func (s *GetChangesOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetChangesOK to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "current_sequence":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.UInt64()
+				s.CurrentSequence = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"current_sequence\"")
 			}
-			unwrapped = append(unwrapped, elem)
-			return nil
-		}); err != nil {
-			return err
+		case "changes":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				s.Changes = make([]Change, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem Change
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.Changes = append(s.Changes, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"changes\"")
+			}
+		default:
+			return d.Skip()
 		}
 		return nil
-	}(); err != nil {
-		return errors.Wrap(err, "alias")
+	}); err != nil {
+		return errors.Wrap(err, "decode GetChangesOK")
 	}
-	*s = GetChangesOKApplicationJSON(unwrapped)
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000011,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfGetChangesOK) {
+					name = jsonFieldsNameOfGetChangesOK[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s GetChangesOKApplicationJSON) MarshalJSON() ([]byte, error) {
+func (s *GetChangesOK) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *GetChangesOKApplicationJSON) UnmarshalJSON(data []byte) error {
+func (s *GetChangesOK) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

@@ -1560,9 +1560,32 @@ type GetChangesInternalServerError ErrorResponse
 
 func (*GetChangesInternalServerError) getChangesRes() {}
 
-type GetChangesOKApplicationJSON []Change
+type GetChangesOK struct {
+	CurrentSequence uint64   `json:"current_sequence"`
+	Changes         []Change `json:"changes"`
+}
 
-func (*GetChangesOKApplicationJSON) getChangesRes() {}
+// GetCurrentSequence returns the value of CurrentSequence.
+func (s *GetChangesOK) GetCurrentSequence() uint64 {
+	return s.CurrentSequence
+}
+
+// GetChanges returns the value of Changes.
+func (s *GetChangesOK) GetChanges() []Change {
+	return s.Changes
+}
+
+// SetCurrentSequence sets the value of CurrentSequence.
+func (s *GetChangesOK) SetCurrentSequence(val uint64) {
+	s.CurrentSequence = val
+}
+
+// SetChanges sets the value of Changes.
+func (s *GetChangesOK) SetChanges(val []Change) {
+	s.Changes = val
+}
+
+func (*GetChangesOK) getChangesRes() {}
 
 type GetChangesUnauthorized ErrorResponse
 
