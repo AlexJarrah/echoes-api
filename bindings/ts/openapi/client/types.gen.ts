@@ -897,6 +897,40 @@ export type StatisticsQuery = {
     limit?: number;
 };
 
+export type SyncRequest = {
+    /**
+     * When to consider updated data outdated
+     */
+    timestamp: string;
+    tracks?: Array<string>;
+    artists?: Array<string>;
+    albums?: Array<string>;
+    playlists?: Array<string>;
+};
+
+export type SyncResponse = {
+    tracks?: Array<{
+        created?: Array<Track>;
+        updated?: Array<Track>;
+        deleted?: Array<string>;
+    }>;
+    artists?: Array<{
+        created?: Array<Artist>;
+        updated?: Array<Artist>;
+        deleted?: Array<string>;
+    }>;
+    albums?: Array<{
+        created?: Array<Album>;
+        updated?: Array<Album>;
+        deleted?: Array<string>;
+    }>;
+    playlists?: Array<{
+        created?: Array<Playlist>;
+        updated?: Array<Playlist>;
+        deleted?: Array<string>;
+    }>;
+};
+
 export type TopAlbumEntry = {
     id: string;
     rank: number;
@@ -3172,6 +3206,32 @@ export type SubsonicStreamResponses = {
 };
 
 export type SubsonicStreamResponse = SubsonicStreamResponses[keyof SubsonicStreamResponses];
+
+export type SyncData = {
+    body: SyncRequest;
+    path?: never;
+    query?: never;
+    url: '/api/sync';
+};
+
+export type SyncErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type SyncError = SyncErrors[keyof SyncErrors];
+
+export type SyncResponses = {
+    200: SyncResponse;
+};
+
+export type SyncResponse2 = SyncResponses[keyof SyncResponses];
 
 export type SearchTracksData = {
     body: Array<SearchTrackQuery>;

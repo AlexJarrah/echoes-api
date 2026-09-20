@@ -1,0 +1,75 @@
+SyncResponse:
+  type: object
+  properties:
+    tracks:
+      type: array
+      items:
+        type: object
+        properties:
+          created:
+            type: array
+            items:
+              $ref: "#/components/schemas/Track"
+          updated:
+            type: array
+            items:
+              $ref: "#/components/schemas/Track"
+          deleted:
+            type: array
+            items:
+              type: string
+              format: uuid
+    artists:
+      type: array
+      items:
+        type: object
+        properties:
+          created:
+            type: array
+            items:
+              $ref: "#/components/schemas/Artist"
+          updated:
+            type: array
+            items:
+              $ref: "#/components/schemas/Artist"
+          deleted:
+            type: array
+            items:
+              type: string
+              format: uuid
+    albums:
+      type: array
+      items:
+        type: object
+        properties:
+          created:
+            type: array
+            items:
+              $ref: "#/components/schemas/Album"
+          updated:
+            type: array
+            items:
+              $ref: "#/components/schemas/Album"
+          deleted:
+            type: array
+            items:
+              type: string
+              format: uuid
+    playlists:
+      type: array
+      items:
+        type: object
+        properties:
+          created:
+            type: array
+            items:
+              $ref: "#/components/schemas/Playlist"
+          updated:
+            type: array
+            items:
+              $ref: "#/components/schemas/Playlist"
+          deleted:
+            type: array
+            items:
+              type: string
+              format: uuid

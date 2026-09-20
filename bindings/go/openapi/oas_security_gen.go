@@ -90,6 +90,7 @@ var operationRolesCookieAuth = map[string][]string{
 	SetBestFriendOperation:             []string{},
 	SetBlockedOperation:                []string{},
 	SetPlaylistRolesOperation:          []string{},
+	SyncOperation:                      []string{},
 	UpdateGroupRolesOperation:          []string{},
 	UpdateLibraryOperation:             []string{},
 	UpdateUserOperation:                []string{},

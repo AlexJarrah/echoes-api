@@ -1898,6 +1898,112 @@ components:
           maximum: 10000
           description: Maximum number of results to return
 
+    SyncRequest:
+      type: object
+      required:
+        - timestamp
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: When to consider updated data outdated
+        tracks:
+          type: array
+          items:
+            type: string
+            format: uuid
+        artists:
+          type: array
+          items:
+            type: string
+            format: uuid
+        albums:
+          type: array
+          items:
+            type: string
+            format: uuid
+        playlists:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    SyncResponse:
+      type: object
+      properties:
+        tracks:
+          type: array
+          items:
+            type: object
+            properties:
+              created:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Track"
+              updated:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Track"
+              deleted:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        artists:
+          type: array
+          items:
+            type: object
+            properties:
+              created:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Artist"
+              updated:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Artist"
+              deleted:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        albums:
+          type: array
+          items:
+            type: object
+            properties:
+              created:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+              updated:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+              deleted:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+        playlists:
+          type: array
+          items:
+            type: object
+            properties:
+              created:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Playlist"
+              updated:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Playlist"
+              deleted:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+
     TopAlbumEntry:
       type: object
       required:
@@ -4131,6 +4237,29 @@ paths:
                 format: binary
         "404":
           $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/sync:
+    post:
+      summary: Compare differences between a snapshot and a provided state
+      operationId: sync
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "500":
           $ref: "#/components/responses/InternalServerError"
 

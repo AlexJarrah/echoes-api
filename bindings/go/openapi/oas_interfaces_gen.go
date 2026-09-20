@@ -253,6 +253,10 @@ type SubsonicStreamRes interface {
 	subsonicStreamRes()
 }
 
+type SyncRes interface {
+	syncRes()
+}
+
 type UpdateGroupRolesRes interface {
 	updateGroupRolesRes()
 }

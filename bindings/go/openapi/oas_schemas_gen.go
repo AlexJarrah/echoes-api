@@ -7723,6 +7723,268 @@ func (s SubsonicStreamOKAudioOgg) Read(p []byte) (n int, err error) {
 
 func (*SubsonicStreamOKAudioOgg) subsonicStreamRes() {}
 
+type SyncBadRequest ErrorResponse
+
+func (*SyncBadRequest) syncRes() {}
+
+type SyncInternalServerError ErrorResponse
+
+func (*SyncInternalServerError) syncRes() {}
+
+// Ref: #/components/schemas/SyncRequest
+type SyncRequest struct {
+	// When to consider updated data outdated.
+	Timestamp time.Time   `json:"timestamp"`
+	Tracks    []uuid.UUID `json:"tracks"`
+	Artists   []uuid.UUID `json:"artists"`
+	Albums    []uuid.UUID `json:"albums"`
+	Playlists []uuid.UUID `json:"playlists"`
+}
+
+// GetTimestamp returns the value of Timestamp.
+func (s *SyncRequest) GetTimestamp() time.Time {
+	return s.Timestamp
+}
+
+// GetTracks returns the value of Tracks.
+func (s *SyncRequest) GetTracks() []uuid.UUID {
+	return s.Tracks
+}
+
+// GetArtists returns the value of Artists.
+func (s *SyncRequest) GetArtists() []uuid.UUID {
+	return s.Artists
+}
+
+// GetAlbums returns the value of Albums.
+func (s *SyncRequest) GetAlbums() []uuid.UUID {
+	return s.Albums
+}
+
+// GetPlaylists returns the value of Playlists.
+func (s *SyncRequest) GetPlaylists() []uuid.UUID {
+	return s.Playlists
+}
+
+// SetTimestamp sets the value of Timestamp.
+func (s *SyncRequest) SetTimestamp(val time.Time) {
+	s.Timestamp = val
+}
+
+// SetTracks sets the value of Tracks.
+func (s *SyncRequest) SetTracks(val []uuid.UUID) {
+	s.Tracks = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *SyncRequest) SetArtists(val []uuid.UUID) {
+	s.Artists = val
+}
+
+// SetAlbums sets the value of Albums.
+func (s *SyncRequest) SetAlbums(val []uuid.UUID) {
+	s.Albums = val
+}
+
+// SetPlaylists sets the value of Playlists.
+func (s *SyncRequest) SetPlaylists(val []uuid.UUID) {
+	s.Playlists = val
+}
+
+// Ref: #/components/schemas/SyncResponse
+type SyncResponse struct {
+	Tracks    []SyncResponseTracksItem    `json:"tracks"`
+	Artists   []SyncResponseArtistsItem   `json:"artists"`
+	Albums    []SyncResponseAlbumsItem    `json:"albums"`
+	Playlists []SyncResponsePlaylistsItem `json:"playlists"`
+}
+
+// GetTracks returns the value of Tracks.
+func (s *SyncResponse) GetTracks() []SyncResponseTracksItem {
+	return s.Tracks
+}
+
+// GetArtists returns the value of Artists.
+func (s *SyncResponse) GetArtists() []SyncResponseArtistsItem {
+	return s.Artists
+}
+
+// GetAlbums returns the value of Albums.
+func (s *SyncResponse) GetAlbums() []SyncResponseAlbumsItem {
+	return s.Albums
+}
+
+// GetPlaylists returns the value of Playlists.
+func (s *SyncResponse) GetPlaylists() []SyncResponsePlaylistsItem {
+	return s.Playlists
+}
+
+// SetTracks sets the value of Tracks.
+func (s *SyncResponse) SetTracks(val []SyncResponseTracksItem) {
+	s.Tracks = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *SyncResponse) SetArtists(val []SyncResponseArtistsItem) {
+	s.Artists = val
+}
+
+// SetAlbums sets the value of Albums.
+func (s *SyncResponse) SetAlbums(val []SyncResponseAlbumsItem) {
+	s.Albums = val
+}
+
+// SetPlaylists sets the value of Playlists.
+func (s *SyncResponse) SetPlaylists(val []SyncResponsePlaylistsItem) {
+	s.Playlists = val
+}
+
+func (*SyncResponse) syncRes() {}
+
+type SyncResponseAlbumsItem struct {
+	Created []Album     `json:"created"`
+	Updated []Album     `json:"updated"`
+	Deleted []uuid.UUID `json:"deleted"`
+}
+
+// GetCreated returns the value of Created.
+func (s *SyncResponseAlbumsItem) GetCreated() []Album {
+	return s.Created
+}
+
+// GetUpdated returns the value of Updated.
+func (s *SyncResponseAlbumsItem) GetUpdated() []Album {
+	return s.Updated
+}
+
+// GetDeleted returns the value of Deleted.
+func (s *SyncResponseAlbumsItem) GetDeleted() []uuid.UUID {
+	return s.Deleted
+}
+
+// SetCreated sets the value of Created.
+func (s *SyncResponseAlbumsItem) SetCreated(val []Album) {
+	s.Created = val
+}
+
+// SetUpdated sets the value of Updated.
+func (s *SyncResponseAlbumsItem) SetUpdated(val []Album) {
+	s.Updated = val
+}
+
+// SetDeleted sets the value of Deleted.
+func (s *SyncResponseAlbumsItem) SetDeleted(val []uuid.UUID) {
+	s.Deleted = val
+}
+
+type SyncResponseArtistsItem struct {
+	Created []Artist    `json:"created"`
+	Updated []Artist    `json:"updated"`
+	Deleted []uuid.UUID `json:"deleted"`
+}
+
+// GetCreated returns the value of Created.
+func (s *SyncResponseArtistsItem) GetCreated() []Artist {
+	return s.Created
+}
+
+// GetUpdated returns the value of Updated.
+func (s *SyncResponseArtistsItem) GetUpdated() []Artist {
+	return s.Updated
+}
+
+// GetDeleted returns the value of Deleted.
+func (s *SyncResponseArtistsItem) GetDeleted() []uuid.UUID {
+	return s.Deleted
+}
+
+// SetCreated sets the value of Created.
+func (s *SyncResponseArtistsItem) SetCreated(val []Artist) {
+	s.Created = val
+}
+
+// SetUpdated sets the value of Updated.
+func (s *SyncResponseArtistsItem) SetUpdated(val []Artist) {
+	s.Updated = val
+}
+
+// SetDeleted sets the value of Deleted.
+func (s *SyncResponseArtistsItem) SetDeleted(val []uuid.UUID) {
+	s.Deleted = val
+}
+
+type SyncResponsePlaylistsItem struct {
+	Created []Playlist  `json:"created"`
+	Updated []Playlist  `json:"updated"`
+	Deleted []uuid.UUID `json:"deleted"`
+}
+
+// GetCreated returns the value of Created.
+func (s *SyncResponsePlaylistsItem) GetCreated() []Playlist {
+	return s.Created
+}
+
+// GetUpdated returns the value of Updated.
+func (s *SyncResponsePlaylistsItem) GetUpdated() []Playlist {
+	return s.Updated
+}
+
+// GetDeleted returns the value of Deleted.
+func (s *SyncResponsePlaylistsItem) GetDeleted() []uuid.UUID {
+	return s.Deleted
+}
+
+// SetCreated sets the value of Created.
+func (s *SyncResponsePlaylistsItem) SetCreated(val []Playlist) {
+	s.Created = val
+}
+
+// SetUpdated sets the value of Updated.
+func (s *SyncResponsePlaylistsItem) SetUpdated(val []Playlist) {
+	s.Updated = val
+}
+
+// SetDeleted sets the value of Deleted.
+func (s *SyncResponsePlaylistsItem) SetDeleted(val []uuid.UUID) {
+	s.Deleted = val
+}
+
+type SyncResponseTracksItem struct {
+	Created []Track     `json:"created"`
+	Updated []Track     `json:"updated"`
+	Deleted []uuid.UUID `json:"deleted"`
+}
+
+// GetCreated returns the value of Created.
+func (s *SyncResponseTracksItem) GetCreated() []Track {
+	return s.Created
+}
+
+// GetUpdated returns the value of Updated.
+func (s *SyncResponseTracksItem) GetUpdated() []Track {
+	return s.Updated
+}
+
+// GetDeleted returns the value of Deleted.
+func (s *SyncResponseTracksItem) GetDeleted() []uuid.UUID {
+	return s.Deleted
+}
+
+// SetCreated sets the value of Created.
+func (s *SyncResponseTracksItem) SetCreated(val []Track) {
+	s.Created = val
+}
+
+// SetUpdated sets the value of Updated.
+func (s *SyncResponseTracksItem) SetUpdated(val []Track) {
+	s.Updated = val
+}
+
+// SetDeleted sets the value of Deleted.
+func (s *SyncResponseTracksItem) SetDeleted(val []uuid.UUID) {
+	s.Deleted = val
+}
+
 // Ref: #/components/schemas/TopAlbumEntry
 type TopAlbumEntry struct {
 	ID       uuid.UUID       `json:"id"`

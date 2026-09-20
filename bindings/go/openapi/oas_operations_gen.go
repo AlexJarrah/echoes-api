@@ -71,6 +71,7 @@ const (
 	SignInOperation                    OperationName = "SignIn"
 	SubsonicDownloadOperation          OperationName = "SubsonicDownload"
 	SubsonicStreamOperation            OperationName = "SubsonicStream"
+	SyncOperation                      OperationName = "Sync"
 	UpdateGroupRolesOperation          OperationName = "UpdateGroupRoles"
 	UpdateLibraryOperation             OperationName = "UpdateLibrary"
 	UpdateUserOperation                OperationName = "UpdateUser"

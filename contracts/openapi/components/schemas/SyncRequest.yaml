@@ -1,0 +1,29 @@
+SyncRequest:
+  type: object
+  required:
+    - timestamp
+  properties:
+    timestamp:
+      type: string
+      format: date-time
+      description: When to consider updated data outdated
+    tracks:
+      type: array
+      items:
+        type: string
+        format: uuid
+    artists:
+      type: array
+      items:
+        type: string
+        format: uuid
+    albums:
+      type: array
+      items:
+        type: string
+        format: uuid
+    playlists:
+      type: array
+      items:
+        type: string
+        format: uuid

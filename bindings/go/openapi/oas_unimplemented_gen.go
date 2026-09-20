@@ -602,6 +602,15 @@ func (UnimplementedHandler) SubsonicStream(ctx context.Context, params SubsonicS
 	return r, ht.ErrNotImplemented
 }
 
+// Sync implements sync operation.
+//
+// Compare differences between a snapshot and a provided state.
+//
+// POST /api/sync
+func (UnimplementedHandler) Sync(ctx context.Context, req *SyncRequest) (r SyncRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // UpdateGroupRoles implements UpdateGroupRoles operation.
 //
 // Update group roles.

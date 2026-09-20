@@ -783,6 +783,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Compare differences between a snapshot and a provided state */
+        post: operations["sync"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tracks/search": {
         parameters: {
             query?: never;
@@ -1930,6 +1947,39 @@ export interface components {
              * @default 100
              */
             limit: number;
+        };
+        SyncRequest: {
+            /**
+             * Format: date-time
+             * @description When to consider updated data outdated
+             */
+            timestamp: string;
+            tracks?: string[];
+            artists?: string[];
+            albums?: string[];
+            playlists?: string[];
+        };
+        SyncResponse: {
+            tracks?: {
+                created?: components["schemas"]["Track"][];
+                updated?: components["schemas"]["Track"][];
+                deleted?: string[];
+            }[];
+            artists?: {
+                created?: components["schemas"]["Artist"][];
+                updated?: components["schemas"]["Artist"][];
+                deleted?: string[];
+            }[];
+            albums?: {
+                created?: components["schemas"]["Album"][];
+                updated?: components["schemas"]["Album"][];
+                deleted?: string[];
+            }[];
+            playlists?: {
+                created?: components["schemas"]["Playlist"][];
+                updated?: components["schemas"]["Playlist"][];
+                deleted?: string[];
+            }[];
         };
         TopAlbumEntry: {
             /** Format: uuid */
@@ -3684,6 +3734,31 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    sync: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SyncRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
             500: components["responses"]["InternalServerError"];
         };
     };

@@ -402,6 +402,12 @@ type Handler interface {
 	//
 	// GET /api/subsonic/rest/stream
 	SubsonicStream(ctx context.Context, params SubsonicStreamParams) (SubsonicStreamRes, error)
+	// Sync implements sync operation.
+	//
+	// Compare differences between a snapshot and a provided state.
+	//
+	// POST /api/sync
+	Sync(ctx context.Context, req *SyncRequest) (SyncRes, error)
 	// UpdateGroupRoles implements UpdateGroupRoles operation.
 	//
 	// Update group roles.
