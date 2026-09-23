@@ -228,6 +228,12 @@ type Handler interface {
 	//
 	// POST /api/listens/sessions
 	GetListenSessions(ctx context.Context, req *ListensSessionsRequest) (GetListenSessionsRes, error)
+	// GetLyrics implements getLyrics operation.
+	//
+	// Get lyrics.
+	//
+	// GET /api/lyrics/{lyrics_id}
+	GetLyrics(ctx context.Context, params GetLyricsParams) (GetLyricsRes, error)
 	// GetMessageThread implements getMessageThread operation.
 	//
 	// Get message thread.

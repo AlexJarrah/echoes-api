@@ -2215,6 +2215,38 @@ type GetListenSessionsUnauthorized ErrorResponse
 
 func (*GetListenSessionsUnauthorized) getListenSessionsRes() {}
 
+type GetLyricsBadRequest ErrorResponse
+
+func (*GetLyricsBadRequest) getLyricsRes() {}
+
+type GetLyricsInternalServerError ErrorResponse
+
+func (*GetLyricsInternalServerError) getLyricsRes() {}
+
+type GetLyricsNotFound ErrorResponse
+
+func (*GetLyricsNotFound) getLyricsRes() {}
+
+type GetLyricsOK struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetLyricsOK) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetLyricsOK) getLyricsRes() {}
+
+type GetLyricsUnauthorized ErrorResponse
+
+func (*GetLyricsUnauthorized) getLyricsRes() {}
+
 type GetMessageThreadInternalServerError ErrorResponse
 
 func (*GetMessageThreadInternalServerError) getMessageThreadRes() {}

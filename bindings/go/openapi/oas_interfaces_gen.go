@@ -141,6 +141,10 @@ type GetListenSessionsRes interface {
 	getListenSessionsRes()
 }
 
+type GetLyricsRes interface {
+	getLyricsRes()
+}
+
 type GetMessageThreadRes interface {
 	getMessageThreadRes()
 }

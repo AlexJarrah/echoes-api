@@ -2144,6 +2144,42 @@ export type GetListenSessionsResponses = {
 
 export type GetListenSessionsResponse = GetListenSessionsResponses[keyof GetListenSessionsResponses];
 
+export type GetLyricsData = {
+    body?: never;
+    path: {
+        lyrics_id: string;
+    };
+    query?: never;
+    url: '/api/lyrics/{lyrics_id}';
+};
+
+export type GetLyricsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetLyricsError = GetLyricsErrors[keyof GetLyricsErrors];
+
+export type GetLyricsResponses = {
+    200: Blob | File;
+};
+
+export type GetLyricsResponse = GetLyricsResponses[keyof GetLyricsResponses];
+
 export type DeletePlaylistRoleData = {
     body?: never;
     path: {

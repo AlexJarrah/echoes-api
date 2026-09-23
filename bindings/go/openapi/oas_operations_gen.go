@@ -42,6 +42,7 @@ const (
 	GetLibrarySearchIndexOperation     OperationName = "GetLibrarySearchIndex"
 	GetLibraryTracksOperation          OperationName = "GetLibraryTracks"
 	GetListenSessionsOperation         OperationName = "GetListenSessions"
+	GetLyricsOperation                 OperationName = "GetLyrics"
 	GetMessageThreadOperation          OperationName = "GetMessageThread"
 	GetMessagesOperation               OperationName = "GetMessages"
 	GetOpenAPIOperation                OperationName = "GetOpenAPI"

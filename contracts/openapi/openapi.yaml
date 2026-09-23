@@ -3313,6 +3313,36 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+  /api/lyrics/{lyrics_id}:
+    get:
+      summary: Get lyrics
+      operationId: getLyrics
+      tags:
+        - Lyrics
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: lyrics_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          content:
+            application/x-yaml:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   /api/playlists/{playlist_id}/roles/{user_id}:
     patch:
       summary: Update a playlist role

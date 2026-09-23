@@ -341,6 +341,15 @@ func (UnimplementedHandler) GetListenSessions(ctx context.Context, req *ListensS
 	return r, ht.ErrNotImplemented
 }
 
+// GetLyrics implements getLyrics operation.
+//
+// Get lyrics.
+//
+// GET /api/lyrics/{lyrics_id}
+func (UnimplementedHandler) GetLyrics(ctx context.Context, params GetLyricsParams) (r GetLyricsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetMessageThread implements getMessageThread operation.
 //
 // Get message thread.

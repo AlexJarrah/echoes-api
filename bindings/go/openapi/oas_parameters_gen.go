@@ -2061,6 +2061,71 @@ func decodeGetGroupRolesParams(args [1]string, argsEscaped bool, r *http.Request
 	return params, nil
 }
 
+// GetLyricsParams is parameters of getLyrics operation.
+type GetLyricsParams struct {
+	LyricsID uuid.UUID
+}
+
+func unpackGetLyricsParams(packed middleware.Parameters) (params GetLyricsParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "lyrics_id",
+			In:   "path",
+		}
+		params.LyricsID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeGetLyricsParams(args [1]string, argsEscaped bool, r *http.Request) (params GetLyricsParams, _ error) {
+	// Decode path: lyrics_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "lyrics_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.LyricsID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "lyrics_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // GetMessageThreadParams is parameters of getMessageThread operation.
 type GetMessageThreadParams struct {
 	ConversationID uuid.UUID
