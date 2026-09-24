@@ -1100,6 +1100,14 @@ func (s GetTracksPlayStatsOKApplicationJSON) Validate() error {
 	return nil
 }
 
+func (s GetUserAssetsOKApplicationJSON) Validate() error {
+	alias := ([]Asset)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
 func (s GetUserIntegrationsOKApplicationJSON) Validate() error {
 	alias := ([]IntegrationMetadata)(s)
 	if alias == nil {

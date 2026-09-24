@@ -1,0 +1,6 @@
+EditUserAssetRequest:
+  type: object
+  properties:
+    position:
+      type: string
+      description: Lexicographically sortable string

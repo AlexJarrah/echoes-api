@@ -38,6 +38,10 @@ type Handler interface {
 	//
 	// POST /api/library/add
 	AddToLibrary(ctx context.Context, req *LibraryAddRequest) (AddToLibraryRes, error)
+	// AddUserAsset implements addUserAsset operation.
+	//
+	// POST /api/assets/user
+	AddUserAsset(ctx context.Context, req *AddUserAssetReq) (AddUserAssetRes, error)
 	// CreateGroup implements createGroup operation.
 	//
 	// Create a new group as owner.
@@ -92,6 +96,10 @@ type Handler interface {
 	//
 	// DELETE /api/playlists/{playlist_id}/tracks/{track_id}
 	DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams) (DeletePlaylistTrackRes, error)
+	// DeleteUserAsset implements deleteUserAsset operation.
+	//
+	// DELETE /api/assets/user/{asset_id}
+	DeleteUserAsset(ctx context.Context, params DeleteUserAssetParams) (DeleteUserAssetRes, error)
 	// EditGroup implements editGroup operation.
 	//
 	// Edit a group.
@@ -122,6 +130,12 @@ type Handler interface {
 	//
 	// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 	EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (EditPlaylistTrackRes, error)
+	// EditUserAsset implements editUserAsset operation.
+	//
+	// Update user asset.
+	//
+	// PATCH /api/assets/user/{asset_id}
+	EditUserAsset(ctx context.Context, req *EditUserAssetRequest, params EditUserAssetParams) (EditUserAssetRes, error)
 	// GetAlbum implements getAlbum operation.
 	//
 	// Get album details.
@@ -288,6 +302,14 @@ type Handler interface {
 	//
 	// POST /api/statistics/user/tracks/plays
 	GetTracksPlayStats(ctx context.Context, req OptStatisticsQuery) (GetTracksPlayStatsRes, error)
+	// GetUserAsset implements getUserAsset operation.
+	//
+	// GET /api/assets/user/{asset_id}
+	GetUserAsset(ctx context.Context, params GetUserAssetParams) (GetUserAssetRes, error)
+	// GetUserAssets implements getUserAssets operation.
+	//
+	// GET /api/assets/user
+	GetUserAssets(ctx context.Context) (GetUserAssetsRes, error)
 	// GetUserDetails implements getUserDetails operation.
 	//
 	// Get current user details.

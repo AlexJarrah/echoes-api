@@ -115,6 +115,41 @@ type AddToLibraryUnauthorized ErrorResponse
 
 func (*AddToLibraryUnauthorized) addToLibraryRes() {}
 
+type AddUserAssetBadRequest ErrorResponse
+
+func (*AddUserAssetBadRequest) addUserAssetRes() {}
+
+type AddUserAssetInternalServerError ErrorResponse
+
+func (*AddUserAssetInternalServerError) addUserAssetRes() {}
+
+type AddUserAssetReq struct {
+	// Asset data.
+	Image ht.MultipartFile `json:"image"`
+}
+
+// GetImage returns the value of Image.
+func (s *AddUserAssetReq) GetImage() ht.MultipartFile {
+	return s.Image
+}
+
+// SetImage sets the value of Image.
+func (s *AddUserAssetReq) SetImage(val ht.MultipartFile) {
+	s.Image = val
+}
+
+type AddUserAssetRequestEntityTooLarge ErrorResponse
+
+func (*AddUserAssetRequestEntityTooLarge) addUserAssetRes() {}
+
+type AddUserAssetUnauthorized ErrorResponse
+
+func (*AddUserAssetUnauthorized) addUserAssetRes() {}
+
+type AddUserAssetUnsupportedMediaType ErrorResponse
+
+func (*AddUserAssetUnsupportedMediaType) addUserAssetRes() {}
+
 // Ref: #/components/schemas/Album
 type Album struct {
 	AlbumID         uuid.UUID      `json:"album_id"`
@@ -701,6 +736,57 @@ func (s *ArtistPlayStats) SetPlayDuration(val uint64) {
 	s.PlayDuration = val
 }
 
+// Ref: #/components/schemas/Asset
+type Asset struct {
+	AssetID   uuid.UUID      `json:"asset_id"`
+	MimeType  string         `json:"mime_type"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt OptNilDateTime `json:"updated_at"`
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *Asset) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// GetMimeType returns the value of MimeType.
+func (s *Asset) GetMimeType() string {
+	return s.MimeType
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Asset) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Asset) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *Asset) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// SetMimeType sets the value of MimeType.
+func (s *Asset) SetMimeType(val string) {
+	s.MimeType = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Asset) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Asset) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*Asset) addUserAssetRes() {}
+func (*Asset) getUserAssetRes() {}
+
 // Ref: #/components/schemas/BestFriendActionRequest
 type BestFriendActionRequest struct {
 	ID         uuid.UUID `json:"id"`
@@ -1154,6 +1240,18 @@ type DeletePlaylistUnauthorized ErrorResponse
 
 func (*DeletePlaylistUnauthorized) deletePlaylistRes() {}
 
+type DeleteUserAssetInternalServerError ErrorResponse
+
+func (*DeleteUserAssetInternalServerError) deleteUserAssetRes() {}
+
+type DeleteUserAssetNotFound ErrorResponse
+
+func (*DeleteUserAssetNotFound) deleteUserAssetRes() {}
+
+type DeleteUserAssetUnauthorized ErrorResponse
+
+func (*DeleteUserAssetUnauthorized) deleteUserAssetRes() {}
+
 type EditGroupBadRequest ErrorResponse
 
 func (*EditGroupBadRequest) editGroupRes() {}
@@ -1346,6 +1444,38 @@ func (*EditPlaylistTrackUnauthorized) editPlaylistTrackRes() {}
 type EditPlaylistUnauthorized ErrorResponse
 
 func (*EditPlaylistUnauthorized) editPlaylistRes() {}
+
+type EditUserAssetBadRequest ErrorResponse
+
+func (*EditUserAssetBadRequest) editUserAssetRes() {}
+
+type EditUserAssetInternalServerError ErrorResponse
+
+func (*EditUserAssetInternalServerError) editUserAssetRes() {}
+
+type EditUserAssetNotFound ErrorResponse
+
+func (*EditUserAssetNotFound) editUserAssetRes() {}
+
+// Ref: #/components/schemas/EditUserAssetRequest
+type EditUserAssetRequest struct {
+	// Lexicographically sortable string.
+	Position OptString `json:"position"`
+}
+
+// GetPosition returns the value of Position.
+func (s *EditUserAssetRequest) GetPosition() OptString {
+	return s.Position
+}
+
+// SetPosition sets the value of Position.
+func (s *EditUserAssetRequest) SetPosition(val OptString) {
+	s.Position = val
+}
+
+type EditUserAssetUnauthorized ErrorResponse
+
+func (*EditUserAssetUnauthorized) editUserAssetRes() {}
 
 // Values change in percentage.
 // Ref: #/components/schemas/EntityChange
@@ -2384,6 +2514,26 @@ func (*GetTracksPlayStatsInternalServerError) getTracksPlayStatsRes() {}
 type GetTracksPlayStatsOKApplicationJSON []EntityPlays
 
 func (*GetTracksPlayStatsOKApplicationJSON) getTracksPlayStatsRes() {}
+
+type GetUserAssetInternalServerError ErrorResponse
+
+func (*GetUserAssetInternalServerError) getUserAssetRes() {}
+
+type GetUserAssetUnauthorized ErrorResponse
+
+func (*GetUserAssetUnauthorized) getUserAssetRes() {}
+
+type GetUserAssetsInternalServerError ErrorResponse
+
+func (*GetUserAssetsInternalServerError) getUserAssetsRes() {}
+
+type GetUserAssetsOKApplicationJSON []Asset
+
+func (*GetUserAssetsOKApplicationJSON) getUserAssetsRes() {}
+
+type GetUserAssetsUnauthorized ErrorResponse
+
+func (*GetUserAssetsUnauthorized) getUserAssetsRes() {}
 
 type GetUserIntegrationsInternalServerError ErrorResponse
 
@@ -3794,6 +3944,7 @@ func (*NoContent) deleteMessageRes()         {}
 func (*NoContent) deletePlaylistRes()        {}
 func (*NoContent) deletePlaylistRoleRes()    {}
 func (*NoContent) deletePlaylistTrackRes()   {}
+func (*NoContent) deleteUserAssetRes()       {}
 func (*NoContent) readMessageRes()           {}
 func (*NoContent) removeFriendRes()          {}
 func (*NoContent) removeFromLibraryRes()     {}
@@ -8782,6 +8933,46 @@ func (s *User) SetUpdatedAt(val OptNilDateTime) {
 }
 
 func (*User) getUserDetailsRes() {}
+
+// Ref: #/components/schemas/UserAsset
+type UserAsset struct {
+	UserID  uuid.UUID `json:"user_id"`
+	AssetID uuid.UUID `json:"asset_id"`
+	// Lexicographically sortable string.
+	Position string `json:"position"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *UserAsset) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *UserAsset) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// GetPosition returns the value of Position.
+func (s *UserAsset) GetPosition() string {
+	return s.Position
+}
+
+// SetUserID sets the value of UserID.
+func (s *UserAsset) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *UserAsset) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *UserAsset) SetPosition(val string) {
+	s.Position = val
+}
+
+func (*UserAsset) editUserAssetRes() {}
 
 // UserHeaders wraps User with response headers.
 type UserHeaders struct {

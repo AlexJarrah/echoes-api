@@ -4,7 +4,6 @@ Asset:
     - asset_id
     - mime_type
     - created_at
-    - updated_at
   properties:
     asset_id:
       type: string

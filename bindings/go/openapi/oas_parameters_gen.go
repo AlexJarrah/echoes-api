@@ -1089,6 +1089,71 @@ func decodeDeletePlaylistTrackParams(args [2]string, argsEscaped bool, r *http.R
 	return params, nil
 }
 
+// DeleteUserAssetParams is parameters of deleteUserAsset operation.
+type DeleteUserAssetParams struct {
+	AssetID uuid.UUID
+}
+
+func unpackDeleteUserAssetParams(packed middleware.Parameters) (params DeleteUserAssetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "asset_id",
+			In:   "path",
+		}
+		params.AssetID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeDeleteUserAssetParams(args [1]string, argsEscaped bool, r *http.Request) (params DeleteUserAssetParams, _ error) {
+	// Decode path: asset_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "asset_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.AssetID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "asset_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // EditGroupParams is parameters of editGroup operation.
 type EditGroupParams struct {
 	GroupID uuid.UUID
@@ -1566,6 +1631,71 @@ func decodeEditPlaylistTrackParams(args [2]string, argsEscaped bool, r *http.Req
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
 			Name: "track_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// EditUserAssetParams is parameters of editUserAsset operation.
+type EditUserAssetParams struct {
+	AssetID uuid.UUID
+}
+
+func unpackEditUserAssetParams(packed middleware.Parameters) (params EditUserAssetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "asset_id",
+			In:   "path",
+		}
+		params.AssetID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeEditUserAssetParams(args [1]string, argsEscaped bool, r *http.Request) (params EditUserAssetParams, _ error) {
+	// Decode path: asset_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "asset_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.AssetID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "asset_id",
 			In:   "path",
 			Err:  err,
 		}
@@ -2828,6 +2958,71 @@ func decodeGetTrackParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
 			Name: "track_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// GetUserAssetParams is parameters of getUserAsset operation.
+type GetUserAssetParams struct {
+	AssetID uuid.UUID
+}
+
+func unpackGetUserAssetParams(packed middleware.Parameters) (params GetUserAssetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "asset_id",
+			In:   "path",
+		}
+		params.AssetID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeGetUserAssetParams(args [1]string, argsEscaped bool, r *http.Request) (params GetUserAssetParams, _ error) {
+	// Decode path: asset_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "asset_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.AssetID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "asset_id",
 			In:   "path",
 			Err:  err,
 		}

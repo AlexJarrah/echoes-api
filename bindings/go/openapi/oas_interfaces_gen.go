@@ -21,6 +21,10 @@ type AddToLibraryRes interface {
 	addToLibraryRes()
 }
 
+type AddUserAssetRes interface {
+	addUserAssetRes()
+}
+
 type CreateGroupRes interface {
 	createGroupRes()
 }
@@ -57,6 +61,10 @@ type DeletePlaylistTrackRes interface {
 	deletePlaylistTrackRes()
 }
 
+type DeleteUserAssetRes interface {
+	deleteUserAssetRes()
+}
+
 type EditGroupRes interface {
 	editGroupRes()
 }
@@ -75,6 +83,10 @@ type EditPlaylistRoleRes interface {
 
 type EditPlaylistTrackRes interface {
 	editPlaylistTrackRes()
+}
+
+type EditUserAssetRes interface {
+	editUserAssetRes()
 }
 
 type GetAlbumRes interface {
@@ -175,6 +187,14 @@ type GetTrackRes interface {
 
 type GetTracksPlayStatsRes interface {
 	getTracksPlayStatsRes()
+}
+
+type GetUserAssetRes interface {
+	getUserAssetRes()
+}
+
+type GetUserAssetsRes interface {
+	getUserAssetsRes()
 }
 
 type GetUserDetailsRes interface {

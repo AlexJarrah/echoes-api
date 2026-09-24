@@ -58,6 +58,13 @@ func (UnimplementedHandler) AddToLibrary(ctx context.Context, req *LibraryAddReq
 	return r, ht.ErrNotImplemented
 }
 
+// AddUserAsset implements addUserAsset operation.
+//
+// POST /api/assets/user
+func (UnimplementedHandler) AddUserAsset(ctx context.Context, req *AddUserAssetReq) (r AddUserAssetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // CreateGroup implements createGroup operation.
 //
 // Create a new group as owner.
@@ -139,6 +146,13 @@ func (UnimplementedHandler) DeletePlaylistTrack(ctx context.Context, params Dele
 	return r, ht.ErrNotImplemented
 }
 
+// DeleteUserAsset implements deleteUserAsset operation.
+//
+// DELETE /api/assets/user/{asset_id}
+func (UnimplementedHandler) DeleteUserAsset(ctx context.Context, params DeleteUserAssetParams) (r DeleteUserAssetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // EditGroup implements editGroup operation.
 //
 // Edit a group.
@@ -181,6 +195,15 @@ func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlayl
 //
 // PATCH /api/playlists/{playlist_id}/tracks/{track_id}
 func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (r EditPlaylistTrackRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// EditUserAsset implements editUserAsset operation.
+//
+// Update user asset.
+//
+// PATCH /api/assets/user/{asset_id}
+func (UnimplementedHandler) EditUserAsset(ctx context.Context, req *EditUserAssetRequest, params EditUserAssetParams) (r EditUserAssetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -428,6 +451,20 @@ func (UnimplementedHandler) GetTrack(ctx context.Context, params GetTrackParams)
 //
 // POST /api/statistics/user/tracks/plays
 func (UnimplementedHandler) GetTracksPlayStats(ctx context.Context, req OptStatisticsQuery) (r GetTracksPlayStatsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetUserAsset implements getUserAsset operation.
+//
+// GET /api/assets/user/{asset_id}
+func (UnimplementedHandler) GetUserAsset(ctx context.Context, params GetUserAssetParams) (r GetUserAssetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetUserAssets implements getUserAssets operation.
+//
+// GET /api/assets/user
+func (UnimplementedHandler) GetUserAssets(ctx context.Context) (r GetUserAssetsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

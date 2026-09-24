@@ -1,0 +1,6 @@
+UnsupportedMediaType:
+  description: Unsupported Media Type
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/ErrorResponse"

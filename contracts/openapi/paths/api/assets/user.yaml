@@ -1,0 +1,53 @@
+/api/assets/user:
+  get:
+    operationId: getUserAssets
+    security:
+      - CookieAuth: []
+    responses:
+      "200":
+        description: User assets retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Asset"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+
+  post:
+    operationId: addUserAsset
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - image
+            properties:
+              image:
+                type: string
+                format: binary
+                description: Asset data
+    responses:
+      "200":
+        description: User asset added successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Asset"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "413":
+        $ref: "#/components/responses/FileTooLarge"
+      "415":
+        $ref: "#/components/responses/UnsupportedMediaType"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

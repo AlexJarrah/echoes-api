@@ -78,6 +78,27 @@ func encodeAddToLibraryRequest(
 	return nil
 }
 
+func encodeAddUserAssetRequest(
+	req *AddUserAssetReq,
+	r *http.Request,
+) error {
+	const contentType = "multipart/form-data"
+	request := req
+
+	q := uri.NewFormEncoder(map[string]string{})
+	body, boundary := ht.CreateMultipartBody(func(w *multipart.Writer) error {
+		if err := request.Image.WriteMultipart("image", w); err != nil {
+			return errors.Wrap(err, "write \"image\"")
+		}
+		if err := q.WriteMultipart(w); err != nil {
+			return errors.Wrap(err, "write multipart")
+		}
+		return nil
+	})
+	ht.SetCloserBody(r, body, mime.FormatMediaType(contentType, map[string]string{"boundary": boundary}))
+	return nil
+}
+
 func encodeCreateGroupRequest(
 	req *CreateGroupRequest,
 	r *http.Request,
@@ -164,6 +185,20 @@ func encodeEditPlaylistRoleRequest(
 
 func encodeEditPlaylistTrackRequest(
 	req *EditPlaylistTrackReq,
+	r *http.Request,
+) error {
+	const contentType = "application/json"
+	e := new(jx.Encoder)
+	{
+		req.Encode(e)
+	}
+	encoded := e.Bytes()
+	ht.SetBody(r, bytes.NewReader(encoded), contentType)
+	return nil
+}
+
+func encodeEditUserAssetRequest(
+	req *EditUserAssetRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
