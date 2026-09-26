@@ -45,7 +45,7 @@ func (UnimplementedHandler) AddMessageReaction(ctx context.Context, params AddMe
 // Add playlist tracks.
 //
 // POST /api/playlists/{playlist_id}/tracks
-func (UnimplementedHandler) AddPlaylistTracks(ctx context.Context, req []AddPlaylistTracksReqItem, params AddPlaylistTracksParams) (r AddPlaylistTracksRes, _ error) {
+func (UnimplementedHandler) AddPlaylistTracks(ctx context.Context, req AddPlaylistTracksRequest, params AddPlaylistTracksParams) (r AddPlaylistTracksRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -176,7 +176,7 @@ func (UnimplementedHandler) EditGroup(ctx context.Context, req *EditGroupRequest
 // Edit a message.
 //
 // PATCH /api/conversations/{conversation_id}/messages/{message_id}
-func (UnimplementedHandler) EditMessage(ctx context.Context, req *EditMessageReq, params EditMessageParams) (r EditMessageRes, _ error) {
+func (UnimplementedHandler) EditMessage(ctx context.Context, req *EditMessageRequest, params EditMessageParams) (r EditMessageRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -194,7 +194,7 @@ func (UnimplementedHandler) EditPlaylist(ctx context.Context, req *EditPlaylistR
 // Update a playlist role.
 //
 // PATCH /api/playlists/{playlist_id}/roles/{user_id}
-func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleReq, params EditPlaylistRoleParams) (r EditPlaylistRoleRes, _ error) {
+func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleRequest, params EditPlaylistRoleParams) (r EditPlaylistRoleRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -203,7 +203,7 @@ func (UnimplementedHandler) EditPlaylistRole(ctx context.Context, req *EditPlayl
 // Update a playlist track.
 //
 // PATCH /api/playlists/{playlist_id}/tracks/{track_id}
-func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (r EditPlaylistTrackRes, _ error) {
+func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackRequest, params EditPlaylistTrackParams) (r EditPlaylistTrackRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -572,7 +572,7 @@ func (UnimplementedHandler) Register(ctx context.Context, req *RegisterRequest) 
 // Remove a friend.
 //
 // POST /api/remove-friend
-func (UnimplementedHandler) RemoveFriend(ctx context.Context, req *RemoveFriendReq) (r RemoveFriendRes, _ error) {
+func (UnimplementedHandler) RemoveFriend(ctx context.Context, req *RemoveFriendRequest) (r RemoveFriendRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -599,7 +599,7 @@ func (UnimplementedHandler) SearchTracks(ctx context.Context, req []SearchTrackQ
 // Send a conversation message.
 //
 // POST /api/conversations/{conversation_id}/messages
-func (UnimplementedHandler) SendMessage(ctx context.Context, req *SendMessageReq, params SendMessageParams) (r SendMessageRes, _ error) {
+func (UnimplementedHandler) SendMessage(ctx context.Context, req *SendMessageRequest, params SendMessageParams) (r SendMessageRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -635,7 +635,7 @@ func (UnimplementedHandler) SetBlocked(ctx context.Context, req *BlockedActionRe
 // Set playlist roles.
 //
 // POST /api/playlists/{playlist_id}/roles
-func (UnimplementedHandler) SetPlaylistRoles(ctx context.Context, req []SetPlaylistRolesReqItem, params SetPlaylistRolesParams) (r SetPlaylistRolesRes, _ error) {
+func (UnimplementedHandler) SetPlaylistRoles(ctx context.Context, req SetPlaylistRolesRequest, params SetPlaylistRolesParams) (r SetPlaylistRolesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -680,7 +680,7 @@ func (UnimplementedHandler) Sync(ctx context.Context, req *SyncRequest) (r SyncR
 // Update group roles.
 //
 // PATCH /api/groups/{group_id}/roles/{user_id}
-func (UnimplementedHandler) UpdateGroupRoles(ctx context.Context, req *UpdateGroupRolesReq, params UpdateGroupRolesParams) (r UpdateGroupRolesRes, _ error) {
+func (UnimplementedHandler) UpdateGroupRoles(ctx context.Context, req *UpdateGroupRolesRequest, params UpdateGroupRolesParams) (r UpdateGroupRolesRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

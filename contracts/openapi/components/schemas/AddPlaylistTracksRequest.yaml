@@ -1,0 +1,17 @@
+AddPlaylistTracksRequest:
+  type: array
+  items:
+    type: object
+    required:
+      - track_id
+      - position
+    properties:
+      track_id:
+        type: string
+        format: uuid
+        description: Track to add to the playlist.
+      position:
+        type: string
+        pattern: "^[0-9a-z._-]+$"
+        maxLength: 64
+        description: Lexicographically sortable string.

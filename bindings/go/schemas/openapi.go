@@ -289,18 +289,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - current_sequence
-                  - changes
-                properties:
-                  current_sequence:
-                    type: integer
-                    format: uint64
-                  changes:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Change'
+                $ref: '#/components/schemas/GetChangesResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -482,10 +471,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                body:
-                  type: string
+              $ref: '#/components/schemas/EditMessageRequest'
       responses:
         '200':
           description: Message edited successfully.
@@ -585,16 +571,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - body
-              properties:
-                body:
-                  type: string
-                parent_id:
-                  type: integer
-                  format: uint64
-                  nullable: true
+              $ref: '#/components/schemas/SendMessageRequest'
       responses:
         '200':
           description: Message sent successfully.
@@ -632,12 +609,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - role
-              properties:
-                role:
-                  $ref: '#/components/schemas/GroupRoleType'
+              $ref: '#/components/schemas/UpdateGroupRolesRequest'
       responses:
         '200':
           description: Group roles updated successfully.
@@ -1225,12 +1197,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - role
-              properties:
-                role:
-                  $ref: '#/components/schemas/PlaylistRoleType'
+              $ref: '#/components/schemas/EditPlaylistRoleRequest'
       responses:
         '200':
           description: Playlist role updated successfully
@@ -1335,18 +1302,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                required:
-                  - user_id
-                  - role
-                properties:
-                  user_id:
-                    type: string
-                    format: uuid
-                  role:
-                    $ref: '#/components/schemas/PlaylistRoleType'
+              $ref: '#/components/schemas/SetPlaylistRolesRequest'
       responses:
         '204':
           description: Playlist roles set successfully
@@ -1389,15 +1345,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - position
-              properties:
-                position:
-                  type: string
-                  pattern: ^[0-9a-z._-]+$
-                  maxLength: 64
-                  description: Lexicographically sortable string
+              $ref: '#/components/schemas/EditPlaylistTrackRequest'
       responses:
         '200':
           description: Playlist track updated successfully
@@ -1502,22 +1450,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                required:
-                  - track_id
-                  - position
-                properties:
-                  track_id:
-                    type: string
-                    format: uuid
-                    description: Track to add to the playlist.
-                  position:
-                    type: string
-                    pattern: ^[0-9a-z._-]+$
-                    maxLength: 64
-                    description: Lexicographically sortable string.
+              $ref: '#/components/schemas/AddPlaylistTracksRequest'
       responses:
         '204':
           description: Playlist tracks added successfully
@@ -1720,13 +1653,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: string
-                  format: uuid
+              $ref: '#/components/schemas/RemoveFriendRequest'
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
@@ -2513,6 +2440,23 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    AddPlaylistTracksRequest:
+      type: array
+      items:
+        type: object
+        required:
+          - track_id
+          - position
+        properties:
+          track_id:
+            type: string
+            format: uuid
+            description: Track to add to the playlist.
+          position:
+            type: string
+            pattern: ^[0-9a-z._-]+$
+            maxLength: 64
+            description: Lexicographically sortable string.
     Album:
       type: object
       required:
@@ -2928,6 +2872,11 @@ components:
           type: string
         visibility:
           $ref: '#/components/schemas/Visibility'
+    EditMessageRequest:
+      type: object
+      properties:
+        body:
+          type: string
     EditPlaylistRequest:
       type: object
       properties:
@@ -2938,6 +2887,23 @@ components:
           nullable: true
         visibility:
           $ref: '#/components/schemas/Visibility'
+    EditPlaylistRoleRequest:
+      type: object
+      required:
+        - role
+      properties:
+        role:
+          $ref: '#/components/schemas/PlaylistRoleType'
+    EditPlaylistTrackRequest:
+      type: object
+      required:
+        - position
+      properties:
+        position:
+          type: string
+          pattern: ^[0-9a-z._-]+$
+          maxLength: 64
+          description: Lexicographically sortable string
     EditUserAssetRequest:
       type: object
       properties:
@@ -2994,6 +2960,19 @@ components:
           type: string
           nullable: true
           description: Target user's handle. Optional if 'id' is provided.
+    GetChangesResponse:
+      type: object
+      required:
+        - current_sequence
+        - changes
+      properties:
+        current_sequence:
+          type: integer
+          format: uint64
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
     GetLibraryAlbumsRequest:
       type: object
       properties:
@@ -3913,6 +3892,14 @@ components:
             listening_streak:
               type: integer
               format: uint16
+    RemoveFriendRequest:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
     SearchIndex:
       type: object
       properties:
@@ -4032,6 +4019,17 @@ components:
             $ref: '#/components/schemas/SearchTrackResult'
         error:
           type: string
+    SendMessageRequest:
+      type: object
+      required:
+        - body
+      properties:
+        body:
+          type: string
+        parent_id:
+          type: integer
+          format: uint64
+          nullable: true
     Session:
       type: object
       required:
@@ -4225,6 +4223,19 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp when playback of this track is expected to end (for background playback estimation).
+    SetPlaylistRolesRequest:
+      type: array
+      items:
+        type: object
+        required:
+          - user_id
+          - role
+        properties:
+          user_id:
+            type: string
+            format: uuid
+          role:
+            $ref: '#/components/schemas/PlaylistRoleType'
     SignInRequest:
       type: object
       required:
@@ -4547,6 +4558,13 @@ components:
         play_duration:
           type: integer
           format: uint64
+    UpdateGroupRolesRequest:
+      type: object
+      required:
+        - role
+      properties:
+        role:
+          $ref: '#/components/schemas/GroupRoleType'
     UpdateUserRequest:
       type: object
       properties:

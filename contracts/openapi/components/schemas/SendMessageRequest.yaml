@@ -1,0 +1,11 @@
+SendMessageRequest:
+  type: object
+  required:
+    - body
+  properties:
+    body:
+      type: string
+    parent_id:
+      type: integer
+      format: uint64
+      nullable: true

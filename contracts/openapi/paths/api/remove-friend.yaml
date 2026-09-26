@@ -11,13 +11,7 @@
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - id
-            properties:
-              id:
-                type: string
-                format: uuid
+            $ref: "#/components/schemas/RemoveFriendRequest"
     responses:
       "204":
         $ref: "#/components/responses/NoContent"

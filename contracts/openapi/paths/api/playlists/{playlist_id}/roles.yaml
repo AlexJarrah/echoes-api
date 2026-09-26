@@ -31,6 +31,7 @@
         $ref: "#/components/responses/NotFound"
       "500":
         $ref: "#/components/responses/InternalServerError"
+
   post:
     summary: Set playlist roles
     operationId: setPlaylistRoles
@@ -51,18 +52,7 @@
       content:
         application/json:
           schema:
-            type: array
-            items:
-              type: object
-              required:
-                - user_id
-                - role
-              properties:
-                user_id:
-                  type: string
-                  format: uuid
-                role:
-                  $ref: "#/components/schemas/PlaylistRoleType"
+            $ref: "#/components/schemas/SetPlaylistRolesRequest"
     responses:
       "204":
         description: Playlist roles set successfully

@@ -31,6 +31,7 @@
         $ref: "#/components/responses/NotFound"
       "500":
         $ref: "#/components/responses/InternalServerError"
+
   post:
     summary: Add playlist tracks
     operationId: addPlaylistTracks
@@ -51,22 +52,7 @@
       content:
         application/json:
           schema:
-            type: array
-            items:
-              type: object
-              required:
-                - track_id
-                - position
-              properties:
-                track_id:
-                  type: string
-                  format: uuid
-                  description: Track to add to the playlist.
-                position:
-                  type: string
-                  pattern: "^[0-9a-z._-]+$"
-                  maxLength: 64
-                  description: Lexicographically sortable string.
+            $ref: "#/components/schemas/AddPlaylistTracksRequest"
     responses:
       "204":
         description: Playlist tracks added successfully

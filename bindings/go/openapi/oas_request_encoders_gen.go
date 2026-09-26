@@ -47,17 +47,13 @@ func encodeAddGroupRolesRequest(
 }
 
 func encodeAddPlaylistTracksRequest(
-	req []AddPlaylistTracksReqItem,
+	req AddPlaylistTracksRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
 	e := new(jx.Encoder)
 	{
-		e.ArrStart()
-		for _, elem := range req {
-			elem.Encode(e)
-		}
-		e.ArrEnd()
+		req.Encode(e)
 	}
 	encoded := e.Bytes()
 	ht.SetBody(r, bytes.NewReader(encoded), contentType)
@@ -142,7 +138,7 @@ func encodeEditGroupRequest(
 }
 
 func encodeEditMessageRequest(
-	req *EditMessageReq,
+	req *EditMessageRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -170,7 +166,7 @@ func encodeEditPlaylistRequest(
 }
 
 func encodeEditPlaylistRoleRequest(
-	req *EditPlaylistRoleReq,
+	req *EditPlaylistRoleRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -184,7 +180,7 @@ func encodeEditPlaylistRoleRequest(
 }
 
 func encodeEditPlaylistTrackRequest(
-	req *EditPlaylistTrackReq,
+	req *EditPlaylistTrackRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -448,7 +444,7 @@ func encodeRegisterRequest(
 }
 
 func encodeRemoveFriendRequest(
-	req *RemoveFriendReq,
+	req *RemoveFriendRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -494,7 +490,7 @@ func encodeSearchTracksRequest(
 }
 
 func encodeSendMessageRequest(
-	req *SendMessageReq,
+	req *SendMessageRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
@@ -554,17 +550,13 @@ func encodeSetBlockedRequest(
 }
 
 func encodeSetPlaylistRolesRequest(
-	req []SetPlaylistRolesReqItem,
+	req SetPlaylistRolesRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
 	e := new(jx.Encoder)
 	{
-		e.ArrStart()
-		for _, elem := range req {
-			elem.Encode(e)
-		}
-		e.ArrEnd()
+		req.Encode(e)
 	}
 	encoded := e.Bytes()
 	ht.SetBody(r, bytes.NewReader(encoded), contentType)
@@ -600,7 +592,7 @@ func encodeSyncRequest(
 }
 
 func encodeUpdateGroupRolesRequest(
-	req *UpdateGroupRolesReq,
+	req *UpdateGroupRolesRequest,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"

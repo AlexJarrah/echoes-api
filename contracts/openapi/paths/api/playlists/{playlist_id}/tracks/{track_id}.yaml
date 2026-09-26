@@ -25,15 +25,7 @@
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - position
-            properties:
-              position:
-                type: string
-                pattern: "^[0-9a-z._-]+$"
-                maxLength: 64
-                description: Lexicographically sortable string
+            $ref: "#/components/schemas/EditPlaylistTrackRequest"
     responses:
       "200":
         description: Playlist track updated successfully
@@ -51,6 +43,7 @@
         $ref: "#/components/responses/NotFound"
       "500":
         $ref: "#/components/responses/InternalServerError"
+
   delete:
     summary: Remove a playlist track
     operationId: deletePlaylistTrack

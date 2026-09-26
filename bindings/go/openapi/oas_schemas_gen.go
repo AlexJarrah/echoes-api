@@ -72,7 +72,9 @@ type AddPlaylistTracksNotFound ErrorResponse
 
 func (*AddPlaylistTracksNotFound) addPlaylistTracksRes() {}
 
-type AddPlaylistTracksReqItem struct {
+type AddPlaylistTracksRequest []AddPlaylistTracksRequestItem
+
+type AddPlaylistTracksRequestItem struct {
 	// Track to add to the playlist.
 	TrackID uuid.UUID `json:"track_id"`
 	// Lexicographically sortable string.
@@ -80,22 +82,22 @@ type AddPlaylistTracksReqItem struct {
 }
 
 // GetTrackID returns the value of TrackID.
-func (s *AddPlaylistTracksReqItem) GetTrackID() uuid.UUID {
+func (s *AddPlaylistTracksRequestItem) GetTrackID() uuid.UUID {
 	return s.TrackID
 }
 
 // GetPosition returns the value of Position.
-func (s *AddPlaylistTracksReqItem) GetPosition() string {
+func (s *AddPlaylistTracksRequestItem) GetPosition() string {
 	return s.Position
 }
 
 // SetTrackID sets the value of TrackID.
-func (s *AddPlaylistTracksReqItem) SetTrackID(val uuid.UUID) {
+func (s *AddPlaylistTracksRequestItem) SetTrackID(val uuid.UUID) {
 	s.TrackID = val
 }
 
 // SetPosition sets the value of Position.
-func (s *AddPlaylistTracksReqItem) SetPosition(val string) {
+func (s *AddPlaylistTracksRequestItem) SetPosition(val string) {
 	s.Position = val
 }
 
@@ -1317,17 +1319,18 @@ type EditMessageInternalServerError ErrorResponse
 
 func (*EditMessageInternalServerError) editMessageRes() {}
 
-type EditMessageReq struct {
+// Ref: #/components/schemas/EditMessageRequest
+type EditMessageRequest struct {
 	Body OptString `json:"body"`
 }
 
 // GetBody returns the value of Body.
-func (s *EditMessageReq) GetBody() OptString {
+func (s *EditMessageRequest) GetBody() OptString {
 	return s.Body
 }
 
 // SetBody sets the value of Body.
-func (s *EditMessageReq) SetBody(val OptString) {
+func (s *EditMessageRequest) SetBody(val OptString) {
 	s.Body = val
 }
 
@@ -1400,17 +1403,18 @@ type EditPlaylistRoleNotFound ErrorResponse
 
 func (*EditPlaylistRoleNotFound) editPlaylistRoleRes() {}
 
-type EditPlaylistRoleReq struct {
+// Ref: #/components/schemas/EditPlaylistRoleRequest
+type EditPlaylistRoleRequest struct {
 	Role PlaylistRoleType `json:"role"`
 }
 
 // GetRole returns the value of Role.
-func (s *EditPlaylistRoleReq) GetRole() PlaylistRoleType {
+func (s *EditPlaylistRoleRequest) GetRole() PlaylistRoleType {
 	return s.Role
 }
 
 // SetRole sets the value of Role.
-func (s *EditPlaylistRoleReq) SetRole(val PlaylistRoleType) {
+func (s *EditPlaylistRoleRequest) SetRole(val PlaylistRoleType) {
 	s.Role = val
 }
 
@@ -1434,18 +1438,19 @@ type EditPlaylistTrackNotFound ErrorResponse
 
 func (*EditPlaylistTrackNotFound) editPlaylistTrackRes() {}
 
-type EditPlaylistTrackReq struct {
+// Ref: #/components/schemas/EditPlaylistTrackRequest
+type EditPlaylistTrackRequest struct {
 	// Lexicographically sortable string.
 	Position string `json:"position"`
 }
 
 // GetPosition returns the value of Position.
-func (s *EditPlaylistTrackReq) GetPosition() string {
+func (s *EditPlaylistTrackRequest) GetPosition() string {
 	return s.Position
 }
 
 // SetPosition sets the value of Position.
-func (s *EditPlaylistTrackReq) SetPosition(val string) {
+func (s *EditPlaylistTrackRequest) SetPosition(val string) {
 	s.Position = val
 }
 
@@ -1702,32 +1707,33 @@ type GetChangesInternalServerError ErrorResponse
 
 func (*GetChangesInternalServerError) getChangesRes() {}
 
-type GetChangesOK struct {
+// Ref: #/components/schemas/GetChangesResponse
+type GetChangesResponse struct {
 	CurrentSequence uint64   `json:"current_sequence"`
 	Changes         []Change `json:"changes"`
 }
 
 // GetCurrentSequence returns the value of CurrentSequence.
-func (s *GetChangesOK) GetCurrentSequence() uint64 {
+func (s *GetChangesResponse) GetCurrentSequence() uint64 {
 	return s.CurrentSequence
 }
 
 // GetChanges returns the value of Changes.
-func (s *GetChangesOK) GetChanges() []Change {
+func (s *GetChangesResponse) GetChanges() []Change {
 	return s.Changes
 }
 
 // SetCurrentSequence sets the value of CurrentSequence.
-func (s *GetChangesOK) SetCurrentSequence(val uint64) {
+func (s *GetChangesResponse) SetCurrentSequence(val uint64) {
 	s.CurrentSequence = val
 }
 
 // SetChanges sets the value of Changes.
-func (s *GetChangesOK) SetChanges(val []Change) {
+func (s *GetChangesResponse) SetChanges(val []Change) {
 	s.Changes = val
 }
 
-func (*GetChangesOK) getChangesRes() {}
+func (*GetChangesResponse) getChangesRes() {}
 
 type GetChangesUnauthorized ErrorResponse
 
@@ -6540,17 +6546,18 @@ type RemoveFriendInternalServerError ErrorResponse
 
 func (*RemoveFriendInternalServerError) removeFriendRes() {}
 
-type RemoveFriendReq struct {
+// Ref: #/components/schemas/RemoveFriendRequest
+type RemoveFriendRequest struct {
 	ID uuid.UUID `json:"id"`
 }
 
 // GetID returns the value of ID.
-func (s *RemoveFriendReq) GetID() uuid.UUID {
+func (s *RemoveFriendRequest) GetID() uuid.UUID {
 	return s.ID
 }
 
 // SetID sets the value of ID.
-func (s *RemoveFriendReq) SetID(val uuid.UUID) {
+func (s *RemoveFriendRequest) SetID(val uuid.UUID) {
 	s.ID = val
 }
 
@@ -7035,28 +7042,29 @@ type SendMessageInternalServerError ErrorResponse
 
 func (*SendMessageInternalServerError) sendMessageRes() {}
 
-type SendMessageReq struct {
+// Ref: #/components/schemas/SendMessageRequest
+type SendMessageRequest struct {
 	Body     string       `json:"body"`
 	ParentID OptNilUint64 `json:"parent_id"`
 }
 
 // GetBody returns the value of Body.
-func (s *SendMessageReq) GetBody() string {
+func (s *SendMessageRequest) GetBody() string {
 	return s.Body
 }
 
 // GetParentID returns the value of ParentID.
-func (s *SendMessageReq) GetParentID() OptNilUint64 {
+func (s *SendMessageRequest) GetParentID() OptNilUint64 {
 	return s.ParentID
 }
 
 // SetBody sets the value of Body.
-func (s *SendMessageReq) SetBody(val string) {
+func (s *SendMessageRequest) SetBody(val string) {
 	s.Body = val
 }
 
 // SetParentID sets the value of ParentID.
-func (s *SendMessageReq) SetParentID(val OptNilUint64) {
+func (s *SendMessageRequest) SetParentID(val OptNilUint64) {
 	s.ParentID = val
 }
 
@@ -7562,28 +7570,30 @@ type SetPlaylistRolesNotFound ErrorResponse
 
 func (*SetPlaylistRolesNotFound) setPlaylistRolesRes() {}
 
-type SetPlaylistRolesReqItem struct {
+type SetPlaylistRolesRequest []SetPlaylistRolesRequestItem
+
+type SetPlaylistRolesRequestItem struct {
 	UserID uuid.UUID        `json:"user_id"`
 	Role   PlaylistRoleType `json:"role"`
 }
 
 // GetUserID returns the value of UserID.
-func (s *SetPlaylistRolesReqItem) GetUserID() uuid.UUID {
+func (s *SetPlaylistRolesRequestItem) GetUserID() uuid.UUID {
 	return s.UserID
 }
 
 // GetRole returns the value of Role.
-func (s *SetPlaylistRolesReqItem) GetRole() PlaylistRoleType {
+func (s *SetPlaylistRolesRequestItem) GetRole() PlaylistRoleType {
 	return s.Role
 }
 
 // SetUserID sets the value of UserID.
-func (s *SetPlaylistRolesReqItem) SetUserID(val uuid.UUID) {
+func (s *SetPlaylistRolesRequestItem) SetUserID(val uuid.UUID) {
 	s.UserID = val
 }
 
 // SetRole sets the value of Role.
-func (s *SetPlaylistRolesReqItem) SetRole(val PlaylistRoleType) {
+func (s *SetPlaylistRolesRequestItem) SetRole(val PlaylistRoleType) {
 	s.Role = val
 }
 
@@ -8739,17 +8749,18 @@ type UpdateGroupRolesInternalServerError ErrorResponse
 
 func (*UpdateGroupRolesInternalServerError) updateGroupRolesRes() {}
 
-type UpdateGroupRolesReq struct {
+// Ref: #/components/schemas/UpdateGroupRolesRequest
+type UpdateGroupRolesRequest struct {
 	Role GroupRoleType `json:"role"`
 }
 
 // GetRole returns the value of Role.
-func (s *UpdateGroupRolesReq) GetRole() GroupRoleType {
+func (s *UpdateGroupRolesRequest) GetRole() GroupRoleType {
 	return s.Role
 }
 
 // SetRole sets the value of Role.
-func (s *UpdateGroupRolesReq) SetRole(val GroupRoleType) {
+func (s *UpdateGroupRolesRequest) SetRole(val GroupRoleType) {
 	s.Role = val
 }
 

@@ -113,7 +113,7 @@ type Invoker interface {
 	// Add playlist tracks.
 	//
 	// POST /api/playlists/{playlist_id}/tracks
-	AddPlaylistTracks(ctx context.Context, request []AddPlaylistTracksReqItem, params AddPlaylistTracksParams, options ...RequestOption) (AddPlaylistTracksRes, error)
+	AddPlaylistTracks(ctx context.Context, request AddPlaylistTracksRequest, params AddPlaylistTracksParams, options ...RequestOption) (AddPlaylistTracksRes, error)
 	// AddToLibrary invokes addToLibrary operation.
 	//
 	// Add items to library.
@@ -199,7 +199,7 @@ type Invoker interface {
 	// Edit a message.
 	//
 	// PATCH /api/conversations/{conversation_id}/messages/{message_id}
-	EditMessage(ctx context.Context, request *EditMessageReq, params EditMessageParams, options ...RequestOption) (EditMessageRes, error)
+	EditMessage(ctx context.Context, request *EditMessageRequest, params EditMessageParams, options ...RequestOption) (EditMessageRes, error)
 	// EditPlaylist invokes editPlaylist operation.
 	//
 	// Update playlist details.
@@ -211,13 +211,13 @@ type Invoker interface {
 	// Update a playlist role.
 	//
 	// PATCH /api/playlists/{playlist_id}/roles/{user_id}
-	EditPlaylistRole(ctx context.Context, request *EditPlaylistRoleReq, params EditPlaylistRoleParams, options ...RequestOption) (EditPlaylistRoleRes, error)
+	EditPlaylistRole(ctx context.Context, request *EditPlaylistRoleRequest, params EditPlaylistRoleParams, options ...RequestOption) (EditPlaylistRoleRes, error)
 	// EditPlaylistTrack invokes editPlaylistTrack operation.
 	//
 	// Update a playlist track.
 	//
 	// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
-	EditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackReq, params EditPlaylistTrackParams, options ...RequestOption) (EditPlaylistTrackRes, error)
+	EditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackRequest, params EditPlaylistTrackParams, options ...RequestOption) (EditPlaylistTrackRes, error)
 	// EditUserAsset invokes editUserAsset operation.
 	//
 	// Update user asset.
@@ -463,7 +463,7 @@ type Invoker interface {
 	// Remove a friend.
 	//
 	// POST /api/remove-friend
-	RemoveFriend(ctx context.Context, request *RemoveFriendReq, options ...RequestOption) (RemoveFriendRes, error)
+	RemoveFriend(ctx context.Context, request *RemoveFriendRequest, options ...RequestOption) (RemoveFriendRes, error)
 	// RemoveFromLibrary invokes removeFromLibrary operation.
 	//
 	// Remove items from library.
@@ -481,7 +481,7 @@ type Invoker interface {
 	// Send a conversation message.
 	//
 	// POST /api/conversations/{conversation_id}/messages
-	SendMessage(ctx context.Context, request *SendMessageReq, params SendMessageParams, options ...RequestOption) (SendMessageRes, error)
+	SendMessage(ctx context.Context, request *SendMessageRequest, params SendMessageParams, options ...RequestOption) (SendMessageRes, error)
 	// SetActivity invokes setActivity operation.
 	//
 	// Set current activity.
@@ -505,7 +505,7 @@ type Invoker interface {
 	// Set playlist roles.
 	//
 	// POST /api/playlists/{playlist_id}/roles
-	SetPlaylistRoles(ctx context.Context, request []SetPlaylistRolesReqItem, params SetPlaylistRolesParams, options ...RequestOption) (SetPlaylistRolesRes, error)
+	SetPlaylistRoles(ctx context.Context, request SetPlaylistRolesRequest, params SetPlaylistRolesParams, options ...RequestOption) (SetPlaylistRolesRes, error)
 	// SignIn invokes signIn operation.
 	//
 	// Sign in with email and password.
@@ -535,7 +535,7 @@ type Invoker interface {
 	// Update group roles.
 	//
 	// PATCH /api/groups/{group_id}/roles/{user_id}
-	UpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesReq, params UpdateGroupRolesParams, options ...RequestOption) (UpdateGroupRolesRes, error)
+	UpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesRequest, params UpdateGroupRolesParams, options ...RequestOption) (UpdateGroupRolesRes, error)
 	// UpdateLibrary invokes updateLibrary operation.
 	//
 	// Update items in library.
@@ -1134,33 +1134,16 @@ func (c *Client) sendAddMessageReaction(ctx context.Context, params AddMessageRe
 // Add playlist tracks.
 //
 // POST /api/playlists/{playlist_id}/tracks
-func (c *Client) AddPlaylistTracks(ctx context.Context, request []AddPlaylistTracksReqItem, params AddPlaylistTracksParams, options ...RequestOption) (AddPlaylistTracksRes, error) {
+func (c *Client) AddPlaylistTracks(ctx context.Context, request AddPlaylistTracksRequest, params AddPlaylistTracksParams, options ...RequestOption) (AddPlaylistTracksRes, error) {
 	res, err := c.sendAddPlaylistTracks(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendAddPlaylistTracks(ctx context.Context, request []AddPlaylistTracksReqItem, params AddPlaylistTracksParams, requestOptions ...RequestOption) (res AddPlaylistTracksRes, err error) {
+func (c *Client) sendAddPlaylistTracks(ctx context.Context, request AddPlaylistTracksRequest, params AddPlaylistTracksParams, requestOptions ...RequestOption) (res AddPlaylistTracksRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
-		if request == nil {
-			return errors.New("nil is invalid value")
-		}
-		var failures []validate.FieldError
-		for i, elem := range request {
-			if err := func() error {
-				if err := elem.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				failures = append(failures, validate.FieldError{
-					Name:  fmt.Sprintf("[%d]", i),
-					Error: err,
-				})
-			}
-		}
-		if len(failures) > 0 {
-			return &validate.Error{Fields: failures}
+		if err := request.Validate(); err != nil {
+			return err
 		}
 		return nil
 	}(); err != nil {
@@ -3608,12 +3591,12 @@ func (c *Client) sendEditGroup(ctx context.Context, request *EditGroupRequest, p
 // Edit a message.
 //
 // PATCH /api/conversations/{conversation_id}/messages/{message_id}
-func (c *Client) EditMessage(ctx context.Context, request *EditMessageReq, params EditMessageParams, options ...RequestOption) (EditMessageRes, error) {
+func (c *Client) EditMessage(ctx context.Context, request *EditMessageRequest, params EditMessageParams, options ...RequestOption) (EditMessageRes, error) {
 	res, err := c.sendEditMessage(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendEditMessage(ctx context.Context, request *EditMessageReq, params EditMessageParams, requestOptions ...RequestOption) (res EditMessageRes, err error) {
+func (c *Client) sendEditMessage(ctx context.Context, request *EditMessageRequest, params EditMessageParams, requestOptions ...RequestOption) (res EditMessageRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editMessage"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
@@ -3956,12 +3939,12 @@ func (c *Client) sendEditPlaylist(ctx context.Context, request *EditPlaylistRequ
 // Update a playlist role.
 //
 // PATCH /api/playlists/{playlist_id}/roles/{user_id}
-func (c *Client) EditPlaylistRole(ctx context.Context, request *EditPlaylistRoleReq, params EditPlaylistRoleParams, options ...RequestOption) (EditPlaylistRoleRes, error) {
+func (c *Client) EditPlaylistRole(ctx context.Context, request *EditPlaylistRoleRequest, params EditPlaylistRoleParams, options ...RequestOption) (EditPlaylistRoleRes, error) {
 	res, err := c.sendEditPlaylistRole(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendEditPlaylistRole(ctx context.Context, request *EditPlaylistRoleReq, params EditPlaylistRoleParams, requestOptions ...RequestOption) (res EditPlaylistRoleRes, err error) {
+func (c *Client) sendEditPlaylistRole(ctx context.Context, request *EditPlaylistRoleRequest, params EditPlaylistRoleParams, requestOptions ...RequestOption) (res EditPlaylistRoleRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
 		if err := request.Validate(); err != nil {
@@ -4144,12 +4127,12 @@ func (c *Client) sendEditPlaylistRole(ctx context.Context, request *EditPlaylist
 // Update a playlist track.
 //
 // PATCH /api/playlists/{playlist_id}/tracks/{track_id}
-func (c *Client) EditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackReq, params EditPlaylistTrackParams, options ...RequestOption) (EditPlaylistTrackRes, error) {
+func (c *Client) EditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackRequest, params EditPlaylistTrackParams, options ...RequestOption) (EditPlaylistTrackRes, error) {
 	res, err := c.sendEditPlaylistTrack(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendEditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackReq, params EditPlaylistTrackParams, requestOptions ...RequestOption) (res EditPlaylistTrackRes, err error) {
+func (c *Client) sendEditPlaylistTrack(ctx context.Context, request *EditPlaylistTrackRequest, params EditPlaylistTrackParams, requestOptions ...RequestOption) (res EditPlaylistTrackRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
 		if err := request.Validate(); err != nil {
@@ -10358,12 +10341,12 @@ func (c *Client) sendRegister(ctx context.Context, request *RegisterRequest, req
 // Remove a friend.
 //
 // POST /api/remove-friend
-func (c *Client) RemoveFriend(ctx context.Context, request *RemoveFriendReq, options ...RequestOption) (RemoveFriendRes, error) {
+func (c *Client) RemoveFriend(ctx context.Context, request *RemoveFriendRequest, options ...RequestOption) (RemoveFriendRes, error) {
 	res, err := c.sendRemoveFriend(ctx, request, options...)
 	return res, err
 }
 
-func (c *Client) sendRemoveFriend(ctx context.Context, request *RemoveFriendReq, requestOptions ...RequestOption) (res RemoveFriendRes, err error) {
+func (c *Client) sendRemoveFriend(ctx context.Context, request *RemoveFriendRequest, requestOptions ...RequestOption) (res RemoveFriendRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("removeFriend"),
 		semconv.HTTPRequestMethodKey.String("POST"),
@@ -10801,12 +10784,12 @@ func (c *Client) sendSearchTracks(ctx context.Context, request []SearchTrackQuer
 // Send a conversation message.
 //
 // POST /api/conversations/{conversation_id}/messages
-func (c *Client) SendMessage(ctx context.Context, request *SendMessageReq, params SendMessageParams, options ...RequestOption) (SendMessageRes, error) {
+func (c *Client) SendMessage(ctx context.Context, request *SendMessageRequest, params SendMessageParams, options ...RequestOption) (SendMessageRes, error) {
 	res, err := c.sendSendMessage(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendSendMessage(ctx context.Context, request *SendMessageReq, params SendMessageParams, requestOptions ...RequestOption) (res SendMessageRes, err error) {
+func (c *Client) sendSendMessage(ctx context.Context, request *SendMessageRequest, params SendMessageParams, requestOptions ...RequestOption) (res SendMessageRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("sendMessage"),
 		semconv.HTTPRequestMethodKey.String("POST"),
@@ -11397,33 +11380,16 @@ func (c *Client) sendSetBlocked(ctx context.Context, request *BlockedActionReque
 // Set playlist roles.
 //
 // POST /api/playlists/{playlist_id}/roles
-func (c *Client) SetPlaylistRoles(ctx context.Context, request []SetPlaylistRolesReqItem, params SetPlaylistRolesParams, options ...RequestOption) (SetPlaylistRolesRes, error) {
+func (c *Client) SetPlaylistRoles(ctx context.Context, request SetPlaylistRolesRequest, params SetPlaylistRolesParams, options ...RequestOption) (SetPlaylistRolesRes, error) {
 	res, err := c.sendSetPlaylistRoles(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendSetPlaylistRoles(ctx context.Context, request []SetPlaylistRolesReqItem, params SetPlaylistRolesParams, requestOptions ...RequestOption) (res SetPlaylistRolesRes, err error) {
+func (c *Client) sendSetPlaylistRoles(ctx context.Context, request SetPlaylistRolesRequest, params SetPlaylistRolesParams, requestOptions ...RequestOption) (res SetPlaylistRolesRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
-		if request == nil {
-			return errors.New("nil is invalid value")
-		}
-		var failures []validate.FieldError
-		for i, elem := range request {
-			if err := func() error {
-				if err := elem.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				failures = append(failures, validate.FieldError{
-					Name:  fmt.Sprintf("[%d]", i),
-					Error: err,
-				})
-			}
-		}
-		if len(failures) > 0 {
-			return &validate.Error{Fields: failures}
+		if err := request.Validate(); err != nil {
+			return err
 		}
 		return nil
 	}(); err != nil {
@@ -12334,12 +12300,12 @@ func (c *Client) sendSync(ctx context.Context, request *SyncRequest, requestOpti
 // Update group roles.
 //
 // PATCH /api/groups/{group_id}/roles/{user_id}
-func (c *Client) UpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesReq, params UpdateGroupRolesParams, options ...RequestOption) (UpdateGroupRolesRes, error) {
+func (c *Client) UpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesRequest, params UpdateGroupRolesParams, options ...RequestOption) (UpdateGroupRolesRes, error) {
 	res, err := c.sendUpdateGroupRoles(ctx, request, params, options...)
 	return res, err
 }
 
-func (c *Client) sendUpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesReq, params UpdateGroupRolesParams, requestOptions ...RequestOption) (res UpdateGroupRolesRes, err error) {
+func (c *Client) sendUpdateGroupRoles(ctx context.Context, request *UpdateGroupRolesRequest, params UpdateGroupRolesParams, requestOptions ...RequestOption) (res UpdateGroupRolesRes, err error) {
 	// Validate request before sending.
 	if err := func() error {
 		if err := request.Validate(); err != nil {

@@ -558,15 +558,65 @@ func (s *AddPlaylistTracksNotFound) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
+// Encode encodes AddPlaylistTracksRequest as json.
+func (s AddPlaylistTracksRequest) Encode(e *jx.Encoder) {
+	unwrapped := []AddPlaylistTracksRequestItem(s)
+
+	e.ArrStart()
+	for _, elem := range unwrapped {
+		elem.Encode(e)
+	}
+	e.ArrEnd()
+}
+
+// Decode decodes AddPlaylistTracksRequest from json.
+func (s *AddPlaylistTracksRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode AddPlaylistTracksRequest to nil")
+	}
+	var unwrapped []AddPlaylistTracksRequestItem
+	if err := func() error {
+		unwrapped = make([]AddPlaylistTracksRequestItem, 0)
+		if err := d.Arr(func(d *jx.Decoder) error {
+			var elem AddPlaylistTracksRequestItem
+			if err := elem.Decode(d); err != nil {
+				return err
+			}
+			unwrapped = append(unwrapped, elem)
+			return nil
+		}); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = AddPlaylistTracksRequest(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s AddPlaylistTracksRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *AddPlaylistTracksRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode implements json.Marshaler.
-func (s *AddPlaylistTracksReqItem) Encode(e *jx.Encoder) {
+func (s *AddPlaylistTracksRequestItem) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *AddPlaylistTracksReqItem) encodeFields(e *jx.Encoder) {
+func (s *AddPlaylistTracksRequestItem) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("track_id")
 		json.EncodeUUID(e, s.TrackID)
@@ -577,15 +627,15 @@ func (s *AddPlaylistTracksReqItem) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAddPlaylistTracksReqItem = [2]string{
+var jsonFieldsNameOfAddPlaylistTracksRequestItem = [2]string{
 	0: "track_id",
 	1: "position",
 }
 
-// Decode decodes AddPlaylistTracksReqItem from json.
-func (s *AddPlaylistTracksReqItem) Decode(d *jx.Decoder) error {
+// Decode decodes AddPlaylistTracksRequestItem from json.
+func (s *AddPlaylistTracksRequestItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode AddPlaylistTracksReqItem to nil")
+		return errors.New("invalid: unable to decode AddPlaylistTracksRequestItem to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -620,7 +670,7 @@ func (s *AddPlaylistTracksReqItem) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode AddPlaylistTracksReqItem")
+		return errors.Wrap(err, "decode AddPlaylistTracksRequestItem")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -637,8 +687,8 @@ func (s *AddPlaylistTracksReqItem) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAddPlaylistTracksReqItem) {
-					name = jsonFieldsNameOfAddPlaylistTracksReqItem[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAddPlaylistTracksRequestItem) {
+					name = jsonFieldsNameOfAddPlaylistTracksRequestItem[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -659,14 +709,14 @@ func (s *AddPlaylistTracksReqItem) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *AddPlaylistTracksReqItem) MarshalJSON() ([]byte, error) {
+func (s *AddPlaylistTracksRequestItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *AddPlaylistTracksReqItem) UnmarshalJSON(data []byte) error {
+func (s *AddPlaylistTracksRequestItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -5407,14 +5457,14 @@ func (s *EditMessageInternalServerError) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *EditMessageReq) Encode(e *jx.Encoder) {
+func (s *EditMessageRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *EditMessageReq) encodeFields(e *jx.Encoder) {
+func (s *EditMessageRequest) encodeFields(e *jx.Encoder) {
 	{
 		if s.Body.Set {
 			e.FieldStart("body")
@@ -5423,14 +5473,14 @@ func (s *EditMessageReq) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfEditMessageReq = [1]string{
+var jsonFieldsNameOfEditMessageRequest = [1]string{
 	0: "body",
 }
 
-// Decode decodes EditMessageReq from json.
-func (s *EditMessageReq) Decode(d *jx.Decoder) error {
+// Decode decodes EditMessageRequest from json.
+func (s *EditMessageRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode EditMessageReq to nil")
+		return errors.New("invalid: unable to decode EditMessageRequest to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -5450,21 +5500,21 @@ func (s *EditMessageReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode EditMessageReq")
+		return errors.Wrap(err, "decode EditMessageRequest")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *EditMessageReq) MarshalJSON() ([]byte, error) {
+func (s *EditMessageRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *EditMessageReq) UnmarshalJSON(data []byte) error {
+func (s *EditMessageRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -5871,28 +5921,28 @@ func (s *EditPlaylistRoleNotFound) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *EditPlaylistRoleReq) Encode(e *jx.Encoder) {
+func (s *EditPlaylistRoleRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *EditPlaylistRoleReq) encodeFields(e *jx.Encoder) {
+func (s *EditPlaylistRoleRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("role")
 		s.Role.Encode(e)
 	}
 }
 
-var jsonFieldsNameOfEditPlaylistRoleReq = [1]string{
+var jsonFieldsNameOfEditPlaylistRoleRequest = [1]string{
 	0: "role",
 }
 
-// Decode decodes EditPlaylistRoleReq from json.
-func (s *EditPlaylistRoleReq) Decode(d *jx.Decoder) error {
+// Decode decodes EditPlaylistRoleRequest from json.
+func (s *EditPlaylistRoleRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode EditPlaylistRoleReq to nil")
+		return errors.New("invalid: unable to decode EditPlaylistRoleRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -5913,7 +5963,7 @@ func (s *EditPlaylistRoleReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode EditPlaylistRoleReq")
+		return errors.Wrap(err, "decode EditPlaylistRoleRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -5930,8 +5980,8 @@ func (s *EditPlaylistRoleReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfEditPlaylistRoleReq) {
-					name = jsonFieldsNameOfEditPlaylistRoleReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfEditPlaylistRoleRequest) {
+					name = jsonFieldsNameOfEditPlaylistRoleRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -5952,14 +6002,14 @@ func (s *EditPlaylistRoleReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *EditPlaylistRoleReq) MarshalJSON() ([]byte, error) {
+func (s *EditPlaylistRoleRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *EditPlaylistRoleReq) UnmarshalJSON(data []byte) error {
+func (s *EditPlaylistRoleRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -6155,28 +6205,28 @@ func (s *EditPlaylistTrackNotFound) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *EditPlaylistTrackReq) Encode(e *jx.Encoder) {
+func (s *EditPlaylistTrackRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *EditPlaylistTrackReq) encodeFields(e *jx.Encoder) {
+func (s *EditPlaylistTrackRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("position")
 		e.Str(s.Position)
 	}
 }
 
-var jsonFieldsNameOfEditPlaylistTrackReq = [1]string{
+var jsonFieldsNameOfEditPlaylistTrackRequest = [1]string{
 	0: "position",
 }
 
-// Decode decodes EditPlaylistTrackReq from json.
-func (s *EditPlaylistTrackReq) Decode(d *jx.Decoder) error {
+// Decode decodes EditPlaylistTrackRequest from json.
+func (s *EditPlaylistTrackRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode EditPlaylistTrackReq to nil")
+		return errors.New("invalid: unable to decode EditPlaylistTrackRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -6199,7 +6249,7 @@ func (s *EditPlaylistTrackReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode EditPlaylistTrackReq")
+		return errors.Wrap(err, "decode EditPlaylistTrackRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -6216,8 +6266,8 @@ func (s *EditPlaylistTrackReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfEditPlaylistTrackReq) {
-					name = jsonFieldsNameOfEditPlaylistTrackReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfEditPlaylistTrackRequest) {
+					name = jsonFieldsNameOfEditPlaylistTrackRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -6238,14 +6288,14 @@ func (s *EditPlaylistTrackReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *EditPlaylistTrackReq) MarshalJSON() ([]byte, error) {
+func (s *EditPlaylistTrackRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *EditPlaylistTrackReq) UnmarshalJSON(data []byte) error {
+func (s *EditPlaylistTrackRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -7438,14 +7488,14 @@ func (s *GetChangesInternalServerError) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *GetChangesOK) Encode(e *jx.Encoder) {
+func (s *GetChangesResponse) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *GetChangesOK) encodeFields(e *jx.Encoder) {
+func (s *GetChangesResponse) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("current_sequence")
 		e.UInt64(s.CurrentSequence)
@@ -7460,15 +7510,15 @@ func (s *GetChangesOK) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfGetChangesOK = [2]string{
+var jsonFieldsNameOfGetChangesResponse = [2]string{
 	0: "current_sequence",
 	1: "changes",
 }
 
-// Decode decodes GetChangesOK from json.
-func (s *GetChangesOK) Decode(d *jx.Decoder) error {
+// Decode decodes GetChangesResponse from json.
+func (s *GetChangesResponse) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode GetChangesOK to nil")
+		return errors.New("invalid: unable to decode GetChangesResponse to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -7509,7 +7559,7 @@ func (s *GetChangesOK) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode GetChangesOK")
+		return errors.Wrap(err, "decode GetChangesResponse")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -7526,8 +7576,8 @@ func (s *GetChangesOK) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfGetChangesOK) {
-					name = jsonFieldsNameOfGetChangesOK[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfGetChangesResponse) {
+					name = jsonFieldsNameOfGetChangesResponse[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -7548,14 +7598,14 @@ func (s *GetChangesOK) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *GetChangesOK) MarshalJSON() ([]byte, error) {
+func (s *GetChangesResponse) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *GetChangesOK) UnmarshalJSON(data []byte) error {
+func (s *GetChangesResponse) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -19557,28 +19607,28 @@ func (s *RemoveFriendInternalServerError) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *RemoveFriendReq) Encode(e *jx.Encoder) {
+func (s *RemoveFriendRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *RemoveFriendReq) encodeFields(e *jx.Encoder) {
+func (s *RemoveFriendRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("id")
 		json.EncodeUUID(e, s.ID)
 	}
 }
 
-var jsonFieldsNameOfRemoveFriendReq = [1]string{
+var jsonFieldsNameOfRemoveFriendRequest = [1]string{
 	0: "id",
 }
 
-// Decode decodes RemoveFriendReq from json.
-func (s *RemoveFriendReq) Decode(d *jx.Decoder) error {
+// Decode decodes RemoveFriendRequest from json.
+func (s *RemoveFriendRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode RemoveFriendReq to nil")
+		return errors.New("invalid: unable to decode RemoveFriendRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -19601,7 +19651,7 @@ func (s *RemoveFriendReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode RemoveFriendReq")
+		return errors.Wrap(err, "decode RemoveFriendRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -19618,8 +19668,8 @@ func (s *RemoveFriendReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfRemoveFriendReq) {
-					name = jsonFieldsNameOfRemoveFriendReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfRemoveFriendRequest) {
+					name = jsonFieldsNameOfRemoveFriendRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -19640,14 +19690,14 @@ func (s *RemoveFriendReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *RemoveFriendReq) MarshalJSON() ([]byte, error) {
+func (s *RemoveFriendRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *RemoveFriendReq) UnmarshalJSON(data []byte) error {
+func (s *RemoveFriendRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -21277,14 +21327,14 @@ func (s *SendMessageInternalServerError) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *SendMessageReq) Encode(e *jx.Encoder) {
+func (s *SendMessageRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *SendMessageReq) encodeFields(e *jx.Encoder) {
+func (s *SendMessageRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("body")
 		e.Str(s.Body)
@@ -21297,15 +21347,15 @@ func (s *SendMessageReq) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfSendMessageReq = [2]string{
+var jsonFieldsNameOfSendMessageRequest = [2]string{
 	0: "body",
 	1: "parent_id",
 }
 
-// Decode decodes SendMessageReq from json.
-func (s *SendMessageReq) Decode(d *jx.Decoder) error {
+// Decode decodes SendMessageRequest from json.
+func (s *SendMessageRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode SendMessageReq to nil")
+		return errors.New("invalid: unable to decode SendMessageRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -21338,7 +21388,7 @@ func (s *SendMessageReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode SendMessageReq")
+		return errors.Wrap(err, "decode SendMessageRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -21355,8 +21405,8 @@ func (s *SendMessageReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfSendMessageReq) {
-					name = jsonFieldsNameOfSendMessageReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfSendMessageRequest) {
+					name = jsonFieldsNameOfSendMessageRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -21377,14 +21427,14 @@ func (s *SendMessageReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *SendMessageReq) MarshalJSON() ([]byte, error) {
+func (s *SendMessageRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *SendMessageReq) UnmarshalJSON(data []byte) error {
+func (s *SendMessageRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -23263,15 +23313,65 @@ func (s *SetPlaylistRolesNotFound) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
+// Encode encodes SetPlaylistRolesRequest as json.
+func (s SetPlaylistRolesRequest) Encode(e *jx.Encoder) {
+	unwrapped := []SetPlaylistRolesRequestItem(s)
+
+	e.ArrStart()
+	for _, elem := range unwrapped {
+		elem.Encode(e)
+	}
+	e.ArrEnd()
+}
+
+// Decode decodes SetPlaylistRolesRequest from json.
+func (s *SetPlaylistRolesRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode SetPlaylistRolesRequest to nil")
+	}
+	var unwrapped []SetPlaylistRolesRequestItem
+	if err := func() error {
+		unwrapped = make([]SetPlaylistRolesRequestItem, 0)
+		if err := d.Arr(func(d *jx.Decoder) error {
+			var elem SetPlaylistRolesRequestItem
+			if err := elem.Decode(d); err != nil {
+				return err
+			}
+			unwrapped = append(unwrapped, elem)
+			return nil
+		}); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = SetPlaylistRolesRequest(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s SetPlaylistRolesRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *SetPlaylistRolesRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode implements json.Marshaler.
-func (s *SetPlaylistRolesReqItem) Encode(e *jx.Encoder) {
+func (s *SetPlaylistRolesRequestItem) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *SetPlaylistRolesReqItem) encodeFields(e *jx.Encoder) {
+func (s *SetPlaylistRolesRequestItem) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("user_id")
 		json.EncodeUUID(e, s.UserID)
@@ -23282,15 +23382,15 @@ func (s *SetPlaylistRolesReqItem) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfSetPlaylistRolesReqItem = [2]string{
+var jsonFieldsNameOfSetPlaylistRolesRequestItem = [2]string{
 	0: "user_id",
 	1: "role",
 }
 
-// Decode decodes SetPlaylistRolesReqItem from json.
-func (s *SetPlaylistRolesReqItem) Decode(d *jx.Decoder) error {
+// Decode decodes SetPlaylistRolesRequestItem from json.
+func (s *SetPlaylistRolesRequestItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode SetPlaylistRolesReqItem to nil")
+		return errors.New("invalid: unable to decode SetPlaylistRolesRequestItem to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -23323,7 +23423,7 @@ func (s *SetPlaylistRolesReqItem) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode SetPlaylistRolesReqItem")
+		return errors.Wrap(err, "decode SetPlaylistRolesRequestItem")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -23340,8 +23440,8 @@ func (s *SetPlaylistRolesReqItem) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfSetPlaylistRolesReqItem) {
-					name = jsonFieldsNameOfSetPlaylistRolesReqItem[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfSetPlaylistRolesRequestItem) {
+					name = jsonFieldsNameOfSetPlaylistRolesRequestItem[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -23362,14 +23462,14 @@ func (s *SetPlaylistRolesReqItem) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *SetPlaylistRolesReqItem) MarshalJSON() ([]byte, error) {
+func (s *SetPlaylistRolesRequestItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *SetPlaylistRolesReqItem) UnmarshalJSON(data []byte) error {
+func (s *SetPlaylistRolesRequestItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -26299,28 +26399,28 @@ func (s *UpdateGroupRolesInternalServerError) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *UpdateGroupRolesReq) Encode(e *jx.Encoder) {
+func (s *UpdateGroupRolesRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *UpdateGroupRolesReq) encodeFields(e *jx.Encoder) {
+func (s *UpdateGroupRolesRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("role")
 		s.Role.Encode(e)
 	}
 }
 
-var jsonFieldsNameOfUpdateGroupRolesReq = [1]string{
+var jsonFieldsNameOfUpdateGroupRolesRequest = [1]string{
 	0: "role",
 }
 
-// Decode decodes UpdateGroupRolesReq from json.
-func (s *UpdateGroupRolesReq) Decode(d *jx.Decoder) error {
+// Decode decodes UpdateGroupRolesRequest from json.
+func (s *UpdateGroupRolesRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode UpdateGroupRolesReq to nil")
+		return errors.New("invalid: unable to decode UpdateGroupRolesRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -26341,7 +26441,7 @@ func (s *UpdateGroupRolesReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode UpdateGroupRolesReq")
+		return errors.Wrap(err, "decode UpdateGroupRolesRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -26358,8 +26458,8 @@ func (s *UpdateGroupRolesReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfUpdateGroupRolesReq) {
-					name = jsonFieldsNameOfUpdateGroupRolesReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfUpdateGroupRolesRequest) {
+					name = jsonFieldsNameOfUpdateGroupRolesRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -26380,14 +26480,14 @@ func (s *UpdateGroupRolesReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *UpdateGroupRolesReq) MarshalJSON() ([]byte, error) {
+func (s *UpdateGroupRolesRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *UpdateGroupRolesReq) UnmarshalJSON(data []byte) error {
+func (s *UpdateGroupRolesRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

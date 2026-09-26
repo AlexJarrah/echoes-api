@@ -24,12 +24,7 @@
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - role
-            properties:
-              role:
-                $ref: "#/components/schemas/GroupRoleType"
+            $ref: "#/components/schemas/UpdateGroupRolesRequest"
     responses:
       "200":
         description: Group roles updated successfully.
@@ -41,6 +36,7 @@
         $ref: "#/components/responses/BadRequest"
       "500":
         $ref: "#/components/responses/InternalServerError"
+
   delete:
     summary: Remove a user from a group.
     operationId: deleteGroupRole

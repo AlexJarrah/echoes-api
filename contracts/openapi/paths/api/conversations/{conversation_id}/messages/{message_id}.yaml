@@ -25,10 +25,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              body:
-                type: string
+            $ref: "#/components/schemas/EditMessageRequest"
     responses:
       "200":
         description: Message edited successfully.
@@ -40,6 +37,7 @@
         $ref: "#/components/responses/BadRequest"
       "500":
         $ref: "#/components/responses/InternalServerError"
+
   delete:
     summary: Delete a message.
     operationId: deleteMessage

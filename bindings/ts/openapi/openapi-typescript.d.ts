@@ -1062,6 +1062,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AddPlaylistTracksRequest: {
+            /**
+             * Format: uuid
+             * @description Track to add to the playlist.
+             */
+            track_id: string;
+            /** @description Lexicographically sortable string. */
+            position: string;
+        }[];
         Album: {
             /** Format: uuid */
             album_id: string;
@@ -1274,10 +1283,20 @@ export interface components {
             description?: string;
             visibility?: components["schemas"]["Visibility"];
         };
+        EditMessageRequest: {
+            body?: string;
+        };
         EditPlaylistRequest: {
             name?: string;
             description?: string | null;
             visibility?: components["schemas"]["Visibility"];
+        };
+        EditPlaylistRoleRequest: {
+            role: components["schemas"]["PlaylistRoleType"];
+        };
+        EditPlaylistTrackRequest: {
+            /** @description Lexicographically sortable string */
+            position: string;
         };
         EditUserAssetRequest: {
             /** @description Lexicographically sortable string */
@@ -1318,6 +1337,11 @@ export interface components {
             id?: string | null;
             /** @description Target user's handle. Optional if 'id' is provided. */
             handle?: string | null;
+        };
+        GetChangesResponse: {
+            /** Format: uint64 */
+            current_sequence: number;
+            changes: components["schemas"]["Change"][];
         };
         GetLibraryAlbumsRequest: {
             /** @description ids will not be returned except for those updated since timestamp. */
@@ -1806,6 +1830,10 @@ export interface components {
                 listening_streak: number;
             };
         };
+        RemoveFriendRequest: {
+            /** Format: uuid */
+            id: string;
+        };
         SearchIndex: {
             artists?: components["schemas"]["SearchIndexArtist"][];
             albums?: components["schemas"]["SearchIndexAlbum"][];
@@ -1860,6 +1888,11 @@ export interface components {
             index: number;
             results: components["schemas"]["SearchTrackResult"][];
             error?: string;
+        };
+        SendMessageRequest: {
+            body: string;
+            /** Format: uint64 */
+            parent_id?: number | null;
         };
         Session: {
             /**
@@ -1997,6 +2030,11 @@ export interface components {
              */
             end_timestamp?: string;
         };
+        SetPlaylistRolesRequest: {
+            /** Format: uuid */
+            user_id: string;
+            role: components["schemas"]["PlaylistRoleType"];
+        }[];
         SignInRequest: {
             /** Format: email */
             email: string;
@@ -2131,6 +2169,9 @@ export interface components {
             play_count: number;
             /** Format: uint64 */
             play_duration: number;
+        };
+        UpdateGroupRolesRequest: {
+            role: components["schemas"]["GroupRoleType"];
         };
         UpdateUserRequest: {
             handle?: string | null;
@@ -2542,11 +2583,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /** Format: uint64 */
-                        current_sequence: number;
-                        changes: components["schemas"]["Change"][];
-                    };
+                    "application/json": components["schemas"]["GetChangesResponse"];
                 };
             };
             401: components["responses"]["Unauthorized"];
@@ -2674,9 +2711,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    body?: string;
-                };
+                "application/json": components["schemas"]["EditMessageRequest"];
             };
         };
         responses: {
@@ -2731,11 +2766,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    body: string;
-                    /** Format: uint64 */
-                    parent_id?: number | null;
-                };
+                "application/json": components["schemas"]["SendMessageRequest"];
             };
         };
         responses: {
@@ -2783,9 +2814,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    role: components["schemas"]["GroupRoleType"];
-                };
+                "application/json": components["schemas"]["UpdateGroupRolesRequest"];
             };
         };
         responses: {
@@ -3315,9 +3344,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    role: components["schemas"]["PlaylistRoleType"];
-                };
+                "application/json": components["schemas"]["EditPlaylistRoleRequest"];
             };
         };
         responses: {
@@ -3374,11 +3401,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    /** Format: uuid */
-                    user_id: string;
-                    role: components["schemas"]["PlaylistRoleType"];
-                }[];
+                "application/json": components["schemas"]["SetPlaylistRolesRequest"];
             };
         };
         responses: {
@@ -3429,10 +3452,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    /** @description Lexicographically sortable string */
-                    position: string;
-                };
+                "application/json": components["schemas"]["EditPlaylistTrackRequest"];
             };
         };
         responses: {
@@ -3489,15 +3509,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    /**
-                     * Format: uuid
-                     * @description Track to add to the playlist.
-                     */
-                    track_id: string;
-                    /** @description Lexicographically sortable string. */
-                    position: string;
-                }[];
+                "application/json": components["schemas"]["AddPlaylistTracksRequest"];
             };
         };
         responses: {
@@ -3680,10 +3692,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": {
-                    /** Format: uuid */
-                    id: string;
-                };
+                "application/json": components["schemas"]["RemoveFriendRequest"];
             };
         };
         responses: {

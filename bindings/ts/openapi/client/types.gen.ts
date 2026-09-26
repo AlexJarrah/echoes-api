@@ -4,6 +4,17 @@ export type ClientOptions = {
     baseUrl: 'https://echoes.la' | (string & {});
 };
 
+export type AddPlaylistTracksRequest = Array<{
+    /**
+     * Track to add to the playlist.
+     */
+    track_id: string;
+    /**
+     * Lexicographically sortable string.
+     */
+    position: string;
+}>;
+
 export type Album = {
     album_id: string;
     user_id?: string | null;
@@ -182,10 +193,25 @@ export type EditGroupRequest = {
     visibility?: Visibility;
 };
 
+export type EditMessageRequest = {
+    body?: string;
+};
+
 export type EditPlaylistRequest = {
     name?: string;
     description?: string | null;
     visibility?: Visibility;
+};
+
+export type EditPlaylistRoleRequest = {
+    role: PlaylistRoleType;
+};
+
+export type EditPlaylistTrackRequest = {
+    /**
+     * Lexicographically sortable string
+     */
+    position: string;
 };
 
 export type EditUserAssetRequest = {
@@ -235,6 +261,11 @@ export type FriendActionRequest = {
      * Target user's handle. Optional if 'id' is provided.
      */
     handle?: string | null;
+};
+
+export type GetChangesResponse = {
+    current_sequence: number;
+    changes: Array<Change>;
 };
 
 export type GetLibraryAlbumsRequest = {
@@ -674,6 +705,10 @@ export type RelationDetails = {
     };
 };
 
+export type RemoveFriendRequest = {
+    id: string;
+};
+
 export type SearchIndex = {
     artists?: Array<SearchIndexArtist>;
     albums?: Array<SearchIndexAlbum>;
@@ -726,6 +761,11 @@ export type SearchTracksResultGroup = {
     index: number;
     results: Array<SearchTrackResult>;
     error?: string;
+};
+
+export type SendMessageRequest = {
+    body: string;
+    parent_id?: number | null;
 };
 
 export type Session = {
@@ -884,6 +924,11 @@ export type SetActivityItem = {
     end_timestamp?: string;
 };
 
+export type SetPlaylistRolesRequest = Array<{
+    user_id: string;
+    role: PlaylistRoleType;
+}>;
+
 export type SignInRequest = {
     email: string;
     password: string;
@@ -1003,6 +1048,10 @@ export type TrackPlayStats = {
     track: Track;
     play_count: number;
     play_duration: number;
+};
+
+export type UpdateGroupRolesRequest = {
+    role: GroupRoleType;
 };
 
 export type UpdateUserRequest = {
@@ -1451,13 +1500,10 @@ export type GetChangesResponses = {
     /**
      * Changes retrieved successfully.
      */
-    200: {
-        current_sequence: number;
-        changes: Array<Change>;
-    };
+    200: GetChangesResponse;
 };
 
-export type GetChangesResponse = GetChangesResponses[keyof GetChangesResponses];
+export type GetChangesResponse2 = GetChangesResponses[keyof GetChangesResponses];
 
 export type DeleteMessageReactionData = {
     body?: never;
@@ -1637,9 +1683,7 @@ export type DeleteMessageResponses = {
 export type DeleteMessageResponse = DeleteMessageResponses[keyof DeleteMessageResponses];
 
 export type EditMessageData = {
-    body: {
-        body?: string;
-    };
+    body: EditMessageRequest;
     path: {
         conversation_id: string;
         message_id: number;
@@ -1705,10 +1749,7 @@ export type GetMessagesResponses = {
 export type GetMessagesResponse = GetMessagesResponses[keyof GetMessagesResponses];
 
 export type SendMessageData = {
-    body: {
-        body: string;
-        parent_id?: number | null;
-    };
+    body: SendMessageRequest;
     path: {
         conversation_id: string;
     };
@@ -1779,9 +1820,7 @@ export type DeleteGroupRoleResponses = {
 export type DeleteGroupRoleResponse = DeleteGroupRoleResponses[keyof DeleteGroupRoleResponses];
 
 export type UpdateGroupRolesData = {
-    body: {
-        role: GroupRoleType;
-    };
+    body: UpdateGroupRolesRequest;
     path: {
         group_id: string;
         user_id: string;
@@ -2479,9 +2518,7 @@ export type DeletePlaylistRoleResponses = {
 export type DeletePlaylistRoleResponse = DeletePlaylistRoleResponses[keyof DeletePlaylistRoleResponses];
 
 export type EditPlaylistRoleData = {
-    body: {
-        role: PlaylistRoleType;
-    };
+    body: EditPlaylistRoleRequest;
     path: {
         playlist_id: string;
         user_id: string;
@@ -2564,10 +2601,7 @@ export type GetPlaylistRolesResponses = {
 export type GetPlaylistRolesResponse = GetPlaylistRolesResponses[keyof GetPlaylistRolesResponses];
 
 export type SetPlaylistRolesData = {
-    body: Array<{
-        user_id: string;
-        role: PlaylistRoleType;
-    }>;
+    body: SetPlaylistRolesRequest;
     path: {
         playlist_id: string;
     };
@@ -2658,12 +2692,7 @@ export type DeletePlaylistTrackResponses = {
 export type DeletePlaylistTrackResponse = DeletePlaylistTrackResponses[keyof DeletePlaylistTrackResponses];
 
 export type EditPlaylistTrackData = {
-    body: {
-        /**
-         * Lexicographically sortable string
-         */
-        position: string;
-    };
+    body: EditPlaylistTrackRequest;
     path: {
         playlist_id: string;
         track_id: string;
@@ -2746,16 +2775,7 @@ export type GetPlaylistTracksResponses = {
 export type GetPlaylistTracksResponse = GetPlaylistTracksResponses[keyof GetPlaylistTracksResponses];
 
 export type AddPlaylistTracksData = {
-    body: Array<{
-        /**
-         * Track to add to the playlist.
-         */
-        track_id: string;
-        /**
-         * Lexicographically sortable string.
-         */
-        position: string;
-    }>;
+    body: AddPlaylistTracksRequest;
     path: {
         playlist_id: string;
     };
@@ -3018,9 +3038,7 @@ export type GetRelationsDetailsResponses = {
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
 
 export type RemoveFriendData = {
-    body: {
-        id: string;
-    };
+    body: RemoveFriendRequest;
     path?: never;
     query?: never;
     url: '/api/remove-friend';

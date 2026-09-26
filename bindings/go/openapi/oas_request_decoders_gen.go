@@ -193,7 +193,7 @@ func (s *Server) decodeAddGroupRolesRequest(r *http.Request) (
 }
 
 func (s *Server) decodeAddPlaylistTracksRequest(r *http.Request) (
-	req []AddPlaylistTracksReqItem,
+	req AddPlaylistTracksRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -240,17 +240,9 @@ func (s *Server) decodeAddPlaylistTracksRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request []AddPlaylistTracksReqItem
+		var request AddPlaylistTracksRequest
 		if err := func() error {
-			request = make([]AddPlaylistTracksReqItem, 0)
-			if err := d.Arr(func(d *jx.Decoder) error {
-				var elem AddPlaylistTracksReqItem
-				if err := elem.Decode(d); err != nil {
-					return err
-				}
-				request = append(request, elem)
-				return nil
-			}); err != nil {
+			if err := request.Decode(d); err != nil {
 				return err
 			}
 			if err := d.Skip(); err != io.EOF {
@@ -266,25 +258,8 @@ func (s *Server) decodeAddPlaylistTracksRequest(r *http.Request) (
 			return req, rawBody, close, err
 		}
 		if err := func() error {
-			if request == nil {
-				return errors.New("nil is invalid value")
-			}
-			var failures []validate.FieldError
-			for i, elem := range request {
-				if err := func() error {
-					if err := elem.Validate(); err != nil {
-						return err
-					}
-					return nil
-				}(); err != nil {
-					failures = append(failures, validate.FieldError{
-						Name:  fmt.Sprintf("[%d]", i),
-						Error: err,
-					})
-				}
-			}
-			if len(failures) > 0 {
-				return &validate.Error{Fields: failures}
+			if err := request.Validate(); err != nil {
+				return err
 			}
 			return nil
 		}(); err != nil {
@@ -686,7 +661,7 @@ func (s *Server) decodeEditGroupRequest(r *http.Request) (
 }
 
 func (s *Server) decodeEditMessageRequest(r *http.Request) (
-	req *EditMessageReq,
+	req *EditMessageRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -733,7 +708,7 @@ func (s *Server) decodeEditMessageRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request EditMessageReq
+		var request EditMessageRequest
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err
@@ -836,7 +811,7 @@ func (s *Server) decodeEditPlaylistRequest(r *http.Request) (
 }
 
 func (s *Server) decodeEditPlaylistRoleRequest(r *http.Request) (
-	req *EditPlaylistRoleReq,
+	req *EditPlaylistRoleRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -883,7 +858,7 @@ func (s *Server) decodeEditPlaylistRoleRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request EditPlaylistRoleReq
+		var request EditPlaylistRoleRequest
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err
@@ -915,7 +890,7 @@ func (s *Server) decodeEditPlaylistRoleRequest(r *http.Request) (
 }
 
 func (s *Server) decodeEditPlaylistTrackRequest(r *http.Request) (
-	req *EditPlaylistTrackReq,
+	req *EditPlaylistTrackRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -962,7 +937,7 @@ func (s *Server) decodeEditPlaylistTrackRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request EditPlaylistTrackReq
+		var request EditPlaylistTrackRequest
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err
@@ -2183,7 +2158,7 @@ func (s *Server) decodeRegisterRequest(r *http.Request) (
 }
 
 func (s *Server) decodeRemoveFriendRequest(r *http.Request) (
-	req *RemoveFriendReq,
+	req *RemoveFriendRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -2230,7 +2205,7 @@ func (s *Server) decodeRemoveFriendRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request RemoveFriendReq
+		var request RemoveFriendRequest
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err
@@ -2420,7 +2395,7 @@ func (s *Server) decodeSearchTracksRequest(r *http.Request) (
 }
 
 func (s *Server) decodeSendMessageRequest(r *http.Request) (
-	req *SendMessageReq,
+	req *SendMessageRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -2467,7 +2442,7 @@ func (s *Server) decodeSendMessageRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request SendMessageReq
+		var request SendMessageRequest
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err
@@ -2720,7 +2695,7 @@ func (s *Server) decodeSetBlockedRequest(r *http.Request) (
 }
 
 func (s *Server) decodeSetPlaylistRolesRequest(r *http.Request) (
-	req []SetPlaylistRolesReqItem,
+	req SetPlaylistRolesRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -2767,17 +2742,9 @@ func (s *Server) decodeSetPlaylistRolesRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request []SetPlaylistRolesReqItem
+		var request SetPlaylistRolesRequest
 		if err := func() error {
-			request = make([]SetPlaylistRolesReqItem, 0)
-			if err := d.Arr(func(d *jx.Decoder) error {
-				var elem SetPlaylistRolesReqItem
-				if err := elem.Decode(d); err != nil {
-					return err
-				}
-				request = append(request, elem)
-				return nil
-			}); err != nil {
+			if err := request.Decode(d); err != nil {
 				return err
 			}
 			if err := d.Skip(); err != io.EOF {
@@ -2793,25 +2760,8 @@ func (s *Server) decodeSetPlaylistRolesRequest(r *http.Request) (
 			return req, rawBody, close, err
 		}
 		if err := func() error {
-			if request == nil {
-				return errors.New("nil is invalid value")
-			}
-			var failures []validate.FieldError
-			for i, elem := range request {
-				if err := func() error {
-					if err := elem.Validate(); err != nil {
-						return err
-					}
-					return nil
-				}(); err != nil {
-					failures = append(failures, validate.FieldError{
-						Name:  fmt.Sprintf("[%d]", i),
-						Error: err,
-					})
-				}
-			}
-			if len(failures) > 0 {
-				return &validate.Error{Fields: failures}
+			if err := request.Validate(); err != nil {
+				return err
 			}
 			return nil
 		}(); err != nil {
@@ -2974,7 +2924,7 @@ func (s *Server) decodeSyncRequest(r *http.Request) (
 }
 
 func (s *Server) decodeUpdateGroupRolesRequest(r *http.Request) (
-	req *UpdateGroupRolesReq,
+	req *UpdateGroupRolesRequest,
 	rawBody []byte,
 	close func() error,
 	rerr error,
@@ -3021,7 +2971,7 @@ func (s *Server) decodeUpdateGroupRolesRequest(r *http.Request) (
 		rawBody = append(rawBody, buf...)
 		d := jx.DecodeBytes(buf)
 
-		var request UpdateGroupRolesReq
+		var request UpdateGroupRolesRequest
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err

@@ -1,0 +1,10 @@
+EditPlaylistTrackRequest:
+  type: object
+  required:
+    - position
+  properties:
+    position:
+      type: string
+      pattern: "^[0-9a-z._-]+$"
+      maxLength: 64
+      description: Lexicographically sortable string

@@ -784,7 +784,7 @@ func (s *Server) handleAddPlaylistTracksRequest(args [1]string, argsEscaped bool
 		}
 
 		type (
-			Request  = []AddPlaylistTracksReqItem
+			Request  = AddPlaylistTracksRequest
 			Params   = AddPlaylistTracksParams
 			Response = AddPlaylistTracksRes
 		)
@@ -3643,7 +3643,7 @@ func (s *Server) handleEditMessageRequest(args [2]string, argsEscaped bool, w ht
 		}
 
 		type (
-			Request  = *EditMessageReq
+			Request  = *EditMessageRequest
 			Params   = EditMessageParams
 			Response = EditMessageRes
 		)
@@ -4051,7 +4051,7 @@ func (s *Server) handleEditPlaylistRoleRequest(args [2]string, argsEscaped bool,
 		}
 
 		type (
-			Request  = *EditPlaylistRoleReq
+			Request  = *EditPlaylistRoleRequest
 			Params   = EditPlaylistRoleParams
 			Response = EditPlaylistRoleRes
 		)
@@ -4257,7 +4257,7 @@ func (s *Server) handleEditPlaylistTrackRequest(args [2]string, argsEscaped bool
 		}
 
 		type (
-			Request  = *EditPlaylistTrackReq
+			Request  = *EditPlaylistTrackRequest
 			Params   = EditPlaylistTrackParams
 			Response = EditPlaylistTrackRes
 		)
@@ -11520,7 +11520,7 @@ func (s *Server) handleRemoveFriendRequest(args [0]string, argsEscaped bool, w h
 		}
 
 		type (
-			Request  = *RemoveFriendReq
+			Request  = *RemoveFriendRequest
 			Params   = struct{}
 			Response = RemoveFriendRes
 		)
@@ -12096,7 +12096,7 @@ func (s *Server) handleSendMessageRequest(args [1]string, argsEscaped bool, w ht
 		}
 
 		type (
-			Request  = *SendMessageReq
+			Request  = *SendMessageRequest
 			Params   = SendMessageParams
 			Response = SendMessageRes
 		)
@@ -12859,7 +12859,7 @@ func (s *Server) handleSetPlaylistRolesRequest(args [1]string, argsEscaped bool,
 		}
 
 		type (
-			Request  = []SetPlaylistRolesReqItem
+			Request  = SetPlaylistRolesRequest
 			Params   = SetPlaylistRolesParams
 			Response = SetPlaylistRolesRes
 		)
@@ -13745,7 +13745,7 @@ func (s *Server) handleUpdateGroupRolesRequest(args [2]string, argsEscaped bool,
 		}
 
 		type (
-			Request  = *UpdateGroupRolesReq
+			Request  = *UpdateGroupRolesRequest
 			Params   = UpdateGroupRolesParams
 			Response = UpdateGroupRolesRes
 		)

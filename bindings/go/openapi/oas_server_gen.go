@@ -31,7 +31,7 @@ type Handler interface {
 	// Add playlist tracks.
 	//
 	// POST /api/playlists/{playlist_id}/tracks
-	AddPlaylistTracks(ctx context.Context, req []AddPlaylistTracksReqItem, params AddPlaylistTracksParams) (AddPlaylistTracksRes, error)
+	AddPlaylistTracks(ctx context.Context, req AddPlaylistTracksRequest, params AddPlaylistTracksParams) (AddPlaylistTracksRes, error)
 	// AddToLibrary implements addToLibrary operation.
 	//
 	// Add items to library.
@@ -117,7 +117,7 @@ type Handler interface {
 	// Edit a message.
 	//
 	// PATCH /api/conversations/{conversation_id}/messages/{message_id}
-	EditMessage(ctx context.Context, req *EditMessageReq, params EditMessageParams) (EditMessageRes, error)
+	EditMessage(ctx context.Context, req *EditMessageRequest, params EditMessageParams) (EditMessageRes, error)
 	// EditPlaylist implements editPlaylist operation.
 	//
 	// Update playlist details.
@@ -129,13 +129,13 @@ type Handler interface {
 	// Update a playlist role.
 	//
 	// PATCH /api/playlists/{playlist_id}/roles/{user_id}
-	EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleReq, params EditPlaylistRoleParams) (EditPlaylistRoleRes, error)
+	EditPlaylistRole(ctx context.Context, req *EditPlaylistRoleRequest, params EditPlaylistRoleParams) (EditPlaylistRoleRes, error)
 	// EditPlaylistTrack implements editPlaylistTrack operation.
 	//
 	// Update a playlist track.
 	//
 	// PATCH /api/playlists/{playlist_id}/tracks/{track_id}
-	EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackReq, params EditPlaylistTrackParams) (EditPlaylistTrackRes, error)
+	EditPlaylistTrack(ctx context.Context, req *EditPlaylistTrackRequest, params EditPlaylistTrackParams) (EditPlaylistTrackRes, error)
 	// EditUserAsset implements editUserAsset operation.
 	//
 	// Update user asset.
@@ -381,7 +381,7 @@ type Handler interface {
 	// Remove a friend.
 	//
 	// POST /api/remove-friend
-	RemoveFriend(ctx context.Context, req *RemoveFriendReq) (RemoveFriendRes, error)
+	RemoveFriend(ctx context.Context, req *RemoveFriendRequest) (RemoveFriendRes, error)
 	// RemoveFromLibrary implements removeFromLibrary operation.
 	//
 	// Remove items from library.
@@ -399,7 +399,7 @@ type Handler interface {
 	// Send a conversation message.
 	//
 	// POST /api/conversations/{conversation_id}/messages
-	SendMessage(ctx context.Context, req *SendMessageReq, params SendMessageParams) (SendMessageRes, error)
+	SendMessage(ctx context.Context, req *SendMessageRequest, params SendMessageParams) (SendMessageRes, error)
 	// SetActivity implements setActivity operation.
 	//
 	// Set current activity.
@@ -423,7 +423,7 @@ type Handler interface {
 	// Set playlist roles.
 	//
 	// POST /api/playlists/{playlist_id}/roles
-	SetPlaylistRoles(ctx context.Context, req []SetPlaylistRolesReqItem, params SetPlaylistRolesParams) (SetPlaylistRolesRes, error)
+	SetPlaylistRoles(ctx context.Context, req SetPlaylistRolesRequest, params SetPlaylistRolesParams) (SetPlaylistRolesRes, error)
 	// SignIn implements signIn operation.
 	//
 	// Sign in with email and password.
@@ -453,7 +453,7 @@ type Handler interface {
 	// Update group roles.
 	//
 	// PATCH /api/groups/{group_id}/roles/{user_id}
-	UpdateGroupRoles(ctx context.Context, req *UpdateGroupRolesReq, params UpdateGroupRolesParams) (UpdateGroupRolesRes, error)
+	UpdateGroupRoles(ctx context.Context, req *UpdateGroupRolesRequest, params UpdateGroupRolesParams) (UpdateGroupRolesRes, error)
 	// UpdateLibrary implements updateLibrary operation.
 	//
 	// Update items in library.

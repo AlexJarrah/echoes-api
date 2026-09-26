@@ -25,12 +25,7 @@
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - role
-            properties:
-              role:
-                $ref: "#/components/schemas/PlaylistRoleType"
+            $ref: "#/components/schemas/EditPlaylistRoleRequest"
     responses:
       "200":
         description: Playlist role updated successfully

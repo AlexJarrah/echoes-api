@@ -1,0 +1,13 @@
+GetChangesResponse:
+  type: object
+  required:
+    - current_sequence
+    - changes
+  properties:
+    current_sequence:
+      type: integer
+      format: uint64
+    changes:
+      type: array
+      items:
+        $ref: "#/components/schemas/Change"

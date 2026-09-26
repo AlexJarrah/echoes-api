@@ -38,6 +38,7 @@
         $ref: "#/components/responses/Unauthorized"
       "500":
         $ref: "#/components/responses/InternalServerError"
+
   post:
     summary: Send a conversation message.
     operationId: sendMessage
@@ -58,16 +59,7 @@
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - body
-            properties:
-              body:
-                type: string
-              parent_id:
-                type: integer
-                format: uint64
-                nullable: true
+            $ref: "#/components/schemas/SendMessageRequest"
     responses:
       "200":
         description: Message sent successfully.

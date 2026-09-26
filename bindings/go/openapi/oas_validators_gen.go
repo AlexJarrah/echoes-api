@@ -34,7 +34,32 @@ func (s AddGroupRolesOKApplicationJSON) Validate() error {
 	return nil
 }
 
-func (s *AddPlaylistTracksReqItem) Validate() error {
+func (s AddPlaylistTracksRequest) Validate() error {
+	alias := ([]AddPlaylistTracksRequestItem)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	var failures []validate.FieldError
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *AddPlaylistTracksRequestItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -364,7 +389,7 @@ func (s *EditPlaylistRequest) Validate() error {
 	return nil
 }
 
-func (s *EditPlaylistRoleReq) Validate() error {
+func (s *EditPlaylistRoleRequest) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -387,7 +412,7 @@ func (s *EditPlaylistRoleReq) Validate() error {
 	return nil
 }
 
-func (s *EditPlaylistTrackReq) Validate() error {
+func (s *EditPlaylistTrackRequest) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -422,7 +447,7 @@ func (s *EditPlaylistTrackReq) Validate() error {
 	return nil
 }
 
-func (s *GetChangesOK) Validate() error {
+func (s *GetChangesResponse) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -2103,7 +2128,32 @@ func (s *SessionsResponse) Validate() error {
 	return nil
 }
 
-func (s *SetPlaylistRolesReqItem) Validate() error {
+func (s SetPlaylistRolesRequest) Validate() error {
+	alias := ([]SetPlaylistRolesRequestItem)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	var failures []validate.FieldError
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
+				return err
+			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
+func (s *SetPlaylistRolesRequestItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -2475,7 +2525,7 @@ func (s *TopTrackEntry) Validate() error {
 	return nil
 }
 
-func (s *UpdateGroupRolesReq) Validate() error {
+func (s *UpdateGroupRolesRequest) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
