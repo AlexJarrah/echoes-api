@@ -66,6 +66,12 @@ type Handler interface {
 	//
 	// DELETE /api/groups/{group_id}/roles/{user_id}
 	DeleteGroupRole(ctx context.Context, params DeleteGroupRoleParams) (DeleteGroupRoleRes, error)
+	// DeleteListen implements deleteListen operation.
+	//
+	// Delete listen.
+	//
+	// DELETE /api/listens/{listen_id}
+	DeleteListen(ctx context.Context, params DeleteListenParams) (DeleteListenRes, error)
 	// DeleteMessage implements deleteMessage operation.
 	//
 	// Delete a message.
@@ -236,6 +242,12 @@ type Handler interface {
 	//
 	// POST /api/library/tracks
 	GetLibraryTracks(ctx context.Context, req OptGetLibraryTracksRequest) (GetLibraryTracksRes, error)
+	// GetListen implements getListen operation.
+	//
+	// Get listen.
+	//
+	// GET /api/listens/{listen_id}
+	GetListen(ctx context.Context, params GetListenParams) (GetListenRes, error)
 	// GetListenSessions implements getListenSessions operation.
 	//
 	// Get recent listening sessions.

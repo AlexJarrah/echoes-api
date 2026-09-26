@@ -2331,6 +2331,73 @@ export type GetListenSessionsResponses = {
 
 export type GetListenSessionsResponse = GetListenSessionsResponses[keyof GetListenSessionsResponses];
 
+export type DeleteListenData = {
+    body?: never;
+    path: {
+        listen_id: number;
+    };
+    query?: never;
+    url: '/api/listens/{listen_id}';
+};
+
+export type DeleteListenErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteListenError = DeleteListenErrors[keyof DeleteListenErrors];
+
+export type DeleteListenResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteListenResponse = DeleteListenResponses[keyof DeleteListenResponses];
+
+export type GetListenData = {
+    body?: never;
+    path: {
+        listen_id: number;
+    };
+    query?: never;
+    url: '/api/listens/{listen_id}';
+};
+
+export type GetListenErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetListenError = GetListenErrors[keyof GetListenErrors];
+
+export type GetListenResponses = {
+    200: Listen;
+};
+
+export type GetListenResponse = GetListenResponses[keyof GetListenResponses];
+
 export type GetLyricsData = {
     body?: never;
     path: {

@@ -41,6 +41,10 @@ type DeleteGroupRoleRes interface {
 	deleteGroupRoleRes()
 }
 
+type DeleteListenRes interface {
+	deleteListenRes()
+}
+
 type DeleteMessageReactionRes interface {
 	deleteMessageReactionRes()
 }
@@ -147,6 +151,10 @@ type GetLibrarySearchIndexRes interface {
 
 type GetLibraryTracksRes interface {
 	getLibraryTracksRes()
+}
+
+type GetListenRes interface {
+	getListenRes()
 }
 
 type GetListenSessionsRes interface {

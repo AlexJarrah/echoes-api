@@ -101,6 +101,15 @@ func (UnimplementedHandler) DeleteGroupRole(ctx context.Context, params DeleteGr
 	return r, ht.ErrNotImplemented
 }
 
+// DeleteListen implements deleteListen operation.
+//
+// Delete listen.
+//
+// DELETE /api/listens/{listen_id}
+func (UnimplementedHandler) DeleteListen(ctx context.Context, params DeleteListenParams) (r DeleteListenRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // DeleteMessage implements deleteMessage operation.
 //
 // Delete a message.
@@ -352,6 +361,15 @@ func (UnimplementedHandler) GetLibrarySearchIndex(ctx context.Context) (r GetLib
 //
 // POST /api/library/tracks
 func (UnimplementedHandler) GetLibraryTracks(ctx context.Context, req OptGetLibraryTracksRequest) (r GetLibraryTracksRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetListen implements getListen operation.
+//
+// Get listen.
+//
+// GET /api/listens/{listen_id}
+func (UnimplementedHandler) GetListen(ctx context.Context, params GetListenParams) (r GetListenRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

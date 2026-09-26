@@ -1160,6 +1160,18 @@ type DeleteGroupRoleUnauthorized ErrorResponse
 
 func (*DeleteGroupRoleUnauthorized) deleteGroupRoleRes() {}
 
+type DeleteListenInternalServerError ErrorResponse
+
+func (*DeleteListenInternalServerError) deleteListenRes() {}
+
+type DeleteListenNotFound ErrorResponse
+
+func (*DeleteListenNotFound) deleteListenRes() {}
+
+type DeleteListenUnauthorized ErrorResponse
+
+func (*DeleteListenUnauthorized) deleteListenRes() {}
+
 type DeleteMessageBadRequest ErrorResponse
 
 func (*DeleteMessageBadRequest) deleteMessageRes() {}
@@ -2333,6 +2345,14 @@ type GetLibraryTracksUnauthorized ErrorResponse
 
 func (*GetLibraryTracksUnauthorized) getLibraryTracksRes() {}
 
+type GetListenInternalServerError ErrorResponse
+
+func (*GetListenInternalServerError) getListenRes() {}
+
+type GetListenNotFound ErrorResponse
+
+func (*GetListenNotFound) getListenRes() {}
+
 type GetListenSessionsBadRequest ErrorResponse
 
 func (*GetListenSessionsBadRequest) getListenSessionsRes() {}
@@ -2344,6 +2364,10 @@ func (*GetListenSessionsInternalServerError) getListenSessionsRes() {}
 type GetListenSessionsUnauthorized ErrorResponse
 
 func (*GetListenSessionsUnauthorized) getListenSessionsRes() {}
+
+type GetListenUnauthorized ErrorResponse
+
+func (*GetListenUnauthorized) getListenRes() {}
 
 type GetLyricsBadRequest ErrorResponse
 
@@ -3682,6 +3706,8 @@ func (s *Listen) SetUpdatedAt(val OptNilDateTime) {
 	s.UpdatedAt = val
 }
 
+func (*Listen) getListenRes() {}
+
 // 0=API: listen was added via API 1=App: listen was added via an official client application
 // 2=Spotify: listen was imported from Spotify 3=AppleMusic: listen was imported from Apple Music
 // 4=Last: listen was imported from Last 5=YouTube: listen was imported from YouTube.
@@ -3939,6 +3965,7 @@ type NoContent struct{}
 
 func (*NoContent) deleteGroupRes()           {}
 func (*NoContent) deleteGroupRoleRes()       {}
+func (*NoContent) deleteListenRes()          {}
 func (*NoContent) deleteMessageReactionRes() {}
 func (*NoContent) deleteMessageRes()         {}
 func (*NoContent) deletePlaylistRes()        {}

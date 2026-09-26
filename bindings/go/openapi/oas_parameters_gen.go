@@ -499,6 +499,71 @@ func decodeDeleteGroupRoleParams(args [2]string, argsEscaped bool, r *http.Reque
 	return params, nil
 }
 
+// DeleteListenParams is parameters of deleteListen operation.
+type DeleteListenParams struct {
+	ListenID uint64
+}
+
+func unpackDeleteListenParams(packed middleware.Parameters) (params DeleteListenParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "listen_id",
+			In:   "path",
+		}
+		params.ListenID = packed[key].(uint64)
+	}
+	return params
+}
+
+func decodeDeleteListenParams(args [1]string, argsEscaped bool, r *http.Request) (params DeleteListenParams, _ error) {
+	// Decode path: listen_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "listen_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUint64(val)
+				if err != nil {
+					return err
+				}
+
+				params.ListenID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "listen_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // DeleteMessageParams is parameters of deleteMessage operation.
 type DeleteMessageParams struct {
 	ConversationID uuid.UUID
@@ -2184,6 +2249,71 @@ func decodeGetGroupRolesParams(args [1]string, argsEscaped bool, r *http.Request
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
 			Name: "group_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// GetListenParams is parameters of getListen operation.
+type GetListenParams struct {
+	ListenID uint64
+}
+
+func unpackGetListenParams(packed middleware.Parameters) (params GetListenParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "listen_id",
+			In:   "path",
+		}
+		params.ListenID = packed[key].(uint64)
+	}
+	return params
+}
+
+func decodeGetListenParams(args [1]string, argsEscaped bool, r *http.Request) (params GetListenParams, _ error) {
+	// Decode path: listen_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "listen_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUint64(val)
+				if err != nil {
+					return err
+				}
+
+				params.ListenID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "listen_id",
 			In:   "path",
 			Err:  err,
 		}

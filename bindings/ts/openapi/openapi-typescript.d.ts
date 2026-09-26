@@ -453,6 +453,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/listens/{listen_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get listen */
+        get: operations["getListen"];
+        put?: never;
+        post?: never;
+        /** Delete listen */
+        delete: operations["deleteListen"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/lyrics/{lyrics_id}": {
         parameters: {
             query?: never;
@@ -3196,6 +3214,47 @@ export interface operations {
             };
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getListen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                listen_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Listen"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteListen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                listen_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };
