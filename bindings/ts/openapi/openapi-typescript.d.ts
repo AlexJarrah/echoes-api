@@ -2484,6 +2484,10 @@ export interface operations {
             /** @description Album asset file retrieved successfully */
             200: {
                 headers: {
+                    /** @description Caching directive for the client/CDN */
+                    "Cache-Control"?: string;
+                    /** @description Entity tag for validation/conditional requests */
+                    ETag?: string;
                     [name: string]: unknown;
                 };
                 content: {
@@ -2509,6 +2513,10 @@ export interface operations {
             /** @description Artist asset file retrieved successfully */
             200: {
                 headers: {
+                    /** @description Caching directive for the client/CDN */
+                    "Cache-Control"?: string;
+                    /** @description Entity tag for validation/conditional requests */
+                    ETag?: string;
                     [name: string]: unknown;
                 };
                 content: {
@@ -2591,6 +2599,10 @@ export interface operations {
             /** @description User asset file retrieved successfully */
             200: {
                 headers: {
+                    /** @description Caching directive for the client/CDN */
+                    "Cache-Control"?: string;
+                    /** @description Entity tag for validation/conditional requests */
+                    ETag?: string;
                     [name: string]: unknown;
                 };
                 content: {

@@ -1616,7 +1616,44 @@ func (s GetAlbumAssetOKImageJpeg) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetAlbumAssetOKImageJpeg) getAlbumAssetRes() {}
+// GetAlbumAssetOKImageJpegHeaders wraps GetAlbumAssetOKImageJpeg with response headers.
+type GetAlbumAssetOKImageJpegHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetAlbumAssetOKImageJpeg
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetAlbumAssetOKImageJpegHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetAlbumAssetOKImageJpegHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetAlbumAssetOKImageJpegHeaders) GetResponse() GetAlbumAssetOKImageJpeg {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetAlbumAssetOKImageJpegHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetAlbumAssetOKImageJpegHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetAlbumAssetOKImageJpegHeaders) SetResponse(val GetAlbumAssetOKImageJpeg) {
+	s.Response = val
+}
+
+func (*GetAlbumAssetOKImageJpegHeaders) getAlbumAssetRes() {}
 
 type GetAlbumAssetOKImagePNG struct {
 	Data io.Reader
@@ -1632,7 +1669,44 @@ func (s GetAlbumAssetOKImagePNG) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetAlbumAssetOKImagePNG) getAlbumAssetRes() {}
+// GetAlbumAssetOKImagePNGHeaders wraps GetAlbumAssetOKImagePNG with response headers.
+type GetAlbumAssetOKImagePNGHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetAlbumAssetOKImagePNG
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetAlbumAssetOKImagePNGHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetAlbumAssetOKImagePNGHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetAlbumAssetOKImagePNGHeaders) GetResponse() GetAlbumAssetOKImagePNG {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetAlbumAssetOKImagePNGHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetAlbumAssetOKImagePNGHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetAlbumAssetOKImagePNGHeaders) SetResponse(val GetAlbumAssetOKImagePNG) {
+	s.Response = val
+}
+
+func (*GetAlbumAssetOKImagePNGHeaders) getAlbumAssetRes() {}
 
 type GetAlbumAssetUnauthorized ErrorResponse
 
@@ -1672,7 +1746,44 @@ func (s GetArtistAssetOKImageJpeg) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetArtistAssetOKImageJpeg) getArtistAssetRes() {}
+// GetArtistAssetOKImageJpegHeaders wraps GetArtistAssetOKImageJpeg with response headers.
+type GetArtistAssetOKImageJpegHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetArtistAssetOKImageJpeg
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetArtistAssetOKImageJpegHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetArtistAssetOKImageJpegHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetArtistAssetOKImageJpegHeaders) GetResponse() GetArtistAssetOKImageJpeg {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetArtistAssetOKImageJpegHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetArtistAssetOKImageJpegHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetArtistAssetOKImageJpegHeaders) SetResponse(val GetArtistAssetOKImageJpeg) {
+	s.Response = val
+}
+
+func (*GetArtistAssetOKImageJpegHeaders) getArtistAssetRes() {}
 
 type GetArtistAssetOKImagePNG struct {
 	Data io.Reader
@@ -1688,7 +1799,44 @@ func (s GetArtistAssetOKImagePNG) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetArtistAssetOKImagePNG) getArtistAssetRes() {}
+// GetArtistAssetOKImagePNGHeaders wraps GetArtistAssetOKImagePNG with response headers.
+type GetArtistAssetOKImagePNGHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetArtistAssetOKImagePNG
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetArtistAssetOKImagePNGHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetArtistAssetOKImagePNGHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetArtistAssetOKImagePNGHeaders) GetResponse() GetArtistAssetOKImagePNG {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetArtistAssetOKImagePNGHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetArtistAssetOKImagePNGHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetArtistAssetOKImagePNGHeaders) SetResponse(val GetArtistAssetOKImagePNG) {
+	s.Response = val
+}
+
+func (*GetArtistAssetOKImagePNGHeaders) getArtistAssetRes() {}
 
 type GetArtistAssetUnauthorized ErrorResponse
 
@@ -2642,7 +2790,44 @@ func (s GetUserAssetOKImageJpeg) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetUserAssetOKImageJpeg) getUserAssetRes() {}
+// GetUserAssetOKImageJpegHeaders wraps GetUserAssetOKImageJpeg with response headers.
+type GetUserAssetOKImageJpegHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetUserAssetOKImageJpeg
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetUserAssetOKImageJpegHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetUserAssetOKImageJpegHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetUserAssetOKImageJpegHeaders) GetResponse() GetUserAssetOKImageJpeg {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetUserAssetOKImageJpegHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetUserAssetOKImageJpegHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetUserAssetOKImageJpegHeaders) SetResponse(val GetUserAssetOKImageJpeg) {
+	s.Response = val
+}
+
+func (*GetUserAssetOKImageJpegHeaders) getUserAssetRes() {}
 
 type GetUserAssetOKImagePNG struct {
 	Data io.Reader
@@ -2658,7 +2843,44 @@ func (s GetUserAssetOKImagePNG) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
-func (*GetUserAssetOKImagePNG) getUserAssetRes() {}
+// GetUserAssetOKImagePNGHeaders wraps GetUserAssetOKImagePNG with response headers.
+type GetUserAssetOKImagePNGHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetUserAssetOKImagePNG
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetUserAssetOKImagePNGHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetUserAssetOKImagePNGHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetUserAssetOKImagePNGHeaders) GetResponse() GetUserAssetOKImagePNG {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetUserAssetOKImagePNGHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetUserAssetOKImagePNGHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetUserAssetOKImagePNGHeaders) SetResponse(val GetUserAssetOKImagePNG) {
+	s.Response = val
+}
+
+func (*GetUserAssetOKImagePNGHeaders) getUserAssetRes() {}
 
 type GetUserAssetUnauthorized ErrorResponse
 

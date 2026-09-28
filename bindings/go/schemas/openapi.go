@@ -155,6 +155,15 @@ paths:
       responses:
         '200':
           description: Album asset file retrieved successfully
+          headers:
+            Cache-Control:
+              description: Caching directive for the client/CDN
+              schema:
+                type: string
+            ETag:
+              description: Entity tag for validation/conditional requests
+              schema:
+                type: string
           content:
             image/jpeg:
               schema:
@@ -183,6 +192,15 @@ paths:
       responses:
         '200':
           description: Artist asset file retrieved successfully
+          headers:
+            Cache-Control:
+              description: Caching directive for the client/CDN
+              schema:
+                type: string
+            ETag:
+              description: Entity tag for validation/conditional requests
+              schema:
+                type: string
           content:
             image/jpeg:
               schema:
@@ -263,6 +281,15 @@ paths:
       responses:
         '200':
           description: User asset file retrieved successfully
+          headers:
+            Cache-Control:
+              description: Caching directive for the client/CDN
+              schema:
+                type: string
+            ETag:
+              description: Entity tag for validation/conditional requests
+              schema:
+                type: string
           content:
             image/jpeg:
               schema:
