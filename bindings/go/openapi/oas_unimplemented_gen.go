@@ -157,7 +157,7 @@ func (UnimplementedHandler) DeletePlaylistTrack(ctx context.Context, params Dele
 
 // DeleteUserAsset implements deleteUserAsset operation.
 //
-// DELETE /api/assets/user/{asset_id}
+// DELETE /api/assets/users/{asset_id}
 func (UnimplementedHandler) DeleteUserAsset(ctx context.Context, params DeleteUserAssetParams) (r DeleteUserAssetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -211,7 +211,7 @@ func (UnimplementedHandler) EditPlaylistTrack(ctx context.Context, req *EditPlay
 //
 // Update user asset.
 //
-// PATCH /api/assets/user/{asset_id}
+// PATCH /api/assets/users/{asset_id}
 func (UnimplementedHandler) EditUserAsset(ctx context.Context, req *EditUserAssetRequest, params EditUserAssetParams) (r EditUserAssetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
@@ -225,12 +225,26 @@ func (UnimplementedHandler) GetAlbum(ctx context.Context, params GetAlbumParams)
 	return r, ht.ErrNotImplemented
 }
 
+// GetAlbumAsset implements getAlbumAsset operation.
+//
+// GET /api/assets/albums/{asset_id}
+func (UnimplementedHandler) GetAlbumAsset(ctx context.Context, params GetAlbumAssetParams) (r GetAlbumAssetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetArtist implements getArtist operation.
 //
 // Get artist details.
 //
 // GET /api/artists/{artist_id}
 func (UnimplementedHandler) GetArtist(ctx context.Context, params GetArtistParams) (r GetArtistRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetArtistAsset implements getArtistAsset operation.
+//
+// GET /api/assets/artists/{asset_id}
+func (UnimplementedHandler) GetArtistAsset(ctx context.Context, params GetArtistAssetParams) (r GetArtistAssetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -474,7 +488,7 @@ func (UnimplementedHandler) GetTracksPlayStats(ctx context.Context, req OptStati
 
 // GetUserAsset implements getUserAsset operation.
 //
-// GET /api/assets/user/{asset_id}
+// GET /api/assets/users/{asset_id}
 func (UnimplementedHandler) GetUserAsset(ctx context.Context, params GetUserAssetParams) (r GetUserAssetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }

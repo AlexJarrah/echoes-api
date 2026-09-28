@@ -1833,6 +1833,71 @@ func decodeGetAlbumParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 	return params, nil
 }
 
+// GetAlbumAssetParams is parameters of getAlbumAsset operation.
+type GetAlbumAssetParams struct {
+	AssetID uuid.UUID
+}
+
+func unpackGetAlbumAssetParams(packed middleware.Parameters) (params GetAlbumAssetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "asset_id",
+			In:   "path",
+		}
+		params.AssetID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeGetAlbumAssetParams(args [1]string, argsEscaped bool, r *http.Request) (params GetAlbumAssetParams, _ error) {
+	// Decode path: asset_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "asset_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.AssetID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "asset_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // GetArtistParams is parameters of getArtist operation.
 type GetArtistParams struct {
 	ArtistID uuid.UUID
@@ -1891,6 +1956,71 @@ func decodeGetArtistParams(args [1]string, argsEscaped bool, r *http.Request) (p
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
 			Name: "artist_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// GetArtistAssetParams is parameters of getArtistAsset operation.
+type GetArtistAssetParams struct {
+	AssetID uuid.UUID
+}
+
+func unpackGetArtistAssetParams(packed middleware.Parameters) (params GetArtistAssetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "asset_id",
+			In:   "path",
+		}
+		params.AssetID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeGetArtistAssetParams(args [1]string, argsEscaped bool, r *http.Request) (params GetArtistAssetParams, _ error) {
+	// Decode path: asset_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "asset_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.AssetID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "asset_id",
 			In:   "path",
 			Err:  err,
 		}

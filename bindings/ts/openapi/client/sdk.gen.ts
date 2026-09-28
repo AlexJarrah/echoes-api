@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddPlaylistTracksData, AddPlaylistTracksErrors, AddPlaylistTracksResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, AddUserAssetData, AddUserAssetErrors, AddUserAssetResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, CreatePlaylistData, CreatePlaylistErrors, CreatePlaylistResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteListenData, DeleteListenErrors, DeleteListenResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, DeletePlaylistData, DeletePlaylistErrors, DeletePlaylistResponses, DeletePlaylistRoleData, DeletePlaylistRoleErrors, DeletePlaylistRoleResponses, DeletePlaylistTrackData, DeletePlaylistTrackErrors, DeletePlaylistTrackResponses, DeleteUserAssetData, DeleteUserAssetErrors, DeleteUserAssetResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, EditPlaylistData, EditPlaylistErrors, EditPlaylistResponses, EditPlaylistRoleData, EditPlaylistRoleErrors, EditPlaylistRoleResponses, EditPlaylistTrackData, EditPlaylistTrackErrors, EditPlaylistTrackResponses, EditUserAssetData, EditUserAssetErrors, EditUserAssetResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetChangesData, GetChangesErrors, GetChangesResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibraryAlbumsData, GetLibraryAlbumsErrors, GetLibraryAlbumsResponses, GetLibraryArtistsData, GetLibraryArtistsErrors, GetLibraryArtistsResponses, GetLibraryPlaylistsData, GetLibraryPlaylistsErrors, GetLibraryPlaylistsResponses, GetLibrarySearchIndexData, GetLibrarySearchIndexErrors, GetLibrarySearchIndexResponses, GetLibraryTracksData, GetLibraryTracksErrors, GetLibraryTracksResponses, GetListenData, GetListenErrors, GetListenResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetLyricsData, GetLyricsErrors, GetLyricsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetPlaylistData, GetPlaylistErrors, GetPlaylistResponses, GetPlaylistRolesData, GetPlaylistRolesErrors, GetPlaylistRolesResponses, GetPlaylistTracksData, GetPlaylistTracksErrors, GetPlaylistTracksResponses, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetTracksPlayStatsData, GetTracksPlayStatsErrors, GetTracksPlayStatsResponses, GetUserAssetData, GetUserAssetErrors, GetUserAssetResponses, GetUserAssetsData, GetUserAssetsErrors, GetUserAssetsResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserRelationsData, GetUserRelationsErrors, GetUserRelationsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksData, SearchTracksErrors, SearchTracksResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SetPlaylistRolesData, SetPlaylistRolesErrors, SetPlaylistRolesResponses, SignInData, SignInErrors, SignInResponses, SubsonicDownloadData, SubsonicDownloadErrors, SubsonicDownloadResponses, SubsonicStreamData, SubsonicStreamErrors, SubsonicStreamResponses, SyncData, SyncErrors, SyncResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, UploadTrackAudioData, UploadTrackAudioErrors, UploadTrackAudioResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
+import type { AddFriendData, AddFriendErrors, AddFriendResponses, AddGroupRolesData, AddGroupRolesErrors, AddGroupRolesResponses, AddMessageReactionData, AddMessageReactionErrors, AddMessageReactionResponses, AddPlaylistTracksData, AddPlaylistTracksErrors, AddPlaylistTracksResponses, AddToLibraryData, AddToLibraryErrors, AddToLibraryResponses, AddUserAssetData, AddUserAssetErrors, AddUserAssetResponses, CreateGroupData, CreateGroupErrors, CreateGroupResponses, CreatePlaylistData, CreatePlaylistErrors, CreatePlaylistResponses, DeleteGroupData, DeleteGroupErrors, DeleteGroupResponses, DeleteGroupRoleData, DeleteGroupRoleErrors, DeleteGroupRoleResponses, DeleteListenData, DeleteListenErrors, DeleteListenResponses, DeleteMessageData, DeleteMessageErrors, DeleteMessageReactionData, DeleteMessageReactionErrors, DeleteMessageReactionResponses, DeleteMessageResponses, DeletePlaylistData, DeletePlaylistErrors, DeletePlaylistResponses, DeletePlaylistRoleData, DeletePlaylistRoleErrors, DeletePlaylistRoleResponses, DeletePlaylistTrackData, DeletePlaylistTrackErrors, DeletePlaylistTrackResponses, DeleteUserAssetData, DeleteUserAssetErrors, DeleteUserAssetResponses, EditGroupData, EditGroupErrors, EditGroupResponses, EditMessageData, EditMessageErrors, EditMessageResponses, EditPlaylistData, EditPlaylistErrors, EditPlaylistResponses, EditPlaylistRoleData, EditPlaylistRoleErrors, EditPlaylistRoleResponses, EditPlaylistTrackData, EditPlaylistTrackErrors, EditPlaylistTrackResponses, EditUserAssetData, EditUserAssetErrors, EditUserAssetResponses, GetAlbumAssetData, GetAlbumAssetErrors, GetAlbumAssetResponses, GetAlbumData, GetAlbumErrors, GetAlbumResponses, GetArtistAssetData, GetArtistAssetErrors, GetArtistAssetResponses, GetArtistData, GetArtistErrors, GetArtistResponses, GetAsyncApiData, GetAsyncApiResponses, GetCalendarListensData, GetCalendarListensErrors, GetCalendarListensResponses, GetChangesData, GetChangesErrors, GetChangesResponses, GetGlobalTopAlbumsData, GetGlobalTopAlbumsErrors, GetGlobalTopAlbumsResponses, GetGlobalTopArtistsData, GetGlobalTopArtistsErrors, GetGlobalTopArtistsResponses, GetGlobalTopTracksData, GetGlobalTopTracksErrors, GetGlobalTopTracksResponses, GetGroupData, GetGroupErrors, GetGroupResponses, GetGroupRolesData, GetGroupRolesErrors, GetGroupRolesResponses, GetGroupsData, GetGroupsErrors, GetGroupsResponses, GetLibraryAlbumsData, GetLibraryAlbumsErrors, GetLibraryAlbumsResponses, GetLibraryArtistsData, GetLibraryArtistsErrors, GetLibraryArtistsResponses, GetLibraryPlaylistsData, GetLibraryPlaylistsErrors, GetLibraryPlaylistsResponses, GetLibrarySearchIndexData, GetLibrarySearchIndexErrors, GetLibrarySearchIndexResponses, GetLibraryTracksData, GetLibraryTracksErrors, GetLibraryTracksResponses, GetListenData, GetListenErrors, GetListenResponses, GetListenSessionsData, GetListenSessionsErrors, GetListenSessionsResponses, GetLyricsData, GetLyricsErrors, GetLyricsResponses, GetMessagesData, GetMessagesErrors, GetMessagesResponses, GetMessageThreadData, GetMessageThreadErrors, GetMessageThreadResponses, GetOpenApiData, GetOpenApiResponses, GetPlaylistData, GetPlaylistErrors, GetPlaylistResponses, GetPlaylistRolesData, GetPlaylistRolesErrors, GetPlaylistRolesResponses, GetPlaylistTracksData, GetPlaylistTracksErrors, GetPlaylistTracksResponses, GetRelationsDetailsData, GetRelationsDetailsErrors, GetRelationsDetailsResponses, GetTrackData, GetTrackErrors, GetTrackResponses, GetTracksPlayStatsData, GetTracksPlayStatsErrors, GetTracksPlayStatsResponses, GetUserAssetData, GetUserAssetErrors, GetUserAssetResponses, GetUserAssetsData, GetUserAssetsErrors, GetUserAssetsResponses, GetUserDetailsData, GetUserDetailsErrors, GetUserDetailsResponses, GetUserIntegrationsData, GetUserIntegrationsErrors, GetUserIntegrationsResponses, GetUserListensByDaysData, GetUserListensByDaysErrors, GetUserListensByDaysResponses, GetUserListenSessionsData, GetUserListenSessionsErrors, GetUserListenSessionsResponses, GetUserRelationsData, GetUserRelationsErrors, GetUserRelationsResponses, GetUserTopArtistPlayStatsData, GetUserTopArtistPlayStatsErrors, GetUserTopArtistPlayStatsResponses, JoinFreeBetaData, JoinFreeBetaErrors, JoinFreeBetaResponses, ReadMessageData, ReadMessageErrors, ReadMessageResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveFriendData, RemoveFriendErrors, RemoveFriendResponses, RemoveFromLibraryData, RemoveFromLibraryErrors, RemoveFromLibraryResponses, SearchTracksData, SearchTracksErrors, SearchTracksResponses, SendMessageData, SendMessageErrors, SendMessageResponses, SetActivityData, SetActivityErrors, SetActivityResponses, SetBestFriendData, SetBestFriendErrors, SetBestFriendResponses, SetBlockedData, SetBlockedErrors, SetBlockedResponses, SetPlaylistRolesData, SetPlaylistRolesErrors, SetPlaylistRolesResponses, SignInData, SignInErrors, SignInResponses, SubsonicDownloadData, SubsonicDownloadErrors, SubsonicDownloadResponses, SubsonicStreamData, SubsonicStreamErrors, SubsonicStreamResponses, SyncData, SyncErrors, SyncResponses, UpdateGroupRolesData, UpdateGroupRolesErrors, UpdateGroupRolesResponses, UpdateLibraryData, UpdateLibraryErrors, UpdateLibraryResponses, UpdateUserData, UpdateUserErrors, UpdateUserResponses, UploadTrackAudioData, UploadTrackAudioErrors, UploadTrackAudioResponses, ValidateTokenData, ValidateTokenErrors, ValidateTokenResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -78,41 +78,24 @@ export const getArtist = <ThrowOnError extends boolean = false>(options: Options
     ...options
 });
 
-export const deleteUserAsset = <ThrowOnError extends boolean = false>(options: Options<DeleteUserAssetData, ThrowOnError>): RequestResult<DeleteUserAssetResponses, DeleteUserAssetErrors, ThrowOnError> => (options.client ?? client).delete<DeleteUserAssetResponses, DeleteUserAssetErrors, ThrowOnError>({
+export const getAlbumAsset = <ThrowOnError extends boolean = false>(options: Options<GetAlbumAssetData, ThrowOnError>): RequestResult<GetAlbumAssetResponses, GetAlbumAssetErrors, ThrowOnError> => (options.client ?? client).get<GetAlbumAssetResponses, GetAlbumAssetErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/assets/user/{asset_id}',
+    url: '/api/assets/albums/{asset_id}',
     ...options
 });
 
-export const getUserAsset = <ThrowOnError extends boolean = false>(options: Options<GetUserAssetData, ThrowOnError>): RequestResult<GetUserAssetResponses, GetUserAssetErrors, ThrowOnError> => (options.client ?? client).get<GetUserAssetResponses, GetUserAssetErrors, ThrowOnError>({
+export const getArtistAsset = <ThrowOnError extends boolean = false>(options: Options<GetArtistAssetData, ThrowOnError>): RequestResult<GetArtistAssetResponses, GetArtistAssetErrors, ThrowOnError> => (options.client ?? client).get<GetArtistAssetResponses, GetArtistAssetErrors, ThrowOnError>({
     security: [{
             in: 'cookie',
             name: 'auth_token',
             type: 'apiKey'
         }],
-    url: '/api/assets/user/{asset_id}',
+    url: '/api/assets/artists/{asset_id}',
     ...options
-});
-
-/**
- * Update user asset
- */
-export const editUserAsset = <ThrowOnError extends boolean = false>(options: Options<EditUserAssetData, ThrowOnError>): RequestResult<EditUserAssetResponses, EditUserAssetErrors, ThrowOnError> => (options.client ?? client).patch<EditUserAssetResponses, EditUserAssetErrors, ThrowOnError>({
-    security: [{
-            in: 'cookie',
-            name: 'auth_token',
-            type: 'apiKey'
-        }],
-    url: '/api/assets/user/{asset_id}',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
 });
 
 export const getUserAssets = <ThrowOnError extends boolean = false>(options?: Options<GetUserAssetsData, ThrowOnError>): RequestResult<GetUserAssetsResponses, GetUserAssetsErrors, ThrowOnError> => (options?.client ?? client).get<GetUserAssetsResponses, GetUserAssetsErrors, ThrowOnError>({
@@ -136,6 +119,43 @@ export const addUserAsset = <ThrowOnError extends boolean = false>(options: Opti
     ...options,
     headers: {
         'Content-Type': null,
+        ...options.headers
+    }
+});
+
+export const deleteUserAsset = <ThrowOnError extends boolean = false>(options: Options<DeleteUserAssetData, ThrowOnError>): RequestResult<DeleteUserAssetResponses, DeleteUserAssetErrors, ThrowOnError> => (options.client ?? client).delete<DeleteUserAssetResponses, DeleteUserAssetErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/assets/users/{asset_id}',
+    ...options
+});
+
+export const getUserAsset = <ThrowOnError extends boolean = false>(options: Options<GetUserAssetData, ThrowOnError>): RequestResult<GetUserAssetResponses, GetUserAssetErrors, ThrowOnError> => (options.client ?? client).get<GetUserAssetResponses, GetUserAssetErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/assets/users/{asset_id}',
+    ...options
+});
+
+/**
+ * Update user asset
+ */
+export const editUserAsset = <ThrowOnError extends boolean = false>(options: Options<EditUserAssetData, ThrowOnError>): RequestResult<EditUserAssetResponses, EditUserAssetErrors, ThrowOnError> => (options.client ?? client).patch<EditUserAssetResponses, EditUserAssetErrors, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'auth_token',
+            type: 'apiKey'
+        }],
+    url: '/api/assets/users/{asset_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
         ...options.headers
     }
 });

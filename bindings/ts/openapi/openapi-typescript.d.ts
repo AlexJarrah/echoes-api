@@ -72,21 +72,36 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/assets/user/{asset_id}": {
+    "/api/assets/albums/{asset_id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getUserAsset"];
+        get: operations["getAlbumAsset"];
         put?: never;
         post?: never;
-        delete: operations["deleteUserAsset"];
+        delete?: never;
         options?: never;
         head?: never;
-        /** Update user asset */
-        patch: operations["editUserAsset"];
+        patch?: never;
+        trace?: never;
+    };
+    "/api/assets/artists/{asset_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getArtistAsset"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/assets/user": {
@@ -103,6 +118,23 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/assets/users/{asset_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getUserAsset"];
+        put?: never;
+        post?: never;
+        delete: operations["deleteUserAsset"];
+        options?: never;
+        head?: never;
+        /** Update user asset */
+        patch: operations["editUserAsset"];
         trace?: never;
     };
     "/api/changes": {
@@ -2438,7 +2470,7 @@ export interface operations {
             500: components["responses"]["InternalServerError"];
         };
     };
-    getUserAsset: {
+    getAlbumAsset: {
         parameters: {
             query?: never;
             header?: never;
@@ -2449,20 +2481,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description User asset retrieved successfully */
+            /** @description Album asset file retrieved successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Asset"];
+                    "image/jpeg": string;
+                    "image/png": string;
                 };
             };
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };
     };
-    deleteUserAsset: {
+    getArtistAsset: {
         parameters: {
             query?: never;
             header?: never;
@@ -2473,39 +2506,17 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            204: components["responses"]["NoContent"];
-            401: components["responses"]["Unauthorized"];
-            404: components["responses"]["NotFound"];
-            500: components["responses"]["InternalServerError"];
-        };
-    };
-    editUserAsset: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                asset_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["EditUserAssetRequest"];
-            };
-        };
-        responses: {
-            /** @description User asset updated successfully */
+            /** @description Artist asset file retrieved successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserAsset"];
+                    "image/jpeg": string;
+                    "image/png": string;
                 };
             };
-            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
-            404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };
@@ -2563,6 +2574,78 @@ export interface operations {
             401: components["responses"]["Unauthorized"];
             413: components["responses"]["FileTooLarge"];
             415: components["responses"]["UnsupportedMediaType"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getUserAsset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User asset file retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/jpeg": string;
+                    "image/png": string;
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteUserAsset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    editUserAsset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                asset_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditUserAssetRequest"];
+            };
+        };
+        responses: {
+            /** @description User asset updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserAsset"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };

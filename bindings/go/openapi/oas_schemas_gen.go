@@ -787,7 +787,6 @@ func (s *Asset) SetUpdatedAt(val OptNilDateTime) {
 }
 
 func (*Asset) addUserAssetRes() {}
-func (*Asset) getUserAssetRes() {}
 
 // Ref: #/components/schemas/BestFriendActionRequest
 type BestFriendActionRequest struct {
@@ -1599,6 +1598,46 @@ func (s *FriendActionRequest) SetHandle(val OptNilString) {
 	s.Handle = val
 }
 
+type GetAlbumAssetInternalServerError ErrorResponse
+
+func (*GetAlbumAssetInternalServerError) getAlbumAssetRes() {}
+
+type GetAlbumAssetOKImageJpeg struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetAlbumAssetOKImageJpeg) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetAlbumAssetOKImageJpeg) getAlbumAssetRes() {}
+
+type GetAlbumAssetOKImagePNG struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetAlbumAssetOKImagePNG) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetAlbumAssetOKImagePNG) getAlbumAssetRes() {}
+
+type GetAlbumAssetUnauthorized ErrorResponse
+
+func (*GetAlbumAssetUnauthorized) getAlbumAssetRes() {}
+
 type GetAlbumBadRequest ErrorResponse
 
 func (*GetAlbumBadRequest) getAlbumRes() {}
@@ -1614,6 +1653,46 @@ func (*GetAlbumNotFound) getAlbumRes() {}
 type GetAlbumUnauthorized ErrorResponse
 
 func (*GetAlbumUnauthorized) getAlbumRes() {}
+
+type GetArtistAssetInternalServerError ErrorResponse
+
+func (*GetArtistAssetInternalServerError) getArtistAssetRes() {}
+
+type GetArtistAssetOKImageJpeg struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetArtistAssetOKImageJpeg) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetArtistAssetOKImageJpeg) getArtistAssetRes() {}
+
+type GetArtistAssetOKImagePNG struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetArtistAssetOKImagePNG) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetArtistAssetOKImagePNG) getArtistAssetRes() {}
+
+type GetArtistAssetUnauthorized ErrorResponse
+
+func (*GetArtistAssetUnauthorized) getArtistAssetRes() {}
 
 type GetArtistBadRequest ErrorResponse
 
@@ -2548,6 +2627,38 @@ func (*GetTracksPlayStatsOKApplicationJSON) getTracksPlayStatsRes() {}
 type GetUserAssetInternalServerError ErrorResponse
 
 func (*GetUserAssetInternalServerError) getUserAssetRes() {}
+
+type GetUserAssetOKImageJpeg struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetUserAssetOKImageJpeg) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetUserAssetOKImageJpeg) getUserAssetRes() {}
+
+type GetUserAssetOKImagePNG struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetUserAssetOKImagePNG) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*GetUserAssetOKImagePNG) getUserAssetRes() {}
 
 type GetUserAssetUnauthorized ErrorResponse
 

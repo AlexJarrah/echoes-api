@@ -1,4 +1,4 @@
-/api/assets/user/{asset_id}:
+/api/assets/users/{asset_id}:
   get:
     operationId: getUserAsset
     security:
@@ -12,11 +12,16 @@
           format: uuid
     responses:
       "200":
-        description: User asset retrieved successfully
+        description: User asset file retrieved successfully
         content:
-          application/json:
+          image/jpeg:
             schema:
-              $ref: "#/components/schemas/Asset"
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
       "401":
         $ref: "#/components/responses/Unauthorized"
       "500":

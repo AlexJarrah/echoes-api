@@ -1,0 +1,28 @@
+/api/assets/artists/{asset_id}:
+  get:
+    operationId: getArtistAsset
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    responses:
+      "200":
+        description: Artist asset file retrieved successfully
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

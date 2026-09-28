@@ -1294,51 +1294,47 @@ export type GetArtistResponses = {
 
 export type GetArtistResponse = GetArtistResponses[keyof GetArtistResponses];
 
-export type DeleteUserAssetData = {
+export type GetAlbumAssetData = {
     body?: never;
     path: {
         asset_id: string;
     };
     query?: never;
-    url: '/api/assets/user/{asset_id}';
+    url: '/api/assets/albums/{asset_id}';
 };
 
-export type DeleteUserAssetErrors = {
+export type GetAlbumAssetErrors = {
     /**
      * Unauthorized
      */
     401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
     /**
      * Internal server error
      */
     500: ErrorResponse;
 };
 
-export type DeleteUserAssetError = DeleteUserAssetErrors[keyof DeleteUserAssetErrors];
+export type GetAlbumAssetError = GetAlbumAssetErrors[keyof GetAlbumAssetErrors];
 
-export type DeleteUserAssetResponses = {
+export type GetAlbumAssetResponses = {
     /**
-     * No content
+     * Album asset file retrieved successfully
      */
-    204: void;
+    200: Blob | File;
 };
 
-export type DeleteUserAssetResponse = DeleteUserAssetResponses[keyof DeleteUserAssetResponses];
+export type GetAlbumAssetResponse = GetAlbumAssetResponses[keyof GetAlbumAssetResponses];
 
-export type GetUserAssetData = {
+export type GetArtistAssetData = {
     body?: never;
     path: {
         asset_id: string;
     };
     query?: never;
-    url: '/api/assets/user/{asset_id}';
+    url: '/api/assets/artists/{asset_id}';
 };
 
-export type GetUserAssetErrors = {
+export type GetArtistAssetErrors = {
     /**
      * Unauthorized
      */
@@ -1349,55 +1345,16 @@ export type GetUserAssetErrors = {
     500: ErrorResponse;
 };
 
-export type GetUserAssetError = GetUserAssetErrors[keyof GetUserAssetErrors];
+export type GetArtistAssetError = GetArtistAssetErrors[keyof GetArtistAssetErrors];
 
-export type GetUserAssetResponses = {
+export type GetArtistAssetResponses = {
     /**
-     * User asset retrieved successfully
+     * Artist asset file retrieved successfully
      */
-    200: Asset;
+    200: Blob | File;
 };
 
-export type GetUserAssetResponse = GetUserAssetResponses[keyof GetUserAssetResponses];
-
-export type EditUserAssetData = {
-    body: EditUserAssetRequest;
-    path: {
-        asset_id: string;
-    };
-    query?: never;
-    url: '/api/assets/user/{asset_id}';
-};
-
-export type EditUserAssetErrors = {
-    /**
-     * Bad request
-     */
-    400: ErrorResponse;
-    /**
-     * Unauthorized
-     */
-    401: ErrorResponse;
-    /**
-     * Not found
-     */
-    404: ErrorResponse;
-    /**
-     * Internal server error
-     */
-    500: ErrorResponse;
-};
-
-export type EditUserAssetError = EditUserAssetErrors[keyof EditUserAssetErrors];
-
-export type EditUserAssetResponses = {
-    /**
-     * User asset updated successfully
-     */
-    200: UserAsset;
-};
-
-export type EditUserAssetResponse = EditUserAssetResponses[keyof EditUserAssetResponses];
+export type GetArtistAssetResponse = GetArtistAssetResponses[keyof GetArtistAssetResponses];
 
 export type GetUserAssetsData = {
     body?: never;
@@ -1473,6 +1430,111 @@ export type AddUserAssetResponses = {
 };
 
 export type AddUserAssetResponse = AddUserAssetResponses[keyof AddUserAssetResponses];
+
+export type DeleteUserAssetData = {
+    body?: never;
+    path: {
+        asset_id: string;
+    };
+    query?: never;
+    url: '/api/assets/users/{asset_id}';
+};
+
+export type DeleteUserAssetErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteUserAssetError = DeleteUserAssetErrors[keyof DeleteUserAssetErrors];
+
+export type DeleteUserAssetResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteUserAssetResponse = DeleteUserAssetResponses[keyof DeleteUserAssetResponses];
+
+export type GetUserAssetData = {
+    body?: never;
+    path: {
+        asset_id: string;
+    };
+    query?: never;
+    url: '/api/assets/users/{asset_id}';
+};
+
+export type GetUserAssetErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetUserAssetError = GetUserAssetErrors[keyof GetUserAssetErrors];
+
+export type GetUserAssetResponses = {
+    /**
+     * User asset file retrieved successfully
+     */
+    200: Blob | File;
+};
+
+export type GetUserAssetResponse = GetUserAssetResponses[keyof GetUserAssetResponses];
+
+export type EditUserAssetData = {
+    body: EditUserAssetRequest;
+    path: {
+        asset_id: string;
+    };
+    query?: never;
+    url: '/api/assets/users/{asset_id}';
+};
+
+export type EditUserAssetErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type EditUserAssetError = EditUserAssetErrors[keyof EditUserAssetErrors];
+
+export type EditUserAssetResponses = {
+    /**
+     * User asset updated successfully
+     */
+    200: UserAsset;
+};
+
+export type EditUserAssetResponse = EditUserAssetResponses[keyof EditUserAssetResponses];
 
 export type GetChangesData = {
     body?: never;

@@ -93,8 +93,16 @@ type EditUserAssetRes interface {
 	editUserAssetRes()
 }
 
+type GetAlbumAssetRes interface {
+	getAlbumAssetRes()
+}
+
 type GetAlbumRes interface {
 	getAlbumRes()
+}
+
+type GetArtistAssetRes interface {
+	getArtistAssetRes()
 }
 
 type GetArtistRes interface {

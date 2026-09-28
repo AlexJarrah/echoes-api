@@ -104,7 +104,7 @@ type Handler interface {
 	DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams) (DeletePlaylistTrackRes, error)
 	// DeleteUserAsset implements deleteUserAsset operation.
 	//
-	// DELETE /api/assets/user/{asset_id}
+	// DELETE /api/assets/users/{asset_id}
 	DeleteUserAsset(ctx context.Context, params DeleteUserAssetParams) (DeleteUserAssetRes, error)
 	// EditGroup implements editGroup operation.
 	//
@@ -140,7 +140,7 @@ type Handler interface {
 	//
 	// Update user asset.
 	//
-	// PATCH /api/assets/user/{asset_id}
+	// PATCH /api/assets/users/{asset_id}
 	EditUserAsset(ctx context.Context, req *EditUserAssetRequest, params EditUserAssetParams) (EditUserAssetRes, error)
 	// GetAlbum implements getAlbum operation.
 	//
@@ -148,12 +148,20 @@ type Handler interface {
 	//
 	// GET /api/albums/{album_id}
 	GetAlbum(ctx context.Context, params GetAlbumParams) (GetAlbumRes, error)
+	// GetAlbumAsset implements getAlbumAsset operation.
+	//
+	// GET /api/assets/albums/{asset_id}
+	GetAlbumAsset(ctx context.Context, params GetAlbumAssetParams) (GetAlbumAssetRes, error)
 	// GetArtist implements getArtist operation.
 	//
 	// Get artist details.
 	//
 	// GET /api/artists/{artist_id}
 	GetArtist(ctx context.Context, params GetArtistParams) (GetArtistRes, error)
+	// GetArtistAsset implements getArtistAsset operation.
+	//
+	// GET /api/assets/artists/{asset_id}
+	GetArtistAsset(ctx context.Context, params GetArtistAssetParams) (GetArtistAssetRes, error)
 	// GetAsyncAPI implements getAsyncAPI operation.
 	//
 	// Get AsyncAPI schema.
@@ -316,7 +324,7 @@ type Handler interface {
 	GetTracksPlayStats(ctx context.Context, req OptStatisticsQuery) (GetTracksPlayStatsRes, error)
 	// GetUserAsset implements getUserAsset operation.
 	//
-	// GET /api/assets/user/{asset_id}
+	// GET /api/assets/users/{asset_id}
 	GetUserAsset(ctx context.Context, params GetUserAssetParams) (GetUserAssetRes, error)
 	// GetUserAssets implements getUserAssets operation.
 	//

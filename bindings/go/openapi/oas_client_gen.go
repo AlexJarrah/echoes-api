@@ -186,7 +186,7 @@ type Invoker interface {
 	DeletePlaylistTrack(ctx context.Context, params DeletePlaylistTrackParams, options ...RequestOption) (DeletePlaylistTrackRes, error)
 	// DeleteUserAsset invokes deleteUserAsset operation.
 	//
-	// DELETE /api/assets/user/{asset_id}
+	// DELETE /api/assets/users/{asset_id}
 	DeleteUserAsset(ctx context.Context, params DeleteUserAssetParams, options ...RequestOption) (DeleteUserAssetRes, error)
 	// EditGroup invokes editGroup operation.
 	//
@@ -222,7 +222,7 @@ type Invoker interface {
 	//
 	// Update user asset.
 	//
-	// PATCH /api/assets/user/{asset_id}
+	// PATCH /api/assets/users/{asset_id}
 	EditUserAsset(ctx context.Context, request *EditUserAssetRequest, params EditUserAssetParams, options ...RequestOption) (EditUserAssetRes, error)
 	// GetAlbum invokes getAlbum operation.
 	//
@@ -230,12 +230,20 @@ type Invoker interface {
 	//
 	// GET /api/albums/{album_id}
 	GetAlbum(ctx context.Context, params GetAlbumParams, options ...RequestOption) (GetAlbumRes, error)
+	// GetAlbumAsset invokes getAlbumAsset operation.
+	//
+	// GET /api/assets/albums/{asset_id}
+	GetAlbumAsset(ctx context.Context, params GetAlbumAssetParams, options ...RequestOption) (GetAlbumAssetRes, error)
 	// GetArtist invokes getArtist operation.
 	//
 	// Get artist details.
 	//
 	// GET /api/artists/{artist_id}
 	GetArtist(ctx context.Context, params GetArtistParams, options ...RequestOption) (GetArtistRes, error)
+	// GetArtistAsset invokes getArtistAsset operation.
+	//
+	// GET /api/assets/artists/{asset_id}
+	GetArtistAsset(ctx context.Context, params GetArtistAssetParams, options ...RequestOption) (GetArtistAssetRes, error)
 	// GetAsyncAPI invokes getAsyncAPI operation.
 	//
 	// Get AsyncAPI schema.
@@ -398,7 +406,7 @@ type Invoker interface {
 	GetTracksPlayStats(ctx context.Context, request OptStatisticsQuery, options ...RequestOption) (GetTracksPlayStatsRes, error)
 	// GetUserAsset invokes getUserAsset operation.
 	//
-	// GET /api/assets/user/{asset_id}
+	// GET /api/assets/users/{asset_id}
 	GetUserAsset(ctx context.Context, params GetUserAssetParams, options ...RequestOption) (GetUserAssetRes, error)
 	// GetUserAssets invokes getUserAssets operation.
 	//
@@ -3264,7 +3272,7 @@ func (c *Client) sendDeletePlaylistTrack(ctx context.Context, params DeletePlayl
 
 // DeleteUserAsset invokes deleteUserAsset operation.
 //
-// DELETE /api/assets/user/{asset_id}
+// DELETE /api/assets/users/{asset_id}
 func (c *Client) DeleteUserAsset(ctx context.Context, params DeleteUserAssetParams, options ...RequestOption) (DeleteUserAssetRes, error) {
 	res, err := c.sendDeleteUserAsset(ctx, params, options...)
 	return res, err
@@ -3274,7 +3282,7 @@ func (c *Client) sendDeleteUserAsset(ctx context.Context, params DeleteUserAsset
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("deleteUserAsset"),
 		semconv.HTTPRequestMethodKey.String("DELETE"),
-		semconv.URLTemplateKey.String("/api/assets/user/{asset_id}"),
+		semconv.URLTemplateKey.String("/api/assets/users/{asset_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -3318,7 +3326,7 @@ func (c *Client) sendDeleteUserAsset(ctx context.Context, params DeleteUserAsset
 	}
 	u = uri.Clone(u)
 	var pathParts [2]string
-	pathParts[0] = "/api/assets/user/"
+	pathParts[0] = "/api/assets/users/"
 	{
 		// Encode "asset_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
@@ -4314,7 +4322,7 @@ func (c *Client) sendEditPlaylistTrack(ctx context.Context, request *EditPlaylis
 //
 // Update user asset.
 //
-// PATCH /api/assets/user/{asset_id}
+// PATCH /api/assets/users/{asset_id}
 func (c *Client) EditUserAsset(ctx context.Context, request *EditUserAssetRequest, params EditUserAssetParams, options ...RequestOption) (EditUserAssetRes, error) {
 	res, err := c.sendEditUserAsset(ctx, request, params, options...)
 	return res, err
@@ -4324,7 +4332,7 @@ func (c *Client) sendEditUserAsset(ctx context.Context, request *EditUserAssetRe
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("editUserAsset"),
 		semconv.HTTPRequestMethodKey.String("PATCH"),
-		semconv.URLTemplateKey.String("/api/assets/user/{asset_id}"),
+		semconv.URLTemplateKey.String("/api/assets/users/{asset_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -4368,7 +4376,7 @@ func (c *Client) sendEditUserAsset(ctx context.Context, request *EditUserAssetRe
 	}
 	u = uri.Clone(u)
 	var pathParts [2]string
-	pathParts[0] = "/api/assets/user/"
+	pathParts[0] = "/api/assets/users/"
 	{
 		// Encode "asset_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
@@ -4627,6 +4635,161 @@ func (c *Client) sendGetAlbum(ctx context.Context, params GetAlbumParams, reques
 	return result, nil
 }
 
+// GetAlbumAsset invokes getAlbumAsset operation.
+//
+// GET /api/assets/albums/{asset_id}
+func (c *Client) GetAlbumAsset(ctx context.Context, params GetAlbumAssetParams, options ...RequestOption) (GetAlbumAssetRes, error) {
+	res, err := c.sendGetAlbumAsset(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetAlbumAsset(ctx context.Context, params GetAlbumAssetParams, requestOptions ...RequestOption) (res GetAlbumAssetRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getAlbumAsset"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/assets/albums/{asset_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetAlbumAssetOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [2]string
+	pathParts[0] = "/api/assets/albums/"
+	{
+		// Encode "asset_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "asset_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.AssetID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetAlbumAssetOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetAlbumAssetResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
 // GetArtist invokes getArtist operation.
 //
 // Get artist details.
@@ -4777,6 +4940,161 @@ func (c *Client) sendGetArtist(ctx context.Context, params GetArtistParams, requ
 
 	stage = "DecodeResponse"
 	result, err := decodeGetArtistResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetArtistAsset invokes getArtistAsset operation.
+//
+// GET /api/assets/artists/{asset_id}
+func (c *Client) GetArtistAsset(ctx context.Context, params GetArtistAssetParams, options ...RequestOption) (GetArtistAssetRes, error) {
+	res, err := c.sendGetArtistAsset(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetArtistAsset(ctx context.Context, params GetArtistAssetParams, requestOptions ...RequestOption) (res GetArtistAssetRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getArtistAsset"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/assets/artists/{asset_id}"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetArtistAssetOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [2]string
+	pathParts[0] = "/api/assets/artists/"
+	{
+		// Encode "asset_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "asset_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.AssetID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetArtistAssetOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetArtistAssetResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -8725,7 +9043,7 @@ func (c *Client) sendGetTracksPlayStats(ctx context.Context, request OptStatisti
 
 // GetUserAsset invokes getUserAsset operation.
 //
-// GET /api/assets/user/{asset_id}
+// GET /api/assets/users/{asset_id}
 func (c *Client) GetUserAsset(ctx context.Context, params GetUserAssetParams, options ...RequestOption) (GetUserAssetRes, error) {
 	res, err := c.sendGetUserAsset(ctx, params, options...)
 	return res, err
@@ -8735,7 +9053,7 @@ func (c *Client) sendGetUserAsset(ctx context.Context, params GetUserAssetParams
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getUserAsset"),
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.URLTemplateKey.String("/api/assets/user/{asset_id}"),
+		semconv.URLTemplateKey.String("/api/assets/users/{asset_id}"),
 	}
 	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
 
@@ -8779,7 +9097,7 @@ func (c *Client) sendGetUserAsset(ctx context.Context, params GetUserAssetParams
 	}
 	u = uri.Clone(u)
 	var pathParts [2]string
-	pathParts[0] = "/api/assets/user/"
+	pathParts[0] = "/api/assets/users/"
 	{
 		// Encode "asset_id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
