@@ -1042,6 +1042,7 @@ export type Track = {
 export type TrackArtist = {
     track_id: string;
     artist_id: string;
+    featured?: boolean;
 };
 
 export type TrackPlayStats = {

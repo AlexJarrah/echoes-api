@@ -26250,11 +26250,18 @@ func (s *TrackArtist) encodeFields(e *jx.Encoder) {
 		e.FieldStart("artist_id")
 		json.EncodeUUID(e, s.ArtistID)
 	}
+	{
+		if s.Featured.Set {
+			e.FieldStart("featured")
+			s.Featured.Encode(e)
+		}
+	}
 }
 
-var jsonFieldsNameOfTrackArtist = [2]string{
+var jsonFieldsNameOfTrackArtist = [3]string{
 	0: "track_id",
 	1: "artist_id",
+	2: "featured",
 }
 
 // Decode decodes TrackArtist from json.
@@ -26263,6 +26270,7 @@ func (s *TrackArtist) Decode(d *jx.Decoder) error {
 		return errors.New("invalid: unable to decode TrackArtist to nil")
 	}
 	var requiredBitSet [1]uint8
+	s.setDefaults()
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
@@ -26289,6 +26297,16 @@ func (s *TrackArtist) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"artist_id\"")
+			}
+		case "featured":
+			if err := func() error {
+				s.Featured.Reset()
+				if err := s.Featured.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"featured\"")
 			}
 		default:
 			return d.Skip()

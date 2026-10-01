@@ -2194,6 +2194,8 @@ export interface components {
             track_id: string;
             /** Format: uuid */
             artist_id: string;
+            /** @default false */
+            featured: boolean;
         };
         TrackPlayStats: {
             track: components["schemas"]["Track"];

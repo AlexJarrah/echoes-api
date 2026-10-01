@@ -4631,6 +4631,9 @@ components:
         artist_id:
           type: string
           format: uuid
+        featured:
+          type: boolean
+          default: false
     TrackPlayStats:
       type: object
       required:

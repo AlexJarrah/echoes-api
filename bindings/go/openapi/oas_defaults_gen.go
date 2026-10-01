@@ -109,3 +109,11 @@ func (s *StatisticsQuery) setDefaults() {
 		s.Limit.SetTo(val)
 	}
 }
+
+// setDefaults set default value of fields.
+func (s *TrackArtist) setDefaults() {
+	{
+		val := bool(false)
+		s.Featured.SetTo(val)
+	}
+}

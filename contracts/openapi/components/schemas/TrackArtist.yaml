@@ -10,3 +10,6 @@ TrackArtist:
     artist_id:
       type: string
       format: uuid
+    featured:
+      type: boolean
+      default: false

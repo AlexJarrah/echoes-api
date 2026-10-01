@@ -9015,6 +9015,7 @@ func (*Track) getTrackRes() {}
 type TrackArtist struct {
 	TrackID  uuid.UUID `json:"track_id"`
 	ArtistID uuid.UUID `json:"artist_id"`
+	Featured OptBool   `json:"featured"`
 }
 
 // GetTrackID returns the value of TrackID.
@@ -9027,6 +9028,11 @@ func (s *TrackArtist) GetArtistID() uuid.UUID {
 	return s.ArtistID
 }
 
+// GetFeatured returns the value of Featured.
+func (s *TrackArtist) GetFeatured() OptBool {
+	return s.Featured
+}
+
 // SetTrackID sets the value of TrackID.
 func (s *TrackArtist) SetTrackID(val uuid.UUID) {
 	s.TrackID = val
@@ -9035,6 +9041,11 @@ func (s *TrackArtist) SetTrackID(val uuid.UUID) {
 // SetArtistID sets the value of ArtistID.
 func (s *TrackArtist) SetArtistID(val uuid.UUID) {
 	s.ArtistID = val
+}
+
+// SetFeatured sets the value of Featured.
+func (s *TrackArtist) SetFeatured(val OptBool) {
+	s.Featured = val
 }
 
 // Ref: #/components/schemas/TrackPlayStats
