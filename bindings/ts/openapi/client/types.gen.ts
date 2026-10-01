@@ -748,6 +748,7 @@ export type SearchIndexTrack = {
 export type SearchTrackQuery = {
     track_name: string;
     artist_names?: Array<string>;
+    featured_artist_names?: Array<string>;
     album_name?: string;
     seconds?: number;
 };

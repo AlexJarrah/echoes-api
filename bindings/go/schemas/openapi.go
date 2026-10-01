@@ -4087,6 +4087,10 @@ components:
           type: array
           items:
             type: string
+        featured_artist_names:
+          type: array
+          items:
+            type: string
         album_name:
           type: string
         seconds:

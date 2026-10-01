@@ -1907,6 +1907,7 @@ export interface components {
         SearchTrackQuery: {
             track_name: string;
             artist_names?: string[];
+            featured_artist_names?: string[];
             album_name?: string;
             /** Format: uint16 */
             seconds?: number;

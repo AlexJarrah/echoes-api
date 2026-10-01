@@ -20844,6 +20844,16 @@ func (s *SearchTrackQuery) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
+		if s.FeaturedArtistNames != nil {
+			e.FieldStart("featured_artist_names")
+			e.ArrStart()
+			for _, elem := range s.FeaturedArtistNames {
+				e.Str(elem)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
 		if s.AlbumName.Set {
 			e.FieldStart("album_name")
 			s.AlbumName.Encode(e)
@@ -20857,11 +20867,12 @@ func (s *SearchTrackQuery) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfSearchTrackQuery = [4]string{
+var jsonFieldsNameOfSearchTrackQuery = [5]string{
 	0: "track_name",
 	1: "artist_names",
-	2: "album_name",
-	3: "seconds",
+	2: "featured_artist_names",
+	3: "album_name",
+	4: "seconds",
 }
 
 // Decode decodes SearchTrackQuery from json.
@@ -20903,6 +20914,25 @@ func (s *SearchTrackQuery) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"artist_names\"")
+			}
+		case "featured_artist_names":
+			if err := func() error {
+				s.FeaturedArtistNames = make([]string, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem string
+					v, err := d.Str()
+					elem = string(v)
+					if err != nil {
+						return err
+					}
+					s.FeaturedArtistNames = append(s.FeaturedArtistNames, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"featured_artist_names\"")
 			}
 		case "album_name":
 			if err := func() error {

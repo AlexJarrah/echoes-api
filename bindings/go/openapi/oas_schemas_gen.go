@@ -7167,10 +7167,11 @@ func (s *SearchIndexTrack) SetAudioSHA256(val OptString) {
 
 // Ref: #/components/schemas/SearchTrackQuery
 type SearchTrackQuery struct {
-	TrackName   string    `json:"track_name"`
-	ArtistNames []string  `json:"artist_names"`
-	AlbumName   OptString `json:"album_name"`
-	Seconds     OptUint16 `json:"seconds"`
+	TrackName           string    `json:"track_name"`
+	ArtistNames         []string  `json:"artist_names"`
+	FeaturedArtistNames []string  `json:"featured_artist_names"`
+	AlbumName           OptString `json:"album_name"`
+	Seconds             OptUint16 `json:"seconds"`
 }
 
 // GetTrackName returns the value of TrackName.
@@ -7181,6 +7182,11 @@ func (s *SearchTrackQuery) GetTrackName() string {
 // GetArtistNames returns the value of ArtistNames.
 func (s *SearchTrackQuery) GetArtistNames() []string {
 	return s.ArtistNames
+}
+
+// GetFeaturedArtistNames returns the value of FeaturedArtistNames.
+func (s *SearchTrackQuery) GetFeaturedArtistNames() []string {
+	return s.FeaturedArtistNames
 }
 
 // GetAlbumName returns the value of AlbumName.
@@ -7201,6 +7207,11 @@ func (s *SearchTrackQuery) SetTrackName(val string) {
 // SetArtistNames sets the value of ArtistNames.
 func (s *SearchTrackQuery) SetArtistNames(val []string) {
 	s.ArtistNames = val
+}
+
+// SetFeaturedArtistNames sets the value of FeaturedArtistNames.
+func (s *SearchTrackQuery) SetFeaturedArtistNames(val []string) {
+	s.FeaturedArtistNames = val
 }
 
 // SetAlbumName sets the value of AlbumName.
