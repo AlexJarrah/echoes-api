@@ -6,4 +6,4 @@ LibraryAddID:
       format: uuid
     reference_id:
       type: integer
-      format: int64
+      format: uint64

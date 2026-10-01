@@ -10,7 +10,7 @@ LibraryAddResult:
       description: UUID of the created or resolved entity.
     reference_id:
       type: integer
-      format: int64
+      format: uint64
       description: |
         Reference ID provided in the request, echoed back for client
         correlation.

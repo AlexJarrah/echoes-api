@@ -1,14 +1,14 @@
-LibraryAddAlbumTrack:
+LibraryAddTrackArtist:
   allOf:
-    - $ref: "#/components/schemas/AlbumTrack"
+    - $ref: "#/components/schemas/TrackArtist"
     - type: object
       required:
-        - album_reference_id
         - track_reference_id
+        - artist_reference_id
       properties:
-        album_reference_id:
+        track_reference_id:
           type: integer
           format: uint64
-        track_reference_id:
+        artist_reference_id:
           type: integer
           format: uint64

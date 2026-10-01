@@ -13955,11 +13955,11 @@ func (s *LibraryAddAlbumTrack) encodeFields(e *jx.Encoder) {
 	}
 	{
 		e.FieldStart("album_reference_id")
-		e.Int64(s.AlbumReferenceID)
+		e.UInt64(s.AlbumReferenceID)
 	}
 	{
 		e.FieldStart("track_reference_id")
-		e.Int64(s.TrackReferenceID)
+		e.UInt64(s.TrackReferenceID)
 	}
 }
 
@@ -14028,8 +14028,8 @@ func (s *LibraryAddAlbumTrack) Decode(d *jx.Decoder) error {
 		case "album_reference_id":
 			requiredBitSet[0] |= 1 << 4
 			if err := func() error {
-				v, err := d.Int64()
-				s.AlbumReferenceID = int64(v)
+				v, err := d.UInt64()
+				s.AlbumReferenceID = uint64(v)
 				if err != nil {
 					return err
 				}
@@ -14040,8 +14040,8 @@ func (s *LibraryAddAlbumTrack) Decode(d *jx.Decoder) error {
 		case "track_reference_id":
 			requiredBitSet[0] |= 1 << 5
 			if err := func() error {
-				v, err := d.Int64()
-				s.TrackReferenceID = int64(v)
+				v, err := d.UInt64()
+				s.TrackReferenceID = uint64(v)
 				if err != nil {
 					return err
 				}
@@ -14734,9 +14734,9 @@ func (s *LibraryAddRequest) Decode(d *jx.Decoder) error {
 			}
 		case "track_artists":
 			if err := func() error {
-				s.TrackArtists = make([]LibraryAddKV, 0)
+				s.TrackArtists = make([]LibraryAddTrackArtist, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem LibraryAddKV
+					var elem LibraryAddTrackArtist
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -15276,6 +15276,171 @@ func (s *LibraryAddTrack) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *LibraryAddTrack) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *LibraryAddTrackArtist) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *LibraryAddTrackArtist) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("track_id")
+		json.EncodeUUID(e, s.TrackID)
+	}
+	{
+		e.FieldStart("artist_id")
+		json.EncodeUUID(e, s.ArtistID)
+	}
+	{
+		if s.Featured.Set {
+			e.FieldStart("featured")
+			s.Featured.Encode(e)
+		}
+	}
+	{
+		e.FieldStart("track_reference_id")
+		e.UInt64(s.TrackReferenceID)
+	}
+	{
+		e.FieldStart("artist_reference_id")
+		e.UInt64(s.ArtistReferenceID)
+	}
+}
+
+var jsonFieldsNameOfLibraryAddTrackArtist = [5]string{
+	0: "track_id",
+	1: "artist_id",
+	2: "featured",
+	3: "track_reference_id",
+	4: "artist_reference_id",
+}
+
+// Decode decodes LibraryAddTrackArtist from json.
+func (s *LibraryAddTrackArtist) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode LibraryAddTrackArtist to nil")
+	}
+	var requiredBitSet [1]uint8
+	s.setDefaults()
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "track_id":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := json.DecodeUUID(d)
+				s.TrackID = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track_id\"")
+			}
+		case "artist_id":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				v, err := json.DecodeUUID(d)
+				s.ArtistID = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist_id\"")
+			}
+		case "featured":
+			if err := func() error {
+				s.Featured.Reset()
+				if err := s.Featured.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"featured\"")
+			}
+		case "track_reference_id":
+			requiredBitSet[0] |= 1 << 3
+			if err := func() error {
+				v, err := d.UInt64()
+				s.TrackReferenceID = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track_reference_id\"")
+			}
+		case "artist_reference_id":
+			requiredBitSet[0] |= 1 << 4
+			if err := func() error {
+				v, err := d.UInt64()
+				s.ArtistReferenceID = uint64(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist_reference_id\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode LibraryAddTrackArtist")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00011011,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfLibraryAddTrackArtist) {
+					name = jsonFieldsNameOfLibraryAddTrackArtist[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *LibraryAddTrackArtist) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *LibraryAddTrackArtist) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -17992,6 +18157,41 @@ func (s OptUint32) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptUint32) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes uint64 as json.
+func (o OptUint64) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.UInt64(uint64(o.Value))
+}
+
+// Decode decodes uint64 from json.
+func (o *OptUint64) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptUint64 to nil")
+	}
+	o.Set = true
+	v, err := d.UInt64()
+	if err != nil {
+		return err
+	}
+	o.Value = uint64(v)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptUint64) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptUint64) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

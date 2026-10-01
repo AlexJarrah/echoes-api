@@ -21,7 +21,7 @@ LibraryAddRequest:
     track_artists:
       type: array
       items:
-        $ref: "#/components/schemas/LibraryAddKV"
+        $ref: "#/components/schemas/LibraryAddTrackArtist"
     album_artists:
       type: array
       items:

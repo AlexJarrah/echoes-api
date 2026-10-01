@@ -7,7 +7,7 @@ LibraryAddListen:
       $ref: "#/components/schemas/Listen"
     reference_id:
       type: integer
-      format: int64
+      format: uint64
       description: Client-provided reference ID for correlation in responses.
     force_add:
       type: boolean

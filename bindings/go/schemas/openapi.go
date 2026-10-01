@@ -3395,7 +3395,7 @@ components:
           $ref: '#/components/schemas/Album'
         reference_id:
           type: integer
-          format: int64
+          format: uint64
           description: Client-provided reference ID for correlation in responses.
         force_add:
           type: boolean
@@ -3411,10 +3411,10 @@ components:
           properties:
             album_reference_id:
               type: integer
-              format: int64
+              format: uint64
             track_reference_id:
               type: integer
-              format: int64
+              format: uint64
     LibraryAddArtist:
       type: object
       required:
@@ -3424,7 +3424,7 @@ components:
           $ref: '#/components/schemas/Artist'
         reference_id:
           type: integer
-          format: int64
+          format: uint64
           description: Client-provided reference ID for correlation in responses.
         force_add:
           type: boolean
@@ -3438,7 +3438,7 @@ components:
           format: uuid
         reference_id:
           type: integer
-          format: int64
+          format: uint64
     LibraryAddKV:
       type: object
       required:
@@ -3458,7 +3458,7 @@ components:
           $ref: '#/components/schemas/Listen'
         reference_id:
           type: integer
-          format: int64
+          format: uint64
           description: Client-provided reference ID for correlation in responses.
         force_add:
           type: boolean
@@ -3487,7 +3487,7 @@ components:
         track_artists:
           type: array
           items:
-            $ref: '#/components/schemas/LibraryAddKV'
+            $ref: '#/components/schemas/LibraryAddTrackArtist'
         album_artists:
           type: array
           items:
@@ -3535,7 +3535,7 @@ components:
           description: UUID of the created or resolved entity.
         reference_id:
           type: integer
-          format: int64
+          format: uint64
           description: |
             Reference ID provided in the request, echoed back for client
             correlation.
@@ -3553,12 +3553,26 @@ components:
           $ref: '#/components/schemas/Track'
         reference_id:
           type: integer
-          format: int64
+          format: uint64
           description: Client-provided reference ID for correlation in responses.
         force_add:
           type: boolean
           default: false
           description: If true, skip deduplication and always create a new entity.
+    LibraryAddTrackArtist:
+      allOf:
+        - $ref: '#/components/schemas/TrackArtist'
+        - type: object
+          required:
+            - track_reference_id
+            - artist_reference_id
+          properties:
+            track_reference_id:
+              type: integer
+              format: uint64
+            artist_reference_id:
+              type: integer
+              format: uint64
     LibraryRemoveRequest:
       type: object
       properties:

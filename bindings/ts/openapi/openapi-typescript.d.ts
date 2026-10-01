@@ -1551,7 +1551,7 @@ export interface components {
         LibraryAddAlbum: {
             album: components["schemas"]["Album"];
             /**
-             * Format: int64
+             * Format: uint64
              * @description Client-provided reference ID for correlation in responses.
              */
             reference_id?: number;
@@ -1562,15 +1562,15 @@ export interface components {
             force_add: boolean;
         };
         LibraryAddAlbumTrack: components["schemas"]["AlbumTrack"] & {
-            /** Format: int64 */
+            /** Format: uint64 */
             album_reference_id: number;
-            /** Format: int64 */
+            /** Format: uint64 */
             track_reference_id: number;
         };
         LibraryAddArtist: {
             artist: components["schemas"]["Artist"];
             /**
-             * Format: int64
+             * Format: uint64
              * @description Client-provided reference ID for correlation in responses.
              */
             reference_id?: number;
@@ -1583,7 +1583,7 @@ export interface components {
         LibraryAddID: {
             /** Format: uuid */
             id?: string;
-            /** Format: int64 */
+            /** Format: uint64 */
             reference_id?: number;
         };
         LibraryAddKV: {
@@ -1593,7 +1593,7 @@ export interface components {
         LibraryAddListen: {
             listen: components["schemas"]["Listen"];
             /**
-             * Format: int64
+             * Format: uint64
              * @description Client-provided reference ID for correlation in responses.
              */
             reference_id?: number;
@@ -1608,7 +1608,7 @@ export interface components {
             artists?: components["schemas"]["LibraryAddArtist"][];
             albums?: components["schemas"]["LibraryAddAlbum"][];
             listens?: components["schemas"]["LibraryAddListen"][];
-            track_artists?: components["schemas"]["LibraryAddKV"][];
+            track_artists?: components["schemas"]["LibraryAddTrackArtist"][];
             album_artists?: components["schemas"]["LibraryAddKV"][];
             listen_tracks?: components["schemas"]["LibraryAddKV"][];
             album_tracks?: components["schemas"]["LibraryAddAlbumTrack"][];
@@ -1627,7 +1627,7 @@ export interface components {
              */
             id: string;
             /**
-             * Format: int64
+             * Format: uint64
              * @description Reference ID provided in the request, echoed back for client
              *     correlation.
              */
@@ -1641,7 +1641,7 @@ export interface components {
         LibraryAddTrack: {
             track: components["schemas"]["Track"];
             /**
-             * Format: int64
+             * Format: uint64
              * @description Client-provided reference ID for correlation in responses.
              */
             reference_id?: number;
@@ -1650,6 +1650,12 @@ export interface components {
              * @default false
              */
             force_add: boolean;
+        };
+        LibraryAddTrackArtist: components["schemas"]["TrackArtist"] & {
+            /** Format: uint64 */
+            track_reference_id: number;
+            /** Format: uint64 */
+            artist_reference_id: number;
         };
         LibraryRemoveRequest: {
             track_ids?: string[];

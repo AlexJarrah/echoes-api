@@ -480,7 +480,7 @@ export type LibraryAddRequest = {
     artists?: Array<LibraryAddArtist>;
     albums?: Array<LibraryAddAlbum>;
     listens?: Array<LibraryAddListen>;
-    track_artists?: Array<LibraryAddKv>;
+    track_artists?: Array<LibraryAddTrackArtist>;
     album_artists?: Array<LibraryAddKv>;
     listen_tracks?: Array<LibraryAddKv>;
     album_tracks?: Array<LibraryAddAlbumTrack>;
@@ -523,6 +523,11 @@ export type LibraryAddTrack = {
      * If true, skip deduplication and always create a new entity.
      */
     force_add?: boolean;
+};
+
+export type LibraryAddTrackArtist = TrackArtist & {
+    track_reference_id: number;
+    artist_reference_id: number;
 };
 
 export type LibraryRemoveRequest = {

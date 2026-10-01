@@ -55,6 +55,14 @@ func (s *LibraryAddTrack) setDefaults() {
 }
 
 // setDefaults set default value of fields.
+func (s *LibraryAddTrackArtist) setDefaults() {
+	{
+		val := bool(false)
+		s.Featured.SetTo(val)
+	}
+}
+
+// setDefaults set default value of fields.
 func (s *LibraryUpdateRequest) setDefaults() {
 	{
 		var defaultVal0 []Track

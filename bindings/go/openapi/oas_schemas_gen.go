@@ -3295,7 +3295,7 @@ func (*JoinFreeBetaUnauthorized) joinFreeBetaRes() {}
 type LibraryAddAlbum struct {
 	Album Album `json:"album"`
 	// Client-provided reference ID for correlation in responses.
-	ReferenceID OptInt64 `json:"reference_id"`
+	ReferenceID OptUint64 `json:"reference_id"`
 	// If true, skip deduplication and always create a new entity.
 	ForceAdd OptBool `json:"force_add"`
 }
@@ -3306,7 +3306,7 @@ func (s *LibraryAddAlbum) GetAlbum() Album {
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddAlbum) GetReferenceID() OptInt64 {
+func (s *LibraryAddAlbum) GetReferenceID() OptUint64 {
 	return s.ReferenceID
 }
 
@@ -3321,7 +3321,7 @@ func (s *LibraryAddAlbum) SetAlbum(val Album) {
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddAlbum) SetReferenceID(val OptInt64) {
+func (s *LibraryAddAlbum) SetReferenceID(val OptUint64) {
 	s.ReferenceID = val
 }
 
@@ -3337,8 +3337,8 @@ type LibraryAddAlbumTrack struct {
 	TrackID          uuid.UUID   `json:"track_id"`
 	DiscNumber       OptNilUint8 `json:"disc_number"`
 	TrackNumber      OptNilUint8 `json:"track_number"`
-	AlbumReferenceID int64       `json:"album_reference_id"`
-	TrackReferenceID int64       `json:"track_reference_id"`
+	AlbumReferenceID uint64      `json:"album_reference_id"`
+	TrackReferenceID uint64      `json:"track_reference_id"`
 }
 
 // GetAlbumID returns the value of AlbumID.
@@ -3362,12 +3362,12 @@ func (s *LibraryAddAlbumTrack) GetTrackNumber() OptNilUint8 {
 }
 
 // GetAlbumReferenceID returns the value of AlbumReferenceID.
-func (s *LibraryAddAlbumTrack) GetAlbumReferenceID() int64 {
+func (s *LibraryAddAlbumTrack) GetAlbumReferenceID() uint64 {
 	return s.AlbumReferenceID
 }
 
 // GetTrackReferenceID returns the value of TrackReferenceID.
-func (s *LibraryAddAlbumTrack) GetTrackReferenceID() int64 {
+func (s *LibraryAddAlbumTrack) GetTrackReferenceID() uint64 {
 	return s.TrackReferenceID
 }
 
@@ -3392,12 +3392,12 @@ func (s *LibraryAddAlbumTrack) SetTrackNumber(val OptNilUint8) {
 }
 
 // SetAlbumReferenceID sets the value of AlbumReferenceID.
-func (s *LibraryAddAlbumTrack) SetAlbumReferenceID(val int64) {
+func (s *LibraryAddAlbumTrack) SetAlbumReferenceID(val uint64) {
 	s.AlbumReferenceID = val
 }
 
 // SetTrackReferenceID sets the value of TrackReferenceID.
-func (s *LibraryAddAlbumTrack) SetTrackReferenceID(val int64) {
+func (s *LibraryAddAlbumTrack) SetTrackReferenceID(val uint64) {
 	s.TrackReferenceID = val
 }
 
@@ -3405,7 +3405,7 @@ func (s *LibraryAddAlbumTrack) SetTrackReferenceID(val int64) {
 type LibraryAddArtist struct {
 	Artist Artist `json:"artist"`
 	// Client-provided reference ID for correlation in responses.
-	ReferenceID OptInt64 `json:"reference_id"`
+	ReferenceID OptUint64 `json:"reference_id"`
 	// If true, skip deduplication and always create a new entity.
 	ForceAdd OptBool `json:"force_add"`
 }
@@ -3416,7 +3416,7 @@ func (s *LibraryAddArtist) GetArtist() Artist {
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddArtist) GetReferenceID() OptInt64 {
+func (s *LibraryAddArtist) GetReferenceID() OptUint64 {
 	return s.ReferenceID
 }
 
@@ -3431,7 +3431,7 @@ func (s *LibraryAddArtist) SetArtist(val Artist) {
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddArtist) SetReferenceID(val OptInt64) {
+func (s *LibraryAddArtist) SetReferenceID(val OptUint64) {
 	s.ReferenceID = val
 }
 
@@ -3442,8 +3442,8 @@ func (s *LibraryAddArtist) SetForceAdd(val OptBool) {
 
 // Ref: #/components/schemas/LibraryAddID
 type LibraryAddID struct {
-	ID          OptUUID  `json:"id"`
-	ReferenceID OptInt64 `json:"reference_id"`
+	ID          OptUUID   `json:"id"`
+	ReferenceID OptUint64 `json:"reference_id"`
 }
 
 // GetID returns the value of ID.
@@ -3452,7 +3452,7 @@ func (s *LibraryAddID) GetID() OptUUID {
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddID) GetReferenceID() OptInt64 {
+func (s *LibraryAddID) GetReferenceID() OptUint64 {
 	return s.ReferenceID
 }
 
@@ -3462,7 +3462,7 @@ func (s *LibraryAddID) SetID(val OptUUID) {
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddID) SetReferenceID(val OptInt64) {
+func (s *LibraryAddID) SetReferenceID(val OptUint64) {
 	s.ReferenceID = val
 }
 
@@ -3496,7 +3496,7 @@ func (s *LibraryAddKV) SetValue(val LibraryAddID) {
 type LibraryAddListen struct {
 	Listen Listen `json:"listen"`
 	// Client-provided reference ID for correlation in responses.
-	ReferenceID OptInt64 `json:"reference_id"`
+	ReferenceID OptUint64 `json:"reference_id"`
 	// If true, skip deduplication and always create a new entity.
 	ForceAdd OptBool `json:"force_add"`
 }
@@ -3507,7 +3507,7 @@ func (s *LibraryAddListen) GetListen() Listen {
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddListen) GetReferenceID() OptInt64 {
+func (s *LibraryAddListen) GetReferenceID() OptUint64 {
 	return s.ReferenceID
 }
 
@@ -3522,7 +3522,7 @@ func (s *LibraryAddListen) SetListen(val Listen) {
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddListen) SetReferenceID(val OptInt64) {
+func (s *LibraryAddListen) SetReferenceID(val OptUint64) {
 	s.ReferenceID = val
 }
 
@@ -3533,14 +3533,14 @@ func (s *LibraryAddListen) SetForceAdd(val OptBool) {
 
 // Ref: #/components/schemas/LibraryAddRequest
 type LibraryAddRequest struct {
-	Tracks       []LibraryAddTrack      `json:"tracks"`
-	Artists      []LibraryAddArtist     `json:"artists"`
-	Albums       []LibraryAddAlbum      `json:"albums"`
-	Listens      []LibraryAddListen     `json:"listens"`
-	TrackArtists []LibraryAddKV         `json:"track_artists"`
-	AlbumArtists []LibraryAddKV         `json:"album_artists"`
-	ListenTracks []LibraryAddKV         `json:"listen_tracks"`
-	AlbumTracks  []LibraryAddAlbumTrack `json:"album_tracks"`
+	Tracks       []LibraryAddTrack       `json:"tracks"`
+	Artists      []LibraryAddArtist      `json:"artists"`
+	Albums       []LibraryAddAlbum       `json:"albums"`
+	Listens      []LibraryAddListen      `json:"listens"`
+	TrackArtists []LibraryAddTrackArtist `json:"track_artists"`
+	AlbumArtists []LibraryAddKV          `json:"album_artists"`
+	ListenTracks []LibraryAddKV          `json:"listen_tracks"`
+	AlbumTracks  []LibraryAddAlbumTrack  `json:"album_tracks"`
 }
 
 // GetTracks returns the value of Tracks.
@@ -3564,7 +3564,7 @@ func (s *LibraryAddRequest) GetListens() []LibraryAddListen {
 }
 
 // GetTrackArtists returns the value of TrackArtists.
-func (s *LibraryAddRequest) GetTrackArtists() []LibraryAddKV {
+func (s *LibraryAddRequest) GetTrackArtists() []LibraryAddTrackArtist {
 	return s.TrackArtists
 }
 
@@ -3604,7 +3604,7 @@ func (s *LibraryAddRequest) SetListens(val []LibraryAddListen) {
 }
 
 // SetTrackArtists sets the value of TrackArtists.
-func (s *LibraryAddRequest) SetTrackArtists(val []LibraryAddKV) {
+func (s *LibraryAddRequest) SetTrackArtists(val []LibraryAddTrackArtist) {
 	s.TrackArtists = val
 }
 
@@ -3689,7 +3689,7 @@ type LibraryAddResult struct {
 	// UUID of the created or resolved entity.
 	ID uuid.UUID `json:"id"`
 	// Reference ID provided in the request, echoed back for client correlation.
-	ReferenceID OptInt64 `json:"reference_id"`
+	ReferenceID OptUint64 `json:"reference_id"`
 	// True if a new entity was created, false if an existing entity was resolved.
 	Created bool `json:"created"`
 }
@@ -3700,7 +3700,7 @@ func (s *LibraryAddResult) GetID() uuid.UUID {
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddResult) GetReferenceID() OptInt64 {
+func (s *LibraryAddResult) GetReferenceID() OptUint64 {
 	return s.ReferenceID
 }
 
@@ -3715,7 +3715,7 @@ func (s *LibraryAddResult) SetID(val uuid.UUID) {
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddResult) SetReferenceID(val OptInt64) {
+func (s *LibraryAddResult) SetReferenceID(val OptUint64) {
 	s.ReferenceID = val
 }
 
@@ -3728,7 +3728,7 @@ func (s *LibraryAddResult) SetCreated(val bool) {
 type LibraryAddTrack struct {
 	Track Track `json:"track"`
 	// Client-provided reference ID for correlation in responses.
-	ReferenceID OptInt64 `json:"reference_id"`
+	ReferenceID OptUint64 `json:"reference_id"`
 	// If true, skip deduplication and always create a new entity.
 	ForceAdd OptBool `json:"force_add"`
 }
@@ -3739,7 +3739,7 @@ func (s *LibraryAddTrack) GetTrack() Track {
 }
 
 // GetReferenceID returns the value of ReferenceID.
-func (s *LibraryAddTrack) GetReferenceID() OptInt64 {
+func (s *LibraryAddTrack) GetReferenceID() OptUint64 {
 	return s.ReferenceID
 }
 
@@ -3754,13 +3754,73 @@ func (s *LibraryAddTrack) SetTrack(val Track) {
 }
 
 // SetReferenceID sets the value of ReferenceID.
-func (s *LibraryAddTrack) SetReferenceID(val OptInt64) {
+func (s *LibraryAddTrack) SetReferenceID(val OptUint64) {
 	s.ReferenceID = val
 }
 
 // SetForceAdd sets the value of ForceAdd.
 func (s *LibraryAddTrack) SetForceAdd(val OptBool) {
 	s.ForceAdd = val
+}
+
+// Merged schema.
+// Ref: #/components/schemas/LibraryAddTrackArtist
+type LibraryAddTrackArtist struct {
+	TrackID           uuid.UUID `json:"track_id"`
+	ArtistID          uuid.UUID `json:"artist_id"`
+	Featured          OptBool   `json:"featured"`
+	TrackReferenceID  uint64    `json:"track_reference_id"`
+	ArtistReferenceID uint64    `json:"artist_reference_id"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *LibraryAddTrackArtist) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *LibraryAddTrackArtist) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetFeatured returns the value of Featured.
+func (s *LibraryAddTrackArtist) GetFeatured() OptBool {
+	return s.Featured
+}
+
+// GetTrackReferenceID returns the value of TrackReferenceID.
+func (s *LibraryAddTrackArtist) GetTrackReferenceID() uint64 {
+	return s.TrackReferenceID
+}
+
+// GetArtistReferenceID returns the value of ArtistReferenceID.
+func (s *LibraryAddTrackArtist) GetArtistReferenceID() uint64 {
+	return s.ArtistReferenceID
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *LibraryAddTrackArtist) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *LibraryAddTrackArtist) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetFeatured sets the value of Featured.
+func (s *LibraryAddTrackArtist) SetFeatured(val OptBool) {
+	s.Featured = val
+}
+
+// SetTrackReferenceID sets the value of TrackReferenceID.
+func (s *LibraryAddTrackArtist) SetTrackReferenceID(val uint64) {
+	s.TrackReferenceID = val
+}
+
+// SetArtistReferenceID sets the value of ArtistReferenceID.
+func (s *LibraryAddTrackArtist) SetArtistReferenceID(val uint64) {
+	s.ArtistReferenceID = val
 }
 
 // Ref: #/components/schemas/LibraryRemoveRequest
