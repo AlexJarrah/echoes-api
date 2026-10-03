@@ -1901,6 +1901,7 @@ export interface components {
             seconds?: number;
             album_ids?: string[];
             artist_ids?: string[];
+            featured_artist_ids?: string[];
             /** @description SHA-256 hash of the audio data. */
             audio_sha256?: string;
         };

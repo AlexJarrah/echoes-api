@@ -20646,6 +20646,16 @@ func (s *SearchIndexTrack) encodeFields(e *jx.Encoder) {
 		}
 	}
 	{
+		if s.FeaturedArtistIds != nil {
+			e.FieldStart("featured_artist_ids")
+			e.ArrStart()
+			for _, elem := range s.FeaturedArtistIds {
+				json.EncodeUUID(e, elem)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
 		if s.AudioSHA256.Set {
 			e.FieldStart("audio_sha256")
 			s.AudioSHA256.Encode(e)
@@ -20653,14 +20663,15 @@ func (s *SearchIndexTrack) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfSearchIndexTrack = [7]string{
+var jsonFieldsNameOfSearchIndexTrack = [8]string{
 	0: "id",
 	1: "user_id",
 	2: "name",
 	3: "seconds",
 	4: "album_ids",
 	5: "artist_ids",
-	6: "audio_sha256",
+	6: "featured_artist_ids",
+	7: "audio_sha256",
 }
 
 // Decode decodes SearchIndexTrack from json.
@@ -20753,6 +20764,25 @@ func (s *SearchIndexTrack) Decode(d *jx.Decoder) error {
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"artist_ids\"")
+			}
+		case "featured_artist_ids":
+			if err := func() error {
+				s.FeaturedArtistIds = make([]uuid.UUID, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem uuid.UUID
+					v, err := json.DecodeUUID(d)
+					elem = v
+					if err != nil {
+						return err
+					}
+					s.FeaturedArtistIds = append(s.FeaturedArtistIds, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"featured_artist_ids\"")
 			}
 		case "audio_sha256":
 			if err := func() error {

@@ -7085,12 +7085,13 @@ func (s *SearchIndexArtist) SetName(val string) {
 
 // Ref: #/components/schemas/SearchIndexTrack
 type SearchIndexTrack struct {
-	ID        uuid.UUID   `json:"id"`
-	UserID    OptUUID     `json:"user_id"`
-	Name      string      `json:"name"`
-	Seconds   OptUint16   `json:"seconds"`
-	AlbumIds  []uuid.UUID `json:"album_ids"`
-	ArtistIds []uuid.UUID `json:"artist_ids"`
+	ID                uuid.UUID   `json:"id"`
+	UserID            OptUUID     `json:"user_id"`
+	Name              string      `json:"name"`
+	Seconds           OptUint16   `json:"seconds"`
+	AlbumIds          []uuid.UUID `json:"album_ids"`
+	ArtistIds         []uuid.UUID `json:"artist_ids"`
+	FeaturedArtistIds []uuid.UUID `json:"featured_artist_ids"`
 	// SHA-256 hash of the audio data.
 	AudioSHA256 OptString `json:"audio_sha256"`
 }
@@ -7123,6 +7124,11 @@ func (s *SearchIndexTrack) GetAlbumIds() []uuid.UUID {
 // GetArtistIds returns the value of ArtistIds.
 func (s *SearchIndexTrack) GetArtistIds() []uuid.UUID {
 	return s.ArtistIds
+}
+
+// GetFeaturedArtistIds returns the value of FeaturedArtistIds.
+func (s *SearchIndexTrack) GetFeaturedArtistIds() []uuid.UUID {
+	return s.FeaturedArtistIds
 }
 
 // GetAudioSHA256 returns the value of AudioSHA256.
@@ -7158,6 +7164,11 @@ func (s *SearchIndexTrack) SetAlbumIds(val []uuid.UUID) {
 // SetArtistIds sets the value of ArtistIds.
 func (s *SearchIndexTrack) SetArtistIds(val []uuid.UUID) {
 	s.ArtistIds = val
+}
+
+// SetFeaturedArtistIds sets the value of FeaturedArtistIds.
+func (s *SearchIndexTrack) SetFeaturedArtistIds(val []uuid.UUID) {
+	s.FeaturedArtistIds = val
 }
 
 // SetAudioSHA256 sets the value of AudioSHA256.

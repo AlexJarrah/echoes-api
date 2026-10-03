@@ -4072,6 +4072,11 @@ components:
           items:
             type: string
             format: uuid
+        featured_artist_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
         audio_sha256:
           type: string
           description: SHA-256 hash of the audio data.

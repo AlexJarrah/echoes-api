@@ -739,6 +739,7 @@ export type SearchIndexTrack = {
     seconds?: number;
     album_ids?: Array<string>;
     artist_ids?: Array<string>;
+    featured_artist_ids?: Array<string>;
     /**
      * SHA-256 hash of the audio data.
      */
