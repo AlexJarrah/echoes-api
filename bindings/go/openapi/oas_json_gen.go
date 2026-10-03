@@ -21495,7 +21495,7 @@ func (s *SearchTracksResultGroup) Encode(e *jx.Encoder) {
 func (s *SearchTracksResultGroup) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("index")
-		e.UInt8(s.Index)
+		e.UInt16(s.Index)
 	}
 	{
 		e.FieldStart("results")
@@ -21531,8 +21531,8 @@ func (s *SearchTracksResultGroup) Decode(d *jx.Decoder) error {
 		case "index":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				v, err := d.UInt8()
-				s.Index = uint8(v)
+				v, err := d.UInt16()
+				s.Index = uint16(v)
 				if err != nil {
 					return err
 				}

@@ -1922,7 +1922,7 @@ export interface components {
         };
         SearchTracksResultGroup: {
             /**
-             * Format: uint8
+             * Format: uint16
              * @description Associated request query index
              */
             index: number;

@@ -7410,13 +7410,13 @@ func (*SearchTracksOKApplicationJSON) searchTracksRes() {}
 // Ref: #/components/schemas/SearchTracksResultGroup
 type SearchTracksResultGroup struct {
 	// Associated request query index.
-	Index   uint8               `json:"index"`
+	Index   uint16              `json:"index"`
 	Results []SearchTrackResult `json:"results"`
 	Error   OptString           `json:"error"`
 }
 
 // GetIndex returns the value of Index.
-func (s *SearchTracksResultGroup) GetIndex() uint8 {
+func (s *SearchTracksResultGroup) GetIndex() uint16 {
 	return s.Index
 }
 
@@ -7431,7 +7431,7 @@ func (s *SearchTracksResultGroup) GetError() OptString {
 }
 
 // SetIndex sets the value of Index.
-func (s *SearchTracksResultGroup) SetIndex(val uint8) {
+func (s *SearchTracksResultGroup) SetIndex(val uint16) {
 	s.Index = val
 }
 

@@ -4122,7 +4122,7 @@ components:
       properties:
         index:
           type: integer
-          format: uint8
+          format: uint16
           description: Associated request query index
         results:
           type: array
