@@ -117,6 +117,10 @@ type GetChangesRes interface {
 	getChangesRes()
 }
 
+type GetFriendsRecentActivityRes interface {
+	getFriendsRecentActivityRes()
+}
+
 type GetGlobalTopAlbumsRes interface {
 	getGlobalTopAlbumsRes()
 }

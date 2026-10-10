@@ -447,6 +447,14 @@ func (s *EditPlaylistTrackRequest) Validate() error {
 	return nil
 }
 
+func (s FriendsRecentActivityResponse) Validate() error {
+	alias := ([]FriendsRecentActivityResponseItem)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
 func (s *GetChangesResponse) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer

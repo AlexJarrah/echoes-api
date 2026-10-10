@@ -1,0 +1,24 @@
+FriendsRecentActivityResponse:
+  type: array
+  items:
+    type: object
+    required: [user_id]
+    properties:
+      user_id:
+        type: string
+        format: uuid
+      listens:
+        type: array
+        items:
+          type: object
+          required: [track_id, seconds, timestamp]
+          properties:
+            track_id:
+              type: string
+              format: uuid
+            seconds:
+              type: integer
+              format: uint16
+            timestamp:
+              type: string
+              format: date-time

@@ -263,6 +263,15 @@ export type FriendActionRequest = {
     handle?: string | null;
 };
 
+export type FriendsRecentActivityResponse = Array<{
+    user_id: string;
+    listens?: Array<{
+        track_id: string;
+        seconds: number;
+        timestamp: string;
+    }>;
+}>;
+
 export type GetChangesResponse = {
     current_sequence: number;
     changes: Array<Change>;
@@ -3106,6 +3115,32 @@ export type GetRelationsDetailsResponses = {
 };
 
 export type GetRelationsDetailsResponse = GetRelationsDetailsResponses[keyof GetRelationsDetailsResponses];
+
+export type GetFriendsRecentActivityData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/relations/friends/recent-activity';
+};
+
+export type GetFriendsRecentActivityErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetFriendsRecentActivityError = GetFriendsRecentActivityErrors[keyof GetFriendsRecentActivityErrors];
+
+export type GetFriendsRecentActivityResponses = {
+    200: FriendsRecentActivityResponse;
+};
+
+export type GetFriendsRecentActivityResponse = GetFriendsRecentActivityResponses[keyof GetFriendsRecentActivityResponses];
 
 export type RemoveFriendData = {
     body: RemoveFriendRequest;

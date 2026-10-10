@@ -181,6 +181,12 @@ type Handler interface {
 	//
 	// GET /api/changes
 	GetChanges(ctx context.Context, params GetChangesParams) (GetChangesRes, error)
+	// GetFriendsRecentActivity implements getFriendsRecentActivity operation.
+	//
+	// Get recent friends activity.
+	//
+	// GET /api/relations/friends/recent-activity
+	GetFriendsRecentActivity(ctx context.Context) (GetFriendsRecentActivityRes, error)
 	// GetGlobalTopAlbums implements getGlobalTopAlbums operation.
 	//
 	// Get global top albums in the specified time range. Time range values default to the range of the

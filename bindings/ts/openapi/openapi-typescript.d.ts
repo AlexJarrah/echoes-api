@@ -662,6 +662,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/relations/friends/recent-activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get recent friends activity */
+        get: operations["getFriendsRecentActivity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/remove-friend": {
         parameters: {
             query?: never;
@@ -1370,6 +1387,18 @@ export interface components {
             /** @description Target user's handle. Optional if 'id' is provided. */
             handle?: string | null;
         };
+        FriendsRecentActivityResponse: {
+            /** Format: uuid */
+            user_id: string;
+            listens?: {
+                /** Format: uuid */
+                track_id: string;
+                /** Format: uint16 */
+                seconds: number;
+                /** Format: date-time */
+                timestamp: string;
+            }[];
+        }[];
         GetChangesResponse: {
             /** Format: uint64 */
             current_sequence: number;
@@ -3782,6 +3811,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RelationDetails"][];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getFriendsRecentActivity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FriendsRecentActivityResponse"];
                 };
             };
             401: components["responses"]["Unauthorized"];

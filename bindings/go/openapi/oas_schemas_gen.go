@@ -1598,6 +1598,71 @@ func (s *FriendActionRequest) SetHandle(val OptNilString) {
 	s.Handle = val
 }
 
+type FriendsRecentActivityResponse []FriendsRecentActivityResponseItem
+
+func (*FriendsRecentActivityResponse) getFriendsRecentActivityRes() {}
+
+type FriendsRecentActivityResponseItem struct {
+	UserID  uuid.UUID                                      `json:"user_id"`
+	Listens []FriendsRecentActivityResponseItemListensItem `json:"listens"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *FriendsRecentActivityResponseItem) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetListens returns the value of Listens.
+func (s *FriendsRecentActivityResponseItem) GetListens() []FriendsRecentActivityResponseItemListensItem {
+	return s.Listens
+}
+
+// SetUserID sets the value of UserID.
+func (s *FriendsRecentActivityResponseItem) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetListens sets the value of Listens.
+func (s *FriendsRecentActivityResponseItem) SetListens(val []FriendsRecentActivityResponseItemListensItem) {
+	s.Listens = val
+}
+
+type FriendsRecentActivityResponseItemListensItem struct {
+	TrackID   uuid.UUID `json:"track_id"`
+	Seconds   uint16    `json:"seconds"`
+	Timestamp time.Time `json:"timestamp"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *FriendsRecentActivityResponseItemListensItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *FriendsRecentActivityResponseItemListensItem) GetSeconds() uint16 {
+	return s.Seconds
+}
+
+// GetTimestamp returns the value of Timestamp.
+func (s *FriendsRecentActivityResponseItemListensItem) GetTimestamp() time.Time {
+	return s.Timestamp
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *FriendsRecentActivityResponseItemListensItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *FriendsRecentActivityResponseItemListensItem) SetSeconds(val uint16) {
+	s.Seconds = val
+}
+
+// SetTimestamp sets the value of Timestamp.
+func (s *FriendsRecentActivityResponseItemListensItem) SetTimestamp(val time.Time) {
+	s.Timestamp = val
+}
+
 type GetAlbumAssetInternalServerError ErrorResponse
 
 func (*GetAlbumAssetInternalServerError) getAlbumAssetRes() {}
@@ -1965,6 +2030,14 @@ func (*GetChangesResponse) getChangesRes() {}
 type GetChangesUnauthorized ErrorResponse
 
 func (*GetChangesUnauthorized) getChangesRes() {}
+
+type GetFriendsRecentActivityInternalServerError ErrorResponse
+
+func (*GetFriendsRecentActivityInternalServerError) getFriendsRecentActivityRes() {}
+
+type GetFriendsRecentActivityUnauthorized ErrorResponse
+
+func (*GetFriendsRecentActivityUnauthorized) getFriendsRecentActivityRes() {}
 
 type GetGlobalTopAlbumsBadRequest ErrorResponse
 

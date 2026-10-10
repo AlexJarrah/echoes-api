@@ -276,6 +276,15 @@ func (UnimplementedHandler) GetChanges(ctx context.Context, params GetChangesPar
 	return r, ht.ErrNotImplemented
 }
 
+// GetFriendsRecentActivity implements getFriendsRecentActivity operation.
+//
+// Get recent friends activity.
+//
+// GET /api/relations/friends/recent-activity
+func (UnimplementedHandler) GetFriendsRecentActivity(ctx context.Context) (r GetFriendsRecentActivityRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetGlobalTopAlbums implements getGlobalTopAlbums operation.
 //
 // Get global top albums in the specified time range. Time range values default to the range of the

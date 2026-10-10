@@ -63,6 +63,7 @@ var operationRolesCookieAuth = map[string][]string{
 	GetArtistOperation:                 []string{},
 	GetArtistAssetOperation:            []string{},
 	GetChangesOperation:                []string{},
+	GetFriendsRecentActivityOperation:  []string{},
 	GetGroupOperation:                  []string{},
 	GetGroupRolesOperation:             []string{},
 	GetGroupsOperation:                 []string{},

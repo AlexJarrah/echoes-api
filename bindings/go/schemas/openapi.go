@@ -1728,6 +1728,24 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/relations/friends/recent-activity:
+    get:
+      summary: Get recent friends activity
+      operationId: getFriendsRecentActivity
+      tags:
+        - Relations
+      security:
+        - CookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendsRecentActivityResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/remove-friend:
     post:
       summary: Remove a friend
@@ -3048,6 +3066,34 @@ components:
           type: string
           nullable: true
           description: Target user's handle. Optional if 'id' is provided.
+    FriendsRecentActivityResponse:
+      type: array
+      items:
+        type: object
+        required:
+          - user_id
+        properties:
+          user_id:
+            type: string
+            format: uuid
+          listens:
+            type: array
+            items:
+              type: object
+              required:
+                - track_id
+                - seconds
+                - timestamp
+              properties:
+                track_id:
+                  type: string
+                  format: uuid
+                seconds:
+                  type: integer
+                  format: uint16
+                timestamp:
+                  type: string
+                  format: date-time
     GetChangesResponse:
       type: object
       required:
