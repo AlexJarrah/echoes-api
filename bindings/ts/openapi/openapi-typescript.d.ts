@@ -2569,7 +2569,9 @@ export interface operations {
     };
     getUserAssets: {
         parameters: {
-            query?: never;
+            query?: {
+                user_id?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;

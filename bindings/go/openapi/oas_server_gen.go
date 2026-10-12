@@ -335,7 +335,7 @@ type Handler interface {
 	// GetUserAssets implements getUserAssets operation.
 	//
 	// GET /api/assets/user
-	GetUserAssets(ctx context.Context) (GetUserAssetsRes, error)
+	GetUserAssets(ctx context.Context, params GetUserAssetsParams) (GetUserAssetsRes, error)
 	// GetUserDetails implements getUserDetails operation.
 	//
 	// Get current user details.

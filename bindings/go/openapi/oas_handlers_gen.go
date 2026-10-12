@@ -10260,6 +10260,16 @@ func (s *Server) handleGetUserAssetsRequest(args [0]string, argsEscaped bool, w 
 			return
 		}
 	}
+	params, err := decodeGetUserAssetsParams(args, argsEscaped, r)
+	if err != nil {
+		err = &ogenerrors.DecodeParamsError{
+			OperationContext: opErrContext,
+			Err:              err,
+		}
+		defer recordError("DecodeParams", err)
+		s.cfg.ErrorHandler(ctx, w, r, err)
+		return
+	}
 
 	var rawBody []byte
 
@@ -10272,13 +10282,18 @@ func (s *Server) handleGetUserAssetsRequest(args [0]string, argsEscaped bool, w 
 			OperationID:      "getUserAssets",
 			Body:             nil,
 			RawBody:          rawBody,
-			Params:           middleware.Parameters{},
-			Raw:              r,
+			Params: middleware.Parameters{
+				{
+					Name: "user_id",
+					In:   "query",
+				}: params.UserID,
+			},
+			Raw: r,
 		}
 
 		type (
 			Request  = struct{}
-			Params   = struct{}
+			Params   = GetUserAssetsParams
 			Response = GetUserAssetsRes
 		)
 		response, err = middleware.HookMiddleware[
@@ -10288,14 +10303,14 @@ func (s *Server) handleGetUserAssetsRequest(args [0]string, argsEscaped bool, w 
 		](
 			m,
 			mreq,
-			nil,
+			unpackGetUserAssetsParams,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.GetUserAssets(ctx)
+				response, err = s.h.GetUserAssets(ctx, params)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.GetUserAssets(ctx)
+		response, err = s.h.GetUserAssets(ctx, params)
 	}
 	if err != nil {
 		defer recordError("Internal", err)

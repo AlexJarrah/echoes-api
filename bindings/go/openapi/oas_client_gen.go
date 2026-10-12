@@ -417,7 +417,7 @@ type Invoker interface {
 	// GetUserAssets invokes getUserAssets operation.
 	//
 	// GET /api/assets/user
-	GetUserAssets(ctx context.Context, options ...RequestOption) (GetUserAssetsRes, error)
+	GetUserAssets(ctx context.Context, params GetUserAssetsParams, options ...RequestOption) (GetUserAssetsRes, error)
 	// GetUserDetails invokes getUserDetails operation.
 	//
 	// Get current user details.
@@ -9344,12 +9344,12 @@ func (c *Client) sendGetUserAsset(ctx context.Context, params GetUserAssetParams
 // GetUserAssets invokes getUserAssets operation.
 //
 // GET /api/assets/user
-func (c *Client) GetUserAssets(ctx context.Context, options ...RequestOption) (GetUserAssetsRes, error) {
-	res, err := c.sendGetUserAssets(ctx, options...)
+func (c *Client) GetUserAssets(ctx context.Context, params GetUserAssetsParams, options ...RequestOption) (GetUserAssetsRes, error) {
+	res, err := c.sendGetUserAssets(ctx, params, options...)
 	return res, err
 }
 
-func (c *Client) sendGetUserAssets(ctx context.Context, requestOptions ...RequestOption) (res GetUserAssetsRes, err error) {
+func (c *Client) sendGetUserAssets(ctx context.Context, params GetUserAssetsParams, requestOptions ...RequestOption) (res GetUserAssetsRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("getUserAssets"),
 		semconv.HTTPRequestMethodKey.String("GET"),
@@ -9399,6 +9399,27 @@ func (c *Client) sendGetUserAssets(ctx context.Context, requestOptions ...Reques
 	var pathParts [1]string
 	pathParts[0] = "/api/assets/user"
 	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeQueryParams"
+	q := uri.NewQueryEncoder()
+	{
+		// Encode "user_id" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "user_id",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			if val, ok := params.UserID.Get(); ok {
+				return e.EncodeValue(conv.UUIDToString(val))
+			}
+			return nil
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	u.RawQuery = q.Values().Encode()
 
 	stage = "EncodeRequest"
 	r, err := ht.NewRequest(ctx, "GET", u)

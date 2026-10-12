@@ -3290,6 +3290,70 @@ func decodeGetUserAssetParams(args [1]string, argsEscaped bool, r *http.Request)
 	return params, nil
 }
 
+// GetUserAssetsParams is parameters of getUserAssets operation.
+type GetUserAssetsParams struct {
+	UserID OptUUID `json:",omitempty,omitzero"`
+}
+
+func unpackGetUserAssetsParams(packed middleware.Parameters) (params GetUserAssetsParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "user_id",
+			In:   "query",
+		}
+		if v, ok := packed[key]; ok {
+			params.UserID = v.(OptUUID)
+		}
+	}
+	return params
+}
+
+func decodeGetUserAssetsParams(args [0]string, argsEscaped bool, r *http.Request) (params GetUserAssetsParams, _ error) {
+	q := uri.NewQueryDecoder(r.URL.Query())
+	// Decode query: user_id.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "user_id",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotUserIDVal uuid.UUID
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToUUID(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotUserIDVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.UserID.SetTo(paramsDotUserIDVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "user_id",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // GetUserListenSessionsParams is parameters of getUserListenSessions operation.
 type GetUserListenSessionsParams struct {
 	Handle string

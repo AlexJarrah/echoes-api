@@ -1376,7 +1376,9 @@ export type GetArtistAssetResponse = GetArtistAssetResponses[keyof GetArtistAsse
 export type GetUserAssetsData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        user_id?: string;
+    };
     url: '/api/assets/user';
 };
 

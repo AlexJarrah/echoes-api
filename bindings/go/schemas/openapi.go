@@ -219,6 +219,13 @@ paths:
       operationId: getUserAssets
       security:
         - CookieAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: User assets retrieved successfully

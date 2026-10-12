@@ -505,7 +505,7 @@ func (UnimplementedHandler) GetUserAsset(ctx context.Context, params GetUserAsse
 // GetUserAssets implements getUserAssets operation.
 //
 // GET /api/assets/user
-func (UnimplementedHandler) GetUserAssets(ctx context.Context) (r GetUserAssetsRes, _ error) {
+func (UnimplementedHandler) GetUserAssets(ctx context.Context, params GetUserAssetsParams) (r GetUserAssetsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
