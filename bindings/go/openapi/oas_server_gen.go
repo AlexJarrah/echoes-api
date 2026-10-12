@@ -322,6 +322,12 @@ type Handler interface {
 	//
 	// GET /api/tracks/{track_id}
 	GetTrack(ctx context.Context, params GetTrackParams) (GetTrackRes, error)
+	// GetTrackDetails implements getTrackDetails operation.
+	//
+	// Get track and related entity's information.
+	//
+	// GET /api/tracks/{track_id}/details
+	GetTrackDetails(ctx context.Context, params GetTrackDetailsParams) (GetTrackDetailsRes, error)
 	// GetTracksPlayStats implements getTracksPlayStats operation.
 	//
 	// Get all tracks' play count & time in a specified time range.

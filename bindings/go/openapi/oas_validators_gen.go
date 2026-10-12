@@ -2533,6 +2533,95 @@ func (s *TopTrackEntry) Validate() error {
 	return nil
 }
 
+func (s *TrackDetails) Validate() error {
+	if s == nil {
+		return validate.ErrNilPointer
+	}
+
+	var failures []validate.FieldError
+	if err := func() error {
+		if s.Artists == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "artists",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.Albums == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "albums",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.TrackArtists == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "track_artists",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.AlbumTracks == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "album_tracks",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.AlbumArtists == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "album_artists",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.ArtistAssets == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "artist_assets",
+			Error: err,
+		})
+	}
+	if err := func() error {
+		if s.AlbumAssets == nil {
+			return errors.New("nil is invalid value")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "album_assets",
+			Error: err,
+		})
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+	return nil
+}
+
 func (s *UpdateGroupRolesRequest) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer

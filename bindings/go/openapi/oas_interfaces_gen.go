@@ -201,6 +201,10 @@ type GetRelationsDetailsRes interface {
 	getRelationsDetailsRes()
 }
 
+type GetTrackDetailsRes interface {
+	getTrackDetailsRes()
+}
+
 type GetTrackRes interface {
 	getTrackRes()
 }

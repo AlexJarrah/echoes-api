@@ -2223,6 +2223,35 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/tracks/{track_id}/details:
+    get:
+      summary: Get track and related entity's information
+      operationId: getTrackDetails
+      tags:
+        - Tracks
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: track_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackDetails'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/tracks/{track_id}:
     get:
       summary: Get track details
@@ -4710,6 +4739,48 @@ components:
         featured:
           type: boolean
           default: false
+    TrackDetails:
+      type: object
+      required:
+        - track
+        - artists
+        - albums
+        - track_artists
+        - album_tracks
+        - album_artists
+        - artist_assets
+        - album_assets
+      properties:
+        track:
+          $ref: '#/components/schemas/Track'
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+        albums:
+          type: array
+          items:
+            $ref: '#/components/schemas/Album'
+        track_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackArtist'
+        album_tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumTrack'
+        album_artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumArtist'
+        artist_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistAsset'
+        album_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumAsset'
     TrackPlayStats:
       type: object
       required:

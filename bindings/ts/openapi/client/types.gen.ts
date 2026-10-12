@@ -1061,6 +1061,17 @@ export type TrackArtist = {
     featured?: boolean;
 };
 
+export type TrackDetails = {
+    track: Track;
+    artists: Array<Artist>;
+    albums: Array<Album>;
+    track_artists: Array<TrackArtist>;
+    album_tracks: Array<AlbumTrack>;
+    album_artists: Array<AlbumArtist>;
+    artist_assets: Array<ArtistAsset>;
+    album_assets: Array<AlbumAsset>;
+};
+
 export type TrackPlayStats = {
     track: Track;
     play_count: number;
@@ -3683,6 +3694,42 @@ export type SearchTracksResponses = {
 };
 
 export type SearchTracksResponse = SearchTracksResponses[keyof SearchTracksResponses];
+
+export type GetTrackDetailsData = {
+    body?: never;
+    path: {
+        track_id: string;
+    };
+    query?: never;
+    url: '/api/tracks/{track_id}/details';
+};
+
+export type GetTrackDetailsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetTrackDetailsError = GetTrackDetailsErrors[keyof GetTrackDetailsErrors];
+
+export type GetTrackDetailsResponses = {
+    200: TrackDetails;
+};
+
+export type GetTrackDetailsResponse = GetTrackDetailsResponses[keyof GetTrackDetailsResponses];
 
 export type GetTrackData = {
     body?: never;

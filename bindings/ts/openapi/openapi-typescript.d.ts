@@ -934,6 +934,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/tracks/{track_id}/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get track and related entity's information */
+        get: operations["getTrackDetails"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tracks/{track_id}": {
         parameters: {
             query?: never;
@@ -2233,6 +2250,16 @@ export interface components {
             artist_id: string;
             /** @default false */
             featured: boolean;
+        };
+        TrackDetails: {
+            track: components["schemas"]["Track"];
+            artists: components["schemas"]["Artist"][];
+            albums: components["schemas"]["Album"][];
+            track_artists: components["schemas"]["TrackArtist"][];
+            album_tracks: components["schemas"]["AlbumTrack"][];
+            album_artists: components["schemas"]["AlbumArtist"][];
+            artist_assets: components["schemas"]["ArtistAsset"][];
+            album_assets: components["schemas"]["AlbumAsset"][];
         };
         TrackPlayStats: {
             track: components["schemas"]["Track"];
@@ -4239,6 +4266,31 @@ export interface operations {
             };
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getTrackDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrackDetails"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
             500: components["responses"]["InternalServerError"];
         };
     };

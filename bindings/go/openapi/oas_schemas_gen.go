@@ -2821,6 +2821,22 @@ type GetTrackBadRequest ErrorResponse
 
 func (*GetTrackBadRequest) getTrackRes() {}
 
+type GetTrackDetailsBadRequest ErrorResponse
+
+func (*GetTrackDetailsBadRequest) getTrackDetailsRes() {}
+
+type GetTrackDetailsInternalServerError ErrorResponse
+
+func (*GetTrackDetailsInternalServerError) getTrackDetailsRes() {}
+
+type GetTrackDetailsNotFound ErrorResponse
+
+func (*GetTrackDetailsNotFound) getTrackDetailsRes() {}
+
+type GetTrackDetailsUnauthorized ErrorResponse
+
+func (*GetTrackDetailsUnauthorized) getTrackDetailsRes() {}
+
 type GetTrackInternalServerError ErrorResponse
 
 func (*GetTrackInternalServerError) getTrackRes() {}
@@ -9202,6 +9218,100 @@ func (s *TrackArtist) SetArtistID(val uuid.UUID) {
 func (s *TrackArtist) SetFeatured(val OptBool) {
 	s.Featured = val
 }
+
+// Ref: #/components/schemas/TrackDetails
+type TrackDetails struct {
+	Track        Track         `json:"track"`
+	Artists      []Artist      `json:"artists"`
+	Albums       []Album       `json:"albums"`
+	TrackArtists []TrackArtist `json:"track_artists"`
+	AlbumTracks  []AlbumTrack  `json:"album_tracks"`
+	AlbumArtists []AlbumArtist `json:"album_artists"`
+	ArtistAssets []ArtistAsset `json:"artist_assets"`
+	AlbumAssets  []AlbumAsset  `json:"album_assets"`
+}
+
+// GetTrack returns the value of Track.
+func (s *TrackDetails) GetTrack() Track {
+	return s.Track
+}
+
+// GetArtists returns the value of Artists.
+func (s *TrackDetails) GetArtists() []Artist {
+	return s.Artists
+}
+
+// GetAlbums returns the value of Albums.
+func (s *TrackDetails) GetAlbums() []Album {
+	return s.Albums
+}
+
+// GetTrackArtists returns the value of TrackArtists.
+func (s *TrackDetails) GetTrackArtists() []TrackArtist {
+	return s.TrackArtists
+}
+
+// GetAlbumTracks returns the value of AlbumTracks.
+func (s *TrackDetails) GetAlbumTracks() []AlbumTrack {
+	return s.AlbumTracks
+}
+
+// GetAlbumArtists returns the value of AlbumArtists.
+func (s *TrackDetails) GetAlbumArtists() []AlbumArtist {
+	return s.AlbumArtists
+}
+
+// GetArtistAssets returns the value of ArtistAssets.
+func (s *TrackDetails) GetArtistAssets() []ArtistAsset {
+	return s.ArtistAssets
+}
+
+// GetAlbumAssets returns the value of AlbumAssets.
+func (s *TrackDetails) GetAlbumAssets() []AlbumAsset {
+	return s.AlbumAssets
+}
+
+// SetTrack sets the value of Track.
+func (s *TrackDetails) SetTrack(val Track) {
+	s.Track = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *TrackDetails) SetArtists(val []Artist) {
+	s.Artists = val
+}
+
+// SetAlbums sets the value of Albums.
+func (s *TrackDetails) SetAlbums(val []Album) {
+	s.Albums = val
+}
+
+// SetTrackArtists sets the value of TrackArtists.
+func (s *TrackDetails) SetTrackArtists(val []TrackArtist) {
+	s.TrackArtists = val
+}
+
+// SetAlbumTracks sets the value of AlbumTracks.
+func (s *TrackDetails) SetAlbumTracks(val []AlbumTrack) {
+	s.AlbumTracks = val
+}
+
+// SetAlbumArtists sets the value of AlbumArtists.
+func (s *TrackDetails) SetAlbumArtists(val []AlbumArtist) {
+	s.AlbumArtists = val
+}
+
+// SetArtistAssets sets the value of ArtistAssets.
+func (s *TrackDetails) SetArtistAssets(val []ArtistAsset) {
+	s.ArtistAssets = val
+}
+
+// SetAlbumAssets sets the value of AlbumAssets.
+func (s *TrackDetails) SetAlbumAssets(val []AlbumAsset) {
+	s.AlbumAssets = val
+}
+
+func (*TrackDetails) getTrackDetailsRes() {}
 
 // Ref: #/components/schemas/TrackPlayStats
 type TrackPlayStats struct {

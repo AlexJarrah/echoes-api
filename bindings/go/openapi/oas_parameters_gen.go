@@ -3225,6 +3225,71 @@ func decodeGetTrackParams(args [1]string, argsEscaped bool, r *http.Request) (pa
 	return params, nil
 }
 
+// GetTrackDetailsParams is parameters of getTrackDetails operation.
+type GetTrackDetailsParams struct {
+	TrackID uuid.UUID
+}
+
+func unpackGetTrackDetailsParams(packed middleware.Parameters) (params GetTrackDetailsParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "track_id",
+			In:   "path",
+		}
+		params.TrackID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeGetTrackDetailsParams(args [1]string, argsEscaped bool, r *http.Request) (params GetTrackDetailsParams, _ error) {
+	// Decode path: track_id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "track_id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.TrackID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "track_id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // GetUserAssetParams is parameters of getUserAsset operation.
 type GetUserAssetParams struct {
 	AssetID uuid.UUID

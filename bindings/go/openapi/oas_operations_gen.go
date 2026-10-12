@@ -59,6 +59,7 @@ const (
 	GetPlaylistTracksOperation         OperationName = "GetPlaylistTracks"
 	GetRelationsDetailsOperation       OperationName = "GetRelationsDetails"
 	GetTrackOperation                  OperationName = "GetTrack"
+	GetTrackDetailsOperation           OperationName = "GetTrackDetails"
 	GetTracksPlayStatsOperation        OperationName = "GetTracksPlayStats"
 	GetUserAssetOperation              OperationName = "GetUserAsset"
 	GetUserAssetsOperation             OperationName = "GetUserAssets"

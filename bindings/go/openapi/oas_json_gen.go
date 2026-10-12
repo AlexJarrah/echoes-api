@@ -12152,6 +12152,158 @@ func (s *GetTrackBadRequest) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
+// Encode encodes GetTrackDetailsBadRequest as json.
+func (s *GetTrackDetailsBadRequest) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetTrackDetailsBadRequest from json.
+func (s *GetTrackDetailsBadRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetTrackDetailsBadRequest to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetTrackDetailsBadRequest(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetTrackDetailsBadRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetTrackDetailsBadRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetTrackDetailsInternalServerError as json.
+func (s *GetTrackDetailsInternalServerError) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetTrackDetailsInternalServerError from json.
+func (s *GetTrackDetailsInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetTrackDetailsInternalServerError to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetTrackDetailsInternalServerError(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetTrackDetailsInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetTrackDetailsInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetTrackDetailsNotFound as json.
+func (s *GetTrackDetailsNotFound) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetTrackDetailsNotFound from json.
+func (s *GetTrackDetailsNotFound) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetTrackDetailsNotFound to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetTrackDetailsNotFound(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetTrackDetailsNotFound) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetTrackDetailsNotFound) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes GetTrackDetailsUnauthorized as json.
+func (s *GetTrackDetailsUnauthorized) Encode(e *jx.Encoder) {
+	unwrapped := (*ErrorResponse)(s)
+
+	unwrapped.Encode(e)
+}
+
+// Decode decodes GetTrackDetailsUnauthorized from json.
+func (s *GetTrackDetailsUnauthorized) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetTrackDetailsUnauthorized to nil")
+	}
+	var unwrapped ErrorResponse
+	if err := func() error {
+		if err := unwrapped.Decode(d); err != nil {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return errors.Wrap(err, "alias")
+	}
+	*s = GetTrackDetailsUnauthorized(unwrapped)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetTrackDetailsUnauthorized) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetTrackDetailsUnauthorized) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes GetTrackInternalServerError as json.
 func (s *GetTrackInternalServerError) Encode(e *jx.Encoder) {
 	unwrapped := (*ErrorResponse)(s)
@@ -27000,6 +27152,289 @@ func (s *TrackArtist) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *TrackArtist) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *TrackDetails) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *TrackDetails) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("track")
+		s.Track.Encode(e)
+	}
+	{
+		e.FieldStart("artists")
+		e.ArrStart()
+		for _, elem := range s.Artists {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("albums")
+		e.ArrStart()
+		for _, elem := range s.Albums {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("track_artists")
+		e.ArrStart()
+		for _, elem := range s.TrackArtists {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("album_tracks")
+		e.ArrStart()
+		for _, elem := range s.AlbumTracks {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("album_artists")
+		e.ArrStart()
+		for _, elem := range s.AlbumArtists {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("artist_assets")
+		e.ArrStart()
+		for _, elem := range s.ArtistAssets {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+	{
+		e.FieldStart("album_assets")
+		e.ArrStart()
+		for _, elem := range s.AlbumAssets {
+			elem.Encode(e)
+		}
+		e.ArrEnd()
+	}
+}
+
+var jsonFieldsNameOfTrackDetails = [8]string{
+	0: "track",
+	1: "artists",
+	2: "albums",
+	3: "track_artists",
+	4: "album_tracks",
+	5: "album_artists",
+	6: "artist_assets",
+	7: "album_assets",
+}
+
+// Decode decodes TrackDetails from json.
+func (s *TrackDetails) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode TrackDetails to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "track":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				if err := s.Track.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track\"")
+			}
+		case "artists":
+			requiredBitSet[0] |= 1 << 1
+			if err := func() error {
+				s.Artists = make([]Artist, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem Artist
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.Artists = append(s.Artists, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artists\"")
+			}
+		case "albums":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				s.Albums = make([]Album, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem Album
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.Albums = append(s.Albums, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"albums\"")
+			}
+		case "track_artists":
+			requiredBitSet[0] |= 1 << 3
+			if err := func() error {
+				s.TrackArtists = make([]TrackArtist, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem TrackArtist
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.TrackArtists = append(s.TrackArtists, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"track_artists\"")
+			}
+		case "album_tracks":
+			requiredBitSet[0] |= 1 << 4
+			if err := func() error {
+				s.AlbumTracks = make([]AlbumTrack, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem AlbumTrack
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.AlbumTracks = append(s.AlbumTracks, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album_tracks\"")
+			}
+		case "album_artists":
+			requiredBitSet[0] |= 1 << 5
+			if err := func() error {
+				s.AlbumArtists = make([]AlbumArtist, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem AlbumArtist
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.AlbumArtists = append(s.AlbumArtists, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album_artists\"")
+			}
+		case "artist_assets":
+			requiredBitSet[0] |= 1 << 6
+			if err := func() error {
+				s.ArtistAssets = make([]ArtistAsset, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem ArtistAsset
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.ArtistAssets = append(s.ArtistAssets, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"artist_assets\"")
+			}
+		case "album_assets":
+			requiredBitSet[0] |= 1 << 7
+			if err := func() error {
+				s.AlbumAssets = make([]AlbumAsset, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem AlbumAsset
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.AlbumAssets = append(s.AlbumAssets, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"album_assets\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode TrackDetails")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b11111111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfTrackDetails) {
+					name = jsonFieldsNameOfTrackDetails[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *TrackDetails) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *TrackDetails) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

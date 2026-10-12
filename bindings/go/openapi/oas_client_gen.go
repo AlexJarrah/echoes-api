@@ -404,6 +404,12 @@ type Invoker interface {
 	//
 	// GET /api/tracks/{track_id}
 	GetTrack(ctx context.Context, params GetTrackParams, options ...RequestOption) (GetTrackRes, error)
+	// GetTrackDetails invokes getTrackDetails operation.
+	//
+	// Get track and related entity's information.
+	//
+	// GET /api/tracks/{track_id}/details
+	GetTrackDetails(ctx context.Context, params GetTrackDetailsParams, options ...RequestOption) (GetTrackDetailsRes, error)
 	// GetTracksPlayStats invokes getTracksPlayStats operation.
 	//
 	// Get all tracks' play count & time in a specified time range.
@@ -9021,6 +9027,164 @@ func (c *Client) sendGetTrack(ctx context.Context, params GetTrackParams, reques
 
 	stage = "DecodeResponse"
 	result, err := decodeGetTrackResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// GetTrackDetails invokes getTrackDetails operation.
+//
+// Get track and related entity's information.
+//
+// GET /api/tracks/{track_id}/details
+func (c *Client) GetTrackDetails(ctx context.Context, params GetTrackDetailsParams, options ...RequestOption) (GetTrackDetailsRes, error) {
+	res, err := c.sendGetTrackDetails(ctx, params, options...)
+	return res, err
+}
+
+func (c *Client) sendGetTrackDetails(ctx context.Context, params GetTrackDetailsParams, requestOptions ...RequestOption) (res GetTrackDetailsRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		otelogen.OperationID("getTrackDetails"),
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.URLTemplateKey.String("/api/tracks/{track_id}/details"),
+	}
+	otelAttrs = append(otelAttrs, c.cfg.Attributes...)
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, GetTrackDetailsOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	var reqCfg requestConfig
+	reqCfg.setDefaults(c.baseClient)
+	for _, o := range requestOptions {
+		o(&reqCfg)
+	}
+
+	stage = "BuildURL"
+	u := c.serverURL
+	if override := reqCfg.ServerURL; override != nil {
+		u = override
+	}
+	u = uri.Clone(u)
+	var pathParts [3]string
+	pathParts[0] = "/api/tracks/"
+	{
+		// Encode "track_id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "track_id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.TrackID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/details"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	{
+		type bitset = [1]uint8
+		var satisfied bitset
+		{
+			stage = "Security:CookieAuth"
+			switch err := c.securityCookieAuth(ctx, GetTrackDetailsOperation, r); {
+			case err == nil: // if NO error
+				satisfied[0] |= 1 << 0
+			case errors.Is(err, ogenerrors.ErrSkipClientSecurity):
+				// Skip this security.
+			default:
+				return res, errors.Wrap(err, "security \"CookieAuth\"")
+			}
+		}
+
+		if ok := func() bool {
+		nextRequirement:
+			for _, requirement := range []bitset{
+				{0b00000001},
+			} {
+				for i, mask := range requirement {
+					if satisfied[i]&mask != mask {
+						continue nextRequirement
+					}
+				}
+				return true
+			}
+			return false
+		}(); !ok {
+			return res, ogenerrors.ErrSecurityRequirementIsNotSatisfied
+		}
+	}
+
+	if err := c.onRequest(ctx, r); err != nil {
+		return res, errors.Wrap(err, "client edit request")
+	}
+
+	if err := reqCfg.onRequest(r); err != nil {
+		return res, errors.Wrap(err, "edit request")
+	}
+
+	stage = "SendRequest"
+	resp, err := reqCfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	body := resp.Body
+	defer func() {
+		// Drain the body to EOF before closing, so the underlying
+		// connection can be reused by the Transport regardless of the
+		// response status code. See https://github.com/ogen-go/ogen/issues/1670.
+		_, _ = io.Copy(io.Discard, body)
+		_ = body.Close()
+	}()
+
+	if err := c.onResponse(ctx, resp); err != nil {
+		return res, errors.Wrap(err, "client edit response")
+	}
+
+	if err := reqCfg.onResponse(resp); err != nil {
+		return res, errors.Wrap(err, "edit response")
+	}
+
+	stage = "DecodeResponse"
+	result, err := decodeGetTrackDetailsResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

@@ -486,6 +486,15 @@ func (UnimplementedHandler) GetTrack(ctx context.Context, params GetTrackParams)
 	return r, ht.ErrNotImplemented
 }
 
+// GetTrackDetails implements getTrackDetails operation.
+//
+// Get track and related entity's information.
+//
+// GET /api/tracks/{track_id}/details
+func (UnimplementedHandler) GetTrackDetails(ctx context.Context, params GetTrackDetailsParams) (r GetTrackDetailsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetTracksPlayStats implements getTracksPlayStats operation.
 //
 // Get all tracks' play count & time in a specified time range.
