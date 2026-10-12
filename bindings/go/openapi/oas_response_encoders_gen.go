@@ -1571,6 +1571,55 @@ func encodeGetAlbumAssetResponse(response GetAlbumAssetRes, w http.ResponseWrite
 
 		return nil
 
+	case *GetAlbumAssetOKImageJxlHeaders:
+		w.Header().Set("Content-Type", "image/jxl")
+		w.Header().Set("Access-Control-Expose-Headers", "Etag")
+		// Encoding response headers.
+		{
+			h := uri.NewHeaderEncoder(w.Header())
+			// Encode "Cache-Control" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "Cache-Control",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.CacheControl.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode Cache-Control header")
+				}
+			}
+			// Encode "ETag" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "ETag",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.ETag.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode ETag header")
+				}
+			}
+		}
+		w.WriteHeader(200)
+
+		writer := w
+		if closer, ok := response.Response.Data.(io.Closer); ok {
+			defer closer.Close()
+		}
+		if _, err := io.Copy(writer, response.Response); err != nil {
+			return errors.Wrap(err, "write")
+		}
+
+		return nil
+
 	case *GetAlbumAssetOKImagePNGHeaders:
 		w.Header().Set("Content-Type", "image/png")
 		w.Header().Set("Access-Control-Expose-Headers", "Etag")
@@ -1722,6 +1771,55 @@ func encodeGetArtistAssetResponse(response GetArtistAssetRes, w http.ResponseWri
 	switch response := response.(type) {
 	case *GetArtistAssetOKImageJpegHeaders:
 		w.Header().Set("Content-Type", "image/jpeg")
+		w.Header().Set("Access-Control-Expose-Headers", "Etag")
+		// Encoding response headers.
+		{
+			h := uri.NewHeaderEncoder(w.Header())
+			// Encode "Cache-Control" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "Cache-Control",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.CacheControl.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode Cache-Control header")
+				}
+			}
+			// Encode "ETag" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "ETag",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.ETag.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode ETag header")
+				}
+			}
+		}
+		w.WriteHeader(200)
+
+		writer := w
+		if closer, ok := response.Response.Data.(io.Closer); ok {
+			defer closer.Close()
+		}
+		if _, err := io.Copy(writer, response.Response); err != nil {
+			return errors.Wrap(err, "write")
+		}
+
+		return nil
+
+	case *GetArtistAssetOKImageJxlHeaders:
+		w.Header().Set("Content-Type", "image/jxl")
 		w.Header().Set("Access-Control-Expose-Headers", "Etag")
 		// Encoding response headers.
 		{
@@ -3471,6 +3569,55 @@ func encodeGetUserAssetResponse(response GetUserAssetRes, w http.ResponseWriter,
 	switch response := response.(type) {
 	case *GetUserAssetOKImageJpegHeaders:
 		w.Header().Set("Content-Type", "image/jpeg")
+		w.Header().Set("Access-Control-Expose-Headers", "Etag")
+		// Encoding response headers.
+		{
+			h := uri.NewHeaderEncoder(w.Header())
+			// Encode "Cache-Control" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "Cache-Control",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.CacheControl.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode Cache-Control header")
+				}
+			}
+			// Encode "ETag" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "ETag",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.ETag.Get(); ok {
+						return e.EncodeValue(conv.StringToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode ETag header")
+				}
+			}
+		}
+		w.WriteHeader(200)
+
+		writer := w
+		if closer, ok := response.Response.Data.(io.Closer); ok {
+			defer closer.Close()
+		}
+		if _, err := io.Copy(writer, response.Response); err != nil {
+			return errors.Wrap(err, "write")
+		}
+
+		return nil
+
+	case *GetUserAssetOKImageJxlHeaders:
+		w.Header().Set("Content-Type", "image/jxl")
 		w.Header().Set("Access-Control-Expose-Headers", "Etag")
 		// Encoding response headers.
 		{

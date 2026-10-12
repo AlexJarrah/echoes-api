@@ -165,6 +165,10 @@ paths:
               schema:
                 type: string
           content:
+            image/jxl:
+              schema:
+                type: string
+                format: binary
             image/jpeg:
               schema:
                 type: string
@@ -202,6 +206,10 @@ paths:
               schema:
                 type: string
           content:
+            image/jxl:
+              schema:
+                type: string
+                format: binary
             image/jpeg:
               schema:
                 type: string
@@ -298,6 +306,10 @@ paths:
               schema:
                 type: string
           content:
+            image/jxl:
+              schema:
+                type: string
+                format: binary
             image/jpeg:
               schema:
                 type: string

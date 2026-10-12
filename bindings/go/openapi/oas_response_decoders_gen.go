@@ -3858,6 +3858,92 @@ func decodeGetAlbumAssetResponse(resp *http.Response) (res GetAlbumAssetRes, _ e
 				}
 			}
 			return &wrapper, nil
+		case ct == "image/jxl":
+			reader := resp.Body
+			b, err := io.ReadAll(reader)
+			if err != nil {
+				return res, err
+			}
+
+			response := GetAlbumAssetOKImageJxl{Data: bytes.NewReader(b)}
+			var wrapper GetAlbumAssetOKImageJxlHeaders
+			wrapper.Response = response
+			h := uri.NewHeaderDecoder(resp.Header)
+			// Parse "Cache-Control" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Cache-Control",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotCacheControlVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotCacheControlVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.CacheControl.SetTo(wrapperDotCacheControlVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Cache-Control header")
+				}
+			}
+			// Parse "ETag" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "ETag",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotETagVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotETagVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.ETag.SetTo(wrapperDotETagVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse ETag header")
+				}
+			}
+			return &wrapper, nil
 		case ct == "image/png":
 			reader := resp.Body
 			b, err := io.ReadAll(reader)
@@ -4220,6 +4306,92 @@ func decodeGetArtistAssetResponse(resp *http.Response) (res GetArtistAssetRes, _
 
 			response := GetArtistAssetOKImageJpeg{Data: bytes.NewReader(b)}
 			var wrapper GetArtistAssetOKImageJpegHeaders
+			wrapper.Response = response
+			h := uri.NewHeaderDecoder(resp.Header)
+			// Parse "Cache-Control" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Cache-Control",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotCacheControlVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotCacheControlVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.CacheControl.SetTo(wrapperDotCacheControlVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Cache-Control header")
+				}
+			}
+			// Parse "ETag" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "ETag",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotETagVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotETagVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.ETag.SetTo(wrapperDotETagVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse ETag header")
+				}
+			}
+			return &wrapper, nil
+		case ct == "image/jxl":
+			reader := resp.Body
+			b, err := io.ReadAll(reader)
+			if err != nil {
+				return res, err
+			}
+
+			response := GetArtistAssetOKImageJxl{Data: bytes.NewReader(b)}
+			var wrapper GetArtistAssetOKImageJxlHeaders
 			wrapper.Response = response
 			h := uri.NewHeaderDecoder(resp.Header)
 			// Parse "Cache-Control" header.
@@ -8324,6 +8496,92 @@ func decodeGetUserAssetResponse(resp *http.Response) (res GetUserAssetRes, _ err
 
 			response := GetUserAssetOKImageJpeg{Data: bytes.NewReader(b)}
 			var wrapper GetUserAssetOKImageJpegHeaders
+			wrapper.Response = response
+			h := uri.NewHeaderDecoder(resp.Header)
+			// Parse "Cache-Control" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "Cache-Control",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotCacheControlVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotCacheControlVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.CacheControl.SetTo(wrapperDotCacheControlVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse Cache-Control header")
+				}
+			}
+			// Parse "ETag" header.
+			{
+				cfg := uri.HeaderParameterDecodingConfig{
+					Name:    "ETag",
+					Explode: false,
+				}
+				if err := func() error {
+					if err := h.HasParam(cfg); err == nil {
+						if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+							var wrapperDotETagVal string
+							if err := func() error {
+								val, err := d.DecodeValue()
+								if err != nil {
+									return err
+								}
+
+								c, err := conv.ToString(val)
+								if err != nil {
+									return err
+								}
+
+								wrapperDotETagVal = c
+								return nil
+							}(); err != nil {
+								return err
+							}
+							wrapper.ETag.SetTo(wrapperDotETagVal)
+							return nil
+						}); err != nil {
+							return err
+						}
+					}
+					return nil
+				}(); err != nil {
+					return res, errors.Wrap(err, "parse ETag header")
+				}
+			}
+			return &wrapper, nil
+		case ct == "image/jxl":
+			reader := resp.Body
+			b, err := io.ReadAll(reader)
+			if err != nil {
+				return res, err
+			}
+
+			response := GetUserAssetOKImageJxl{Data: bytes.NewReader(b)}
+			var wrapper GetUserAssetOKImageJxlHeaders
 			wrapper.Response = response
 			h := uri.NewHeaderDecoder(resp.Header)
 			// Parse "Cache-Control" header.

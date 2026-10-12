@@ -1720,6 +1720,59 @@ func (s *GetAlbumAssetOKImageJpegHeaders) SetResponse(val GetAlbumAssetOKImageJp
 
 func (*GetAlbumAssetOKImageJpegHeaders) getAlbumAssetRes() {}
 
+type GetAlbumAssetOKImageJxl struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetAlbumAssetOKImageJxl) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+// GetAlbumAssetOKImageJxlHeaders wraps GetAlbumAssetOKImageJxl with response headers.
+type GetAlbumAssetOKImageJxlHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetAlbumAssetOKImageJxl
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetAlbumAssetOKImageJxlHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetAlbumAssetOKImageJxlHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetAlbumAssetOKImageJxlHeaders) GetResponse() GetAlbumAssetOKImageJxl {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetAlbumAssetOKImageJxlHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetAlbumAssetOKImageJxlHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetAlbumAssetOKImageJxlHeaders) SetResponse(val GetAlbumAssetOKImageJxl) {
+	s.Response = val
+}
+
+func (*GetAlbumAssetOKImageJxlHeaders) getAlbumAssetRes() {}
+
 type GetAlbumAssetOKImagePNG struct {
 	Data io.Reader
 }
@@ -1849,6 +1902,59 @@ func (s *GetArtistAssetOKImageJpegHeaders) SetResponse(val GetArtistAssetOKImage
 }
 
 func (*GetArtistAssetOKImageJpegHeaders) getArtistAssetRes() {}
+
+type GetArtistAssetOKImageJxl struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetArtistAssetOKImageJxl) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+// GetArtistAssetOKImageJxlHeaders wraps GetArtistAssetOKImageJxl with response headers.
+type GetArtistAssetOKImageJxlHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetArtistAssetOKImageJxl
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetArtistAssetOKImageJxlHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetArtistAssetOKImageJxlHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetArtistAssetOKImageJxlHeaders) GetResponse() GetArtistAssetOKImageJxl {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetArtistAssetOKImageJxlHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetArtistAssetOKImageJxlHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetArtistAssetOKImageJxlHeaders) SetResponse(val GetArtistAssetOKImageJxl) {
+	s.Response = val
+}
+
+func (*GetArtistAssetOKImageJxlHeaders) getArtistAssetRes() {}
 
 type GetArtistAssetOKImagePNG struct {
 	Data io.Reader
@@ -2917,6 +3023,59 @@ func (s *GetUserAssetOKImageJpegHeaders) SetResponse(val GetUserAssetOKImageJpeg
 }
 
 func (*GetUserAssetOKImageJpegHeaders) getUserAssetRes() {}
+
+type GetUserAssetOKImageJxl struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s GetUserAssetOKImageJxl) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+// GetUserAssetOKImageJxlHeaders wraps GetUserAssetOKImageJxl with response headers.
+type GetUserAssetOKImageJxlHeaders struct {
+	CacheControl OptString
+	ETag         OptString
+	Response     GetUserAssetOKImageJxl
+}
+
+// GetCacheControl returns the value of CacheControl.
+func (s *GetUserAssetOKImageJxlHeaders) GetCacheControl() OptString {
+	return s.CacheControl
+}
+
+// GetETag returns the value of ETag.
+func (s *GetUserAssetOKImageJxlHeaders) GetETag() OptString {
+	return s.ETag
+}
+
+// GetResponse returns the value of Response.
+func (s *GetUserAssetOKImageJxlHeaders) GetResponse() GetUserAssetOKImageJxl {
+	return s.Response
+}
+
+// SetCacheControl sets the value of CacheControl.
+func (s *GetUserAssetOKImageJxlHeaders) SetCacheControl(val OptString) {
+	s.CacheControl = val
+}
+
+// SetETag sets the value of ETag.
+func (s *GetUserAssetOKImageJxlHeaders) SetETag(val OptString) {
+	s.ETag = val
+}
+
+// SetResponse sets the value of Response.
+func (s *GetUserAssetOKImageJxlHeaders) SetResponse(val GetUserAssetOKImageJxl) {
+	s.Response = val
+}
+
+func (*GetUserAssetOKImageJxlHeaders) getUserAssetRes() {}
 
 type GetUserAssetOKImagePNG struct {
 	Data io.Reader

@@ -2557,6 +2557,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "image/jxl": string;
                     "image/jpeg": string;
                     "image/png": string;
                 };
@@ -2586,6 +2587,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "image/jxl": string;
                     "image/jpeg": string;
                     "image/png": string;
                 };
@@ -2674,6 +2676,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "image/jxl": string;
                     "image/jpeg": string;
                     "image/png": string;
                 };
