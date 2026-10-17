@@ -125,3 +125,19 @@ func (s *TrackArtist) setDefaults() {
 		s.Featured.SetTo(val)
 	}
 }
+
+// setDefaults set default value of fields.
+func (s *TrackArtistContributionsCreateItem) setDefaults() {
+	{
+		val := bool(false)
+		s.Featured.SetTo(val)
+	}
+}
+
+// setDefaults set default value of fields.
+func (s *TrackArtistContributionsUpdateItem) setDefaults() {
+	{
+		val := bool(false)
+		s.Featured.SetTo(val)
+	}
+}

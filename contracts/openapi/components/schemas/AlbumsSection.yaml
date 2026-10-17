@@ -1,0 +1,66 @@
+AlbumContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id, name]
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the album gets assigned.
+          name:
+            type: string
+            minLength: 1
+            maxLength: 300
+          release_date:
+            type: string
+            format: date-time
+            nullable: true
+          base_album_id:
+            type: string
+            format: uuid
+            nullable: true
+          links:
+            $ref: "#/components/schemas/PlatformLinksChange"
+
+    update:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id]
+        additionalProperties: false
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          name:
+            type: string
+            minLength: 1
+            maxLength: 300
+          release_date:
+            type: string
+            format: date-time
+            nullable: true
+          base_album_id:
+            type: string
+            format: uuid
+            nullable: true
+          links:
+            $ref: "#/components/schemas/PlatformLinksChange"
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: string
+        format: uuid

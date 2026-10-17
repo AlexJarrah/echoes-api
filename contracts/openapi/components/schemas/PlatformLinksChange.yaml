@@ -1,0 +1,21 @@
+PlatformLinksChange:
+  type: object
+  description: Absent properties are unchanged.
+  minProperties: 1
+  properties:
+    spotify_url:
+      type: string
+      format: uri
+      nullable: true
+    apple_music_url:
+      type: string
+      format: uri
+      nullable: true
+    tidal_url:
+      type: string
+      format: uri
+      nullable: true
+    youtube_music_url:
+      type: string
+      format: uri
+      nullable: true

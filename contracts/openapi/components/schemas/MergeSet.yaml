@@ -1,0 +1,15 @@
+MergeSet:
+  type: object
+  required:
+    - main_id
+    - merge_ids
+  additionalProperties: false
+  properties:
+    main_id:
+      type: string
+      format: uuid
+      description: Surviving ID or reference ID.
+    merge_ids:
+      type: string
+      format: uuid
+      description: Entity IDs to be merged into main_id.

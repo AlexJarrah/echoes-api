@@ -1,0 +1,81 @@
+/api/contributions:
+  get:
+    summary: List contributions
+    operationId: getContributions
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Filter by author
+      - name: entity_id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Filter by entity involvement
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: "#/components/schemas/ContributionStatus"
+        description: Filter by status
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 50
+          maximum: 100
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 0
+    responses:
+      "200":
+        description: Contributions retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "500": { $ref: "#/components/responses/InternalServerError" }
+
+  post:
+    summary: Propose a contribution
+    operationId: proposeContribution
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ContributionChanges"
+    responses:
+      "201":
+        description: Contribution proposed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "409": { $ref: "#/components/responses/Conflict" }
+      "500": { $ref: "#/components/responses/InternalServerError" }

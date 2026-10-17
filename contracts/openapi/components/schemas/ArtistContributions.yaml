@@ -1,0 +1,66 @@
+ArtistContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [artist_id, name]
+        properties:
+          artist_id:
+            type: string
+            format: uuid
+            description: Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the artist gets assigned.
+          name:
+            type: string
+            minLength: 1
+            maxLength: 200
+          bio:
+            type: string
+            maxLength: 5000
+            nullable: true
+          links:
+            $ref: "#/components/schemas/PlatformLinksChange"
+
+    update:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [artist_id]
+        additionalProperties: false
+        properties:
+          artist_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          name:
+            type: string
+            minLength: 1
+            maxLength: 200
+          bio:
+            type: string
+            maxLength: 5000
+            nullable: true
+          links:
+            $ref: "#/components/schemas/PlatformLinksChange"
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: string
+        format: uuid
+        description: ID or reference ID.
+
+    merge:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        $ref: "#/components/schemas/MergeSet"

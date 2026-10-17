@@ -35,6 +35,29 @@ export type AlbumArtist = {
     artist_id: string;
 };
 
+export type AlbumArtistContributions = {
+    create?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+    }>;
+    delete?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+    }>;
+};
+
 export type AlbumAsset = {
     album_id: string;
     asset_id: string;
@@ -42,6 +65,27 @@ export type AlbumAsset = {
      * Lexicographically sortable string
      */
     position: string;
+};
+
+export type AlbumAssetContributions = {
+    create?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        asset_id: string;
+        /**
+         * Lexicographically sortable string. Assigned by the server when omitted.
+         */
+        position?: string;
+    }>;
+    delete?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        asset_id: string;
+    }>;
 };
 
 export type AlbumPlayStats = {
@@ -58,6 +102,67 @@ export type AlbumTrack = {
     track_number?: number | null;
 };
 
+export type AlbumTrackContributions = {
+    create?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+        disc_number?: number | null;
+        track_number?: number | null;
+    }>;
+    update?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+        disc_number?: number | null;
+        track_number?: number | null;
+    }>;
+    delete?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+    }>;
+};
+
+export type AlbumContributions = {
+    create?: Array<{
+        /**
+         * Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the album gets assigned.
+         */
+        album_id: string;
+        name: string;
+        release_date?: string | null;
+        base_album_id?: string | null;
+        links?: PlatformLinksChange;
+    }>;
+    update?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        album_id: string;
+        name?: string;
+        release_date?: string | null;
+        base_album_id?: string | null;
+        links?: PlatformLinksChange;
+    }>;
+    delete?: Array<string>;
+};
+
 export type Artist = {
     artist_id: string;
     user_id?: string | null;
@@ -72,6 +177,23 @@ export type Artist = {
     updated_at?: string | null;
 };
 
+export type ArtistAliasContributions = {
+    create?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        alias: string;
+    }>;
+    delete?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        alias: string;
+    }>;
+};
+
 export type ArtistAsset = {
     artist_id: string;
     asset_id: string;
@@ -79,6 +201,50 @@ export type ArtistAsset = {
      * Lexicographically sortable string
      */
     position: string;
+};
+
+export type ArtistAssetContributions = {
+    create?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        asset_id: string;
+        /**
+         * Lexicographically sortable string. Assigned by the server when omitted.
+         */
+        position?: string;
+    }>;
+    delete?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        asset_id: string;
+    }>;
+};
+
+export type ArtistContributions = {
+    create?: Array<{
+        /**
+         * Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the artist gets assigned.
+         */
+        artist_id: string;
+        name: string;
+        bio?: string | null;
+        links?: PlatformLinksChange;
+    }>;
+    update?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        name?: string;
+        bio?: string | null;
+        links?: PlatformLinksChange;
+    }>;
+    delete?: Array<string>;
+    merge?: Array<MergeSet>;
 };
 
 export type ArtistPlayStatisticsQuery = {
@@ -144,6 +310,45 @@ export type Change = {
  *
  */
 export type ChangeOperation = 0 | 1 | 2;
+
+export type Contribution = {
+    contribution_id: string;
+    /**
+     * Null if the user no longer exists.
+     */
+    user_id?: string | null;
+    status: ContributionStatus;
+    changes?: ContributionChanges;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+export type ContributionChanges = {
+    artists?: ArtistContributions;
+    albums?: AlbumContributions;
+    tracks?: TrackContributions;
+    artist_aliases?: ArtistAliasContributions;
+    artist_assets?: ArtistAssetContributions;
+    album_artists?: AlbumArtistContributions;
+    album_assets?: AlbumAssetContributions;
+    album_tracks?: AlbumTrackContributions;
+    track_artists?: TrackArtistContributions;
+};
+
+/**
+ * 0=Pending
+ * 1=Approved
+ * 2=Rejected
+ *
+ */
+export type ContributionStatus = 0 | 1 | 2;
+
+export type ContributionVote = {
+    user_id: string;
+    contribution_id: string;
+    vote: number;
+    created_at: string;
+};
 
 export type Conversation = {
     conversation_id: string;
@@ -605,6 +810,17 @@ export type ListensSessionsRequest = {
     limit?: number;
 };
 
+export type MergeSet = {
+    /**
+     * Surviving ID or reference ID.
+     */
+    main_id: string;
+    /**
+     * Entity IDs to be merged into main_id.
+     */
+    merge_ids: string;
+};
+
 export type Message = {
     message_id: number;
     conversation_id: string;
@@ -638,6 +854,16 @@ export type MessageReaction = {
     message_id: number;
     emoji: string;
     created_at: string;
+};
+
+/**
+ * Absent properties are unchanged.
+ */
+export type PlatformLinksChange = {
+    spotify_url?: string | null;
+    apple_music_url?: string | null;
+    tidal_url?: string | null;
+    youtube_music_url?: string | null;
 };
 
 export type Playlist = {
@@ -721,6 +947,10 @@ export type RelationDetails = {
 
 export type RemoveFriendRequest = {
     id: string;
+};
+
+export type ReviewContributionRequest = {
+    status: ContributionStatus;
 };
 
 export type SearchIndex = {
@@ -1061,6 +1291,65 @@ export type TrackArtist = {
     featured?: boolean;
 };
 
+export type TrackArtistContributions = {
+    create?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        featured?: boolean;
+    }>;
+    update?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+        featured?: boolean;
+    }>;
+    delete?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+        /**
+         * ID or reference ID.
+         */
+        artist_id: string;
+    }>;
+};
+
+export type TrackContributions = {
+    create?: Array<{
+        /**
+         * Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the track gets assigned.
+         */
+        track_id: string;
+        name: string;
+        seconds?: number | null;
+        lyrics?: string | null;
+        links?: PlatformLinksChange;
+    }>;
+    update?: Array<{
+        /**
+         * ID or reference ID.
+         */
+        track_id: string;
+        name?: string;
+        seconds?: number | null;
+        lyrics?: string | null;
+        links?: PlatformLinksChange;
+    }>;
+    delete?: Array<string>;
+};
+
 export type TrackDetails = {
     track: Track;
     artists: Array<Artist>;
@@ -1129,6 +1418,10 @@ export type UserRelation = 0 | 1 | 2 | 3 | 4 | 5;
  *
  */
 export type Visibility = 0 | 1 | 2 | 3;
+
+export type VoteContributionRequest = {
+    vote: -1 | 1;
+};
 
 /**
  * Username
@@ -1596,6 +1889,337 @@ export type GetChangesResponses = {
 };
 
 export type GetChangesResponse2 = GetChangesResponses[keyof GetChangesResponses];
+
+export type ReviewContributionData = {
+    body: ReviewContributionRequest;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/review';
+};
+
+export type ReviewContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ReviewContributionError = ReviewContributionErrors[keyof ReviewContributionErrors];
+
+export type ReviewContributionResponses = {
+    /**
+     * Contribution reviewed successfully
+     */
+    200: Contribution;
+};
+
+export type ReviewContributionResponse = ReviewContributionResponses[keyof ReviewContributionResponses];
+
+export type RemoveContributionVoteData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/votes';
+};
+
+export type RemoveContributionVoteErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type RemoveContributionVoteError = RemoveContributionVoteErrors[keyof RemoveContributionVoteErrors];
+
+export type RemoveContributionVoteResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type RemoveContributionVoteResponse = RemoveContributionVoteResponses[keyof RemoveContributionVoteResponses];
+
+export type GetContributionVotesData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/votes';
+};
+
+export type GetContributionVotesErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetContributionVotesError = GetContributionVotesErrors[keyof GetContributionVotesErrors];
+
+export type GetContributionVotesResponses = {
+    /**
+     * Votes retrieved successfully
+     */
+    200: Array<ContributionVote>;
+};
+
+export type GetContributionVotesResponse = GetContributionVotesResponses[keyof GetContributionVotesResponses];
+
+export type VoteContributionData = {
+    body: VoteContributionRequest;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/votes';
+};
+
+export type VoteContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type VoteContributionError = VoteContributionErrors[keyof VoteContributionErrors];
+
+export type VoteContributionResponses = {
+    /**
+     * Vote recorded successfully
+     */
+    200: ContributionVote;
+};
+
+export type VoteContributionResponse = VoteContributionResponses[keyof VoteContributionResponses];
+
+export type DeleteContributionData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}';
+};
+
+export type DeleteContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteContributionError = DeleteContributionErrors[keyof DeleteContributionErrors];
+
+export type DeleteContributionResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteContributionResponse = DeleteContributionResponses[keyof DeleteContributionResponses];
+
+export type GetContributionData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}';
+};
+
+export type GetContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetContributionError = GetContributionErrors[keyof GetContributionErrors];
+
+export type GetContributionResponses = {
+    /**
+     * Contribution retrieved successfully
+     */
+    200: Contribution;
+};
+
+export type GetContributionResponse = GetContributionResponses[keyof GetContributionResponses];
+
+export type GetContributionsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by author
+         */
+        user_id?: string;
+        /**
+         * Filter by entity involvement
+         */
+        entity_id?: string;
+        /**
+         * Filter by status
+         */
+        status?: ContributionStatus;
+        limit?: number;
+        offset?: number;
+    };
+    url: '/api/contributions';
+};
+
+export type GetContributionsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetContributionsError = GetContributionsErrors[keyof GetContributionsErrors];
+
+export type GetContributionsResponses = {
+    /**
+     * Contributions retrieved successfully
+     */
+    200: Array<Contribution>;
+};
+
+export type GetContributionsResponse = GetContributionsResponses[keyof GetContributionsResponses];
+
+export type ProposeContributionData = {
+    body: ContributionChanges;
+    path?: never;
+    query?: never;
+    url: '/api/contributions';
+};
+
+export type ProposeContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ProposeContributionError = ProposeContributionErrors[keyof ProposeContributionErrors];
+
+export type ProposeContributionResponses = {
+    /**
+     * Contribution proposed successfully
+     */
+    201: Contribution;
+};
+
+export type ProposeContributionResponse = ProposeContributionResponses[keyof ProposeContributionResponses];
 
 export type DeleteMessageReactionData = {
     body?: never;

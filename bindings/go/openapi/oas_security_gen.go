@@ -43,6 +43,7 @@ var operationRolesCookieAuth = map[string][]string{
 	AddUserAssetOperation:              []string{},
 	CreateGroupOperation:               []string{},
 	CreatePlaylistOperation:            []string{},
+	DeleteContributionOperation:        []string{},
 	DeleteGroupOperation:               []string{},
 	DeleteGroupRoleOperation:           []string{},
 	DeleteListenOperation:              []string{},
@@ -63,6 +64,9 @@ var operationRolesCookieAuth = map[string][]string{
 	GetArtistOperation:                 []string{},
 	GetArtistAssetOperation:            []string{},
 	GetChangesOperation:                []string{},
+	GetContributionOperation:           []string{},
+	GetContributionVotesOperation:      []string{},
+	GetContributionsOperation:          []string{},
 	GetFriendsRecentActivityOperation:  []string{},
 	GetGroupOperation:                  []string{},
 	GetGroupRolesOperation:             []string{},
@@ -93,9 +97,12 @@ var operationRolesCookieAuth = map[string][]string{
 	GetUserRelationsOperation:          []string{},
 	GetUserTopArtistPlayStatsOperation: []string{},
 	JoinFreeBetaOperation:              []string{},
+	ProposeContributionOperation:       []string{},
 	ReadMessageOperation:               []string{},
+	RemoveContributionVoteOperation:    []string{},
 	RemoveFriendOperation:              []string{},
 	RemoveFromLibraryOperation:         []string{},
+	ReviewContributionOperation:        []string{},
 	SearchTracksOperation:              []string{},
 	SendMessageOperation:               []string{},
 	SetActivityOperation:               []string{},
@@ -108,6 +115,7 @@ var operationRolesCookieAuth = map[string][]string{
 	UpdateUserOperation:                []string{},
 	UploadTrackAudioOperation:          []string{},
 	ValidateTokenOperation:             []string{},
+	VoteContributionOperation:          []string{},
 }
 
 // GetRolesForCookieAuth returns the required roles for the given operation.

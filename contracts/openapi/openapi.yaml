@@ -199,6 +199,44 @@ components:
           type: string
           format: uuid
 
+    AlbumArtistContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, artist_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, artist_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+
     AlbumAsset:
       type: object
       required:
@@ -215,6 +253,46 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
+
+    AlbumAssetContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, asset_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              asset_id:
+                type: string
+                format: uuid
+              position:
+                type: string
+                pattern: "^[0-9a-z._-]+$"
+                description: Lexicographically sortable string. Assigned by the server when omitted.
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, asset_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              asset_id:
+                type: string
+                format: uuid
 
     AlbumPlayStats:
       type: object
@@ -257,6 +335,144 @@ components:
           type: integer
           format: uint8
           nullable: true
+
+    AlbumTrackContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, track_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              disc_number:
+                type: integer
+                format: uint8
+                nullable: true
+              track_number:
+                type: integer
+                format: uint8
+                nullable: true
+
+        update:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, track_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              disc_number:
+                type: integer
+                format: uint8
+                nullable: true
+              track_number:
+                type: integer
+                format: uint8
+                nullable: true
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, track_id]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+
+    AlbumContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id, name]
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the album gets assigned.
+              name:
+                type: string
+                minLength: 1
+                maxLength: 300
+              release_date:
+                type: string
+                format: date-time
+                nullable: true
+              base_album_id:
+                type: string
+                format: uuid
+                nullable: true
+              links:
+                $ref: "#/components/schemas/PlatformLinksChange"
+
+        update:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [album_id]
+            additionalProperties: false
+            properties:
+              album_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              name:
+                type: string
+                minLength: 1
+                maxLength: 300
+              release_date:
+                type: string
+                format: date-time
+                nullable: true
+              base_album_id:
+                type: string
+                format: uuid
+                nullable: true
+              links:
+                $ref: "#/components/schemas/PlatformLinksChange"
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
 
     Artist:
       type: object
@@ -301,6 +517,44 @@ components:
           format: date-time
           nullable: true
 
+    ArtistAliasContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [artist_id, alias]
+            properties:
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              alias:
+                type: string
+                minLength: 1
+                maxLength: 200
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [artist_id, alias]
+            properties:
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              alias:
+                type: string
+                minLength: 1
+                maxLength: 200
+
     ArtistAsset:
       type: object
       required:
@@ -317,6 +571,113 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
+
+    ArtistAssetContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [artist_id, asset_id]
+            properties:
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              asset_id:
+                type: string
+                format: uuid
+              position:
+                type: string
+                pattern: "^[0-9a-z._-]+$"
+                description: Lexicographically sortable string. Assigned by the server when omitted.
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [artist_id, asset_id]
+            properties:
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              asset_id:
+                type: string
+                format: uuid
+
+    ArtistContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [artist_id, name]
+            properties:
+              artist_id:
+                type: string
+                format: uuid
+                description: Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the artist gets assigned.
+              name:
+                type: string
+                minLength: 1
+                maxLength: 200
+              bio:
+                type: string
+                maxLength: 5000
+                nullable: true
+              links:
+                $ref: "#/components/schemas/PlatformLinksChange"
+
+        update:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [artist_id]
+            additionalProperties: false
+            properties:
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              name:
+                type: string
+                minLength: 1
+                maxLength: 200
+              bio:
+                type: string
+                maxLength: 5000
+                nullable: true
+              links:
+                $ref: "#/components/schemas/PlatformLinksChange"
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+
+        merge:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/MergeSet"
 
     ArtistPlayStatisticsQuery:
       type: object
@@ -447,6 +808,87 @@ components:
         0=Create
         1=Update
         2=Delete
+
+    Contribution:
+      type: object
+      required:
+        - contribution_id
+        - status
+        - proposed
+        - created_at
+      properties:
+        contribution_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Null if the user no longer exists.
+        status:
+          $ref: "#/components/schemas/ContributionStatus"
+        changes:
+          $ref: "#/components/schemas/ContributionChanges"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    ContributionChanges:
+      type: object
+      minProperties: 1
+      properties:
+        artists:
+          $ref: "#/components/schemas/ArtistContributions"
+        albums:
+          $ref: "#/components/schemas/AlbumContributions"
+        tracks:
+          $ref: "#/components/schemas/TrackContributions"
+        artist_aliases:
+          $ref: "#/components/schemas/ArtistAliasContributions"
+        artist_assets:
+          $ref: "#/components/schemas/ArtistAssetContributions"
+        album_artists:
+          $ref: "#/components/schemas/AlbumArtistContributions"
+        album_assets:
+          $ref: "#/components/schemas/AlbumAssetContributions"
+        album_tracks:
+          $ref: "#/components/schemas/AlbumTrackContributions"
+        track_artists:
+          $ref: "#/components/schemas/TrackArtistContributions"
+
+    ContributionStatus:
+      type: integer
+      format: uint8
+      enum: [0, 1, 2]
+      description: |
+        0=Pending
+        1=Approved
+        2=Rejected
+
+    ContributionVote:
+      type: object
+      required:
+        - user_id
+        - contribution_id
+        - vote
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        contribution_id:
+          type: string
+          format: uuid
+        vote:
+          type: integer
+          format: int8
+        created_at:
+          type: string
+          format: date-time
 
     Conversation:
       type: object
@@ -1374,6 +1816,22 @@ components:
           default: 1000
           description: Maximum amount of listens to be fetched.
 
+    MergeSet:
+      type: object
+      required:
+        - main_id
+        - merge_ids
+      additionalProperties: false
+      properties:
+        main_id:
+          type: string
+          format: uuid
+          description: Surviving ID or reference ID.
+        merge_ids:
+          type: string
+          format: uuid
+          description: Entity IDs to be merged into main_id.
+
     Message:
       type: object
       required:
@@ -1459,6 +1917,28 @@ components:
         created_at:
           type: string
           format: date-time
+
+    PlatformLinksChange:
+      type: object
+      description: Absent properties are unchanged.
+      minProperties: 1
+      properties:
+        spotify_url:
+          type: string
+          format: uri
+          nullable: true
+        apple_music_url:
+          type: string
+          format: uri
+          nullable: true
+        tidal_url:
+          type: string
+          format: uri
+          nullable: true
+        youtube_music_url:
+          type: string
+          format: uri
+          nullable: true
 
     Playlist:
       type: object
@@ -1660,6 +2140,14 @@ components:
         id:
           type: string
           format: uuid
+
+    ReviewContributionRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          $ref: "#/components/schemas/ContributionStatus"
 
     SearchIndex:
       type: object
@@ -2349,6 +2837,135 @@ components:
           type: boolean
           default: false
 
+    TrackArtistContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [track_id, artist_id]
+            properties:
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              featured:
+                type: boolean
+                default: false
+
+        update:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [track_id, artist_id]
+            properties:
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              featured:
+                type: boolean
+                default: false
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [track_id, artist_id]
+            properties:
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              artist_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+
+    TrackContributions:
+      type: object
+      minProperties: 1
+      properties:
+        create:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [track_id, name]
+            properties:
+              track_id:
+                type: string
+                format: uuid
+                description: Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the track gets assigned.
+              name:
+                type: string
+                minLength: 1
+                maxLength: 300
+              seconds:
+                type: integer
+                format: uint16
+                nullable: true
+              lyrics:
+                type: string
+                format: yaml
+                maxLength: 10000
+                nullable: true
+              links:
+                $ref: "#/components/schemas/PlatformLinksChange"
+
+        update:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: object
+            required: [track_id]
+            properties:
+              track_id:
+                type: string
+                format: uuid
+                description: ID or reference ID.
+              name:
+                type: string
+                minLength: 1
+                maxLength: 300
+              seconds:
+                type: integer
+                format: uint16
+                nullable: true
+              lyrics:
+                type: string
+                maxLength: 10000
+                nullable: true
+              links:
+                $ref: "#/components/schemas/PlatformLinksChange"
+
+        delete:
+          type: array
+          maxItems: 100
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+
     TrackDetails:
       type: object
       required:
@@ -2512,6 +3129,15 @@ components:
         1=Friends: visible to the user's friends
         2=BestFriends: visible to the user's best friends
         3=Private: visible to only the user
+
+    VoteContributionRequest:
+      type: object
+      required: [vote]
+      properties:
+        vote:
+          type: integer
+          format: int8
+          enum: [-1, 1]
 
   securitySchemes:
     CookieAuth:
@@ -2921,6 +3547,278 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
+
+  /api/contributions/{contribution_id}/review:
+    patch:
+      summary: Review a contribution
+      operationId: reviewContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewContributionRequest"
+      responses:
+        "200":
+          description: Contribution reviewed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contribution"
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "500": { $ref: "#/components/responses/InternalServerError" }
+
+  /api/contributions/{contribution_id}/votes:
+    get:
+      summary: Get all contribution votes
+      operationId: getContributionVotes
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Votes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContributionVote"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    put:
+      summary: Vote on a contribution
+      operationId: voteContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VoteContributionRequest"
+      responses:
+        "200":
+          description: Vote recorded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContributionVote"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    delete:
+      summary: Remove vote from a contribution
+      operationId: removeContributionVote
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/contributions/{contribution_id}:
+    get:
+      summary: Get a contribution
+      operationId: getContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Contribution retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contribution"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    delete:
+      summary: Delete a pending contribution
+      operationId: deleteContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/contributions:
+    get:
+      summary: List contributions
+      operationId: getContributions
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: Filter by author
+        - name: entity_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: Filter by entity involvement
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/ContributionStatus"
+          description: Filter by status
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 0
+      responses:
+        "200":
+          description: Contributions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contribution"
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "500": { $ref: "#/components/responses/InternalServerError" }
+
+    post:
+      summary: Propose a contribution
+      operationId: proposeContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContributionChanges"
+      responses:
+        "201":
+          description: Contribution proposed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contribution"
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "500": { $ref: "#/components/responses/InternalServerError" }
 
   /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
     put:

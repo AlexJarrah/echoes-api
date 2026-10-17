@@ -4,6 +4,7 @@ package openapi
 
 import (
 	"io"
+	"net/url"
 	"time"
 
 	"github.com/go-faster/errors"
@@ -316,6 +317,86 @@ func (s *AlbumArtist) SetArtistID(val uuid.UUID) {
 	s.ArtistID = val
 }
 
+// Ref: #/components/schemas/AlbumArtistContributions
+type AlbumArtistContributions struct {
+	Create []AlbumArtistContributionsCreateItem `json:"create"`
+	Delete []AlbumArtistContributionsDeleteItem `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *AlbumArtistContributions) GetCreate() []AlbumArtistContributionsCreateItem {
+	return s.Create
+}
+
+// GetDelete returns the value of Delete.
+func (s *AlbumArtistContributions) GetDelete() []AlbumArtistContributionsDeleteItem {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *AlbumArtistContributions) SetCreate(val []AlbumArtistContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *AlbumArtistContributions) SetDelete(val []AlbumArtistContributionsDeleteItem) {
+	s.Delete = val
+}
+
+type AlbumArtistContributionsCreateItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumArtistContributionsCreateItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *AlbumArtistContributionsCreateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumArtistContributionsCreateItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *AlbumArtistContributionsCreateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+type AlbumArtistContributionsDeleteItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumArtistContributionsDeleteItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *AlbumArtistContributionsDeleteItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumArtistContributionsDeleteItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *AlbumArtistContributionsDeleteItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
 // Ref: #/components/schemas/AlbumAsset
 type AlbumAsset struct {
 	AlbumID uuid.UUID `json:"album_id"`
@@ -352,6 +433,252 @@ func (s *AlbumAsset) SetAssetID(val uuid.UUID) {
 // SetPosition sets the value of Position.
 func (s *AlbumAsset) SetPosition(val string) {
 	s.Position = val
+}
+
+// Ref: #/components/schemas/AlbumAssetContributions
+type AlbumAssetContributions struct {
+	Create []AlbumAssetContributionsCreateItem `json:"create"`
+	Delete []AlbumAssetContributionsDeleteItem `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *AlbumAssetContributions) GetCreate() []AlbumAssetContributionsCreateItem {
+	return s.Create
+}
+
+// GetDelete returns the value of Delete.
+func (s *AlbumAssetContributions) GetDelete() []AlbumAssetContributionsDeleteItem {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *AlbumAssetContributions) SetCreate(val []AlbumAssetContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *AlbumAssetContributions) SetDelete(val []AlbumAssetContributionsDeleteItem) {
+	s.Delete = val
+}
+
+type AlbumAssetContributionsCreateItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	AssetID uuid.UUID `json:"asset_id"`
+	// Lexicographically sortable string. Assigned by the server when omitted.
+	Position OptString `json:"position"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumAssetContributionsCreateItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *AlbumAssetContributionsCreateItem) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// GetPosition returns the value of Position.
+func (s *AlbumAssetContributionsCreateItem) GetPosition() OptString {
+	return s.Position
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumAssetContributionsCreateItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *AlbumAssetContributionsCreateItem) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *AlbumAssetContributionsCreateItem) SetPosition(val OptString) {
+	s.Position = val
+}
+
+type AlbumAssetContributionsDeleteItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	AssetID uuid.UUID `json:"asset_id"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumAssetContributionsDeleteItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *AlbumAssetContributionsDeleteItem) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumAssetContributionsDeleteItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *AlbumAssetContributionsDeleteItem) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// Ref: #/components/schemas/AlbumContributions
+type AlbumContributions struct {
+	Create []AlbumContributionsCreateItem `json:"create"`
+	Update []AlbumContributionsUpdateItem `json:"update"`
+	Delete []uuid.UUID                    `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *AlbumContributions) GetCreate() []AlbumContributionsCreateItem {
+	return s.Create
+}
+
+// GetUpdate returns the value of Update.
+func (s *AlbumContributions) GetUpdate() []AlbumContributionsUpdateItem {
+	return s.Update
+}
+
+// GetDelete returns the value of Delete.
+func (s *AlbumContributions) GetDelete() []uuid.UUID {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *AlbumContributions) SetCreate(val []AlbumContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetUpdate sets the value of Update.
+func (s *AlbumContributions) SetUpdate(val []AlbumContributionsUpdateItem) {
+	s.Update = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *AlbumContributions) SetDelete(val []uuid.UUID) {
+	s.Delete = val
+}
+
+type AlbumContributionsCreateItem struct {
+	// Assign any UUID to be used as reference. All references to this UUID will be understood by the
+	// server as whatever UUID the album gets assigned.
+	AlbumID     uuid.UUID              `json:"album_id"`
+	Name        string                 `json:"name"`
+	ReleaseDate OptNilDateTime         `json:"release_date"`
+	BaseAlbumID OptNilUUID             `json:"base_album_id"`
+	Links       OptPlatformLinksChange `json:"links"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumContributionsCreateItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetName returns the value of Name.
+func (s *AlbumContributionsCreateItem) GetName() string {
+	return s.Name
+}
+
+// GetReleaseDate returns the value of ReleaseDate.
+func (s *AlbumContributionsCreateItem) GetReleaseDate() OptNilDateTime {
+	return s.ReleaseDate
+}
+
+// GetBaseAlbumID returns the value of BaseAlbumID.
+func (s *AlbumContributionsCreateItem) GetBaseAlbumID() OptNilUUID {
+	return s.BaseAlbumID
+}
+
+// GetLinks returns the value of Links.
+func (s *AlbumContributionsCreateItem) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumContributionsCreateItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetName sets the value of Name.
+func (s *AlbumContributionsCreateItem) SetName(val string) {
+	s.Name = val
+}
+
+// SetReleaseDate sets the value of ReleaseDate.
+func (s *AlbumContributionsCreateItem) SetReleaseDate(val OptNilDateTime) {
+	s.ReleaseDate = val
+}
+
+// SetBaseAlbumID sets the value of BaseAlbumID.
+func (s *AlbumContributionsCreateItem) SetBaseAlbumID(val OptNilUUID) {
+	s.BaseAlbumID = val
+}
+
+// SetLinks sets the value of Links.
+func (s *AlbumContributionsCreateItem) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+type AlbumContributionsUpdateItem struct {
+	// ID or reference ID.
+	AlbumID     uuid.UUID              `json:"album_id"`
+	Name        OptString              `json:"name"`
+	ReleaseDate OptNilDateTime         `json:"release_date"`
+	BaseAlbumID OptNilUUID             `json:"base_album_id"`
+	Links       OptPlatformLinksChange `json:"links"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumContributionsUpdateItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetName returns the value of Name.
+func (s *AlbumContributionsUpdateItem) GetName() OptString {
+	return s.Name
+}
+
+// GetReleaseDate returns the value of ReleaseDate.
+func (s *AlbumContributionsUpdateItem) GetReleaseDate() OptNilDateTime {
+	return s.ReleaseDate
+}
+
+// GetBaseAlbumID returns the value of BaseAlbumID.
+func (s *AlbumContributionsUpdateItem) GetBaseAlbumID() OptNilUUID {
+	return s.BaseAlbumID
+}
+
+// GetLinks returns the value of Links.
+func (s *AlbumContributionsUpdateItem) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumContributionsUpdateItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetName sets the value of Name.
+func (s *AlbumContributionsUpdateItem) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetReleaseDate sets the value of ReleaseDate.
+func (s *AlbumContributionsUpdateItem) SetReleaseDate(val OptNilDateTime) {
+	s.ReleaseDate = val
+}
+
+// SetBaseAlbumID sets the value of BaseAlbumID.
+func (s *AlbumContributionsUpdateItem) SetBaseAlbumID(val OptNilUUID) {
+	s.BaseAlbumID = val
+}
+
+// SetLinks sets the value of Links.
+func (s *AlbumContributionsUpdateItem) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
 }
 
 // Ref: #/components/schemas/AlbumPlayStats
@@ -447,6 +774,168 @@ func (s *AlbumTrack) SetDiscNumber(val OptNilUint8) {
 
 // SetTrackNumber sets the value of TrackNumber.
 func (s *AlbumTrack) SetTrackNumber(val OptNilUint8) {
+	s.TrackNumber = val
+}
+
+// Ref: #/components/schemas/AlbumTrackContributions
+type AlbumTrackContributions struct {
+	Create []AlbumTrackContributionsCreateItem `json:"create"`
+	Update []AlbumTrackContributionsUpdateItem `json:"update"`
+	Delete []AlbumTrackContributionsDeleteItem `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *AlbumTrackContributions) GetCreate() []AlbumTrackContributionsCreateItem {
+	return s.Create
+}
+
+// GetUpdate returns the value of Update.
+func (s *AlbumTrackContributions) GetUpdate() []AlbumTrackContributionsUpdateItem {
+	return s.Update
+}
+
+// GetDelete returns the value of Delete.
+func (s *AlbumTrackContributions) GetDelete() []AlbumTrackContributionsDeleteItem {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *AlbumTrackContributions) SetCreate(val []AlbumTrackContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetUpdate sets the value of Update.
+func (s *AlbumTrackContributions) SetUpdate(val []AlbumTrackContributionsUpdateItem) {
+	s.Update = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *AlbumTrackContributions) SetDelete(val []AlbumTrackContributionsDeleteItem) {
+	s.Delete = val
+}
+
+type AlbumTrackContributionsCreateItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	// ID or reference ID.
+	TrackID     uuid.UUID   `json:"track_id"`
+	DiscNumber  OptNilUint8 `json:"disc_number"`
+	TrackNumber OptNilUint8 `json:"track_number"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumTrackContributionsCreateItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *AlbumTrackContributionsCreateItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetDiscNumber returns the value of DiscNumber.
+func (s *AlbumTrackContributionsCreateItem) GetDiscNumber() OptNilUint8 {
+	return s.DiscNumber
+}
+
+// GetTrackNumber returns the value of TrackNumber.
+func (s *AlbumTrackContributionsCreateItem) GetTrackNumber() OptNilUint8 {
+	return s.TrackNumber
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumTrackContributionsCreateItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *AlbumTrackContributionsCreateItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetDiscNumber sets the value of DiscNumber.
+func (s *AlbumTrackContributionsCreateItem) SetDiscNumber(val OptNilUint8) {
+	s.DiscNumber = val
+}
+
+// SetTrackNumber sets the value of TrackNumber.
+func (s *AlbumTrackContributionsCreateItem) SetTrackNumber(val OptNilUint8) {
+	s.TrackNumber = val
+}
+
+type AlbumTrackContributionsDeleteItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	// ID or reference ID.
+	TrackID uuid.UUID `json:"track_id"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumTrackContributionsDeleteItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *AlbumTrackContributionsDeleteItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumTrackContributionsDeleteItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *AlbumTrackContributionsDeleteItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+type AlbumTrackContributionsUpdateItem struct {
+	// ID or reference ID.
+	AlbumID uuid.UUID `json:"album_id"`
+	// ID or reference ID.
+	TrackID     uuid.UUID   `json:"track_id"`
+	DiscNumber  OptNilUint8 `json:"disc_number"`
+	TrackNumber OptNilUint8 `json:"track_number"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumTrackContributionsUpdateItem) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *AlbumTrackContributionsUpdateItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetDiscNumber returns the value of DiscNumber.
+func (s *AlbumTrackContributionsUpdateItem) GetDiscNumber() OptNilUint8 {
+	return s.DiscNumber
+}
+
+// GetTrackNumber returns the value of TrackNumber.
+func (s *AlbumTrackContributionsUpdateItem) GetTrackNumber() OptNilUint8 {
+	return s.TrackNumber
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumTrackContributionsUpdateItem) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *AlbumTrackContributionsUpdateItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetDiscNumber sets the value of DiscNumber.
+func (s *AlbumTrackContributionsUpdateItem) SetDiscNumber(val OptNilUint8) {
+	s.DiscNumber = val
+}
+
+// SetTrackNumber sets the value of TrackNumber.
+func (s *AlbumTrackContributionsUpdateItem) SetTrackNumber(val OptNilUint8) {
 	s.TrackNumber = val
 }
 
@@ -577,6 +1066,84 @@ func (s *Artist) SetUpdatedAt(val OptNilDateTime) {
 
 func (*Artist) getArtistRes() {}
 
+// Ref: #/components/schemas/ArtistAliasContributions
+type ArtistAliasContributions struct {
+	Create []ArtistAliasContributionsCreateItem `json:"create"`
+	Delete []ArtistAliasContributionsDeleteItem `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *ArtistAliasContributions) GetCreate() []ArtistAliasContributionsCreateItem {
+	return s.Create
+}
+
+// GetDelete returns the value of Delete.
+func (s *ArtistAliasContributions) GetDelete() []ArtistAliasContributionsDeleteItem {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *ArtistAliasContributions) SetCreate(val []ArtistAliasContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *ArtistAliasContributions) SetDelete(val []ArtistAliasContributionsDeleteItem) {
+	s.Delete = val
+}
+
+type ArtistAliasContributionsCreateItem struct {
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+	Alias    string    `json:"alias"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistAliasContributionsCreateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetAlias returns the value of Alias.
+func (s *ArtistAliasContributionsCreateItem) GetAlias() string {
+	return s.Alias
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistAliasContributionsCreateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetAlias sets the value of Alias.
+func (s *ArtistAliasContributionsCreateItem) SetAlias(val string) {
+	s.Alias = val
+}
+
+type ArtistAliasContributionsDeleteItem struct {
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+	Alias    string    `json:"alias"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistAliasContributionsDeleteItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetAlias returns the value of Alias.
+func (s *ArtistAliasContributionsDeleteItem) GetAlias() string {
+	return s.Alias
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistAliasContributionsDeleteItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetAlias sets the value of Alias.
+func (s *ArtistAliasContributionsDeleteItem) SetAlias(val string) {
+	s.Alias = val
+}
+
 // Ref: #/components/schemas/ArtistAsset
 type ArtistAsset struct {
 	ArtistID uuid.UUID `json:"artist_id"`
@@ -613,6 +1180,241 @@ func (s *ArtistAsset) SetAssetID(val uuid.UUID) {
 // SetPosition sets the value of Position.
 func (s *ArtistAsset) SetPosition(val string) {
 	s.Position = val
+}
+
+// Ref: #/components/schemas/ArtistAssetContributions
+type ArtistAssetContributions struct {
+	Create []ArtistAssetContributionsCreateItem `json:"create"`
+	Delete []ArtistAssetContributionsDeleteItem `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *ArtistAssetContributions) GetCreate() []ArtistAssetContributionsCreateItem {
+	return s.Create
+}
+
+// GetDelete returns the value of Delete.
+func (s *ArtistAssetContributions) GetDelete() []ArtistAssetContributionsDeleteItem {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *ArtistAssetContributions) SetCreate(val []ArtistAssetContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *ArtistAssetContributions) SetDelete(val []ArtistAssetContributionsDeleteItem) {
+	s.Delete = val
+}
+
+type ArtistAssetContributionsCreateItem struct {
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+	AssetID  uuid.UUID `json:"asset_id"`
+	// Lexicographically sortable string. Assigned by the server when omitted.
+	Position OptString `json:"position"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistAssetContributionsCreateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *ArtistAssetContributionsCreateItem) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// GetPosition returns the value of Position.
+func (s *ArtistAssetContributionsCreateItem) GetPosition() OptString {
+	return s.Position
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistAssetContributionsCreateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *ArtistAssetContributionsCreateItem) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *ArtistAssetContributionsCreateItem) SetPosition(val OptString) {
+	s.Position = val
+}
+
+type ArtistAssetContributionsDeleteItem struct {
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+	AssetID  uuid.UUID `json:"asset_id"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistAssetContributionsDeleteItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *ArtistAssetContributionsDeleteItem) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistAssetContributionsDeleteItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *ArtistAssetContributionsDeleteItem) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// Ref: #/components/schemas/ArtistContributions
+type ArtistContributions struct {
+	Create []ArtistContributionsCreateItem `json:"create"`
+	Update []ArtistContributionsUpdateItem `json:"update"`
+	Delete []uuid.UUID                     `json:"delete"`
+	Merge  []MergeSet                      `json:"merge"`
+}
+
+// GetCreate returns the value of Create.
+func (s *ArtistContributions) GetCreate() []ArtistContributionsCreateItem {
+	return s.Create
+}
+
+// GetUpdate returns the value of Update.
+func (s *ArtistContributions) GetUpdate() []ArtistContributionsUpdateItem {
+	return s.Update
+}
+
+// GetDelete returns the value of Delete.
+func (s *ArtistContributions) GetDelete() []uuid.UUID {
+	return s.Delete
+}
+
+// GetMerge returns the value of Merge.
+func (s *ArtistContributions) GetMerge() []MergeSet {
+	return s.Merge
+}
+
+// SetCreate sets the value of Create.
+func (s *ArtistContributions) SetCreate(val []ArtistContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetUpdate sets the value of Update.
+func (s *ArtistContributions) SetUpdate(val []ArtistContributionsUpdateItem) {
+	s.Update = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *ArtistContributions) SetDelete(val []uuid.UUID) {
+	s.Delete = val
+}
+
+// SetMerge sets the value of Merge.
+func (s *ArtistContributions) SetMerge(val []MergeSet) {
+	s.Merge = val
+}
+
+type ArtistContributionsCreateItem struct {
+	// Assign any UUID to be used as reference. All references to this UUID will be understood by the
+	// server as whatever UUID the artist gets assigned.
+	ArtistID uuid.UUID              `json:"artist_id"`
+	Name     string                 `json:"name"`
+	Bio      OptNilString           `json:"bio"`
+	Links    OptPlatformLinksChange `json:"links"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistContributionsCreateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetName returns the value of Name.
+func (s *ArtistContributionsCreateItem) GetName() string {
+	return s.Name
+}
+
+// GetBio returns the value of Bio.
+func (s *ArtistContributionsCreateItem) GetBio() OptNilString {
+	return s.Bio
+}
+
+// GetLinks returns the value of Links.
+func (s *ArtistContributionsCreateItem) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistContributionsCreateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetName sets the value of Name.
+func (s *ArtistContributionsCreateItem) SetName(val string) {
+	s.Name = val
+}
+
+// SetBio sets the value of Bio.
+func (s *ArtistContributionsCreateItem) SetBio(val OptNilString) {
+	s.Bio = val
+}
+
+// SetLinks sets the value of Links.
+func (s *ArtistContributionsCreateItem) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+type ArtistContributionsUpdateItem struct {
+	// ID or reference ID.
+	ArtistID uuid.UUID              `json:"artist_id"`
+	Name     OptString              `json:"name"`
+	Bio      OptNilString           `json:"bio"`
+	Links    OptPlatformLinksChange `json:"links"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistContributionsUpdateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetName returns the value of Name.
+func (s *ArtistContributionsUpdateItem) GetName() OptString {
+	return s.Name
+}
+
+// GetBio returns the value of Bio.
+func (s *ArtistContributionsUpdateItem) GetBio() OptNilString {
+	return s.Bio
+}
+
+// GetLinks returns the value of Links.
+func (s *ArtistContributionsUpdateItem) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistContributionsUpdateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetName sets the value of Name.
+func (s *ArtistContributionsUpdateItem) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetBio sets the value of Bio.
+func (s *ArtistContributionsUpdateItem) SetBio(val OptNilString) {
+	s.Bio = val
+}
+
+// SetLinks sets the value of Links.
+func (s *ArtistContributionsUpdateItem) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
 }
 
 // Ref: #/components/schemas/ArtistPlayStatisticsQuery
@@ -918,6 +1720,253 @@ func (ChangeOperation) AllValues() []ChangeOperation {
 	}
 }
 
+// Ref: #/components/schemas/Contribution
+type Contribution struct {
+	ContributionID uuid.UUID `json:"contribution_id"`
+	// Null if the user no longer exists.
+	UserID    OptNilUUID             `json:"user_id"`
+	Status    ContributionStatus     `json:"status"`
+	Changes   OptContributionChanges `json:"changes"`
+	CreatedAt time.Time              `json:"created_at"`
+	UpdatedAt OptNilDateTime         `json:"updated_at"`
+}
+
+// GetContributionID returns the value of ContributionID.
+func (s *Contribution) GetContributionID() uuid.UUID {
+	return s.ContributionID
+}
+
+// GetUserID returns the value of UserID.
+func (s *Contribution) GetUserID() OptNilUUID {
+	return s.UserID
+}
+
+// GetStatus returns the value of Status.
+func (s *Contribution) GetStatus() ContributionStatus {
+	return s.Status
+}
+
+// GetChanges returns the value of Changes.
+func (s *Contribution) GetChanges() OptContributionChanges {
+	return s.Changes
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Contribution) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Contribution) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetContributionID sets the value of ContributionID.
+func (s *Contribution) SetContributionID(val uuid.UUID) {
+	s.ContributionID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *Contribution) SetUserID(val OptNilUUID) {
+	s.UserID = val
+}
+
+// SetStatus sets the value of Status.
+func (s *Contribution) SetStatus(val ContributionStatus) {
+	s.Status = val
+}
+
+// SetChanges sets the value of Changes.
+func (s *Contribution) SetChanges(val OptContributionChanges) {
+	s.Changes = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Contribution) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Contribution) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*Contribution) getContributionRes()     {}
+func (*Contribution) proposeContributionRes() {}
+func (*Contribution) reviewContributionRes()  {}
+
+// Ref: #/components/schemas/ContributionChanges
+type ContributionChanges struct {
+	Artists       OptArtistContributions      `json:"artists"`
+	Albums        OptAlbumContributions       `json:"albums"`
+	Tracks        OptTrackContributions       `json:"tracks"`
+	ArtistAliases OptArtistAliasContributions `json:"artist_aliases"`
+	ArtistAssets  OptArtistAssetContributions `json:"artist_assets"`
+	AlbumArtists  OptAlbumArtistContributions `json:"album_artists"`
+	AlbumAssets   OptAlbumAssetContributions  `json:"album_assets"`
+	AlbumTracks   OptAlbumTrackContributions  `json:"album_tracks"`
+	TrackArtists  OptTrackArtistContributions `json:"track_artists"`
+}
+
+// GetArtists returns the value of Artists.
+func (s *ContributionChanges) GetArtists() OptArtistContributions {
+	return s.Artists
+}
+
+// GetAlbums returns the value of Albums.
+func (s *ContributionChanges) GetAlbums() OptAlbumContributions {
+	return s.Albums
+}
+
+// GetTracks returns the value of Tracks.
+func (s *ContributionChanges) GetTracks() OptTrackContributions {
+	return s.Tracks
+}
+
+// GetArtistAliases returns the value of ArtistAliases.
+func (s *ContributionChanges) GetArtistAliases() OptArtistAliasContributions {
+	return s.ArtistAliases
+}
+
+// GetArtistAssets returns the value of ArtistAssets.
+func (s *ContributionChanges) GetArtistAssets() OptArtistAssetContributions {
+	return s.ArtistAssets
+}
+
+// GetAlbumArtists returns the value of AlbumArtists.
+func (s *ContributionChanges) GetAlbumArtists() OptAlbumArtistContributions {
+	return s.AlbumArtists
+}
+
+// GetAlbumAssets returns the value of AlbumAssets.
+func (s *ContributionChanges) GetAlbumAssets() OptAlbumAssetContributions {
+	return s.AlbumAssets
+}
+
+// GetAlbumTracks returns the value of AlbumTracks.
+func (s *ContributionChanges) GetAlbumTracks() OptAlbumTrackContributions {
+	return s.AlbumTracks
+}
+
+// GetTrackArtists returns the value of TrackArtists.
+func (s *ContributionChanges) GetTrackArtists() OptTrackArtistContributions {
+	return s.TrackArtists
+}
+
+// SetArtists sets the value of Artists.
+func (s *ContributionChanges) SetArtists(val OptArtistContributions) {
+	s.Artists = val
+}
+
+// SetAlbums sets the value of Albums.
+func (s *ContributionChanges) SetAlbums(val OptAlbumContributions) {
+	s.Albums = val
+}
+
+// SetTracks sets the value of Tracks.
+func (s *ContributionChanges) SetTracks(val OptTrackContributions) {
+	s.Tracks = val
+}
+
+// SetArtistAliases sets the value of ArtistAliases.
+func (s *ContributionChanges) SetArtistAliases(val OptArtistAliasContributions) {
+	s.ArtistAliases = val
+}
+
+// SetArtistAssets sets the value of ArtistAssets.
+func (s *ContributionChanges) SetArtistAssets(val OptArtistAssetContributions) {
+	s.ArtistAssets = val
+}
+
+// SetAlbumArtists sets the value of AlbumArtists.
+func (s *ContributionChanges) SetAlbumArtists(val OptAlbumArtistContributions) {
+	s.AlbumArtists = val
+}
+
+// SetAlbumAssets sets the value of AlbumAssets.
+func (s *ContributionChanges) SetAlbumAssets(val OptAlbumAssetContributions) {
+	s.AlbumAssets = val
+}
+
+// SetAlbumTracks sets the value of AlbumTracks.
+func (s *ContributionChanges) SetAlbumTracks(val OptAlbumTrackContributions) {
+	s.AlbumTracks = val
+}
+
+// SetTrackArtists sets the value of TrackArtists.
+func (s *ContributionChanges) SetTrackArtists(val OptTrackArtistContributions) {
+	s.TrackArtists = val
+}
+
+// 0=Pending 1=Approved 2=Rejected.
+// Ref: #/components/schemas/ContributionStatus
+type ContributionStatus uint8
+
+const (
+	ContributionStatus0 ContributionStatus = 0
+	ContributionStatus1 ContributionStatus = 1
+	ContributionStatus2 ContributionStatus = 2
+)
+
+// AllValues returns all ContributionStatus values.
+func (ContributionStatus) AllValues() []ContributionStatus {
+	return []ContributionStatus{
+		ContributionStatus0,
+		ContributionStatus1,
+		ContributionStatus2,
+	}
+}
+
+// Ref: #/components/schemas/ContributionVote
+type ContributionVote struct {
+	UserID         uuid.UUID `json:"user_id"`
+	ContributionID uuid.UUID `json:"contribution_id"`
+	Vote           int8      `json:"vote"`
+	CreatedAt      time.Time `json:"created_at"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *ContributionVote) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetContributionID returns the value of ContributionID.
+func (s *ContributionVote) GetContributionID() uuid.UUID {
+	return s.ContributionID
+}
+
+// GetVote returns the value of Vote.
+func (s *ContributionVote) GetVote() int8 {
+	return s.Vote
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *ContributionVote) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// SetUserID sets the value of UserID.
+func (s *ContributionVote) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetContributionID sets the value of ContributionID.
+func (s *ContributionVote) SetContributionID(val uuid.UUID) {
+	s.ContributionID = val
+}
+
+// SetVote sets the value of Vote.
+func (s *ContributionVote) SetVote(val int8) {
+	s.Vote = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *ContributionVote) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+func (*ContributionVote) voteContributionRes() {}
+
 // Ref: #/components/schemas/Conversation
 type Conversation struct {
 	ConversationID uuid.UUID `json:"conversation_id"`
@@ -1136,6 +2185,26 @@ func (s *DayListenDetails) SetPlayCount(val uint16) {
 func (s *DayListenDetails) SetSeconds(val uint64) {
 	s.Seconds = val
 }
+
+type DeleteContributionBadRequest ErrorResponse
+
+func (*DeleteContributionBadRequest) deleteContributionRes() {}
+
+type DeleteContributionForbidden ErrorResponse
+
+func (*DeleteContributionForbidden) deleteContributionRes() {}
+
+type DeleteContributionInternalServerError ErrorResponse
+
+func (*DeleteContributionInternalServerError) deleteContributionRes() {}
+
+type DeleteContributionNotFound ErrorResponse
+
+func (*DeleteContributionNotFound) deleteContributionRes() {}
+
+type DeleteContributionUnauthorized ErrorResponse
+
+func (*DeleteContributionUnauthorized) deleteContributionRes() {}
 
 type DeleteGroupBadRequest ErrorResponse
 
@@ -2136,6 +3205,58 @@ func (*GetChangesResponse) getChangesRes() {}
 type GetChangesUnauthorized ErrorResponse
 
 func (*GetChangesUnauthorized) getChangesRes() {}
+
+type GetContributionBadRequest ErrorResponse
+
+func (*GetContributionBadRequest) getContributionRes() {}
+
+type GetContributionInternalServerError ErrorResponse
+
+func (*GetContributionInternalServerError) getContributionRes() {}
+
+type GetContributionNotFound ErrorResponse
+
+func (*GetContributionNotFound) getContributionRes() {}
+
+type GetContributionUnauthorized ErrorResponse
+
+func (*GetContributionUnauthorized) getContributionRes() {}
+
+type GetContributionVotesBadRequest ErrorResponse
+
+func (*GetContributionVotesBadRequest) getContributionVotesRes() {}
+
+type GetContributionVotesInternalServerError ErrorResponse
+
+func (*GetContributionVotesInternalServerError) getContributionVotesRes() {}
+
+type GetContributionVotesNotFound ErrorResponse
+
+func (*GetContributionVotesNotFound) getContributionVotesRes() {}
+
+type GetContributionVotesOKApplicationJSON []ContributionVote
+
+func (*GetContributionVotesOKApplicationJSON) getContributionVotesRes() {}
+
+type GetContributionVotesUnauthorized ErrorResponse
+
+func (*GetContributionVotesUnauthorized) getContributionVotesRes() {}
+
+type GetContributionsBadRequest ErrorResponse
+
+func (*GetContributionsBadRequest) getContributionsRes() {}
+
+type GetContributionsInternalServerError ErrorResponse
+
+func (*GetContributionsInternalServerError) getContributionsRes() {}
+
+type GetContributionsOKApplicationJSON []Contribution
+
+func (*GetContributionsOKApplicationJSON) getContributionsRes() {}
+
+type GetContributionsUnauthorized ErrorResponse
+
+func (*GetContributionsUnauthorized) getContributionsRes() {}
 
 type GetFriendsRecentActivityInternalServerError ErrorResponse
 
@@ -4435,6 +5556,34 @@ func (s *ListensSessionsRequest) SetLimit(val OptInt64) {
 	s.Limit = val
 }
 
+// Ref: #/components/schemas/MergeSet
+type MergeSet struct {
+	// Surviving ID or reference ID.
+	MainID uuid.UUID `json:"main_id"`
+	// Entity IDs to be merged into main_id.
+	MergeIds uuid.UUID `json:"merge_ids"`
+}
+
+// GetMainID returns the value of MainID.
+func (s *MergeSet) GetMainID() uuid.UUID {
+	return s.MainID
+}
+
+// GetMergeIds returns the value of MergeIds.
+func (s *MergeSet) GetMergeIds() uuid.UUID {
+	return s.MergeIds
+}
+
+// SetMainID sets the value of MainID.
+func (s *MergeSet) SetMainID(val uuid.UUID) {
+	s.MainID = val
+}
+
+// SetMergeIds sets the value of MergeIds.
+func (s *MergeSet) SetMergeIds(val uuid.UUID) {
+	s.MergeIds = val
+}
+
 // Ref: #/components/schemas/Message
 type Message struct {
 	MessageID      uint64    `json:"message_id"`
@@ -4610,24 +5759,210 @@ func (*MessageReaction) addMessageReactionRes() {}
 // Ref: #/components/responses/NoContent
 type NoContent struct{}
 
-func (*NoContent) deleteGroupRes()           {}
-func (*NoContent) deleteGroupRoleRes()       {}
-func (*NoContent) deleteListenRes()          {}
-func (*NoContent) deleteMessageReactionRes() {}
-func (*NoContent) deleteMessageRes()         {}
-func (*NoContent) deletePlaylistRes()        {}
-func (*NoContent) deletePlaylistRoleRes()    {}
-func (*NoContent) deletePlaylistTrackRes()   {}
-func (*NoContent) deleteUserAssetRes()       {}
-func (*NoContent) readMessageRes()           {}
-func (*NoContent) removeFriendRes()          {}
-func (*NoContent) removeFromLibraryRes()     {}
-func (*NoContent) setActivityRes()           {}
-func (*NoContent) setBestFriendRes()         {}
-func (*NoContent) setBlockedRes()            {}
-func (*NoContent) updateUserRes()            {}
-func (*NoContent) uploadTrackAudioRes()      {}
-func (*NoContent) validateTokenRes()         {}
+func (*NoContent) deleteContributionRes()     {}
+func (*NoContent) deleteGroupRes()            {}
+func (*NoContent) deleteGroupRoleRes()        {}
+func (*NoContent) deleteListenRes()           {}
+func (*NoContent) deleteMessageReactionRes()  {}
+func (*NoContent) deleteMessageRes()          {}
+func (*NoContent) deletePlaylistRes()         {}
+func (*NoContent) deletePlaylistRoleRes()     {}
+func (*NoContent) deletePlaylistTrackRes()    {}
+func (*NoContent) deleteUserAssetRes()        {}
+func (*NoContent) readMessageRes()            {}
+func (*NoContent) removeContributionVoteRes() {}
+func (*NoContent) removeFriendRes()           {}
+func (*NoContent) removeFromLibraryRes()      {}
+func (*NoContent) setActivityRes()            {}
+func (*NoContent) setBestFriendRes()          {}
+func (*NoContent) setBlockedRes()             {}
+func (*NoContent) updateUserRes()             {}
+func (*NoContent) uploadTrackAudioRes()       {}
+func (*NoContent) validateTokenRes()          {}
+
+// NewOptAlbumArtistContributions returns new OptAlbumArtistContributions with value set to v.
+func NewOptAlbumArtistContributions(v AlbumArtistContributions) OptAlbumArtistContributions {
+	return OptAlbumArtistContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAlbumArtistContributions is optional AlbumArtistContributions.
+type OptAlbumArtistContributions struct {
+	Value AlbumArtistContributions
+	Set   bool
+}
+
+// IsSet returns true if OptAlbumArtistContributions was set.
+func (o OptAlbumArtistContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAlbumArtistContributions) Reset() {
+	var v AlbumArtistContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAlbumArtistContributions) SetTo(v AlbumArtistContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAlbumArtistContributions) Get() (v AlbumArtistContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAlbumArtistContributions) Or(d AlbumArtistContributions) AlbumArtistContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAlbumAssetContributions returns new OptAlbumAssetContributions with value set to v.
+func NewOptAlbumAssetContributions(v AlbumAssetContributions) OptAlbumAssetContributions {
+	return OptAlbumAssetContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAlbumAssetContributions is optional AlbumAssetContributions.
+type OptAlbumAssetContributions struct {
+	Value AlbumAssetContributions
+	Set   bool
+}
+
+// IsSet returns true if OptAlbumAssetContributions was set.
+func (o OptAlbumAssetContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAlbumAssetContributions) Reset() {
+	var v AlbumAssetContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAlbumAssetContributions) SetTo(v AlbumAssetContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAlbumAssetContributions) Get() (v AlbumAssetContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAlbumAssetContributions) Or(d AlbumAssetContributions) AlbumAssetContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAlbumContributions returns new OptAlbumContributions with value set to v.
+func NewOptAlbumContributions(v AlbumContributions) OptAlbumContributions {
+	return OptAlbumContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAlbumContributions is optional AlbumContributions.
+type OptAlbumContributions struct {
+	Value AlbumContributions
+	Set   bool
+}
+
+// IsSet returns true if OptAlbumContributions was set.
+func (o OptAlbumContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAlbumContributions) Reset() {
+	var v AlbumContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAlbumContributions) SetTo(v AlbumContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAlbumContributions) Get() (v AlbumContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAlbumContributions) Or(d AlbumContributions) AlbumContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAlbumTrackContributions returns new OptAlbumTrackContributions with value set to v.
+func NewOptAlbumTrackContributions(v AlbumTrackContributions) OptAlbumTrackContributions {
+	return OptAlbumTrackContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAlbumTrackContributions is optional AlbumTrackContributions.
+type OptAlbumTrackContributions struct {
+	Value AlbumTrackContributions
+	Set   bool
+}
+
+// IsSet returns true if OptAlbumTrackContributions was set.
+func (o OptAlbumTrackContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAlbumTrackContributions) Reset() {
+	var v AlbumTrackContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAlbumTrackContributions) SetTo(v AlbumTrackContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAlbumTrackContributions) Get() (v AlbumTrackContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAlbumTrackContributions) Or(d AlbumTrackContributions) AlbumTrackContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
 
 // NewOptArtist returns new OptArtist with value set to v.
 func NewOptArtist(v Artist) OptArtist {
@@ -4669,6 +6004,144 @@ func (o OptArtist) Get() (v Artist, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptArtist) Or(d Artist) Artist {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptArtistAliasContributions returns new OptArtistAliasContributions with value set to v.
+func NewOptArtistAliasContributions(v ArtistAliasContributions) OptArtistAliasContributions {
+	return OptArtistAliasContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtistAliasContributions is optional ArtistAliasContributions.
+type OptArtistAliasContributions struct {
+	Value ArtistAliasContributions
+	Set   bool
+}
+
+// IsSet returns true if OptArtistAliasContributions was set.
+func (o OptArtistAliasContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtistAliasContributions) Reset() {
+	var v ArtistAliasContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtistAliasContributions) SetTo(v ArtistAliasContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtistAliasContributions) Get() (v ArtistAliasContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtistAliasContributions) Or(d ArtistAliasContributions) ArtistAliasContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptArtistAssetContributions returns new OptArtistAssetContributions with value set to v.
+func NewOptArtistAssetContributions(v ArtistAssetContributions) OptArtistAssetContributions {
+	return OptArtistAssetContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtistAssetContributions is optional ArtistAssetContributions.
+type OptArtistAssetContributions struct {
+	Value ArtistAssetContributions
+	Set   bool
+}
+
+// IsSet returns true if OptArtistAssetContributions was set.
+func (o OptArtistAssetContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtistAssetContributions) Reset() {
+	var v ArtistAssetContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtistAssetContributions) SetTo(v ArtistAssetContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtistAssetContributions) Get() (v ArtistAssetContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtistAssetContributions) Or(d ArtistAssetContributions) ArtistAssetContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptArtistContributions returns new OptArtistContributions with value set to v.
+func NewOptArtistContributions(v ArtistContributions) OptArtistContributions {
+	return OptArtistContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtistContributions is optional ArtistContributions.
+type OptArtistContributions struct {
+	Value ArtistContributions
+	Set   bool
+}
+
+// IsSet returns true if OptArtistContributions was set.
+func (o OptArtistContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtistContributions) Reset() {
+	var v ArtistContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtistContributions) SetTo(v ArtistContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtistContributions) Get() (v ArtistContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtistContributions) Or(d ArtistContributions) ArtistContributions {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -4761,6 +6234,98 @@ func (o OptBool) Get() (v bool, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptBool) Or(d bool) bool {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptContributionChanges returns new OptContributionChanges with value set to v.
+func NewOptContributionChanges(v ContributionChanges) OptContributionChanges {
+	return OptContributionChanges{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptContributionChanges is optional ContributionChanges.
+type OptContributionChanges struct {
+	Value ContributionChanges
+	Set   bool
+}
+
+// IsSet returns true if OptContributionChanges was set.
+func (o OptContributionChanges) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptContributionChanges) Reset() {
+	var v ContributionChanges
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptContributionChanges) SetTo(v ContributionChanges) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptContributionChanges) Get() (v ContributionChanges, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptContributionChanges) Or(d ContributionChanges) ContributionChanges {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptContributionStatus returns new OptContributionStatus with value set to v.
+func NewOptContributionStatus(v ContributionStatus) OptContributionStatus {
+	return OptContributionStatus{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptContributionStatus is optional ContributionStatus.
+type OptContributionStatus struct {
+	Value ContributionStatus
+	Set   bool
+}
+
+// IsSet returns true if OptContributionStatus was set.
+func (o OptContributionStatus) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptContributionStatus) Reset() {
+	var v ContributionStatus
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptContributionStatus) SetTo(v ContributionStatus) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptContributionStatus) Get() (v ContributionStatus, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptContributionStatus) Or(d ContributionStatus) ContributionStatus {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -5799,6 +7364,74 @@ func (o OptNilString) Or(d string) string {
 	return d
 }
 
+// NewOptNilURI returns new OptNilURI with value set to v.
+func NewOptNilURI(v url.URL) OptNilURI {
+	return OptNilURI{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptNilURI is optional nullable url.URL.
+type OptNilURI struct {
+	Value url.URL
+	Set   bool
+	Null  bool
+}
+
+// IsSet returns true if OptNilURI was set.
+func (o OptNilURI) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptNilURI) Reset() {
+	var v url.URL
+	o.Value = v
+	o.Set = false
+	o.Null = false
+}
+
+// SetTo sets value to v.
+func (o *OptNilURI) SetTo(v url.URL) {
+	o.Set = true
+	o.Null = false
+	o.Value = v
+}
+
+// IsNull returns true if value is Null.
+func (o OptNilURI) IsNull() bool { return o.Null }
+
+// SetToNull sets value to null.
+func (o *OptNilURI) SetToNull() {
+	o.Set = true
+	o.Null = true
+	var v url.URL
+	o.Value = v
+}
+
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilURI) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptNilURI) Get() (v url.URL, ok bool) {
+	if o.Null {
+		return v, false
+	}
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptNilURI) Or(d url.URL) url.URL {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptNilUUID returns new OptNilUUID with value set to v.
 func NewOptNilUUID(v uuid.UUID) OptNilUUID {
 	return OptNilUUID{
@@ -6065,6 +7698,52 @@ func (o OptNilUint8) Get() (v uint8, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptNilUint8) Or(d uint8) uint8 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptPlatformLinksChange returns new OptPlatformLinksChange with value set to v.
+func NewOptPlatformLinksChange(v PlatformLinksChange) OptPlatformLinksChange {
+	return OptPlatformLinksChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptPlatformLinksChange is optional PlatformLinksChange.
+type OptPlatformLinksChange struct {
+	Value PlatformLinksChange
+	Set   bool
+}
+
+// IsSet returns true if OptPlatformLinksChange was set.
+func (o OptPlatformLinksChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptPlatformLinksChange) Reset() {
+	var v PlatformLinksChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptPlatformLinksChange) SetTo(v PlatformLinksChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptPlatformLinksChange) Get() (v PlatformLinksChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptPlatformLinksChange) Or(d PlatformLinksChange) PlatformLinksChange {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -6393,6 +8072,98 @@ func (o OptSubsonicStreamMaxBitRate) Or(d SubsonicStreamMaxBitRate) SubsonicStre
 	return d
 }
 
+// NewOptTrackArtistContributions returns new OptTrackArtistContributions with value set to v.
+func NewOptTrackArtistContributions(v TrackArtistContributions) OptTrackArtistContributions {
+	return OptTrackArtistContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptTrackArtistContributions is optional TrackArtistContributions.
+type OptTrackArtistContributions struct {
+	Value TrackArtistContributions
+	Set   bool
+}
+
+// IsSet returns true if OptTrackArtistContributions was set.
+func (o OptTrackArtistContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptTrackArtistContributions) Reset() {
+	var v TrackArtistContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptTrackArtistContributions) SetTo(v TrackArtistContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptTrackArtistContributions) Get() (v TrackArtistContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptTrackArtistContributions) Or(d TrackArtistContributions) TrackArtistContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptTrackContributions returns new OptTrackContributions with value set to v.
+func NewOptTrackContributions(v TrackContributions) OptTrackContributions {
+	return OptTrackContributions{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptTrackContributions is optional TrackContributions.
+type OptTrackContributions struct {
+	Value TrackContributions
+	Set   bool
+}
+
+// IsSet returns true if OptTrackContributions was set.
+func (o OptTrackContributions) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptTrackContributions) Reset() {
+	var v TrackContributions
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptTrackContributions) SetTo(v TrackContributions) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptTrackContributions) Get() (v TrackContributions, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptTrackContributions) Or(d TrackContributions) TrackContributions {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptUUID returns new OptUUID with value set to v.
 func NewOptUUID(v uuid.UUID) OptUUID {
 	return OptUUID{
@@ -6669,6 +8440,55 @@ func (o OptVisibility) Or(d Visibility) Visibility {
 	return d
 }
 
+// Absent properties are unchanged.
+// Ref: #/components/schemas/PlatformLinksChange
+type PlatformLinksChange struct {
+	SpotifyURL      OptNilURI `json:"spotify_url"`
+	AppleMusicURL   OptNilURI `json:"apple_music_url"`
+	TidalURL        OptNilURI `json:"tidal_url"`
+	YoutubeMusicURL OptNilURI `json:"youtube_music_url"`
+}
+
+// GetSpotifyURL returns the value of SpotifyURL.
+func (s *PlatformLinksChange) GetSpotifyURL() OptNilURI {
+	return s.SpotifyURL
+}
+
+// GetAppleMusicURL returns the value of AppleMusicURL.
+func (s *PlatformLinksChange) GetAppleMusicURL() OptNilURI {
+	return s.AppleMusicURL
+}
+
+// GetTidalURL returns the value of TidalURL.
+func (s *PlatformLinksChange) GetTidalURL() OptNilURI {
+	return s.TidalURL
+}
+
+// GetYoutubeMusicURL returns the value of YoutubeMusicURL.
+func (s *PlatformLinksChange) GetYoutubeMusicURL() OptNilURI {
+	return s.YoutubeMusicURL
+}
+
+// SetSpotifyURL sets the value of SpotifyURL.
+func (s *PlatformLinksChange) SetSpotifyURL(val OptNilURI) {
+	s.SpotifyURL = val
+}
+
+// SetAppleMusicURL sets the value of AppleMusicURL.
+func (s *PlatformLinksChange) SetAppleMusicURL(val OptNilURI) {
+	s.AppleMusicURL = val
+}
+
+// SetTidalURL sets the value of TidalURL.
+func (s *PlatformLinksChange) SetTidalURL(val OptNilURI) {
+	s.TidalURL = val
+}
+
+// SetYoutubeMusicURL sets the value of YoutubeMusicURL.
+func (s *PlatformLinksChange) SetYoutubeMusicURL(val OptNilURI) {
+	s.YoutubeMusicURL = val
+}
+
 // Ref: #/components/schemas/Playlist
 type Playlist struct {
 	PlaylistID  uuid.UUID      `json:"playlist_id"`
@@ -6931,6 +8751,22 @@ func (s *PlaylistTrack) SetUpdatedAt(val OptNilDateTime) {
 
 func (*PlaylistTrack) editPlaylistTrackRes() {}
 
+type ProposeContributionBadRequest ErrorResponse
+
+func (*ProposeContributionBadRequest) proposeContributionRes() {}
+
+type ProposeContributionConflict ErrorResponse
+
+func (*ProposeContributionConflict) proposeContributionRes() {}
+
+type ProposeContributionInternalServerError ErrorResponse
+
+func (*ProposeContributionInternalServerError) proposeContributionRes() {}
+
+type ProposeContributionUnauthorized ErrorResponse
+
+func (*ProposeContributionUnauthorized) proposeContributionRes() {}
+
 type ReadMessageBadRequest ErrorResponse
 
 func (*ReadMessageBadRequest) readMessageRes() {}
@@ -7175,6 +9011,22 @@ func (s *RelationDetailsStatistics) SetListeningStreak(val uint16) {
 	s.ListeningStreak = val
 }
 
+type RemoveContributionVoteBadRequest ErrorResponse
+
+func (*RemoveContributionVoteBadRequest) removeContributionVoteRes() {}
+
+type RemoveContributionVoteInternalServerError ErrorResponse
+
+func (*RemoveContributionVoteInternalServerError) removeContributionVoteRes() {}
+
+type RemoveContributionVoteNotFound ErrorResponse
+
+func (*RemoveContributionVoteNotFound) removeContributionVoteRes() {}
+
+type RemoveContributionVoteUnauthorized ErrorResponse
+
+func (*RemoveContributionVoteUnauthorized) removeContributionVoteRes() {}
+
 type RemoveFriendBadRequest ErrorResponse
 
 func (*RemoveFriendBadRequest) removeFriendRes() {}
@@ -7217,6 +9069,41 @@ func (*RemoveFromLibraryInternalServerError) removeFromLibraryRes() {}
 type RemoveFromLibraryUnauthorized ErrorResponse
 
 func (*RemoveFromLibraryUnauthorized) removeFromLibraryRes() {}
+
+type ReviewContributionBadRequest ErrorResponse
+
+func (*ReviewContributionBadRequest) reviewContributionRes() {}
+
+type ReviewContributionForbidden ErrorResponse
+
+func (*ReviewContributionForbidden) reviewContributionRes() {}
+
+type ReviewContributionInternalServerError ErrorResponse
+
+func (*ReviewContributionInternalServerError) reviewContributionRes() {}
+
+type ReviewContributionNotFound ErrorResponse
+
+func (*ReviewContributionNotFound) reviewContributionRes() {}
+
+// Ref: #/components/schemas/ReviewContributionRequest
+type ReviewContributionRequest struct {
+	Status ContributionStatus `json:"status"`
+}
+
+// GetStatus returns the value of Status.
+func (s *ReviewContributionRequest) GetStatus() ContributionStatus {
+	return s.Status
+}
+
+// SetStatus sets the value of Status.
+func (s *ReviewContributionRequest) SetStatus(val ContributionStatus) {
+	s.Status = val
+}
+
+type ReviewContributionUnauthorized ErrorResponse
+
+func (*ReviewContributionUnauthorized) reviewContributionRes() {}
 
 // Ref: #/components/schemas/SearchIndex
 type SearchIndex struct {
@@ -9378,6 +11265,302 @@ func (s *TrackArtist) SetFeatured(val OptBool) {
 	s.Featured = val
 }
 
+// Ref: #/components/schemas/TrackArtistContributions
+type TrackArtistContributions struct {
+	Create []TrackArtistContributionsCreateItem `json:"create"`
+	Update []TrackArtistContributionsUpdateItem `json:"update"`
+	Delete []TrackArtistContributionsDeleteItem `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *TrackArtistContributions) GetCreate() []TrackArtistContributionsCreateItem {
+	return s.Create
+}
+
+// GetUpdate returns the value of Update.
+func (s *TrackArtistContributions) GetUpdate() []TrackArtistContributionsUpdateItem {
+	return s.Update
+}
+
+// GetDelete returns the value of Delete.
+func (s *TrackArtistContributions) GetDelete() []TrackArtistContributionsDeleteItem {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *TrackArtistContributions) SetCreate(val []TrackArtistContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetUpdate sets the value of Update.
+func (s *TrackArtistContributions) SetUpdate(val []TrackArtistContributionsUpdateItem) {
+	s.Update = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *TrackArtistContributions) SetDelete(val []TrackArtistContributionsDeleteItem) {
+	s.Delete = val
+}
+
+type TrackArtistContributionsCreateItem struct {
+	// ID or reference ID.
+	TrackID uuid.UUID `json:"track_id"`
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+	Featured OptBool   `json:"featured"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackArtistContributionsCreateItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *TrackArtistContributionsCreateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetFeatured returns the value of Featured.
+func (s *TrackArtistContributionsCreateItem) GetFeatured() OptBool {
+	return s.Featured
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackArtistContributionsCreateItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *TrackArtistContributionsCreateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetFeatured sets the value of Featured.
+func (s *TrackArtistContributionsCreateItem) SetFeatured(val OptBool) {
+	s.Featured = val
+}
+
+type TrackArtistContributionsDeleteItem struct {
+	// ID or reference ID.
+	TrackID uuid.UUID `json:"track_id"`
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackArtistContributionsDeleteItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *TrackArtistContributionsDeleteItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackArtistContributionsDeleteItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *TrackArtistContributionsDeleteItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+type TrackArtistContributionsUpdateItem struct {
+	// ID or reference ID.
+	TrackID uuid.UUID `json:"track_id"`
+	// ID or reference ID.
+	ArtistID uuid.UUID `json:"artist_id"`
+	Featured OptBool   `json:"featured"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackArtistContributionsUpdateItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *TrackArtistContributionsUpdateItem) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetFeatured returns the value of Featured.
+func (s *TrackArtistContributionsUpdateItem) GetFeatured() OptBool {
+	return s.Featured
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackArtistContributionsUpdateItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *TrackArtistContributionsUpdateItem) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetFeatured sets the value of Featured.
+func (s *TrackArtistContributionsUpdateItem) SetFeatured(val OptBool) {
+	s.Featured = val
+}
+
+// Ref: #/components/schemas/TrackContributions
+type TrackContributions struct {
+	Create []TrackContributionsCreateItem `json:"create"`
+	Update []TrackContributionsUpdateItem `json:"update"`
+	Delete []uuid.UUID                    `json:"delete"`
+}
+
+// GetCreate returns the value of Create.
+func (s *TrackContributions) GetCreate() []TrackContributionsCreateItem {
+	return s.Create
+}
+
+// GetUpdate returns the value of Update.
+func (s *TrackContributions) GetUpdate() []TrackContributionsUpdateItem {
+	return s.Update
+}
+
+// GetDelete returns the value of Delete.
+func (s *TrackContributions) GetDelete() []uuid.UUID {
+	return s.Delete
+}
+
+// SetCreate sets the value of Create.
+func (s *TrackContributions) SetCreate(val []TrackContributionsCreateItem) {
+	s.Create = val
+}
+
+// SetUpdate sets the value of Update.
+func (s *TrackContributions) SetUpdate(val []TrackContributionsUpdateItem) {
+	s.Update = val
+}
+
+// SetDelete sets the value of Delete.
+func (s *TrackContributions) SetDelete(val []uuid.UUID) {
+	s.Delete = val
+}
+
+type TrackContributionsCreateItem struct {
+	// Assign any UUID to be used as reference. All references to this UUID will be understood by the
+	// server as whatever UUID the track gets assigned.
+	TrackID uuid.UUID              `json:"track_id"`
+	Name    string                 `json:"name"`
+	Seconds OptNilUint16           `json:"seconds"`
+	Lyrics  OptNilString           `json:"lyrics"`
+	Links   OptPlatformLinksChange `json:"links"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackContributionsCreateItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetName returns the value of Name.
+func (s *TrackContributionsCreateItem) GetName() string {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *TrackContributionsCreateItem) GetSeconds() OptNilUint16 {
+	return s.Seconds
+}
+
+// GetLyrics returns the value of Lyrics.
+func (s *TrackContributionsCreateItem) GetLyrics() OptNilString {
+	return s.Lyrics
+}
+
+// GetLinks returns the value of Links.
+func (s *TrackContributionsCreateItem) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackContributionsCreateItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetName sets the value of Name.
+func (s *TrackContributionsCreateItem) SetName(val string) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *TrackContributionsCreateItem) SetSeconds(val OptNilUint16) {
+	s.Seconds = val
+}
+
+// SetLyrics sets the value of Lyrics.
+func (s *TrackContributionsCreateItem) SetLyrics(val OptNilString) {
+	s.Lyrics = val
+}
+
+// SetLinks sets the value of Links.
+func (s *TrackContributionsCreateItem) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+type TrackContributionsUpdateItem struct {
+	// ID or reference ID.
+	TrackID uuid.UUID              `json:"track_id"`
+	Name    OptString              `json:"name"`
+	Seconds OptNilUint16           `json:"seconds"`
+	Lyrics  OptNilString           `json:"lyrics"`
+	Links   OptPlatformLinksChange `json:"links"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackContributionsUpdateItem) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetName returns the value of Name.
+func (s *TrackContributionsUpdateItem) GetName() OptString {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *TrackContributionsUpdateItem) GetSeconds() OptNilUint16 {
+	return s.Seconds
+}
+
+// GetLyrics returns the value of Lyrics.
+func (s *TrackContributionsUpdateItem) GetLyrics() OptNilString {
+	return s.Lyrics
+}
+
+// GetLinks returns the value of Links.
+func (s *TrackContributionsUpdateItem) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackContributionsUpdateItem) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetName sets the value of Name.
+func (s *TrackContributionsUpdateItem) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *TrackContributionsUpdateItem) SetSeconds(val OptNilUint16) {
+	s.Seconds = val
+}
+
+// SetLyrics sets the value of Lyrics.
+func (s *TrackContributionsUpdateItem) SetLyrics(val OptNilString) {
+	s.Lyrics = val
+}
+
+// SetLinks sets the value of Links.
+func (s *TrackContributionsUpdateItem) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
 // Ref: #/components/schemas/TrackDetails
 type TrackDetails struct {
 	Track        Track         `json:"track"`
@@ -9869,3 +12052,53 @@ func (Visibility) AllValues() []Visibility {
 		Visibility3,
 	}
 }
+
+type VoteContributionBadRequest ErrorResponse
+
+func (*VoteContributionBadRequest) voteContributionRes() {}
+
+type VoteContributionForbidden ErrorResponse
+
+func (*VoteContributionForbidden) voteContributionRes() {}
+
+type VoteContributionInternalServerError ErrorResponse
+
+func (*VoteContributionInternalServerError) voteContributionRes() {}
+
+type VoteContributionNotFound ErrorResponse
+
+func (*VoteContributionNotFound) voteContributionRes() {}
+
+// Ref: #/components/schemas/VoteContributionRequest
+type VoteContributionRequest struct {
+	Vote VoteContributionRequestVote `json:"vote"`
+}
+
+// GetVote returns the value of Vote.
+func (s *VoteContributionRequest) GetVote() VoteContributionRequestVote {
+	return s.Vote
+}
+
+// SetVote sets the value of Vote.
+func (s *VoteContributionRequest) SetVote(val VoteContributionRequestVote) {
+	s.Vote = val
+}
+
+type VoteContributionRequestVote int8
+
+const (
+	VoteContributionRequestVoteMinus1 VoteContributionRequestVote = -1
+	VoteContributionRequestVote1      VoteContributionRequestVote = 1
+)
+
+// AllValues returns all VoteContributionRequestVote values.
+func (VoteContributionRequestVote) AllValues() []VoteContributionRequestVote {
+	return []VoteContributionRequestVote{
+		VoteContributionRequestVoteMinus1,
+		VoteContributionRequestVote1,
+	}
+}
+
+type VoteContributionUnauthorized ErrorResponse
+
+func (*VoteContributionUnauthorized) voteContributionRes() {}

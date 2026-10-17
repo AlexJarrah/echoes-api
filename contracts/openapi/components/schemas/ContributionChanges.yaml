@@ -1,0 +1,22 @@
+ContributionChanges:
+  type: object
+  minProperties: 1
+  properties:
+    artists:
+      $ref: "#/components/schemas/ArtistContributions"
+    albums:
+      $ref: "#/components/schemas/AlbumContributions"
+    tracks:
+      $ref: "#/components/schemas/TrackContributions"
+    artist_aliases:
+      $ref: "#/components/schemas/ArtistAliasContributions"
+    artist_assets:
+      $ref: "#/components/schemas/ArtistAssetContributions"
+    album_artists:
+      $ref: "#/components/schemas/AlbumArtistContributions"
+    album_assets:
+      $ref: "#/components/schemas/AlbumAssetContributions"
+    album_tracks:
+      $ref: "#/components/schemas/AlbumTrackContributions"
+    track_artists:
+      $ref: "#/components/schemas/TrackArtistContributions"

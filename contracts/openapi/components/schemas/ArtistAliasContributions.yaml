@@ -1,0 +1,37 @@
+ArtistAliasContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [artist_id, alias]
+        properties:
+          artist_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          alias:
+            type: string
+            minLength: 1
+            maxLength: 200
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [artist_id, alias]
+        properties:
+          artist_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          alias:
+            type: string
+            minLength: 1
+            maxLength: 200

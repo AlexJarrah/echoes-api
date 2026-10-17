@@ -1,0 +1,70 @@
+AlbumTrackContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id, track_id]
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          disc_number:
+            type: integer
+            format: uint8
+            nullable: true
+          track_number:
+            type: integer
+            format: uint8
+            nullable: true
+
+    update:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id, track_id]
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          disc_number:
+            type: integer
+            format: uint8
+            nullable: true
+          track_number:
+            type: integer
+            format: uint8
+            nullable: true
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id, track_id]
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.

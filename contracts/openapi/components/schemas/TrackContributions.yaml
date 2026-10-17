@@ -1,0 +1,67 @@
+TrackContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [track_id, name]
+        properties:
+          track_id:
+            type: string
+            format: uuid
+            description: Assign any UUID to be used as reference. All references to this UUID will be understood by the server as whatever UUID the track gets assigned.
+          name:
+            type: string
+            minLength: 1
+            maxLength: 300
+          seconds:
+            type: integer
+            format: uint16
+            nullable: true
+          lyrics:
+            type: string
+            format: yaml
+            maxLength: 10000
+            nullable: true
+          links:
+            $ref: "#/components/schemas/PlatformLinksChange"
+
+    update:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [track_id]
+        properties:
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          name:
+            type: string
+            minLength: 1
+            maxLength: 300
+          seconds:
+            type: integer
+            format: uint16
+            nullable: true
+          lyrics:
+            type: string
+            maxLength: 10000
+            nullable: true
+          links:
+            $ref: "#/components/schemas/PlatformLinksChange"
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: string
+        format: uuid
+        description: ID or reference ID.

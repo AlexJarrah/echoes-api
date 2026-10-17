@@ -83,6 +83,15 @@ func (UnimplementedHandler) CreatePlaylist(ctx context.Context, req *CreatePlayl
 	return r, ht.ErrNotImplemented
 }
 
+// DeleteContribution implements deleteContribution operation.
+//
+// Delete a pending contribution.
+//
+// DELETE /api/contributions/{contribution_id}
+func (UnimplementedHandler) DeleteContribution(ctx context.Context, params DeleteContributionParams) (r DeleteContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // DeleteGroup implements deleteGroup operation.
 //
 // Delete a group if owned by the user.
@@ -273,6 +282,33 @@ func (UnimplementedHandler) GetCalendarListens(ctx context.Context, params GetCa
 //
 // GET /api/changes
 func (UnimplementedHandler) GetChanges(ctx context.Context, params GetChangesParams) (r GetChangesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetContribution implements getContribution operation.
+//
+// Get a contribution.
+//
+// GET /api/contributions/{contribution_id}
+func (UnimplementedHandler) GetContribution(ctx context.Context, params GetContributionParams) (r GetContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetContributionVotes implements getContributionVotes operation.
+//
+// Get all contribution votes.
+//
+// GET /api/contributions/{contribution_id}/votes
+func (UnimplementedHandler) GetContributionVotes(ctx context.Context, params GetContributionVotesParams) (r GetContributionVotesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetContributions implements getContributions operation.
+//
+// List contributions.
+//
+// GET /api/contributions
+func (UnimplementedHandler) GetContributions(ctx context.Context, params GetContributionsParams) (r GetContributionsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -581,6 +617,15 @@ func (UnimplementedHandler) JoinFreeBeta(ctx context.Context) (r JoinFreeBetaRes
 	return r, ht.ErrNotImplemented
 }
 
+// ProposeContribution implements proposeContribution operation.
+//
+// Propose a contribution.
+//
+// POST /api/contributions
+func (UnimplementedHandler) ProposeContribution(ctx context.Context, req *ContributionChanges) (r ProposeContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // ReadMessage implements readMessage operation.
 //
 // Read a message.
@@ -599,6 +644,15 @@ func (UnimplementedHandler) Register(ctx context.Context, req *RegisterRequest) 
 	return r, ht.ErrNotImplemented
 }
 
+// RemoveContributionVote implements removeContributionVote operation.
+//
+// Remove vote from a contribution.
+//
+// DELETE /api/contributions/{contribution_id}/votes
+func (UnimplementedHandler) RemoveContributionVote(ctx context.Context, params RemoveContributionVoteParams) (r RemoveContributionVoteRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // RemoveFriend implements removeFriend operation.
 //
 // Remove a friend.
@@ -614,6 +668,15 @@ func (UnimplementedHandler) RemoveFriend(ctx context.Context, req *RemoveFriendR
 //
 // POST /api/library/remove
 func (UnimplementedHandler) RemoveFromLibrary(ctx context.Context, req *LibraryRemoveRequest) (r RemoveFromLibraryRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ReviewContribution implements reviewContribution operation.
+//
+// Review a contribution.
+//
+// PATCH /api/contributions/{contribution_id}/review
+func (UnimplementedHandler) ReviewContribution(ctx context.Context, req *ReviewContributionRequest, params ReviewContributionParams) (r ReviewContributionRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -749,5 +812,14 @@ func (UnimplementedHandler) UploadTrackAudio(ctx context.Context, req *UploadTra
 //
 // GET /api/validate
 func (UnimplementedHandler) ValidateToken(ctx context.Context) (r ValidateTokenRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// VoteContribution implements voteContribution operation.
+//
+// Vote on a contribution.
+//
+// PUT /api/contributions/{contribution_id}/votes
+func (UnimplementedHandler) VoteContribution(ctx context.Context, req *VoteContributionRequest, params VoteContributionParams) (r VoteContributionRes, _ error) {
 	return r, ht.ErrNotImplemented
 }

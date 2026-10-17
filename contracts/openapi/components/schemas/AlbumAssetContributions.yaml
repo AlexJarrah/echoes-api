@@ -1,0 +1,39 @@
+AlbumAssetContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id, asset_id]
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          asset_id:
+            type: string
+            format: uuid
+          position:
+            type: string
+            pattern: "^[0-9a-z._-]+$"
+            description: Lexicographically sortable string. Assigned by the server when omitted.
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [album_id, asset_id]
+        properties:
+          album_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          asset_id:
+            type: string
+            format: uuid

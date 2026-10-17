@@ -54,6 +54,12 @@ type Handler interface {
 	//
 	// POST /api/playlists
 	CreatePlaylist(ctx context.Context, req *CreatePlaylistRequest) (CreatePlaylistRes, error)
+	// DeleteContribution implements deleteContribution operation.
+	//
+	// Delete a pending contribution.
+	//
+	// DELETE /api/contributions/{contribution_id}
+	DeleteContribution(ctx context.Context, params DeleteContributionParams) (DeleteContributionRes, error)
 	// DeleteGroup implements deleteGroup operation.
 	//
 	// Delete a group if owned by the user.
@@ -181,6 +187,24 @@ type Handler interface {
 	//
 	// GET /api/changes
 	GetChanges(ctx context.Context, params GetChangesParams) (GetChangesRes, error)
+	// GetContribution implements getContribution operation.
+	//
+	// Get a contribution.
+	//
+	// GET /api/contributions/{contribution_id}
+	GetContribution(ctx context.Context, params GetContributionParams) (GetContributionRes, error)
+	// GetContributionVotes implements getContributionVotes operation.
+	//
+	// Get all contribution votes.
+	//
+	// GET /api/contributions/{contribution_id}/votes
+	GetContributionVotes(ctx context.Context, params GetContributionVotesParams) (GetContributionVotesRes, error)
+	// GetContributions implements getContributions operation.
+	//
+	// List contributions.
+	//
+	// GET /api/contributions
+	GetContributions(ctx context.Context, params GetContributionsParams) (GetContributionsRes, error)
 	// GetFriendsRecentActivity implements getFriendsRecentActivity operation.
 	//
 	// Get recent friends activity.
@@ -384,6 +408,12 @@ type Handler interface {
 	//
 	// POST /api/join-free-beta
 	JoinFreeBeta(ctx context.Context) (JoinFreeBetaRes, error)
+	// ProposeContribution implements proposeContribution operation.
+	//
+	// Propose a contribution.
+	//
+	// POST /api/contributions
+	ProposeContribution(ctx context.Context, req *ContributionChanges) (ProposeContributionRes, error)
 	// ReadMessage implements readMessage operation.
 	//
 	// Read a message.
@@ -396,6 +426,12 @@ type Handler interface {
 	//
 	// POST /api/register
 	Register(ctx context.Context, req *RegisterRequest) (RegisterRes, error)
+	// RemoveContributionVote implements removeContributionVote operation.
+	//
+	// Remove vote from a contribution.
+	//
+	// DELETE /api/contributions/{contribution_id}/votes
+	RemoveContributionVote(ctx context.Context, params RemoveContributionVoteParams) (RemoveContributionVoteRes, error)
 	// RemoveFriend implements removeFriend operation.
 	//
 	// Remove a friend.
@@ -408,6 +444,12 @@ type Handler interface {
 	//
 	// POST /api/library/remove
 	RemoveFromLibrary(ctx context.Context, req *LibraryRemoveRequest) (RemoveFromLibraryRes, error)
+	// ReviewContribution implements reviewContribution operation.
+	//
+	// Review a contribution.
+	//
+	// PATCH /api/contributions/{contribution_id}/review
+	ReviewContribution(ctx context.Context, req *ReviewContributionRequest, params ReviewContributionParams) (ReviewContributionRes, error)
 	// SearchTracks implements searchTracks operation.
 	//
 	// Search tracks.
@@ -498,6 +540,12 @@ type Handler interface {
 	//
 	// GET /api/validate
 	ValidateToken(ctx context.Context) (ValidateTokenRes, error)
+	// VoteContribution implements voteContribution operation.
+	//
+	// Vote on a contribution.
+	//
+	// PUT /api/contributions/{contribution_id}/votes
+	VoteContribution(ctx context.Context, req *VoteContributionRequest, params VoteContributionParams) (VoteContributionRes, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

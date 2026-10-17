@@ -1,0 +1,60 @@
+TrackArtistContributions:
+  type: object
+  minProperties: 1
+  properties:
+    create:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [track_id, artist_id]
+        properties:
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          artist_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          featured:
+            type: boolean
+            default: false
+
+    update:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [track_id, artist_id]
+        properties:
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          artist_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          featured:
+            type: boolean
+            default: false
+
+    delete:
+      type: array
+      maxItems: 100
+      uniqueItems: true
+      items:
+        type: object
+        required: [track_id, artist_id]
+        properties:
+          track_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.
+          artist_id:
+            type: string
+            format: uuid
+            description: ID or reference ID.

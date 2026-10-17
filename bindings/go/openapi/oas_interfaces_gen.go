@@ -33,6 +33,10 @@ type CreatePlaylistRes interface {
 	createPlaylistRes()
 }
 
+type DeleteContributionRes interface {
+	deleteContributionRes()
+}
+
 type DeleteGroupRes interface {
 	deleteGroupRes()
 }
@@ -115,6 +119,18 @@ type GetCalendarListensRes interface {
 
 type GetChangesRes interface {
 	getChangesRes()
+}
+
+type GetContributionRes interface {
+	getContributionRes()
+}
+
+type GetContributionVotesRes interface {
+	getContributionVotesRes()
+}
+
+type GetContributionsRes interface {
+	getContributionsRes()
 }
 
 type GetFriendsRecentActivityRes interface {
@@ -249,6 +265,10 @@ type JoinFreeBetaRes interface {
 	joinFreeBetaRes()
 }
 
+type ProposeContributionRes interface {
+	proposeContributionRes()
+}
+
 type ReadMessageRes interface {
 	readMessageRes()
 }
@@ -257,12 +277,20 @@ type RegisterRes interface {
 	registerRes()
 }
 
+type RemoveContributionVoteRes interface {
+	removeContributionVoteRes()
+}
+
 type RemoveFriendRes interface {
 	removeFriendRes()
 }
 
 type RemoveFromLibraryRes interface {
 	removeFromLibraryRes()
+}
+
+type ReviewContributionRes interface {
+	reviewContributionRes()
 }
 
 type SearchTracksRes interface {
@@ -323,4 +351,8 @@ type UploadTrackAudioRes interface {
 
 type ValidateTokenRes interface {
 	validateTokenRes()
+}
+
+type VoteContributionRes interface {
+	voteContributionRes()
 }
