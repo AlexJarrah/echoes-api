@@ -1,0 +1,71 @@
+/api/contributions:
+  get:
+    summary: List contributions
+    operationId: getContributions
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: user_id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Filter by author
+      - name: entity
+        in: query
+        required: false
+        schema:
+          $ref: "#/components/schemas/ContributionEntity"
+        description: Filter by entity type
+      - name: entity_id
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Filter by entity
+      - name: operation
+        in: query
+        required: false
+        schema:
+          $ref: "#/components/schemas/ContributionOperation"
+        description: Filter by operation
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: "#/components/schemas/ContributionStatus"
+        description: Filter by status
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 50
+          maximum: 100
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 0
+    responses:
+      "200":
+        description: Contributions retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contribution"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "500":
+        $ref: "#/components/responses/InternalServerError"

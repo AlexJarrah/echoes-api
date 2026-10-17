@@ -154,6 +154,184 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/contributions/albums/{album_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        /** List contributions for an album */
+        get: operations["getAlbumContributions"];
+        put?: never;
+        /**
+         * Propose a change to an album
+         * @description Asset ids must have been uploaded via the assets endpoint beforehand.
+         */
+        post: operations["proposeAlbumContribution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions/albums": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Propose a new album */
+        post: operations["proposeAlbumCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions/artists/{artist_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                artist_id: string;
+            };
+            cookie?: never;
+        };
+        /**
+         * List contributions for an artist
+         * @description Includes merge contributions where the artist is a merge source.
+         */
+        get: operations["getArtistContributions"];
+        put?: never;
+        /**
+         * Propose a change to an artist
+         * @description The artist in the path is the target (for merge, the surviving artist).
+         *     Asset ids must have been uploaded via the assets endpoint beforehand.
+         */
+        post: operations["proposeArtistContribution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions/artists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Propose a new artist */
+        post: operations["proposeArtistCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions/tracks/{track_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        /** List contributions for a track */
+        get: operations["getTrackContributions"];
+        put?: never;
+        /**
+         * Propose a change to a track
+         * @description New tracks are proposed through album contributions.
+         */
+        post: operations["proposeTrackContribution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions/{contribution_id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Review a contribution */
+        patch: operations["reviewContribution"];
+        trace?: never;
+    };
+    "/api/contributions/{contribution_id}/votes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all contribution votes */
+        get: operations["getContributionVotes"];
+        /** Vote on a contribution */
+        put: operations["voteContribution"];
+        post?: never;
+        /** Remove vote from a contribution */
+        delete: operations["removeContributionVote"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions/{contribution_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a contribution */
+        get: operations["getContribution"];
+        put?: never;
+        post?: never;
+        /** Delete a pending contribution */
+        delete: operations["deleteContribution"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/contributions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List contributions */
+        get: operations["getContributions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}": {
         parameters: {
             query?: never;
@@ -1172,6 +1350,50 @@ export interface components {
             /** @description Lexicographically sortable string */
             position: string;
         };
+        AlbumChanges: {
+            name?: string;
+            /** Format: date-time */
+            release_date?: string | null;
+            /** Format: uuid */
+            base_album_id?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            assets?: components["schemas"]["AssetsChange"];
+            artists?: components["schemas"]["ArtistsChange"];
+            tracks?: components["schemas"]["AlbumTracksChange"];
+        };
+        AlbumCreateProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "album-create";
+            name: string;
+            /** Format: date-time */
+            release_date?: string | null;
+            /** Format: uuid */
+            base_album_id?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            assets?: components["schemas"]["AssetsChange"];
+            artists?: string[];
+            tracks?: components["schemas"]["TrackCreate"][];
+        };
+        AlbumDeleteProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "album-delete";
+        };
+        AlbumOriginal: components["schemas"]["Album"] & {
+            /** @enum {string} */
+            entity: "album";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            entity: "album";
+        };
         AlbumPlayStats: {
             album: components["schemas"]["Album"];
             assets: components["schemas"]["AlbumAsset"][];
@@ -1189,6 +1411,20 @@ export interface components {
             disc_number?: number | null;
             /** Format: uint8 */
             track_number?: number | null;
+        };
+        /** @description Tracks to add, update or remove. Absent keys are unchanged. */
+        AlbumTracksChange: {
+            add?: components["schemas"]["TrackCreate"][];
+            update?: components["schemas"]["TrackUpdate"][];
+            remove?: string[];
+        };
+        AlbumUpdateProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "album-update";
+            changes?: components["schemas"]["AlbumChanges"];
         };
         Artist: {
             /** Format: uuid */
@@ -1215,6 +1451,52 @@ export interface components {
             asset_id: string;
             /** @description Lexicographically sortable string */
             position: string;
+        };
+        /** @description Optional artist fields. Absent fields are unchanged. */
+        ArtistChanges: {
+            name?: string;
+            bio?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            assets?: components["schemas"]["AssetsChange"];
+        };
+        ArtistCreateProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "artist-create";
+            name: string;
+            bio?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            assets?: components["schemas"]["AssetsChange"];
+        };
+        ArtistDeleteProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "artist-delete";
+        };
+        ArtistMergeProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "artist-merge";
+            /** @description Artists merged into the surviving artist. Must not include the survivor. */
+            source_artist_ids: string[];
+            /** @description Changes to the surviving artist, applied together with the merge. */
+            changes?: components["schemas"]["ArtistChanges"];
+        };
+        ArtistOriginal: components["schemas"]["Artist"] & {
+            /** @enum {string} */
+            entity: "artist";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            entity: "artist";
         };
         ArtistPlayStatisticsQuery: {
             /**
@@ -1259,6 +1541,19 @@ export interface components {
             /** Format: uint64 */
             play_duration: number;
         };
+        ArtistUpdateProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "artist-update";
+            changes?: components["schemas"]["ArtistChanges"];
+        };
+        /** @description Artists to add or remove. Absent fields are unchanged. */
+        ArtistsChange: {
+            add?: string[];
+            remove?: string[];
+        };
         Asset: {
             /** Format: uuid */
             asset_id: string;
@@ -1267,6 +1562,16 @@ export interface components {
             created_at: string;
             /** Format: date-time */
             updated_at?: string | null;
+        };
+        /** @description Assets to add or remove. Absent fields are unchanged. */
+        AssetsChange: {
+            add?: {
+                /** Format: uuid */
+                asset_id: string;
+                /** @description Lexicographically sortable string, assigned by the server when omitted. */
+                position?: string;
+            }[];
+            remove?: string[];
         };
         BestFriendActionRequest: {
             /** Format: uuid */
@@ -1295,6 +1600,65 @@ export interface components {
          * @enum {integer}
          */
         ChangeOperation: 0 | 1 | 2;
+        Contribution: {
+            /** Format: uuid */
+            contribution_id: string;
+            /**
+             * Format: uuid
+             * @description Null if the author was deleted.
+             */
+            user_id?: string | null;
+            /** @description Entity type targeted by the contribution. */
+            entity: components["schemas"]["ContributionEntity"];
+            /**
+             * Format: uuid
+             * @description Null for create operations.
+             */
+            entity_id?: string | null;
+            operation: components["schemas"]["ContributionOperation"];
+            status: components["schemas"]["ContributionStatus"];
+            proposed: components["schemas"]["ContributionProposal"];
+            /** @description State of the entity at proposal time. Null for create operations. */
+            original?: components["schemas"]["ContributionOriginal"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
+        };
+        /** @enum {string} */
+        ContributionEntity: "artist" | "album" | "track";
+        /**
+         * Format: uint8
+         * @description 0=Create
+         *     1=Update
+         *     2=Delete
+         *     3=Merge
+         * @enum {integer}
+         */
+        ContributionOperation: 0 | 1 | 2 | 3;
+        ContributionOriginal: components["schemas"]["ArtistOriginal"] | components["schemas"]["AlbumOriginal"] | components["schemas"]["TrackOriginal"];
+        ContributionProposal: components["schemas"]["ArtistCreateProposal"] | components["schemas"]["ArtistUpdateProposal"] | components["schemas"]["ArtistMergeProposal"] | components["schemas"]["ArtistDeleteProposal"] | components["schemas"]["AlbumCreateProposal"] | components["schemas"]["AlbumUpdateProposal"] | components["schemas"]["AlbumDeleteProposal"] | components["schemas"]["TrackUpdateProposal"] | components["schemas"]["TrackDeleteProposal"];
+        /**
+         * Format: uint8
+         * @description 0=Pending
+         *     1=Approved
+         *     2=Rejected
+         * @enum {integer}
+         */
+        ContributionStatus: 0 | 1 | 2;
+        ContributionVote: {
+            /** Format: uuid */
+            user_id: string;
+            /** Format: uuid */
+            contribution_id: string;
+            /**
+             * Format: int8
+             * @enum {integer}
+             */
+            vote: -1 | 1;
+            /** Format: date-time */
+            created_at: string;
+        };
         Conversation: {
             /** Format: uuid */
             conversation_id: string;
@@ -1825,6 +2189,17 @@ export interface components {
             /** Format: date-time */
             created_at: string;
         };
+        /** @description Absent fields are unchanged, null clears the link. */
+        PlatformLinksChange: {
+            /** Format: uri */
+            spotify_url?: string | null;
+            /** Format: uri */
+            apple_music_url?: string | null;
+            /** Format: uri */
+            tidal_url?: string | null;
+            /** Format: uri */
+            youtube_music_url?: string | null;
+        };
         Playlist: {
             /** Format: uuid */
             playlist_id: string;
@@ -1917,6 +2292,9 @@ export interface components {
         RemoveFriendRequest: {
             /** Format: uuid */
             id: string;
+        };
+        ReviewContributionRequest: {
+            status: components["schemas"]["ContributionStatus"];
         };
         SearchIndex: {
             artists?: components["schemas"]["SearchIndexArtist"][];
@@ -2251,6 +2629,47 @@ export interface components {
             /** @default false */
             featured: boolean;
         };
+        TrackArtistChange: {
+            /** Format: uuid */
+            artist_id: string;
+            /** @default false */
+            featured: boolean;
+        };
+        /** @description Track artists to add or remove. Absent fields are unchanged. */
+        TrackArtistsChange: {
+            add?: components["schemas"]["TrackArtistChange"][];
+            remove?: string[];
+        };
+        /** @description Optional track fields. Absent fields are unchanged. */
+        TrackChanges: {
+            name?: string;
+            /** Format: uint16 */
+            seconds?: number | null;
+            /** @description Full lyrics text, null clears. */
+            lyrics?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            artists?: components["schemas"]["TrackArtistsChange"];
+        };
+        TrackCreate: {
+            name: string;
+            /** Format: uint16 */
+            seconds?: number | null;
+            /** Format: uint8 */
+            disc_number?: number | null;
+            /** Format: uint8 */
+            track_number?: number | null;
+            /** @description Full lyrics text. */
+            lyrics?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            artists?: components["schemas"]["TrackArtistsChange"];
+        };
+        TrackDeleteProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "track-delete";
+        };
         TrackDetails: {
             track: components["schemas"]["Track"];
             artists: components["schemas"]["Artist"][];
@@ -2261,12 +2680,45 @@ export interface components {
             artist_assets: components["schemas"]["ArtistAsset"][];
             album_assets: components["schemas"]["AlbumAsset"][];
         };
+        TrackOriginal: components["schemas"]["Track"] & {
+            /** @enum {string} */
+            entity: "track";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            entity: "track";
+        };
         TrackPlayStats: {
             track: components["schemas"]["Track"];
             /** Format: uint64 */
             play_count: number;
             /** Format: uint64 */
             play_duration: number;
+        };
+        TrackUpdate: {
+            /** Format: uuid */
+            track_id: string;
+            name?: string;
+            /** Format: uint16 */
+            seconds?: number | null;
+            /** Format: uint8 */
+            disc_number?: number | null;
+            /** Format: uint8 */
+            track_number?: number | null;
+            /** @description Full lyrics text, null clears. */
+            lyrics?: string | null;
+            links?: components["schemas"]["PlatformLinksChange"];
+            artists?: components["schemas"]["TrackArtistsChange"];
+        };
+        TrackUpdateProposal: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "track-update";
+            changes?: components["schemas"]["TrackChanges"];
         };
         UpdateGroupRolesRequest: {
             role: components["schemas"]["GroupRoleType"];
@@ -2322,6 +2774,13 @@ export interface components {
          * @enum {integer}
          */
         Visibility: 0 | 1 | 2 | 3;
+        VoteContributionRequest: {
+            /**
+             * Format: int8
+             * @enum {integer}
+             */
+            vote: -1 | 1;
+        };
     };
     responses: {
         /** @description Bad request */
@@ -2752,6 +3211,436 @@ export interface operations {
                     "application/json": components["schemas"]["GetChangesResponse"];
                 };
             };
+            401: components["responses"]["Unauthorized"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getAlbumContributions: {
+        parameters: {
+            query?: {
+                /** @description Filter by status */
+                status?: components["schemas"]["ContributionStatus"];
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Contributions retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    proposeAlbumContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                album_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlbumUpdateProposal"] | components["schemas"]["AlbumDeleteProposal"];
+            };
+        };
+        responses: {
+            /** @description Contribution proposed successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    proposeAlbumCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlbumCreateProposal"];
+            };
+        };
+        responses: {
+            /** @description Contribution proposed successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getArtistContributions: {
+        parameters: {
+            query?: {
+                /** @description Filter by status */
+                status?: components["schemas"]["ContributionStatus"];
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                artist_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Contributions retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    proposeArtistContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                artist_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArtistUpdateProposal"] | components["schemas"]["ArtistMergeProposal"] | components["schemas"]["ArtistDeleteProposal"];
+            };
+        };
+        responses: {
+            /** @description Contribution proposed successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    proposeArtistCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArtistCreateProposal"];
+            };
+        };
+        responses: {
+            /** @description Contribution proposed successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getTrackContributions: {
+        parameters: {
+            query?: {
+                /** @description Filter by status */
+                status?: components["schemas"]["ContributionStatus"];
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Contributions retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    proposeTrackContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                track_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrackUpdateProposal"] | components["schemas"]["TrackDeleteProposal"];
+            };
+        };
+        responses: {
+            /** @description Contribution proposed successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    reviewContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contribution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewContributionRequest"];
+            };
+        };
+        responses: {
+            /** @description Contribution reviewed successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getContributionVotes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contribution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Votes retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContributionVote"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    voteContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contribution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VoteContributionRequest"];
+            };
+        };
+        responses: {
+            /** @description Vote recorded successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContributionVote"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    removeContributionVote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contribution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contribution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Contribution retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    deleteContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contribution_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: components["responses"]["NoContent"];
+            400: components["responses"]["BadRequest"];
+            401: components["responses"]["Unauthorized"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getContributions: {
+        parameters: {
+            query?: {
+                /** @description Filter by author */
+                user_id?: string;
+                /** @description Filter by entity type */
+                entity?: components["schemas"]["ContributionEntity"];
+                /** @description Filter by entity */
+                entity_id?: string;
+                /** @description Filter by operation */
+                operation?: components["schemas"]["ContributionOperation"];
+                /** @description Filter by status */
+                status?: components["schemas"]["ContributionStatus"];
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Contributions retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Contribution"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             500: components["responses"]["InternalServerError"];
         };

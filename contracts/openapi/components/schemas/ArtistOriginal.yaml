@@ -1,0 +1,11 @@
+ArtistOriginal:
+  allOf:
+    - $ref: "#/components/schemas/Artist"
+    - type: object
+      required:
+        - entity
+      properties:
+        entity:
+          type: string
+          enum:
+            - artist

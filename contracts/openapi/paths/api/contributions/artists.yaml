@@ -1,0 +1,25 @@
+/api/contributions/artists:
+  post:
+    summary: Propose a new artist
+    operationId: proposeArtistCreate
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ArtistCreateProposal"
+    responses:
+      "201":
+        description: Contribution proposed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "409": { $ref: "#/components/responses/Conflict" }
+      "500": { $ref: "#/components/responses/InternalServerError" }

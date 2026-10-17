@@ -1,0 +1,11 @@
+AlbumOriginal:
+  allOf:
+    - $ref: "#/components/schemas/Album"
+    - type: object
+      required:
+        - entity
+      properties:
+        entity:
+          type: string
+          enum:
+            - album

@@ -1,0 +1,23 @@
+AssetsChange:
+  type: object
+  description: Assets to add or remove. Absent fields are unchanged.
+  minProperties: 1
+  properties:
+    add:
+      type: array
+      items:
+        type: object
+        required:
+          - asset_id
+        properties:
+          asset_id:
+            type: string
+            format: uuid
+          position:
+            type: string
+            description: Lexicographically sortable string, assigned by the server when omitted.
+    remove:
+      type: array
+      items:
+        type: string
+        format: uuid

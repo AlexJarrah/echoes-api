@@ -1,0 +1,22 @@
+ArtistCreateProposal:
+  type: object
+  required:
+    - kind
+    - name
+  additionalProperties: false
+  properties:
+    kind:
+      type: string
+      enum: [artist-create]
+    name:
+      type: string
+      minLength: 1
+      maxLength: 200
+    bio:
+      type: string
+      maxLength: 5000
+      nullable: true
+    links:
+      $ref: "#/components/schemas/PlatformLinksChange"
+    assets:
+      $ref: "#/components/schemas/AssetsChange"

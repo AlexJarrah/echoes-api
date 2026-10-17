@@ -1,0 +1,23 @@
+ContributionProposal:
+  oneOf:
+    - $ref: "#/components/schemas/ArtistCreateProposal"
+    - $ref: "#/components/schemas/ArtistUpdateProposal"
+    - $ref: "#/components/schemas/ArtistMergeProposal"
+    - $ref: "#/components/schemas/ArtistDeleteProposal"
+    - $ref: "#/components/schemas/AlbumCreateProposal"
+    - $ref: "#/components/schemas/AlbumUpdateProposal"
+    - $ref: "#/components/schemas/AlbumDeleteProposal"
+    - $ref: "#/components/schemas/TrackUpdateProposal"
+    - $ref: "#/components/schemas/TrackDeleteProposal"
+  discriminator:
+    propertyName: kind
+    mapping:
+      artist-create: "#/components/schemas/ArtistCreateProposal"
+      artist-update: "#/components/schemas/ArtistUpdateProposal"
+      artist-merge: "#/components/schemas/ArtistMergeProposal"
+      artist-delete: "#/components/schemas/ArtistDeleteProposal"
+      album-create: "#/components/schemas/AlbumCreateProposal"
+      album-update: "#/components/schemas/AlbumUpdateProposal"
+      album-delete: "#/components/schemas/AlbumDeleteProposal"
+      track-update: "#/components/schemas/TrackUpdateProposal"
+      track-delete: "#/components/schemas/TrackDeleteProposal"

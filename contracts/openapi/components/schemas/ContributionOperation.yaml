@@ -1,0 +1,9 @@
+ContributionOperation:
+  type: integer
+  format: uint8
+  enum: [0, 1, 2, 3]
+  description: |
+    0=Create
+    1=Update
+    2=Delete
+    3=Merge

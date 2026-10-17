@@ -1,0 +1,22 @@
+TrackChanges:
+  type: object
+  description: Optional track fields. Absent fields are unchanged.
+  minProperties: 1
+  properties:
+    name:
+      type: string
+      minLength: 1
+      maxLength: 300
+    seconds:
+      type: integer
+      format: uint16
+      nullable: true
+    lyrics:
+      type: string
+      maxLength: 10000
+      nullable: true
+      description: Full lyrics text, null clears.
+    links:
+      $ref: "#/components/schemas/PlatformLinksChange"
+    artists:
+      $ref: "#/components/schemas/TrackArtistsChange"

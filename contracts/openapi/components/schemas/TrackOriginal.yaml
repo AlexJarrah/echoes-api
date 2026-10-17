@@ -1,0 +1,11 @@
+TrackOriginal:
+  allOf:
+    - $ref: "#/components/schemas/Track"
+    - type: object
+      required:
+        - entity
+      properties:
+        entity:
+          type: string
+          enum:
+            - track

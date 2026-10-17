@@ -1,0 +1,24 @@
+AlbumChanges:
+  type: object
+  minProperties: 1
+  properties:
+    name:
+      type: string
+      minLength: 1
+      maxLength: 300
+    release_date:
+      type: string
+      format: date-time
+      nullable: true
+    base_album_id:
+      type: string
+      format: uuid
+      nullable: true
+    links:
+      $ref: "#/components/schemas/PlatformLinksChange"
+    assets:
+      $ref: "#/components/schemas/AssetsChange"
+    artists:
+      $ref: "#/components/schemas/ArtistsChange"
+    tracks:
+      $ref: "#/components/schemas/AlbumTracksChange"

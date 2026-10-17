@@ -1,0 +1,8 @@
+ContributionStatus:
+  type: integer
+  format: uint8
+  enum: [0, 1, 2]
+  description: |
+    0=Pending
+    1=Approved
+    2=Rejected

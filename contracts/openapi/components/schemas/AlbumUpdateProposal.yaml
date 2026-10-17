@@ -1,0 +1,11 @@
+AlbumUpdateProposal:
+  type: object
+  required:
+    - kind
+  additionalProperties: false
+  properties:
+    kind:
+      type: string
+      enum: [album-update]
+    changes:
+      $ref: "#/components/schemas/AlbumChanges"

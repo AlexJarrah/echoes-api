@@ -1,0 +1,26 @@
+/api/contributions/albums:
+  post:
+    summary: Propose a new album
+    operationId: proposeAlbumCreate
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AlbumCreateProposal"
+    responses:
+      "201":
+        description: Contribution proposed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "404": { $ref: "#/components/responses/NotFound" }
+      "409": { $ref: "#/components/responses/Conflict" }
+      "500": { $ref: "#/components/responses/InternalServerError" }

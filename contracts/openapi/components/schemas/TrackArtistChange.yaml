@@ -1,0 +1,11 @@
+TrackArtistChange:
+  type: object
+  required:
+    - artist_id
+  properties:
+    artist_id:
+      type: string
+      format: uuid
+    featured:
+      type: boolean
+      default: false

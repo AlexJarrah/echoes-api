@@ -44,6 +44,35 @@ export type AlbumAsset = {
     position: string;
 };
 
+export type AlbumChanges = {
+    name?: string;
+    release_date?: string | null;
+    base_album_id?: string | null;
+    links?: PlatformLinksChange;
+    assets?: AssetsChange;
+    artists?: ArtistsChange;
+    tracks?: AlbumTracksChange;
+};
+
+export type AlbumCreateProposal = {
+    kind: 'album-create';
+    name: string;
+    release_date?: string | null;
+    base_album_id?: string | null;
+    links?: PlatformLinksChange;
+    assets?: AssetsChange;
+    artists?: Array<string>;
+    tracks?: Array<TrackCreate>;
+};
+
+export type AlbumDeleteProposal = {
+    kind: 'album-delete';
+};
+
+export type AlbumOriginal = Album & {
+    entity: 'album';
+};
+
 export type AlbumPlayStats = {
     album: Album;
     assets: Array<AlbumAsset>;
@@ -56,6 +85,20 @@ export type AlbumTrack = {
     track_id: string;
     disc_number?: number | null;
     track_number?: number | null;
+};
+
+/**
+ * Tracks to add, update or remove. Absent keys are unchanged.
+ */
+export type AlbumTracksChange = {
+    add?: Array<TrackCreate>;
+    update?: Array<TrackUpdate>;
+    remove?: Array<string>;
+};
+
+export type AlbumUpdateProposal = {
+    kind: 'album-update';
+    changes?: AlbumChanges;
 };
 
 export type Artist = {
@@ -79,6 +122,41 @@ export type ArtistAsset = {
      * Lexicographically sortable string
      */
     position: string;
+};
+
+/**
+ * Optional artist fields. Absent fields are unchanged.
+ */
+export type ArtistChanges = {
+    name?: string;
+    bio?: string | null;
+    links?: PlatformLinksChange;
+    assets?: AssetsChange;
+};
+
+export type ArtistCreateProposal = {
+    kind: 'artist-create';
+    name: string;
+    bio?: string | null;
+    links?: PlatformLinksChange;
+    assets?: AssetsChange;
+};
+
+export type ArtistDeleteProposal = {
+    kind: 'artist-delete';
+};
+
+export type ArtistMergeProposal = {
+    kind: 'artist-merge';
+    /**
+     * Artists merged into the surviving artist. Must not include the survivor.
+     */
+    source_artist_ids: Array<string>;
+    changes?: ArtistChanges;
+};
+
+export type ArtistOriginal = Artist & {
+    entity: 'artist';
 };
 
 export type ArtistPlayStatisticsQuery = {
@@ -112,11 +190,38 @@ export type ArtistPlayStats = {
     play_duration: number;
 };
 
+export type ArtistUpdateProposal = {
+    kind: 'artist-update';
+    changes?: ArtistChanges;
+};
+
+/**
+ * Artists to add or remove. Absent fields are unchanged.
+ */
+export type ArtistsChange = {
+    add?: Array<string>;
+    remove?: Array<string>;
+};
+
 export type Asset = {
     asset_id: string;
     mime_type: string;
     created_at: string;
     updated_at?: string | null;
+};
+
+/**
+ * Assets to add or remove. Absent fields are unchanged.
+ */
+export type AssetsChange = {
+    add?: Array<{
+        asset_id: string;
+        /**
+         * Lexicographically sortable string, assigned by the server when omitted.
+         */
+        position?: string;
+    }>;
+    remove?: Array<string>;
 };
 
 export type BestFriendActionRequest = {
@@ -144,6 +249,79 @@ export type Change = {
  *
  */
 export type ChangeOperation = 0 | 1 | 2;
+
+export type Contribution = {
+    contribution_id: string;
+    /**
+     * Null if the author was deleted.
+     */
+    user_id?: string | null;
+    entity: ContributionEntity;
+    /**
+     * Null for create operations.
+     */
+    entity_id?: string | null;
+    operation: ContributionOperation;
+    status: ContributionStatus;
+    proposed: ContributionProposal;
+    original?: ContributionOriginal;
+    created_at: string;
+    updated_at?: string | null;
+};
+
+export type ContributionEntity = 'artist' | 'album' | 'track';
+
+/**
+ * 0=Create
+ * 1=Update
+ * 2=Delete
+ * 3=Merge
+ *
+ */
+export type ContributionOperation = 0 | 1 | 2 | 3;
+
+export type ContributionOriginal = ({
+    entity: 'artist';
+} & ArtistOriginal) | ({
+    entity: 'album';
+} & AlbumOriginal) | ({
+    entity: 'track';
+} & TrackOriginal);
+
+export type ContributionProposal = ({
+    kind: 'artist-create';
+} & ArtistCreateProposal) | ({
+    kind: 'artist-update';
+} & ArtistUpdateProposal) | ({
+    kind: 'artist-merge';
+} & ArtistMergeProposal) | ({
+    kind: 'artist-delete';
+} & ArtistDeleteProposal) | ({
+    kind: 'album-create';
+} & AlbumCreateProposal) | ({
+    kind: 'album-update';
+} & AlbumUpdateProposal) | ({
+    kind: 'album-delete';
+} & AlbumDeleteProposal) | ({
+    kind: 'track-update';
+} & TrackUpdateProposal) | ({
+    kind: 'track-delete';
+} & TrackDeleteProposal);
+
+/**
+ * 0=Pending
+ * 1=Approved
+ * 2=Rejected
+ *
+ */
+export type ContributionStatus = 0 | 1 | 2;
+
+export type ContributionVote = {
+    user_id: string;
+    contribution_id: string;
+    vote: -1 | 1;
+    created_at: string;
+};
 
 export type Conversation = {
     conversation_id: string;
@@ -640,6 +818,16 @@ export type MessageReaction = {
     created_at: string;
 };
 
+/**
+ * Absent fields are unchanged, null clears the link.
+ */
+export type PlatformLinksChange = {
+    spotify_url?: string | null;
+    apple_music_url?: string | null;
+    tidal_url?: string | null;
+    youtube_music_url?: string | null;
+};
+
 export type Playlist = {
     playlist_id: string;
     user_id: string;
@@ -721,6 +909,10 @@ export type RelationDetails = {
 
 export type RemoveFriendRequest = {
     id: string;
+};
+
+export type ReviewContributionRequest = {
+    status: ContributionStatus;
 };
 
 export type SearchIndex = {
@@ -1061,6 +1253,50 @@ export type TrackArtist = {
     featured?: boolean;
 };
 
+export type TrackArtistChange = {
+    artist_id: string;
+    featured?: boolean;
+};
+
+/**
+ * Track artists to add or remove. Absent fields are unchanged.
+ */
+export type TrackArtistsChange = {
+    add?: Array<TrackArtistChange>;
+    remove?: Array<string>;
+};
+
+/**
+ * Optional track fields. Absent fields are unchanged.
+ */
+export type TrackChanges = {
+    name?: string;
+    seconds?: number | null;
+    /**
+     * Full lyrics text, null clears.
+     */
+    lyrics?: string | null;
+    links?: PlatformLinksChange;
+    artists?: TrackArtistsChange;
+};
+
+export type TrackCreate = {
+    name: string;
+    seconds?: number | null;
+    disc_number?: number | null;
+    track_number?: number | null;
+    /**
+     * Full lyrics text.
+     */
+    lyrics?: string | null;
+    links?: PlatformLinksChange;
+    artists?: TrackArtistsChange;
+};
+
+export type TrackDeleteProposal = {
+    kind: 'track-delete';
+};
+
 export type TrackDetails = {
     track: Track;
     artists: Array<Artist>;
@@ -1072,10 +1308,33 @@ export type TrackDetails = {
     album_assets: Array<AlbumAsset>;
 };
 
+export type TrackOriginal = Track & {
+    entity: 'track';
+};
+
 export type TrackPlayStats = {
     track: Track;
     play_count: number;
     play_duration: number;
+};
+
+export type TrackUpdate = {
+    track_id: string;
+    name?: string;
+    seconds?: number | null;
+    disc_number?: number | null;
+    track_number?: number | null;
+    /**
+     * Full lyrics text, null clears.
+     */
+    lyrics?: string | null;
+    links?: PlatformLinksChange;
+    artists?: TrackArtistsChange;
+};
+
+export type TrackUpdateProposal = {
+    kind: 'track-update';
+    changes?: TrackChanges;
 };
 
 export type UpdateGroupRolesRequest = {
@@ -1129,6 +1388,10 @@ export type UserRelation = 0 | 1 | 2 | 3 | 4 | 5;
  *
  */
 export type Visibility = 0 | 1 | 2 | 3;
+
+export type VoteContributionRequest = {
+    vote: -1 | 1;
+};
 
 /**
  * Username
@@ -1596,6 +1859,667 @@ export type GetChangesResponses = {
 };
 
 export type GetChangesResponse2 = GetChangesResponses[keyof GetChangesResponses];
+
+export type GetAlbumContributionsData = {
+    body?: never;
+    path: {
+        album_id: string;
+    };
+    query?: {
+        /**
+         * Filter by status
+         */
+        status?: ContributionStatus;
+        limit?: number;
+        offset?: number;
+    };
+    url: '/api/contributions/albums/{album_id}';
+};
+
+export type GetAlbumContributionsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetAlbumContributionsError = GetAlbumContributionsErrors[keyof GetAlbumContributionsErrors];
+
+export type GetAlbumContributionsResponses = {
+    /**
+     * Contributions retrieved successfully
+     */
+    200: Array<Contribution>;
+};
+
+export type GetAlbumContributionsResponse = GetAlbumContributionsResponses[keyof GetAlbumContributionsResponses];
+
+export type ProposeAlbumContributionData = {
+    body: ({
+        kind: 'album-update';
+    } & AlbumUpdateProposal) | ({
+        kind: 'album-delete';
+    } & AlbumDeleteProposal);
+    path: {
+        album_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/albums/{album_id}';
+};
+
+export type ProposeAlbumContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ProposeAlbumContributionError = ProposeAlbumContributionErrors[keyof ProposeAlbumContributionErrors];
+
+export type ProposeAlbumContributionResponses = {
+    /**
+     * Contribution proposed successfully
+     */
+    201: Contribution;
+};
+
+export type ProposeAlbumContributionResponse = ProposeAlbumContributionResponses[keyof ProposeAlbumContributionResponses];
+
+export type ProposeAlbumCreateData = {
+    body: AlbumCreateProposal;
+    path?: never;
+    query?: never;
+    url: '/api/contributions/albums';
+};
+
+export type ProposeAlbumCreateErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ProposeAlbumCreateError = ProposeAlbumCreateErrors[keyof ProposeAlbumCreateErrors];
+
+export type ProposeAlbumCreateResponses = {
+    /**
+     * Contribution proposed successfully
+     */
+    201: Contribution;
+};
+
+export type ProposeAlbumCreateResponse = ProposeAlbumCreateResponses[keyof ProposeAlbumCreateResponses];
+
+export type GetArtistContributionsData = {
+    body?: never;
+    path: {
+        artist_id: string;
+    };
+    query?: {
+        /**
+         * Filter by status
+         */
+        status?: ContributionStatus;
+        limit?: number;
+        offset?: number;
+    };
+    url: '/api/contributions/artists/{artist_id}';
+};
+
+export type GetArtistContributionsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetArtistContributionsError = GetArtistContributionsErrors[keyof GetArtistContributionsErrors];
+
+export type GetArtistContributionsResponses = {
+    /**
+     * Contributions retrieved successfully
+     */
+    200: Array<Contribution>;
+};
+
+export type GetArtistContributionsResponse = GetArtistContributionsResponses[keyof GetArtistContributionsResponses];
+
+export type ProposeArtistContributionData = {
+    body: ({
+        kind: 'artist-update';
+    } & ArtistUpdateProposal) | ({
+        kind: 'artist-merge';
+    } & ArtistMergeProposal) | ({
+        kind: 'artist-delete';
+    } & ArtistDeleteProposal);
+    path: {
+        artist_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/artists/{artist_id}';
+};
+
+export type ProposeArtistContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ProposeArtistContributionError = ProposeArtistContributionErrors[keyof ProposeArtistContributionErrors];
+
+export type ProposeArtistContributionResponses = {
+    /**
+     * Contribution proposed successfully
+     */
+    201: Contribution;
+};
+
+export type ProposeArtistContributionResponse = ProposeArtistContributionResponses[keyof ProposeArtistContributionResponses];
+
+export type ProposeArtistCreateData = {
+    body: ArtistCreateProposal;
+    path?: never;
+    query?: never;
+    url: '/api/contributions/artists';
+};
+
+export type ProposeArtistCreateErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ProposeArtistCreateError = ProposeArtistCreateErrors[keyof ProposeArtistCreateErrors];
+
+export type ProposeArtistCreateResponses = {
+    /**
+     * Contribution proposed successfully
+     */
+    201: Contribution;
+};
+
+export type ProposeArtistCreateResponse = ProposeArtistCreateResponses[keyof ProposeArtistCreateResponses];
+
+export type GetTrackContributionsData = {
+    body?: never;
+    path: {
+        track_id: string;
+    };
+    query?: {
+        /**
+         * Filter by status
+         */
+        status?: ContributionStatus;
+        limit?: number;
+        offset?: number;
+    };
+    url: '/api/contributions/tracks/{track_id}';
+};
+
+export type GetTrackContributionsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetTrackContributionsError = GetTrackContributionsErrors[keyof GetTrackContributionsErrors];
+
+export type GetTrackContributionsResponses = {
+    /**
+     * Contributions retrieved successfully
+     */
+    200: Array<Contribution>;
+};
+
+export type GetTrackContributionsResponse = GetTrackContributionsResponses[keyof GetTrackContributionsResponses];
+
+export type ProposeTrackContributionData = {
+    body: ({
+        kind: 'track-update';
+    } & TrackUpdateProposal) | ({
+        kind: 'track-delete';
+    } & TrackDeleteProposal);
+    path: {
+        track_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/tracks/{track_id}';
+};
+
+export type ProposeTrackContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Conflict
+     */
+    409: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ProposeTrackContributionError = ProposeTrackContributionErrors[keyof ProposeTrackContributionErrors];
+
+export type ProposeTrackContributionResponses = {
+    /**
+     * Contribution proposed successfully
+     */
+    201: Contribution;
+};
+
+export type ProposeTrackContributionResponse = ProposeTrackContributionResponses[keyof ProposeTrackContributionResponses];
+
+export type ReviewContributionData = {
+    body: ReviewContributionRequest;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/review';
+};
+
+export type ReviewContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type ReviewContributionError = ReviewContributionErrors[keyof ReviewContributionErrors];
+
+export type ReviewContributionResponses = {
+    /**
+     * Contribution reviewed successfully
+     */
+    200: Contribution;
+};
+
+export type ReviewContributionResponse = ReviewContributionResponses[keyof ReviewContributionResponses];
+
+export type RemoveContributionVoteData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/votes';
+};
+
+export type RemoveContributionVoteErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type RemoveContributionVoteError = RemoveContributionVoteErrors[keyof RemoveContributionVoteErrors];
+
+export type RemoveContributionVoteResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type RemoveContributionVoteResponse = RemoveContributionVoteResponses[keyof RemoveContributionVoteResponses];
+
+export type GetContributionVotesData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/votes';
+};
+
+export type GetContributionVotesErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetContributionVotesError = GetContributionVotesErrors[keyof GetContributionVotesErrors];
+
+export type GetContributionVotesResponses = {
+    /**
+     * Votes retrieved successfully
+     */
+    200: Array<ContributionVote>;
+};
+
+export type GetContributionVotesResponse = GetContributionVotesResponses[keyof GetContributionVotesResponses];
+
+export type VoteContributionData = {
+    body: VoteContributionRequest;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}/votes';
+};
+
+export type VoteContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type VoteContributionError = VoteContributionErrors[keyof VoteContributionErrors];
+
+export type VoteContributionResponses = {
+    /**
+     * Vote recorded successfully
+     */
+    200: ContributionVote;
+};
+
+export type VoteContributionResponse = VoteContributionResponses[keyof VoteContributionResponses];
+
+export type DeleteContributionData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}';
+};
+
+export type DeleteContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Forbidden
+     */
+    403: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type DeleteContributionError = DeleteContributionErrors[keyof DeleteContributionErrors];
+
+export type DeleteContributionResponses = {
+    /**
+     * No content
+     */
+    204: void;
+};
+
+export type DeleteContributionResponse = DeleteContributionResponses[keyof DeleteContributionResponses];
+
+export type GetContributionData = {
+    body?: never;
+    path: {
+        contribution_id: string;
+    };
+    query?: never;
+    url: '/api/contributions/{contribution_id}';
+};
+
+export type GetContributionErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Not found
+     */
+    404: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetContributionError = GetContributionErrors[keyof GetContributionErrors];
+
+export type GetContributionResponses = {
+    /**
+     * Contribution retrieved successfully
+     */
+    200: Contribution;
+};
+
+export type GetContributionResponse = GetContributionResponses[keyof GetContributionResponses];
+
+export type GetContributionsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Filter by author
+         */
+        user_id?: string;
+        /**
+         * Filter by entity type
+         */
+        entity?: ContributionEntity;
+        /**
+         * Filter by entity
+         */
+        entity_id?: string;
+        /**
+         * Filter by operation
+         */
+        operation?: ContributionOperation;
+        /**
+         * Filter by status
+         */
+        status?: ContributionStatus;
+        limit?: number;
+        offset?: number;
+    };
+    url: '/api/contributions';
+};
+
+export type GetContributionsErrors = {
+    /**
+     * Bad request
+     */
+    400: ErrorResponse;
+    /**
+     * Unauthorized
+     */
+    401: ErrorResponse;
+    /**
+     * Internal server error
+     */
+    500: ErrorResponse;
+};
+
+export type GetContributionsError = GetContributionsErrors[keyof GetContributionsErrors];
+
+export type GetContributionsResponses = {
+    /**
+     * Contributions retrieved successfully
+     */
+    200: Array<Contribution>;
+};
+
+export type GetContributionsResponse = GetContributionsResponses[keyof GetContributionsResponses];
 
 export type DeleteMessageReactionData = {
     body?: never;

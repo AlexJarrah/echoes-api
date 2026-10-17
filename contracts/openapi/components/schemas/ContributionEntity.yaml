@@ -1,0 +1,6 @@
+ContributionEntity:
+  type: string
+  enum:
+    - artist
+    - album
+    - track

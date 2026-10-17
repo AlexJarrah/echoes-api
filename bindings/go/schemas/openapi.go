@@ -401,6 +401,607 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /api/contributions/albums/{album_id}:
+    parameters:
+      - name: album_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: List contributions for an album
+      operationId: getAlbumContributions
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ContributionStatus'
+          description: Filter by status
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 0
+      responses:
+        '200':
+          description: Contributions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Propose a change to an album
+      description: Asset ids must have been uploaded via the assets endpoint beforehand.
+      operationId: proposeAlbumContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/AlbumUpdateProposal'
+                - $ref: '#/components/schemas/AlbumDeleteProposal'
+              discriminator:
+                propertyName: kind
+                mapping:
+                  album-update: '#/components/schemas/AlbumUpdateProposal'
+                  album-delete: '#/components/schemas/AlbumDeleteProposal'
+      responses:
+        '201':
+          description: Contribution proposed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/albums:
+    post:
+      summary: Propose a new album
+      operationId: proposeAlbumCreate
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlbumCreateProposal'
+      responses:
+        '201':
+          description: Contribution proposed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/artists/{artist_id}:
+    parameters:
+      - name: artist_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: List contributions for an artist
+      description: Includes merge contributions where the artist is a merge source.
+      operationId: getArtistContributions
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ContributionStatus'
+          description: Filter by status
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 0
+      responses:
+        '200':
+          description: Contributions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Propose a change to an artist
+      description: |-
+        The artist in the path is the target (for merge, the surviving artist).
+        Asset ids must have been uploaded via the assets endpoint beforehand.
+      operationId: proposeArtistContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/ArtistUpdateProposal'
+                - $ref: '#/components/schemas/ArtistMergeProposal'
+                - $ref: '#/components/schemas/ArtistDeleteProposal'
+              discriminator:
+                propertyName: kind
+                mapping:
+                  artist-update: '#/components/schemas/ArtistUpdateProposal'
+                  artist-merge: '#/components/schemas/ArtistMergeProposal'
+                  artist-delete: '#/components/schemas/ArtistDeleteProposal'
+      responses:
+        '201':
+          description: Contribution proposed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/artists:
+    post:
+      summary: Propose a new artist
+      operationId: proposeArtistCreate
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistCreateProposal'
+      responses:
+        '201':
+          description: Contribution proposed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/tracks/{track_id}:
+    parameters:
+      - name: track_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: List contributions for a track
+      operationId: getTrackContributions
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ContributionStatus'
+          description: Filter by status
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 0
+      responses:
+        '200':
+          description: Contributions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Propose a change to a track
+      description: New tracks are proposed through album contributions.
+      operationId: proposeTrackContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/TrackUpdateProposal'
+                - $ref: '#/components/schemas/TrackDeleteProposal'
+              discriminator:
+                propertyName: kind
+                mapping:
+                  track-update: '#/components/schemas/TrackUpdateProposal'
+                  track-delete: '#/components/schemas/TrackDeleteProposal'
+      responses:
+        '201':
+          description: Contribution proposed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/{contribution_id}/review:
+    patch:
+      summary: Review a contribution
+      operationId: reviewContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewContributionRequest'
+      responses:
+        '200':
+          description: Contribution reviewed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/{contribution_id}/votes:
+    get:
+      summary: Get all contribution votes
+      operationId: getContributionVotes
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Votes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContributionVote'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Vote on a contribution
+      operationId: voteContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteContributionRequest'
+      responses:
+        '200':
+          description: Vote recorded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionVote'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remove vote from a contribution
+      operationId: removeContributionVote
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions/{contribution_id}:
+    get:
+      summary: Get a contribution
+      operationId: getContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Contribution retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete a pending contribution
+      operationId: deleteContribution
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: contribution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/contributions:
+    get:
+      summary: List contributions
+      operationId: getContributions
+      tags:
+        - Contributions
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: Filter by author
+        - name: entity
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ContributionEntity'
+          description: Filter by entity type
+        - name: entity_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: Filter by entity
+        - name: operation
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ContributionOperation'
+          description: Filter by operation
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ContributionStatus'
+          description: Filter by status
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: uint32
+            default: 0
+      responses:
+        '200':
+          description: Contributions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contribution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /api/conversations/{conversation_id}/messages/{message_id}/reactions/{emoji}:
     put:
       summary: Add a reaction to a message.
@@ -2686,6 +3287,89 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
+    AlbumChanges:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 300
+        release_date:
+          type: string
+          format: date-time
+          nullable: true
+        base_album_id:
+          type: string
+          format: uuid
+          nullable: true
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        assets:
+          $ref: '#/components/schemas/AssetsChange'
+        artists:
+          $ref: '#/components/schemas/ArtistsChange'
+        tracks:
+          $ref: '#/components/schemas/AlbumTracksChange'
+    AlbumCreateProposal:
+      type: object
+      required:
+        - kind
+        - name
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - album-create
+        name:
+          type: string
+          minLength: 1
+          maxLength: 300
+        release_date:
+          type: string
+          format: date-time
+          nullable: true
+        base_album_id:
+          type: string
+          format: uuid
+          nullable: true
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        assets:
+          $ref: '#/components/schemas/AssetsChange'
+        artists:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        tracks:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/TrackCreate'
+    AlbumDeleteProposal:
+      type: object
+      required:
+        - kind
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - album-delete
+    AlbumOriginal:
+      allOf:
+        - $ref: '#/components/schemas/Album'
+        - type: object
+          required:
+            - entity
+          properties:
+            entity:
+              type: string
+              enum:
+                - album
     AlbumPlayStats:
       type: object
       required:
@@ -2726,6 +3410,40 @@ components:
           type: integer
           format: uint8
           nullable: true
+    AlbumTracksChange:
+      type: object
+      description: Tracks to add, update or remove. Absent keys are unchanged.
+      minProperties: 1
+      properties:
+        add:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/TrackCreate'
+        update:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/TrackUpdate'
+        remove:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+            description: Track to remove from the album.
+    AlbumUpdateProposal:
+      type: object
+      required:
+        - kind
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - album-update
+        changes:
+          $ref: '#/components/schemas/AlbumChanges'
     Artist:
       type: object
       required:
@@ -2784,6 +3502,90 @@ components:
         position:
           type: string
           description: Lexicographically sortable string
+    ArtistChanges:
+      type: object
+      description: Optional artist fields. Absent fields are unchanged.
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        bio:
+          type: string
+          maxLength: 5000
+          nullable: true
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        assets:
+          $ref: '#/components/schemas/AssetsChange'
+    ArtistCreateProposal:
+      type: object
+      required:
+        - kind
+        - name
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - artist-create
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        bio:
+          type: string
+          maxLength: 5000
+          nullable: true
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        assets:
+          $ref: '#/components/schemas/AssetsChange'
+    ArtistDeleteProposal:
+      type: object
+      required:
+        - kind
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - artist-delete
+    ArtistMergeProposal:
+      type: object
+      required:
+        - kind
+        - source_artist_ids
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - artist-merge
+        source_artist_ids:
+          type: array
+          minItems: 1
+          maxItems: 20
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+          description: Artists merged into the surviving artist. Must not include the survivor.
+        changes:
+          $ref: '#/components/schemas/ArtistChanges'
+          description: Changes to the surviving artist, applied together with the merge.
+    ArtistOriginal:
+      allOf:
+        - $ref: '#/components/schemas/Artist'
+        - type: object
+          required:
+            - entity
+          properties:
+            entity:
+              type: string
+              enum:
+                - artist
     ArtistPlayStatisticsQuery:
       type: object
       properties:
@@ -2837,6 +3639,35 @@ components:
         play_duration:
           type: integer
           format: uint64
+    ArtistUpdateProposal:
+      type: object
+      required:
+        - kind
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - artist-update
+        changes:
+          $ref: '#/components/schemas/ArtistChanges'
+    ArtistsChange:
+      type: object
+      description: Artists to add or remove. Absent fields are unchanged.
+      minProperties: 1
+      properties:
+        add:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        remove:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
     Asset:
       type: object
       required:
@@ -2856,6 +3687,29 @@ components:
           type: string
           format: date-time
           nullable: true
+    AssetsChange:
+      type: object
+      description: Assets to add or remove. Absent fields are unchanged.
+      minProperties: 1
+      properties:
+        add:
+          type: array
+          items:
+            type: object
+            required:
+              - asset_id
+            properties:
+              asset_id:
+                type: string
+                format: uuid
+              position:
+                type: string
+                description: Lexicographically sortable string, assigned by the server when omitted.
+        remove:
+          type: array
+          items:
+            type: string
+            format: uuid
     BestFriendActionRequest:
       type: object
       required:
@@ -2910,6 +3764,136 @@ components:
         0=Create
         1=Update
         2=Delete
+    Contribution:
+      type: object
+      required:
+        - contribution_id
+        - entity
+        - operation
+        - status
+        - proposed
+        - created_at
+      properties:
+        contribution_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Null if the author was deleted.
+        entity:
+          $ref: '#/components/schemas/ContributionEntity'
+          description: Entity type targeted by the contribution.
+        entity_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Null for create operations.
+        operation:
+          $ref: '#/components/schemas/ContributionOperation'
+        status:
+          $ref: '#/components/schemas/ContributionStatus'
+        proposed:
+          $ref: '#/components/schemas/ContributionProposal'
+        original:
+          $ref: '#/components/schemas/ContributionOriginal'
+          nullable: true
+          description: State of the entity at proposal time. Null for create operations.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    ContributionEntity:
+      type: string
+      enum:
+        - artist
+        - album
+        - track
+    ContributionOperation:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+      description: |
+        0=Create
+        1=Update
+        2=Delete
+        3=Merge
+    ContributionOriginal:
+      oneOf:
+        - $ref: '#/components/schemas/ArtistOriginal'
+        - $ref: '#/components/schemas/AlbumOriginal'
+        - $ref: '#/components/schemas/TrackOriginal'
+      discriminator:
+        propertyName: entity
+        mapping:
+          artist: '#/components/schemas/ArtistOriginal'
+          album: '#/components/schemas/AlbumOriginal'
+          track: '#/components/schemas/TrackOriginal'
+    ContributionProposal:
+      oneOf:
+        - $ref: '#/components/schemas/ArtistCreateProposal'
+        - $ref: '#/components/schemas/ArtistUpdateProposal'
+        - $ref: '#/components/schemas/ArtistMergeProposal'
+        - $ref: '#/components/schemas/ArtistDeleteProposal'
+        - $ref: '#/components/schemas/AlbumCreateProposal'
+        - $ref: '#/components/schemas/AlbumUpdateProposal'
+        - $ref: '#/components/schemas/AlbumDeleteProposal'
+        - $ref: '#/components/schemas/TrackUpdateProposal'
+        - $ref: '#/components/schemas/TrackDeleteProposal'
+      discriminator:
+        propertyName: kind
+        mapping:
+          artist-create: '#/components/schemas/ArtistCreateProposal'
+          artist-update: '#/components/schemas/ArtistUpdateProposal'
+          artist-merge: '#/components/schemas/ArtistMergeProposal'
+          artist-delete: '#/components/schemas/ArtistDeleteProposal'
+          album-create: '#/components/schemas/AlbumCreateProposal'
+          album-update: '#/components/schemas/AlbumUpdateProposal'
+          album-delete: '#/components/schemas/AlbumDeleteProposal'
+          track-update: '#/components/schemas/TrackUpdateProposal'
+          track-delete: '#/components/schemas/TrackDeleteProposal'
+    ContributionStatus:
+      type: integer
+      format: uint8
+      enum:
+        - 0
+        - 1
+        - 2
+      description: |
+        0=Pending
+        1=Approved
+        2=Rejected
+    ContributionVote:
+      type: object
+      required:
+        - user_id
+        - contribution_id
+        - vote
+        - created_at
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        contribution_id:
+          type: string
+          format: uuid
+        vote:
+          type: integer
+          format: int8
+          enum:
+            - -1
+            - 1
+        created_at:
+          type: string
+          format: date-time
     Conversation:
       type: object
       required:
@@ -3902,6 +4886,27 @@ components:
         created_at:
           type: string
           format: date-time
+    PlatformLinksChange:
+      type: object
+      description: Absent fields are unchanged, null clears the link.
+      minProperties: 1
+      properties:
+        spotify_url:
+          type: string
+          format: uri
+          nullable: true
+        apple_music_url:
+          type: string
+          format: uri
+          nullable: true
+        tidal_url:
+          type: string
+          format: uri
+          nullable: true
+        youtube_music_url:
+          type: string
+          format: uri
+          nullable: true
     Playlist:
       type: object
       required:
@@ -4096,6 +5101,13 @@ components:
         id:
           type: string
           format: uuid
+    ReviewContributionRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ContributionStatus'
     SearchIndex:
       type: object
       properties:
@@ -4751,6 +5763,96 @@ components:
         featured:
           type: boolean
           default: false
+    TrackArtistChange:
+      type: object
+      required:
+        - artist_id
+      properties:
+        artist_id:
+          type: string
+          format: uuid
+        featured:
+          type: boolean
+          default: false
+    TrackArtistsChange:
+      type: object
+      description: Track artists to add or remove. Absent fields are unchanged.
+      minProperties: 1
+      properties:
+        add:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/TrackArtistChange'
+        remove:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+            description: Artist to remove from the track.
+    TrackChanges:
+      type: object
+      description: Optional track fields. Absent fields are unchanged.
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 300
+        seconds:
+          type: integer
+          format: uint16
+          nullable: true
+        lyrics:
+          type: string
+          maxLength: 10000
+          nullable: true
+          description: Full lyrics text, null clears.
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        artists:
+          $ref: '#/components/schemas/TrackArtistsChange'
+    TrackCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 300
+        seconds:
+          type: integer
+          format: uint16
+          nullable: true
+        disc_number:
+          type: integer
+          format: uint8
+          nullable: true
+        track_number:
+          type: integer
+          format: uint8
+          nullable: true
+        lyrics:
+          type: string
+          maxLength: 10000
+          nullable: true
+          description: Full lyrics text.
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        artists:
+          $ref: '#/components/schemas/TrackArtistsChange'
+    TrackDeleteProposal:
+      type: object
+      required:
+        - kind
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - track-delete
     TrackDetails:
       type: object
       required:
@@ -4793,6 +5895,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AlbumAsset'
+    TrackOriginal:
+      allOf:
+        - $ref: '#/components/schemas/Track'
+        - type: object
+          required:
+            - entity
+          properties:
+            entity:
+              type: string
+              enum:
+                - track
     TrackPlayStats:
       type: object
       required:
@@ -4808,6 +5921,51 @@ components:
         play_duration:
           type: integer
           format: uint64
+    TrackUpdate:
+      type: object
+      required:
+        - track_id
+      properties:
+        track_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 300
+        seconds:
+          type: integer
+          format: uint16
+          nullable: true
+        disc_number:
+          type: integer
+          format: uint8
+          nullable: true
+        track_number:
+          type: integer
+          format: uint8
+          nullable: true
+        lyrics:
+          type: string
+          maxLength: 10000
+          nullable: true
+          description: Full lyrics text, null clears.
+        links:
+          $ref: '#/components/schemas/PlatformLinksChange'
+        artists:
+          $ref: '#/components/schemas/TrackArtistsChange'
+    TrackUpdateProposal:
+      type: object
+      required:
+        - kind
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+          enum:
+            - track-update
+        changes:
+          $ref: '#/components/schemas/TrackChanges'
     UpdateGroupRolesRequest:
       type: object
       required:
@@ -4917,6 +6075,17 @@ components:
         1=Friends: visible to the user's friends
         2=BestFriends: visible to the user's best friends
         3=Private: visible to only the user
+    VoteContributionRequest:
+      type: object
+      required:
+        - vote
+      properties:
+        vote:
+          type: integer
+          format: int8
+          enum:
+            - -1
+            - 1
   securitySchemes:
     CookieAuth:
       type: apiKey

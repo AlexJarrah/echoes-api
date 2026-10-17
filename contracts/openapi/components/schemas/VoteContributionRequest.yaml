@@ -1,0 +1,9 @@
+VoteContributionRequest:
+  type: object
+  required:
+    - vote
+  properties:
+    vote:
+      type: integer
+      format: int8
+      enum: [-1, 1]

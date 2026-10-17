@@ -4,6 +4,7 @@ package openapi
 
 import (
 	"io"
+	"net/url"
 	"time"
 
 	"github.com/go-faster/errors"
@@ -354,6 +355,444 @@ func (s *AlbumAsset) SetPosition(val string) {
 	s.Position = val
 }
 
+// Ref: #/components/schemas/AlbumChanges
+type AlbumChanges struct {
+	Name        OptString              `json:"name"`
+	ReleaseDate OptNilDateTime         `json:"release_date"`
+	BaseAlbumID OptNilUUID             `json:"base_album_id"`
+	Links       OptPlatformLinksChange `json:"links"`
+	Assets      OptAssetsChange        `json:"assets"`
+	Artists     OptArtistsChange       `json:"artists"`
+	Tracks      OptAlbumTracksChange   `json:"tracks"`
+}
+
+// GetName returns the value of Name.
+func (s *AlbumChanges) GetName() OptString {
+	return s.Name
+}
+
+// GetReleaseDate returns the value of ReleaseDate.
+func (s *AlbumChanges) GetReleaseDate() OptNilDateTime {
+	return s.ReleaseDate
+}
+
+// GetBaseAlbumID returns the value of BaseAlbumID.
+func (s *AlbumChanges) GetBaseAlbumID() OptNilUUID {
+	return s.BaseAlbumID
+}
+
+// GetLinks returns the value of Links.
+func (s *AlbumChanges) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetAssets returns the value of Assets.
+func (s *AlbumChanges) GetAssets() OptAssetsChange {
+	return s.Assets
+}
+
+// GetArtists returns the value of Artists.
+func (s *AlbumChanges) GetArtists() OptArtistsChange {
+	return s.Artists
+}
+
+// GetTracks returns the value of Tracks.
+func (s *AlbumChanges) GetTracks() OptAlbumTracksChange {
+	return s.Tracks
+}
+
+// SetName sets the value of Name.
+func (s *AlbumChanges) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetReleaseDate sets the value of ReleaseDate.
+func (s *AlbumChanges) SetReleaseDate(val OptNilDateTime) {
+	s.ReleaseDate = val
+}
+
+// SetBaseAlbumID sets the value of BaseAlbumID.
+func (s *AlbumChanges) SetBaseAlbumID(val OptNilUUID) {
+	s.BaseAlbumID = val
+}
+
+// SetLinks sets the value of Links.
+func (s *AlbumChanges) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetAssets sets the value of Assets.
+func (s *AlbumChanges) SetAssets(val OptAssetsChange) {
+	s.Assets = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *AlbumChanges) SetArtists(val OptArtistsChange) {
+	s.Artists = val
+}
+
+// SetTracks sets the value of Tracks.
+func (s *AlbumChanges) SetTracks(val OptAlbumTracksChange) {
+	s.Tracks = val
+}
+
+// Ref: #/components/schemas/AlbumCreateProposal
+type AlbumCreateProposal struct {
+	Kind        AlbumCreateProposalKind `json:"kind"`
+	Name        string                  `json:"name"`
+	ReleaseDate OptNilDateTime          `json:"release_date"`
+	BaseAlbumID OptNilUUID              `json:"base_album_id"`
+	Links       OptPlatformLinksChange  `json:"links"`
+	Assets      OptAssetsChange         `json:"assets"`
+	Artists     []uuid.UUID             `json:"artists"`
+	Tracks      []TrackCreate           `json:"tracks"`
+}
+
+// GetKind returns the value of Kind.
+func (s *AlbumCreateProposal) GetKind() AlbumCreateProposalKind {
+	return s.Kind
+}
+
+// GetName returns the value of Name.
+func (s *AlbumCreateProposal) GetName() string {
+	return s.Name
+}
+
+// GetReleaseDate returns the value of ReleaseDate.
+func (s *AlbumCreateProposal) GetReleaseDate() OptNilDateTime {
+	return s.ReleaseDate
+}
+
+// GetBaseAlbumID returns the value of BaseAlbumID.
+func (s *AlbumCreateProposal) GetBaseAlbumID() OptNilUUID {
+	return s.BaseAlbumID
+}
+
+// GetLinks returns the value of Links.
+func (s *AlbumCreateProposal) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetAssets returns the value of Assets.
+func (s *AlbumCreateProposal) GetAssets() OptAssetsChange {
+	return s.Assets
+}
+
+// GetArtists returns the value of Artists.
+func (s *AlbumCreateProposal) GetArtists() []uuid.UUID {
+	return s.Artists
+}
+
+// GetTracks returns the value of Tracks.
+func (s *AlbumCreateProposal) GetTracks() []TrackCreate {
+	return s.Tracks
+}
+
+// SetKind sets the value of Kind.
+func (s *AlbumCreateProposal) SetKind(val AlbumCreateProposalKind) {
+	s.Kind = val
+}
+
+// SetName sets the value of Name.
+func (s *AlbumCreateProposal) SetName(val string) {
+	s.Name = val
+}
+
+// SetReleaseDate sets the value of ReleaseDate.
+func (s *AlbumCreateProposal) SetReleaseDate(val OptNilDateTime) {
+	s.ReleaseDate = val
+}
+
+// SetBaseAlbumID sets the value of BaseAlbumID.
+func (s *AlbumCreateProposal) SetBaseAlbumID(val OptNilUUID) {
+	s.BaseAlbumID = val
+}
+
+// SetLinks sets the value of Links.
+func (s *AlbumCreateProposal) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetAssets sets the value of Assets.
+func (s *AlbumCreateProposal) SetAssets(val OptAssetsChange) {
+	s.Assets = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *AlbumCreateProposal) SetArtists(val []uuid.UUID) {
+	s.Artists = val
+}
+
+// SetTracks sets the value of Tracks.
+func (s *AlbumCreateProposal) SetTracks(val []TrackCreate) {
+	s.Tracks = val
+}
+
+type AlbumCreateProposalKind string
+
+const (
+	AlbumCreateProposalKindAlbumCreate AlbumCreateProposalKind = "album-create"
+)
+
+// AllValues returns all AlbumCreateProposalKind values.
+func (AlbumCreateProposalKind) AllValues() []AlbumCreateProposalKind {
+	return []AlbumCreateProposalKind{
+		AlbumCreateProposalKindAlbumCreate,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s AlbumCreateProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case AlbumCreateProposalKindAlbumCreate:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *AlbumCreateProposalKind) UnmarshalText(data []byte) error {
+	switch AlbumCreateProposalKind(data) {
+	case AlbumCreateProposalKindAlbumCreate:
+		*s = AlbumCreateProposalKindAlbumCreate
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// Ref: #/components/schemas/AlbumDeleteProposal
+type AlbumDeleteProposal struct {
+	Kind AlbumDeleteProposalKind `json:"kind"`
+}
+
+// GetKind returns the value of Kind.
+func (s *AlbumDeleteProposal) GetKind() AlbumDeleteProposalKind {
+	return s.Kind
+}
+
+// SetKind sets the value of Kind.
+func (s *AlbumDeleteProposal) SetKind(val AlbumDeleteProposalKind) {
+	s.Kind = val
+}
+
+type AlbumDeleteProposalKind string
+
+const (
+	AlbumDeleteProposalKindAlbumDelete AlbumDeleteProposalKind = "album-delete"
+)
+
+// AllValues returns all AlbumDeleteProposalKind values.
+func (AlbumDeleteProposalKind) AllValues() []AlbumDeleteProposalKind {
+	return []AlbumDeleteProposalKind{
+		AlbumDeleteProposalKindAlbumDelete,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s AlbumDeleteProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case AlbumDeleteProposalKindAlbumDelete:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *AlbumDeleteProposalKind) UnmarshalText(data []byte) error {
+	switch AlbumDeleteProposalKind(data) {
+	case AlbumDeleteProposalKindAlbumDelete:
+		*s = AlbumDeleteProposalKindAlbumDelete
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// Merged schema.
+// Ref: #/components/schemas/AlbumOriginal
+type AlbumOriginal struct {
+	AlbumID         uuid.UUID           `json:"album_id"`
+	UserID          OptNilUUID          `json:"user_id"`
+	BaseAlbumID     OptNilUUID          `json:"base_album_id"`
+	Name            string              `json:"name"`
+	ReleaseDate     OptNilDateTime      `json:"release_date"`
+	MusicbrainzID   OptNilUUID          `json:"musicbrainz_id"`
+	SpotifyURL      OptNilString        `json:"spotify_url"`
+	AppleMusicURL   OptNilString        `json:"apple_music_url"`
+	TidalURL        OptNilString        `json:"tidal_url"`
+	YoutubeMusicURL OptNilString        `json:"youtube_music_url"`
+	CreatedAt       time.Time           `json:"created_at"`
+	UpdatedAt       OptNilDateTime      `json:"updated_at"`
+	Entity          AlbumOriginalEntity `json:"entity"`
+}
+
+// GetAlbumID returns the value of AlbumID.
+func (s *AlbumOriginal) GetAlbumID() uuid.UUID {
+	return s.AlbumID
+}
+
+// GetUserID returns the value of UserID.
+func (s *AlbumOriginal) GetUserID() OptNilUUID {
+	return s.UserID
+}
+
+// GetBaseAlbumID returns the value of BaseAlbumID.
+func (s *AlbumOriginal) GetBaseAlbumID() OptNilUUID {
+	return s.BaseAlbumID
+}
+
+// GetName returns the value of Name.
+func (s *AlbumOriginal) GetName() string {
+	return s.Name
+}
+
+// GetReleaseDate returns the value of ReleaseDate.
+func (s *AlbumOriginal) GetReleaseDate() OptNilDateTime {
+	return s.ReleaseDate
+}
+
+// GetMusicbrainzID returns the value of MusicbrainzID.
+func (s *AlbumOriginal) GetMusicbrainzID() OptNilUUID {
+	return s.MusicbrainzID
+}
+
+// GetSpotifyURL returns the value of SpotifyURL.
+func (s *AlbumOriginal) GetSpotifyURL() OptNilString {
+	return s.SpotifyURL
+}
+
+// GetAppleMusicURL returns the value of AppleMusicURL.
+func (s *AlbumOriginal) GetAppleMusicURL() OptNilString {
+	return s.AppleMusicURL
+}
+
+// GetTidalURL returns the value of TidalURL.
+func (s *AlbumOriginal) GetTidalURL() OptNilString {
+	return s.TidalURL
+}
+
+// GetYoutubeMusicURL returns the value of YoutubeMusicURL.
+func (s *AlbumOriginal) GetYoutubeMusicURL() OptNilString {
+	return s.YoutubeMusicURL
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *AlbumOriginal) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *AlbumOriginal) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// GetEntity returns the value of Entity.
+func (s *AlbumOriginal) GetEntity() AlbumOriginalEntity {
+	return s.Entity
+}
+
+// SetAlbumID sets the value of AlbumID.
+func (s *AlbumOriginal) SetAlbumID(val uuid.UUID) {
+	s.AlbumID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *AlbumOriginal) SetUserID(val OptNilUUID) {
+	s.UserID = val
+}
+
+// SetBaseAlbumID sets the value of BaseAlbumID.
+func (s *AlbumOriginal) SetBaseAlbumID(val OptNilUUID) {
+	s.BaseAlbumID = val
+}
+
+// SetName sets the value of Name.
+func (s *AlbumOriginal) SetName(val string) {
+	s.Name = val
+}
+
+// SetReleaseDate sets the value of ReleaseDate.
+func (s *AlbumOriginal) SetReleaseDate(val OptNilDateTime) {
+	s.ReleaseDate = val
+}
+
+// SetMusicbrainzID sets the value of MusicbrainzID.
+func (s *AlbumOriginal) SetMusicbrainzID(val OptNilUUID) {
+	s.MusicbrainzID = val
+}
+
+// SetSpotifyURL sets the value of SpotifyURL.
+func (s *AlbumOriginal) SetSpotifyURL(val OptNilString) {
+	s.SpotifyURL = val
+}
+
+// SetAppleMusicURL sets the value of AppleMusicURL.
+func (s *AlbumOriginal) SetAppleMusicURL(val OptNilString) {
+	s.AppleMusicURL = val
+}
+
+// SetTidalURL sets the value of TidalURL.
+func (s *AlbumOriginal) SetTidalURL(val OptNilString) {
+	s.TidalURL = val
+}
+
+// SetYoutubeMusicURL sets the value of YoutubeMusicURL.
+func (s *AlbumOriginal) SetYoutubeMusicURL(val OptNilString) {
+	s.YoutubeMusicURL = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *AlbumOriginal) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *AlbumOriginal) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+// SetEntity sets the value of Entity.
+func (s *AlbumOriginal) SetEntity(val AlbumOriginalEntity) {
+	s.Entity = val
+}
+
+type AlbumOriginalEntity string
+
+const (
+	AlbumOriginalEntityAlbum AlbumOriginalEntity = "album"
+)
+
+// AllValues returns all AlbumOriginalEntity values.
+func (AlbumOriginalEntity) AllValues() []AlbumOriginalEntity {
+	return []AlbumOriginalEntity{
+		AlbumOriginalEntityAlbum,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s AlbumOriginalEntity) MarshalText() ([]byte, error) {
+	switch s {
+	case AlbumOriginalEntityAlbum:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *AlbumOriginalEntity) UnmarshalText(data []byte) error {
+	switch AlbumOriginalEntity(data) {
+	case AlbumOriginalEntityAlbum:
+		*s = AlbumOriginalEntityAlbum
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 // Ref: #/components/schemas/AlbumPlayStats
 type AlbumPlayStats struct {
 	Album        Album        `json:"album"`
@@ -448,6 +887,104 @@ func (s *AlbumTrack) SetDiscNumber(val OptNilUint8) {
 // SetTrackNumber sets the value of TrackNumber.
 func (s *AlbumTrack) SetTrackNumber(val OptNilUint8) {
 	s.TrackNumber = val
+}
+
+// Tracks to add, update or remove. Absent keys are unchanged.
+// Ref: #/components/schemas/AlbumTracksChange
+type AlbumTracksChange struct {
+	Add    []TrackCreate `json:"add"`
+	Update []TrackUpdate `json:"update"`
+	Remove []uuid.UUID   `json:"remove"`
+}
+
+// GetAdd returns the value of Add.
+func (s *AlbumTracksChange) GetAdd() []TrackCreate {
+	return s.Add
+}
+
+// GetUpdate returns the value of Update.
+func (s *AlbumTracksChange) GetUpdate() []TrackUpdate {
+	return s.Update
+}
+
+// GetRemove returns the value of Remove.
+func (s *AlbumTracksChange) GetRemove() []uuid.UUID {
+	return s.Remove
+}
+
+// SetAdd sets the value of Add.
+func (s *AlbumTracksChange) SetAdd(val []TrackCreate) {
+	s.Add = val
+}
+
+// SetUpdate sets the value of Update.
+func (s *AlbumTracksChange) SetUpdate(val []TrackUpdate) {
+	s.Update = val
+}
+
+// SetRemove sets the value of Remove.
+func (s *AlbumTracksChange) SetRemove(val []uuid.UUID) {
+	s.Remove = val
+}
+
+// Ref: #/components/schemas/AlbumUpdateProposal
+type AlbumUpdateProposal struct {
+	Kind    AlbumUpdateProposalKind `json:"kind"`
+	Changes OptAlbumChanges         `json:"changes"`
+}
+
+// GetKind returns the value of Kind.
+func (s *AlbumUpdateProposal) GetKind() AlbumUpdateProposalKind {
+	return s.Kind
+}
+
+// GetChanges returns the value of Changes.
+func (s *AlbumUpdateProposal) GetChanges() OptAlbumChanges {
+	return s.Changes
+}
+
+// SetKind sets the value of Kind.
+func (s *AlbumUpdateProposal) SetKind(val AlbumUpdateProposalKind) {
+	s.Kind = val
+}
+
+// SetChanges sets the value of Changes.
+func (s *AlbumUpdateProposal) SetChanges(val OptAlbumChanges) {
+	s.Changes = val
+}
+
+type AlbumUpdateProposalKind string
+
+const (
+	AlbumUpdateProposalKindAlbumUpdate AlbumUpdateProposalKind = "album-update"
+)
+
+// AllValues returns all AlbumUpdateProposalKind values.
+func (AlbumUpdateProposalKind) AllValues() []AlbumUpdateProposalKind {
+	return []AlbumUpdateProposalKind{
+		AlbumUpdateProposalKindAlbumUpdate,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s AlbumUpdateProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case AlbumUpdateProposalKindAlbumUpdate:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *AlbumUpdateProposalKind) UnmarshalText(data []byte) error {
+	switch AlbumUpdateProposalKind(data) {
+	case AlbumUpdateProposalKindAlbumUpdate:
+		*s = AlbumUpdateProposalKindAlbumUpdate
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
 }
 
 // Ref: #/components/schemas/Artist
@@ -615,6 +1152,441 @@ func (s *ArtistAsset) SetPosition(val string) {
 	s.Position = val
 }
 
+// Optional artist fields. Absent fields are unchanged.
+// Ref: #/components/schemas/ArtistChanges
+type ArtistChanges struct {
+	Name   OptString              `json:"name"`
+	Bio    OptNilString           `json:"bio"`
+	Links  OptPlatformLinksChange `json:"links"`
+	Assets OptAssetsChange        `json:"assets"`
+}
+
+// GetName returns the value of Name.
+func (s *ArtistChanges) GetName() OptString {
+	return s.Name
+}
+
+// GetBio returns the value of Bio.
+func (s *ArtistChanges) GetBio() OptNilString {
+	return s.Bio
+}
+
+// GetLinks returns the value of Links.
+func (s *ArtistChanges) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetAssets returns the value of Assets.
+func (s *ArtistChanges) GetAssets() OptAssetsChange {
+	return s.Assets
+}
+
+// SetName sets the value of Name.
+func (s *ArtistChanges) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetBio sets the value of Bio.
+func (s *ArtistChanges) SetBio(val OptNilString) {
+	s.Bio = val
+}
+
+// SetLinks sets the value of Links.
+func (s *ArtistChanges) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetAssets sets the value of Assets.
+func (s *ArtistChanges) SetAssets(val OptAssetsChange) {
+	s.Assets = val
+}
+
+// Ref: #/components/schemas/ArtistCreateProposal
+type ArtistCreateProposal struct {
+	Kind   ArtistCreateProposalKind `json:"kind"`
+	Name   string                   `json:"name"`
+	Bio    OptNilString             `json:"bio"`
+	Links  OptPlatformLinksChange   `json:"links"`
+	Assets OptAssetsChange          `json:"assets"`
+}
+
+// GetKind returns the value of Kind.
+func (s *ArtistCreateProposal) GetKind() ArtistCreateProposalKind {
+	return s.Kind
+}
+
+// GetName returns the value of Name.
+func (s *ArtistCreateProposal) GetName() string {
+	return s.Name
+}
+
+// GetBio returns the value of Bio.
+func (s *ArtistCreateProposal) GetBio() OptNilString {
+	return s.Bio
+}
+
+// GetLinks returns the value of Links.
+func (s *ArtistCreateProposal) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetAssets returns the value of Assets.
+func (s *ArtistCreateProposal) GetAssets() OptAssetsChange {
+	return s.Assets
+}
+
+// SetKind sets the value of Kind.
+func (s *ArtistCreateProposal) SetKind(val ArtistCreateProposalKind) {
+	s.Kind = val
+}
+
+// SetName sets the value of Name.
+func (s *ArtistCreateProposal) SetName(val string) {
+	s.Name = val
+}
+
+// SetBio sets the value of Bio.
+func (s *ArtistCreateProposal) SetBio(val OptNilString) {
+	s.Bio = val
+}
+
+// SetLinks sets the value of Links.
+func (s *ArtistCreateProposal) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetAssets sets the value of Assets.
+func (s *ArtistCreateProposal) SetAssets(val OptAssetsChange) {
+	s.Assets = val
+}
+
+type ArtistCreateProposalKind string
+
+const (
+	ArtistCreateProposalKindArtistCreate ArtistCreateProposalKind = "artist-create"
+)
+
+// AllValues returns all ArtistCreateProposalKind values.
+func (ArtistCreateProposalKind) AllValues() []ArtistCreateProposalKind {
+	return []ArtistCreateProposalKind{
+		ArtistCreateProposalKindArtistCreate,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s ArtistCreateProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case ArtistCreateProposalKindArtistCreate:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *ArtistCreateProposalKind) UnmarshalText(data []byte) error {
+	switch ArtistCreateProposalKind(data) {
+	case ArtistCreateProposalKindArtistCreate:
+		*s = ArtistCreateProposalKindArtistCreate
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// Ref: #/components/schemas/ArtistDeleteProposal
+type ArtistDeleteProposal struct {
+	Kind ArtistDeleteProposalKind `json:"kind"`
+}
+
+// GetKind returns the value of Kind.
+func (s *ArtistDeleteProposal) GetKind() ArtistDeleteProposalKind {
+	return s.Kind
+}
+
+// SetKind sets the value of Kind.
+func (s *ArtistDeleteProposal) SetKind(val ArtistDeleteProposalKind) {
+	s.Kind = val
+}
+
+type ArtistDeleteProposalKind string
+
+const (
+	ArtistDeleteProposalKindArtistDelete ArtistDeleteProposalKind = "artist-delete"
+)
+
+// AllValues returns all ArtistDeleteProposalKind values.
+func (ArtistDeleteProposalKind) AllValues() []ArtistDeleteProposalKind {
+	return []ArtistDeleteProposalKind{
+		ArtistDeleteProposalKindArtistDelete,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s ArtistDeleteProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case ArtistDeleteProposalKindArtistDelete:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *ArtistDeleteProposalKind) UnmarshalText(data []byte) error {
+	switch ArtistDeleteProposalKind(data) {
+	case ArtistDeleteProposalKindArtistDelete:
+		*s = ArtistDeleteProposalKindArtistDelete
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// Ref: #/components/schemas/ArtistMergeProposal
+type ArtistMergeProposal struct {
+	Kind ArtistMergeProposalKind `json:"kind"`
+	// Artists merged into the surviving artist. Must not include the survivor.
+	SourceArtistIds []uuid.UUID `json:"source_artist_ids"`
+	// Changes to the surviving artist, applied together with the merge.
+	Changes OptArtistChanges `json:"changes"`
+}
+
+// GetKind returns the value of Kind.
+func (s *ArtistMergeProposal) GetKind() ArtistMergeProposalKind {
+	return s.Kind
+}
+
+// GetSourceArtistIds returns the value of SourceArtistIds.
+func (s *ArtistMergeProposal) GetSourceArtistIds() []uuid.UUID {
+	return s.SourceArtistIds
+}
+
+// GetChanges returns the value of Changes.
+func (s *ArtistMergeProposal) GetChanges() OptArtistChanges {
+	return s.Changes
+}
+
+// SetKind sets the value of Kind.
+func (s *ArtistMergeProposal) SetKind(val ArtistMergeProposalKind) {
+	s.Kind = val
+}
+
+// SetSourceArtistIds sets the value of SourceArtistIds.
+func (s *ArtistMergeProposal) SetSourceArtistIds(val []uuid.UUID) {
+	s.SourceArtistIds = val
+}
+
+// SetChanges sets the value of Changes.
+func (s *ArtistMergeProposal) SetChanges(val OptArtistChanges) {
+	s.Changes = val
+}
+
+type ArtistMergeProposalKind string
+
+const (
+	ArtistMergeProposalKindArtistMerge ArtistMergeProposalKind = "artist-merge"
+)
+
+// AllValues returns all ArtistMergeProposalKind values.
+func (ArtistMergeProposalKind) AllValues() []ArtistMergeProposalKind {
+	return []ArtistMergeProposalKind{
+		ArtistMergeProposalKindArtistMerge,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s ArtistMergeProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case ArtistMergeProposalKindArtistMerge:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *ArtistMergeProposalKind) UnmarshalText(data []byte) error {
+	switch ArtistMergeProposalKind(data) {
+	case ArtistMergeProposalKindArtistMerge:
+		*s = ArtistMergeProposalKindArtistMerge
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// Merged schema.
+// Ref: #/components/schemas/ArtistOriginal
+type ArtistOriginal struct {
+	ArtistID        uuid.UUID            `json:"artist_id"`
+	UserID          OptNilUUID           `json:"user_id"`
+	Name            string               `json:"name"`
+	Bio             OptNilString         `json:"bio"`
+	MusicbrainzID   OptNilUUID           `json:"musicbrainz_id"`
+	SpotifyURL      OptNilString         `json:"spotify_url"`
+	AppleMusicURL   OptNilString         `json:"apple_music_url"`
+	TidalURL        OptNilString         `json:"tidal_url"`
+	YoutubeMusicURL OptNilString         `json:"youtube_music_url"`
+	CreatedAt       time.Time            `json:"created_at"`
+	UpdatedAt       OptNilDateTime       `json:"updated_at"`
+	Entity          ArtistOriginalEntity `json:"entity"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *ArtistOriginal) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetUserID returns the value of UserID.
+func (s *ArtistOriginal) GetUserID() OptNilUUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *ArtistOriginal) GetName() string {
+	return s.Name
+}
+
+// GetBio returns the value of Bio.
+func (s *ArtistOriginal) GetBio() OptNilString {
+	return s.Bio
+}
+
+// GetMusicbrainzID returns the value of MusicbrainzID.
+func (s *ArtistOriginal) GetMusicbrainzID() OptNilUUID {
+	return s.MusicbrainzID
+}
+
+// GetSpotifyURL returns the value of SpotifyURL.
+func (s *ArtistOriginal) GetSpotifyURL() OptNilString {
+	return s.SpotifyURL
+}
+
+// GetAppleMusicURL returns the value of AppleMusicURL.
+func (s *ArtistOriginal) GetAppleMusicURL() OptNilString {
+	return s.AppleMusicURL
+}
+
+// GetTidalURL returns the value of TidalURL.
+func (s *ArtistOriginal) GetTidalURL() OptNilString {
+	return s.TidalURL
+}
+
+// GetYoutubeMusicURL returns the value of YoutubeMusicURL.
+func (s *ArtistOriginal) GetYoutubeMusicURL() OptNilString {
+	return s.YoutubeMusicURL
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *ArtistOriginal) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *ArtistOriginal) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// GetEntity returns the value of Entity.
+func (s *ArtistOriginal) GetEntity() ArtistOriginalEntity {
+	return s.Entity
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *ArtistOriginal) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *ArtistOriginal) SetUserID(val OptNilUUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *ArtistOriginal) SetName(val string) {
+	s.Name = val
+}
+
+// SetBio sets the value of Bio.
+func (s *ArtistOriginal) SetBio(val OptNilString) {
+	s.Bio = val
+}
+
+// SetMusicbrainzID sets the value of MusicbrainzID.
+func (s *ArtistOriginal) SetMusicbrainzID(val OptNilUUID) {
+	s.MusicbrainzID = val
+}
+
+// SetSpotifyURL sets the value of SpotifyURL.
+func (s *ArtistOriginal) SetSpotifyURL(val OptNilString) {
+	s.SpotifyURL = val
+}
+
+// SetAppleMusicURL sets the value of AppleMusicURL.
+func (s *ArtistOriginal) SetAppleMusicURL(val OptNilString) {
+	s.AppleMusicURL = val
+}
+
+// SetTidalURL sets the value of TidalURL.
+func (s *ArtistOriginal) SetTidalURL(val OptNilString) {
+	s.TidalURL = val
+}
+
+// SetYoutubeMusicURL sets the value of YoutubeMusicURL.
+func (s *ArtistOriginal) SetYoutubeMusicURL(val OptNilString) {
+	s.YoutubeMusicURL = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *ArtistOriginal) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *ArtistOriginal) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+// SetEntity sets the value of Entity.
+func (s *ArtistOriginal) SetEntity(val ArtistOriginalEntity) {
+	s.Entity = val
+}
+
+type ArtistOriginalEntity string
+
+const (
+	ArtistOriginalEntityArtist ArtistOriginalEntity = "artist"
+)
+
+// AllValues returns all ArtistOriginalEntity values.
+func (ArtistOriginalEntity) AllValues() []ArtistOriginalEntity {
+	return []ArtistOriginalEntity{
+		ArtistOriginalEntityArtist,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s ArtistOriginalEntity) MarshalText() ([]byte, error) {
+	switch s {
+	case ArtistOriginalEntityArtist:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *ArtistOriginalEntity) UnmarshalText(data []byte) error {
+	switch ArtistOriginalEntity(data) {
+	case ArtistOriginalEntityArtist:
+		*s = ArtistOriginalEntityArtist
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 // Ref: #/components/schemas/ArtistPlayStatisticsQuery
 type ArtistPlayStatisticsQuery struct {
 	// Start timestamp for the time range, defaults to one year ago.
@@ -738,6 +1710,93 @@ func (s *ArtistPlayStats) SetPlayDuration(val uint64) {
 	s.PlayDuration = val
 }
 
+// Ref: #/components/schemas/ArtistUpdateProposal
+type ArtistUpdateProposal struct {
+	Kind    ArtistUpdateProposalKind `json:"kind"`
+	Changes OptArtistChanges         `json:"changes"`
+}
+
+// GetKind returns the value of Kind.
+func (s *ArtistUpdateProposal) GetKind() ArtistUpdateProposalKind {
+	return s.Kind
+}
+
+// GetChanges returns the value of Changes.
+func (s *ArtistUpdateProposal) GetChanges() OptArtistChanges {
+	return s.Changes
+}
+
+// SetKind sets the value of Kind.
+func (s *ArtistUpdateProposal) SetKind(val ArtistUpdateProposalKind) {
+	s.Kind = val
+}
+
+// SetChanges sets the value of Changes.
+func (s *ArtistUpdateProposal) SetChanges(val OptArtistChanges) {
+	s.Changes = val
+}
+
+type ArtistUpdateProposalKind string
+
+const (
+	ArtistUpdateProposalKindArtistUpdate ArtistUpdateProposalKind = "artist-update"
+)
+
+// AllValues returns all ArtistUpdateProposalKind values.
+func (ArtistUpdateProposalKind) AllValues() []ArtistUpdateProposalKind {
+	return []ArtistUpdateProposalKind{
+		ArtistUpdateProposalKindArtistUpdate,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s ArtistUpdateProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case ArtistUpdateProposalKindArtistUpdate:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *ArtistUpdateProposalKind) UnmarshalText(data []byte) error {
+	switch ArtistUpdateProposalKind(data) {
+	case ArtistUpdateProposalKindArtistUpdate:
+		*s = ArtistUpdateProposalKindArtistUpdate
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// Artists to add or remove. Absent fields are unchanged.
+// Ref: #/components/schemas/ArtistsChange
+type ArtistsChange struct {
+	Add    []uuid.UUID `json:"add"`
+	Remove []uuid.UUID `json:"remove"`
+}
+
+// GetAdd returns the value of Add.
+func (s *ArtistsChange) GetAdd() []uuid.UUID {
+	return s.Add
+}
+
+// GetRemove returns the value of Remove.
+func (s *ArtistsChange) GetRemove() []uuid.UUID {
+	return s.Remove
+}
+
+// SetAdd sets the value of Add.
+func (s *ArtistsChange) SetAdd(val []uuid.UUID) {
+	s.Add = val
+}
+
+// SetRemove sets the value of Remove.
+func (s *ArtistsChange) SetRemove(val []uuid.UUID) {
+	s.Remove = val
+}
+
 // Ref: #/components/schemas/Asset
 type Asset struct {
 	AssetID   uuid.UUID      `json:"asset_id"`
@@ -787,6 +1846,59 @@ func (s *Asset) SetUpdatedAt(val OptNilDateTime) {
 }
 
 func (*Asset) addUserAssetRes() {}
+
+// Assets to add or remove. Absent fields are unchanged.
+// Ref: #/components/schemas/AssetsChange
+type AssetsChange struct {
+	Add    []AssetsChangeAddItem `json:"add"`
+	Remove []uuid.UUID           `json:"remove"`
+}
+
+// GetAdd returns the value of Add.
+func (s *AssetsChange) GetAdd() []AssetsChangeAddItem {
+	return s.Add
+}
+
+// GetRemove returns the value of Remove.
+func (s *AssetsChange) GetRemove() []uuid.UUID {
+	return s.Remove
+}
+
+// SetAdd sets the value of Add.
+func (s *AssetsChange) SetAdd(val []AssetsChangeAddItem) {
+	s.Add = val
+}
+
+// SetRemove sets the value of Remove.
+func (s *AssetsChange) SetRemove(val []uuid.UUID) {
+	s.Remove = val
+}
+
+type AssetsChangeAddItem struct {
+	AssetID uuid.UUID `json:"asset_id"`
+	// Lexicographically sortable string, assigned by the server when omitted.
+	Position OptString `json:"position"`
+}
+
+// GetAssetID returns the value of AssetID.
+func (s *AssetsChangeAddItem) GetAssetID() uuid.UUID {
+	return s.AssetID
+}
+
+// GetPosition returns the value of Position.
+func (s *AssetsChangeAddItem) GetPosition() OptString {
+	return s.Position
+}
+
+// SetAssetID sets the value of AssetID.
+func (s *AssetsChangeAddItem) SetAssetID(val uuid.UUID) {
+	s.AssetID = val
+}
+
+// SetPosition sets the value of Position.
+func (s *AssetsChangeAddItem) SetPosition(val OptString) {
+	s.Position = val
+}
 
 // Ref: #/components/schemas/BestFriendActionRequest
 type BestFriendActionRequest struct {
@@ -915,6 +2027,650 @@ func (ChangeOperation) AllValues() []ChangeOperation {
 		ChangeOperation0,
 		ChangeOperation1,
 		ChangeOperation2,
+	}
+}
+
+// Ref: #/components/schemas/Contribution
+type Contribution struct {
+	ContributionID uuid.UUID `json:"contribution_id"`
+	// Null if the author was deleted.
+	UserID OptNilUUID `json:"user_id"`
+	// Entity type targeted by the contribution.
+	Entity ContributionEntity `json:"entity"`
+	// Null for create operations.
+	EntityID  OptNilUUID            `json:"entity_id"`
+	Operation ContributionOperation `json:"operation"`
+	Status    ContributionStatus    `json:"status"`
+	Proposed  ContributionProposal  `json:"proposed"`
+	// State of the entity at proposal time. Null for create operations.
+	Original  OptContributionOriginal `json:"original"`
+	CreatedAt time.Time               `json:"created_at"`
+	UpdatedAt OptNilDateTime          `json:"updated_at"`
+}
+
+// GetContributionID returns the value of ContributionID.
+func (s *Contribution) GetContributionID() uuid.UUID {
+	return s.ContributionID
+}
+
+// GetUserID returns the value of UserID.
+func (s *Contribution) GetUserID() OptNilUUID {
+	return s.UserID
+}
+
+// GetEntity returns the value of Entity.
+func (s *Contribution) GetEntity() ContributionEntity {
+	return s.Entity
+}
+
+// GetEntityID returns the value of EntityID.
+func (s *Contribution) GetEntityID() OptNilUUID {
+	return s.EntityID
+}
+
+// GetOperation returns the value of Operation.
+func (s *Contribution) GetOperation() ContributionOperation {
+	return s.Operation
+}
+
+// GetStatus returns the value of Status.
+func (s *Contribution) GetStatus() ContributionStatus {
+	return s.Status
+}
+
+// GetProposed returns the value of Proposed.
+func (s *Contribution) GetProposed() ContributionProposal {
+	return s.Proposed
+}
+
+// GetOriginal returns the value of Original.
+func (s *Contribution) GetOriginal() OptContributionOriginal {
+	return s.Original
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *Contribution) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *Contribution) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// SetContributionID sets the value of ContributionID.
+func (s *Contribution) SetContributionID(val uuid.UUID) {
+	s.ContributionID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *Contribution) SetUserID(val OptNilUUID) {
+	s.UserID = val
+}
+
+// SetEntity sets the value of Entity.
+func (s *Contribution) SetEntity(val ContributionEntity) {
+	s.Entity = val
+}
+
+// SetEntityID sets the value of EntityID.
+func (s *Contribution) SetEntityID(val OptNilUUID) {
+	s.EntityID = val
+}
+
+// SetOperation sets the value of Operation.
+func (s *Contribution) SetOperation(val ContributionOperation) {
+	s.Operation = val
+}
+
+// SetStatus sets the value of Status.
+func (s *Contribution) SetStatus(val ContributionStatus) {
+	s.Status = val
+}
+
+// SetProposed sets the value of Proposed.
+func (s *Contribution) SetProposed(val ContributionProposal) {
+	s.Proposed = val
+}
+
+// SetOriginal sets the value of Original.
+func (s *Contribution) SetOriginal(val OptContributionOriginal) {
+	s.Original = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *Contribution) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *Contribution) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+func (*Contribution) getContributionRes()           {}
+func (*Contribution) proposeAlbumContributionRes()  {}
+func (*Contribution) proposeAlbumCreateRes()        {}
+func (*Contribution) proposeArtistContributionRes() {}
+func (*Contribution) proposeArtistCreateRes()       {}
+func (*Contribution) proposeTrackContributionRes()  {}
+func (*Contribution) reviewContributionRes()        {}
+
+// Ref: #/components/schemas/ContributionEntity
+type ContributionEntity string
+
+const (
+	ContributionEntityArtist ContributionEntity = "artist"
+	ContributionEntityAlbum  ContributionEntity = "album"
+	ContributionEntityTrack  ContributionEntity = "track"
+)
+
+// AllValues returns all ContributionEntity values.
+func (ContributionEntity) AllValues() []ContributionEntity {
+	return []ContributionEntity{
+		ContributionEntityArtist,
+		ContributionEntityAlbum,
+		ContributionEntityTrack,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s ContributionEntity) MarshalText() ([]byte, error) {
+	switch s {
+	case ContributionEntityArtist:
+		return []byte(s), nil
+	case ContributionEntityAlbum:
+		return []byte(s), nil
+	case ContributionEntityTrack:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *ContributionEntity) UnmarshalText(data []byte) error {
+	switch ContributionEntity(data) {
+	case ContributionEntityArtist:
+		*s = ContributionEntityArtist
+		return nil
+	case ContributionEntityAlbum:
+		*s = ContributionEntityAlbum
+		return nil
+	case ContributionEntityTrack:
+		*s = ContributionEntityTrack
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+// 0=Create 1=Update 2=Delete 3=Merge.
+// Ref: #/components/schemas/ContributionOperation
+type ContributionOperation uint8
+
+const (
+	ContributionOperation0 ContributionOperation = 0
+	ContributionOperation1 ContributionOperation = 1
+	ContributionOperation2 ContributionOperation = 2
+	ContributionOperation3 ContributionOperation = 3
+)
+
+// AllValues returns all ContributionOperation values.
+func (ContributionOperation) AllValues() []ContributionOperation {
+	return []ContributionOperation{
+		ContributionOperation0,
+		ContributionOperation1,
+		ContributionOperation2,
+		ContributionOperation3,
+	}
+}
+
+// Ref: #/components/schemas/ContributionOriginal
+// ContributionOriginal represents sum type.
+type ContributionOriginal struct {
+	// Type selects the active sum variant, switch on this field.
+	Type           ContributionOriginalType
+	ArtistOriginal ArtistOriginal
+	AlbumOriginal  AlbumOriginal
+	TrackOriginal  TrackOriginal
+}
+
+// ContributionOriginalType is oneOf type of ContributionOriginal.
+type ContributionOriginalType string
+
+// Possible values for ContributionOriginalType.
+const (
+	ArtistOriginalContributionOriginal ContributionOriginalType = "artist"
+	AlbumOriginalContributionOriginal  ContributionOriginalType = "album"
+	TrackOriginalContributionOriginal  ContributionOriginalType = "track"
+)
+
+// IsArtistOriginal reports whether ContributionOriginal is ArtistOriginal.
+func (s ContributionOriginal) IsArtistOriginal() bool {
+	return s.Type == ArtistOriginalContributionOriginal
+}
+
+// IsAlbumOriginal reports whether ContributionOriginal is AlbumOriginal.
+func (s ContributionOriginal) IsAlbumOriginal() bool {
+	return s.Type == AlbumOriginalContributionOriginal
+}
+
+// IsTrackOriginal reports whether ContributionOriginal is TrackOriginal.
+func (s ContributionOriginal) IsTrackOriginal() bool {
+	return s.Type == TrackOriginalContributionOriginal
+}
+
+// SetArtistOriginal sets ContributionOriginal to ArtistOriginal.
+func (s *ContributionOriginal) SetArtistOriginal(v ArtistOriginal) {
+	s.Type = ArtistOriginalContributionOriginal
+	s.ArtistOriginal = v
+}
+
+// GetArtistOriginal returns ArtistOriginal and true boolean if ContributionOriginal is ArtistOriginal.
+func (s ContributionOriginal) GetArtistOriginal() (v ArtistOriginal, ok bool) {
+	if !s.IsArtistOriginal() {
+		return v, false
+	}
+	return s.ArtistOriginal, true
+}
+
+// NewArtistOriginalContributionOriginal returns new ContributionOriginal from ArtistOriginal.
+func NewArtistOriginalContributionOriginal(v ArtistOriginal) ContributionOriginal {
+	var s ContributionOriginal
+	s.SetArtistOriginal(v)
+	return s
+}
+
+// SetAlbumOriginal sets ContributionOriginal to AlbumOriginal.
+func (s *ContributionOriginal) SetAlbumOriginal(v AlbumOriginal) {
+	s.Type = AlbumOriginalContributionOriginal
+	s.AlbumOriginal = v
+}
+
+// GetAlbumOriginal returns AlbumOriginal and true boolean if ContributionOriginal is AlbumOriginal.
+func (s ContributionOriginal) GetAlbumOriginal() (v AlbumOriginal, ok bool) {
+	if !s.IsAlbumOriginal() {
+		return v, false
+	}
+	return s.AlbumOriginal, true
+}
+
+// NewAlbumOriginalContributionOriginal returns new ContributionOriginal from AlbumOriginal.
+func NewAlbumOriginalContributionOriginal(v AlbumOriginal) ContributionOriginal {
+	var s ContributionOriginal
+	s.SetAlbumOriginal(v)
+	return s
+}
+
+// SetTrackOriginal sets ContributionOriginal to TrackOriginal.
+func (s *ContributionOriginal) SetTrackOriginal(v TrackOriginal) {
+	s.Type = TrackOriginalContributionOriginal
+	s.TrackOriginal = v
+}
+
+// GetTrackOriginal returns TrackOriginal and true boolean if ContributionOriginal is TrackOriginal.
+func (s ContributionOriginal) GetTrackOriginal() (v TrackOriginal, ok bool) {
+	if !s.IsTrackOriginal() {
+		return v, false
+	}
+	return s.TrackOriginal, true
+}
+
+// NewTrackOriginalContributionOriginal returns new ContributionOriginal from TrackOriginal.
+func NewTrackOriginalContributionOriginal(v TrackOriginal) ContributionOriginal {
+	var s ContributionOriginal
+	s.SetTrackOriginal(v)
+	return s
+}
+
+// Ref: #/components/schemas/ContributionProposal
+// ContributionProposal represents sum type.
+type ContributionProposal struct {
+	// Type selects the active sum variant, switch on this field.
+	Type                 ContributionProposalType
+	ArtistCreateProposal ArtistCreateProposal
+	ArtistUpdateProposal ArtistUpdateProposal
+	ArtistMergeProposal  ArtistMergeProposal
+	ArtistDeleteProposal ArtistDeleteProposal
+	AlbumCreateProposal  AlbumCreateProposal
+	AlbumUpdateProposal  AlbumUpdateProposal
+	AlbumDeleteProposal  AlbumDeleteProposal
+	TrackUpdateProposal  TrackUpdateProposal
+	TrackDeleteProposal  TrackDeleteProposal
+}
+
+// ContributionProposalType is oneOf type of ContributionProposal.
+type ContributionProposalType string
+
+// Possible values for ContributionProposalType.
+const (
+	ArtistCreateProposalContributionProposal ContributionProposalType = "artist-create"
+	ArtistUpdateProposalContributionProposal ContributionProposalType = "artist-update"
+	ArtistMergeProposalContributionProposal  ContributionProposalType = "artist-merge"
+	ArtistDeleteProposalContributionProposal ContributionProposalType = "artist-delete"
+	AlbumCreateProposalContributionProposal  ContributionProposalType = "album-create"
+	AlbumUpdateProposalContributionProposal  ContributionProposalType = "album-update"
+	AlbumDeleteProposalContributionProposal  ContributionProposalType = "album-delete"
+	TrackUpdateProposalContributionProposal  ContributionProposalType = "track-update"
+	TrackDeleteProposalContributionProposal  ContributionProposalType = "track-delete"
+)
+
+// IsArtistCreateProposal reports whether ContributionProposal is ArtistCreateProposal.
+func (s ContributionProposal) IsArtistCreateProposal() bool {
+	return s.Type == ArtistCreateProposalContributionProposal
+}
+
+// IsArtistUpdateProposal reports whether ContributionProposal is ArtistUpdateProposal.
+func (s ContributionProposal) IsArtistUpdateProposal() bool {
+	return s.Type == ArtistUpdateProposalContributionProposal
+}
+
+// IsArtistMergeProposal reports whether ContributionProposal is ArtistMergeProposal.
+func (s ContributionProposal) IsArtistMergeProposal() bool {
+	return s.Type == ArtistMergeProposalContributionProposal
+}
+
+// IsArtistDeleteProposal reports whether ContributionProposal is ArtistDeleteProposal.
+func (s ContributionProposal) IsArtistDeleteProposal() bool {
+	return s.Type == ArtistDeleteProposalContributionProposal
+}
+
+// IsAlbumCreateProposal reports whether ContributionProposal is AlbumCreateProposal.
+func (s ContributionProposal) IsAlbumCreateProposal() bool {
+	return s.Type == AlbumCreateProposalContributionProposal
+}
+
+// IsAlbumUpdateProposal reports whether ContributionProposal is AlbumUpdateProposal.
+func (s ContributionProposal) IsAlbumUpdateProposal() bool {
+	return s.Type == AlbumUpdateProposalContributionProposal
+}
+
+// IsAlbumDeleteProposal reports whether ContributionProposal is AlbumDeleteProposal.
+func (s ContributionProposal) IsAlbumDeleteProposal() bool {
+	return s.Type == AlbumDeleteProposalContributionProposal
+}
+
+// IsTrackUpdateProposal reports whether ContributionProposal is TrackUpdateProposal.
+func (s ContributionProposal) IsTrackUpdateProposal() bool {
+	return s.Type == TrackUpdateProposalContributionProposal
+}
+
+// IsTrackDeleteProposal reports whether ContributionProposal is TrackDeleteProposal.
+func (s ContributionProposal) IsTrackDeleteProposal() bool {
+	return s.Type == TrackDeleteProposalContributionProposal
+}
+
+// SetArtistCreateProposal sets ContributionProposal to ArtistCreateProposal.
+func (s *ContributionProposal) SetArtistCreateProposal(v ArtistCreateProposal) {
+	s.Type = ArtistCreateProposalContributionProposal
+	s.ArtistCreateProposal = v
+}
+
+// GetArtistCreateProposal returns ArtistCreateProposal and true boolean if ContributionProposal is ArtistCreateProposal.
+func (s ContributionProposal) GetArtistCreateProposal() (v ArtistCreateProposal, ok bool) {
+	if !s.IsArtistCreateProposal() {
+		return v, false
+	}
+	return s.ArtistCreateProposal, true
+}
+
+// NewArtistCreateProposalContributionProposal returns new ContributionProposal from ArtistCreateProposal.
+func NewArtistCreateProposalContributionProposal(v ArtistCreateProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetArtistCreateProposal(v)
+	return s
+}
+
+// SetArtistUpdateProposal sets ContributionProposal to ArtistUpdateProposal.
+func (s *ContributionProposal) SetArtistUpdateProposal(v ArtistUpdateProposal) {
+	s.Type = ArtistUpdateProposalContributionProposal
+	s.ArtistUpdateProposal = v
+}
+
+// GetArtistUpdateProposal returns ArtistUpdateProposal and true boolean if ContributionProposal is ArtistUpdateProposal.
+func (s ContributionProposal) GetArtistUpdateProposal() (v ArtistUpdateProposal, ok bool) {
+	if !s.IsArtistUpdateProposal() {
+		return v, false
+	}
+	return s.ArtistUpdateProposal, true
+}
+
+// NewArtistUpdateProposalContributionProposal returns new ContributionProposal from ArtistUpdateProposal.
+func NewArtistUpdateProposalContributionProposal(v ArtistUpdateProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetArtistUpdateProposal(v)
+	return s
+}
+
+// SetArtistMergeProposal sets ContributionProposal to ArtistMergeProposal.
+func (s *ContributionProposal) SetArtistMergeProposal(v ArtistMergeProposal) {
+	s.Type = ArtistMergeProposalContributionProposal
+	s.ArtistMergeProposal = v
+}
+
+// GetArtistMergeProposal returns ArtistMergeProposal and true boolean if ContributionProposal is ArtistMergeProposal.
+func (s ContributionProposal) GetArtistMergeProposal() (v ArtistMergeProposal, ok bool) {
+	if !s.IsArtistMergeProposal() {
+		return v, false
+	}
+	return s.ArtistMergeProposal, true
+}
+
+// NewArtistMergeProposalContributionProposal returns new ContributionProposal from ArtistMergeProposal.
+func NewArtistMergeProposalContributionProposal(v ArtistMergeProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetArtistMergeProposal(v)
+	return s
+}
+
+// SetArtistDeleteProposal sets ContributionProposal to ArtistDeleteProposal.
+func (s *ContributionProposal) SetArtistDeleteProposal(v ArtistDeleteProposal) {
+	s.Type = ArtistDeleteProposalContributionProposal
+	s.ArtistDeleteProposal = v
+}
+
+// GetArtistDeleteProposal returns ArtistDeleteProposal and true boolean if ContributionProposal is ArtistDeleteProposal.
+func (s ContributionProposal) GetArtistDeleteProposal() (v ArtistDeleteProposal, ok bool) {
+	if !s.IsArtistDeleteProposal() {
+		return v, false
+	}
+	return s.ArtistDeleteProposal, true
+}
+
+// NewArtistDeleteProposalContributionProposal returns new ContributionProposal from ArtistDeleteProposal.
+func NewArtistDeleteProposalContributionProposal(v ArtistDeleteProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetArtistDeleteProposal(v)
+	return s
+}
+
+// SetAlbumCreateProposal sets ContributionProposal to AlbumCreateProposal.
+func (s *ContributionProposal) SetAlbumCreateProposal(v AlbumCreateProposal) {
+	s.Type = AlbumCreateProposalContributionProposal
+	s.AlbumCreateProposal = v
+}
+
+// GetAlbumCreateProposal returns AlbumCreateProposal and true boolean if ContributionProposal is AlbumCreateProposal.
+func (s ContributionProposal) GetAlbumCreateProposal() (v AlbumCreateProposal, ok bool) {
+	if !s.IsAlbumCreateProposal() {
+		return v, false
+	}
+	return s.AlbumCreateProposal, true
+}
+
+// NewAlbumCreateProposalContributionProposal returns new ContributionProposal from AlbumCreateProposal.
+func NewAlbumCreateProposalContributionProposal(v AlbumCreateProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetAlbumCreateProposal(v)
+	return s
+}
+
+// SetAlbumUpdateProposal sets ContributionProposal to AlbumUpdateProposal.
+func (s *ContributionProposal) SetAlbumUpdateProposal(v AlbumUpdateProposal) {
+	s.Type = AlbumUpdateProposalContributionProposal
+	s.AlbumUpdateProposal = v
+}
+
+// GetAlbumUpdateProposal returns AlbumUpdateProposal and true boolean if ContributionProposal is AlbumUpdateProposal.
+func (s ContributionProposal) GetAlbumUpdateProposal() (v AlbumUpdateProposal, ok bool) {
+	if !s.IsAlbumUpdateProposal() {
+		return v, false
+	}
+	return s.AlbumUpdateProposal, true
+}
+
+// NewAlbumUpdateProposalContributionProposal returns new ContributionProposal from AlbumUpdateProposal.
+func NewAlbumUpdateProposalContributionProposal(v AlbumUpdateProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetAlbumUpdateProposal(v)
+	return s
+}
+
+// SetAlbumDeleteProposal sets ContributionProposal to AlbumDeleteProposal.
+func (s *ContributionProposal) SetAlbumDeleteProposal(v AlbumDeleteProposal) {
+	s.Type = AlbumDeleteProposalContributionProposal
+	s.AlbumDeleteProposal = v
+}
+
+// GetAlbumDeleteProposal returns AlbumDeleteProposal and true boolean if ContributionProposal is AlbumDeleteProposal.
+func (s ContributionProposal) GetAlbumDeleteProposal() (v AlbumDeleteProposal, ok bool) {
+	if !s.IsAlbumDeleteProposal() {
+		return v, false
+	}
+	return s.AlbumDeleteProposal, true
+}
+
+// NewAlbumDeleteProposalContributionProposal returns new ContributionProposal from AlbumDeleteProposal.
+func NewAlbumDeleteProposalContributionProposal(v AlbumDeleteProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetAlbumDeleteProposal(v)
+	return s
+}
+
+// SetTrackUpdateProposal sets ContributionProposal to TrackUpdateProposal.
+func (s *ContributionProposal) SetTrackUpdateProposal(v TrackUpdateProposal) {
+	s.Type = TrackUpdateProposalContributionProposal
+	s.TrackUpdateProposal = v
+}
+
+// GetTrackUpdateProposal returns TrackUpdateProposal and true boolean if ContributionProposal is TrackUpdateProposal.
+func (s ContributionProposal) GetTrackUpdateProposal() (v TrackUpdateProposal, ok bool) {
+	if !s.IsTrackUpdateProposal() {
+		return v, false
+	}
+	return s.TrackUpdateProposal, true
+}
+
+// NewTrackUpdateProposalContributionProposal returns new ContributionProposal from TrackUpdateProposal.
+func NewTrackUpdateProposalContributionProposal(v TrackUpdateProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetTrackUpdateProposal(v)
+	return s
+}
+
+// SetTrackDeleteProposal sets ContributionProposal to TrackDeleteProposal.
+func (s *ContributionProposal) SetTrackDeleteProposal(v TrackDeleteProposal) {
+	s.Type = TrackDeleteProposalContributionProposal
+	s.TrackDeleteProposal = v
+}
+
+// GetTrackDeleteProposal returns TrackDeleteProposal and true boolean if ContributionProposal is TrackDeleteProposal.
+func (s ContributionProposal) GetTrackDeleteProposal() (v TrackDeleteProposal, ok bool) {
+	if !s.IsTrackDeleteProposal() {
+		return v, false
+	}
+	return s.TrackDeleteProposal, true
+}
+
+// NewTrackDeleteProposalContributionProposal returns new ContributionProposal from TrackDeleteProposal.
+func NewTrackDeleteProposalContributionProposal(v TrackDeleteProposal) ContributionProposal {
+	var s ContributionProposal
+	s.SetTrackDeleteProposal(v)
+	return s
+}
+
+// 0=Pending 1=Approved 2=Rejected.
+// Ref: #/components/schemas/ContributionStatus
+type ContributionStatus uint8
+
+const (
+	ContributionStatus0 ContributionStatus = 0
+	ContributionStatus1 ContributionStatus = 1
+	ContributionStatus2 ContributionStatus = 2
+)
+
+// AllValues returns all ContributionStatus values.
+func (ContributionStatus) AllValues() []ContributionStatus {
+	return []ContributionStatus{
+		ContributionStatus0,
+		ContributionStatus1,
+		ContributionStatus2,
+	}
+}
+
+// Ref: #/components/schemas/ContributionVote
+type ContributionVote struct {
+	UserID         uuid.UUID            `json:"user_id"`
+	ContributionID uuid.UUID            `json:"contribution_id"`
+	Vote           ContributionVoteVote `json:"vote"`
+	CreatedAt      time.Time            `json:"created_at"`
+}
+
+// GetUserID returns the value of UserID.
+func (s *ContributionVote) GetUserID() uuid.UUID {
+	return s.UserID
+}
+
+// GetContributionID returns the value of ContributionID.
+func (s *ContributionVote) GetContributionID() uuid.UUID {
+	return s.ContributionID
+}
+
+// GetVote returns the value of Vote.
+func (s *ContributionVote) GetVote() ContributionVoteVote {
+	return s.Vote
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *ContributionVote) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// SetUserID sets the value of UserID.
+func (s *ContributionVote) SetUserID(val uuid.UUID) {
+	s.UserID = val
+}
+
+// SetContributionID sets the value of ContributionID.
+func (s *ContributionVote) SetContributionID(val uuid.UUID) {
+	s.ContributionID = val
+}
+
+// SetVote sets the value of Vote.
+func (s *ContributionVote) SetVote(val ContributionVoteVote) {
+	s.Vote = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *ContributionVote) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+func (*ContributionVote) voteContributionRes() {}
+
+type ContributionVoteVote int8
+
+const (
+	ContributionVoteVoteMinus1 ContributionVoteVote = -1
+	ContributionVoteVote1      ContributionVoteVote = 1
+)
+
+// AllValues returns all ContributionVoteVote values.
+func (ContributionVoteVote) AllValues() []ContributionVoteVote {
+	return []ContributionVoteVote{
+		ContributionVoteVoteMinus1,
+		ContributionVoteVote1,
 	}
 }
 
@@ -1136,6 +2892,26 @@ func (s *DayListenDetails) SetPlayCount(val uint16) {
 func (s *DayListenDetails) SetSeconds(val uint64) {
 	s.Seconds = val
 }
+
+type DeleteContributionBadRequest ErrorResponse
+
+func (*DeleteContributionBadRequest) deleteContributionRes() {}
+
+type DeleteContributionForbidden ErrorResponse
+
+func (*DeleteContributionForbidden) deleteContributionRes() {}
+
+type DeleteContributionInternalServerError ErrorResponse
+
+func (*DeleteContributionInternalServerError) deleteContributionRes() {}
+
+type DeleteContributionNotFound ErrorResponse
+
+func (*DeleteContributionNotFound) deleteContributionRes() {}
+
+type DeleteContributionUnauthorized ErrorResponse
+
+func (*DeleteContributionUnauthorized) deleteContributionRes() {}
 
 type DeleteGroupBadRequest ErrorResponse
 
@@ -1834,6 +3610,26 @@ type GetAlbumBadRequest ErrorResponse
 
 func (*GetAlbumBadRequest) getAlbumRes() {}
 
+type GetAlbumContributionsBadRequest ErrorResponse
+
+func (*GetAlbumContributionsBadRequest) getAlbumContributionsRes() {}
+
+type GetAlbumContributionsInternalServerError ErrorResponse
+
+func (*GetAlbumContributionsInternalServerError) getAlbumContributionsRes() {}
+
+type GetAlbumContributionsNotFound ErrorResponse
+
+func (*GetAlbumContributionsNotFound) getAlbumContributionsRes() {}
+
+type GetAlbumContributionsOKApplicationJSON []Contribution
+
+func (*GetAlbumContributionsOKApplicationJSON) getAlbumContributionsRes() {}
+
+type GetAlbumContributionsUnauthorized ErrorResponse
+
+func (*GetAlbumContributionsUnauthorized) getAlbumContributionsRes() {}
+
 type GetAlbumInternalServerError ErrorResponse
 
 func (*GetAlbumInternalServerError) getAlbumRes() {}
@@ -2017,6 +3813,26 @@ type GetArtistBadRequest ErrorResponse
 
 func (*GetArtistBadRequest) getArtistRes() {}
 
+type GetArtistContributionsBadRequest ErrorResponse
+
+func (*GetArtistContributionsBadRequest) getArtistContributionsRes() {}
+
+type GetArtistContributionsInternalServerError ErrorResponse
+
+func (*GetArtistContributionsInternalServerError) getArtistContributionsRes() {}
+
+type GetArtistContributionsNotFound ErrorResponse
+
+func (*GetArtistContributionsNotFound) getArtistContributionsRes() {}
+
+type GetArtistContributionsOKApplicationJSON []Contribution
+
+func (*GetArtistContributionsOKApplicationJSON) getArtistContributionsRes() {}
+
+type GetArtistContributionsUnauthorized ErrorResponse
+
+func (*GetArtistContributionsUnauthorized) getArtistContributionsRes() {}
+
 type GetArtistInternalServerError ErrorResponse
 
 func (*GetArtistInternalServerError) getArtistRes() {}
@@ -2136,6 +3952,58 @@ func (*GetChangesResponse) getChangesRes() {}
 type GetChangesUnauthorized ErrorResponse
 
 func (*GetChangesUnauthorized) getChangesRes() {}
+
+type GetContributionBadRequest ErrorResponse
+
+func (*GetContributionBadRequest) getContributionRes() {}
+
+type GetContributionInternalServerError ErrorResponse
+
+func (*GetContributionInternalServerError) getContributionRes() {}
+
+type GetContributionNotFound ErrorResponse
+
+func (*GetContributionNotFound) getContributionRes() {}
+
+type GetContributionUnauthorized ErrorResponse
+
+func (*GetContributionUnauthorized) getContributionRes() {}
+
+type GetContributionVotesBadRequest ErrorResponse
+
+func (*GetContributionVotesBadRequest) getContributionVotesRes() {}
+
+type GetContributionVotesInternalServerError ErrorResponse
+
+func (*GetContributionVotesInternalServerError) getContributionVotesRes() {}
+
+type GetContributionVotesNotFound ErrorResponse
+
+func (*GetContributionVotesNotFound) getContributionVotesRes() {}
+
+type GetContributionVotesOKApplicationJSON []ContributionVote
+
+func (*GetContributionVotesOKApplicationJSON) getContributionVotesRes() {}
+
+type GetContributionVotesUnauthorized ErrorResponse
+
+func (*GetContributionVotesUnauthorized) getContributionVotesRes() {}
+
+type GetContributionsBadRequest ErrorResponse
+
+func (*GetContributionsBadRequest) getContributionsRes() {}
+
+type GetContributionsInternalServerError ErrorResponse
+
+func (*GetContributionsInternalServerError) getContributionsRes() {}
+
+type GetContributionsOKApplicationJSON []Contribution
+
+func (*GetContributionsOKApplicationJSON) getContributionsRes() {}
+
+type GetContributionsUnauthorized ErrorResponse
+
+func (*GetContributionsUnauthorized) getContributionsRes() {}
 
 type GetFriendsRecentActivityInternalServerError ErrorResponse
 
@@ -2926,6 +4794,26 @@ func (*GetRelationsDetailsUnauthorized) getRelationsDetailsRes() {}
 type GetTrackBadRequest ErrorResponse
 
 func (*GetTrackBadRequest) getTrackRes() {}
+
+type GetTrackContributionsBadRequest ErrorResponse
+
+func (*GetTrackContributionsBadRequest) getTrackContributionsRes() {}
+
+type GetTrackContributionsInternalServerError ErrorResponse
+
+func (*GetTrackContributionsInternalServerError) getTrackContributionsRes() {}
+
+type GetTrackContributionsNotFound ErrorResponse
+
+func (*GetTrackContributionsNotFound) getTrackContributionsRes() {}
+
+type GetTrackContributionsOKApplicationJSON []Contribution
+
+func (*GetTrackContributionsOKApplicationJSON) getTrackContributionsRes() {}
+
+type GetTrackContributionsUnauthorized ErrorResponse
+
+func (*GetTrackContributionsUnauthorized) getTrackContributionsRes() {}
 
 type GetTrackDetailsBadRequest ErrorResponse
 
@@ -4610,24 +6498,118 @@ func (*MessageReaction) addMessageReactionRes() {}
 // Ref: #/components/responses/NoContent
 type NoContent struct{}
 
-func (*NoContent) deleteGroupRes()           {}
-func (*NoContent) deleteGroupRoleRes()       {}
-func (*NoContent) deleteListenRes()          {}
-func (*NoContent) deleteMessageReactionRes() {}
-func (*NoContent) deleteMessageRes()         {}
-func (*NoContent) deletePlaylistRes()        {}
-func (*NoContent) deletePlaylistRoleRes()    {}
-func (*NoContent) deletePlaylistTrackRes()   {}
-func (*NoContent) deleteUserAssetRes()       {}
-func (*NoContent) readMessageRes()           {}
-func (*NoContent) removeFriendRes()          {}
-func (*NoContent) removeFromLibraryRes()     {}
-func (*NoContent) setActivityRes()           {}
-func (*NoContent) setBestFriendRes()         {}
-func (*NoContent) setBlockedRes()            {}
-func (*NoContent) updateUserRes()            {}
-func (*NoContent) uploadTrackAudioRes()      {}
-func (*NoContent) validateTokenRes()         {}
+func (*NoContent) deleteContributionRes()     {}
+func (*NoContent) deleteGroupRes()            {}
+func (*NoContent) deleteGroupRoleRes()        {}
+func (*NoContent) deleteListenRes()           {}
+func (*NoContent) deleteMessageReactionRes()  {}
+func (*NoContent) deleteMessageRes()          {}
+func (*NoContent) deletePlaylistRes()         {}
+func (*NoContent) deletePlaylistRoleRes()     {}
+func (*NoContent) deletePlaylistTrackRes()    {}
+func (*NoContent) deleteUserAssetRes()        {}
+func (*NoContent) readMessageRes()            {}
+func (*NoContent) removeContributionVoteRes() {}
+func (*NoContent) removeFriendRes()           {}
+func (*NoContent) removeFromLibraryRes()      {}
+func (*NoContent) setActivityRes()            {}
+func (*NoContent) setBestFriendRes()          {}
+func (*NoContent) setBlockedRes()             {}
+func (*NoContent) updateUserRes()             {}
+func (*NoContent) uploadTrackAudioRes()       {}
+func (*NoContent) validateTokenRes()          {}
+
+// NewOptAlbumChanges returns new OptAlbumChanges with value set to v.
+func NewOptAlbumChanges(v AlbumChanges) OptAlbumChanges {
+	return OptAlbumChanges{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAlbumChanges is optional AlbumChanges.
+type OptAlbumChanges struct {
+	Value AlbumChanges
+	Set   bool
+}
+
+// IsSet returns true if OptAlbumChanges was set.
+func (o OptAlbumChanges) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAlbumChanges) Reset() {
+	var v AlbumChanges
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAlbumChanges) SetTo(v AlbumChanges) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAlbumChanges) Get() (v AlbumChanges, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAlbumChanges) Or(d AlbumChanges) AlbumChanges {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAlbumTracksChange returns new OptAlbumTracksChange with value set to v.
+func NewOptAlbumTracksChange(v AlbumTracksChange) OptAlbumTracksChange {
+	return OptAlbumTracksChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAlbumTracksChange is optional AlbumTracksChange.
+type OptAlbumTracksChange struct {
+	Value AlbumTracksChange
+	Set   bool
+}
+
+// IsSet returns true if OptAlbumTracksChange was set.
+func (o OptAlbumTracksChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAlbumTracksChange) Reset() {
+	var v AlbumTracksChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAlbumTracksChange) SetTo(v AlbumTracksChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAlbumTracksChange) Get() (v AlbumTracksChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAlbumTracksChange) Or(d AlbumTracksChange) AlbumTracksChange {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
 
 // NewOptArtist returns new OptArtist with value set to v.
 func NewOptArtist(v Artist) OptArtist {
@@ -4669,6 +6651,52 @@ func (o OptArtist) Get() (v Artist, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptArtist) Or(d Artist) Artist {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptArtistChanges returns new OptArtistChanges with value set to v.
+func NewOptArtistChanges(v ArtistChanges) OptArtistChanges {
+	return OptArtistChanges{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtistChanges is optional ArtistChanges.
+type OptArtistChanges struct {
+	Value ArtistChanges
+	Set   bool
+}
+
+// IsSet returns true if OptArtistChanges was set.
+func (o OptArtistChanges) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtistChanges) Reset() {
+	var v ArtistChanges
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtistChanges) SetTo(v ArtistChanges) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtistChanges) Get() (v ArtistChanges, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtistChanges) Or(d ArtistChanges) ArtistChanges {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -4721,6 +6749,98 @@ func (o OptArtistPlayStatisticsQuery) Or(d ArtistPlayStatisticsQuery) ArtistPlay
 	return d
 }
 
+// NewOptArtistsChange returns new OptArtistsChange with value set to v.
+func NewOptArtistsChange(v ArtistsChange) OptArtistsChange {
+	return OptArtistsChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptArtistsChange is optional ArtistsChange.
+type OptArtistsChange struct {
+	Value ArtistsChange
+	Set   bool
+}
+
+// IsSet returns true if OptArtistsChange was set.
+func (o OptArtistsChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptArtistsChange) Reset() {
+	var v ArtistsChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptArtistsChange) SetTo(v ArtistsChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptArtistsChange) Get() (v ArtistsChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptArtistsChange) Or(d ArtistsChange) ArtistsChange {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAssetsChange returns new OptAssetsChange with value set to v.
+func NewOptAssetsChange(v AssetsChange) OptAssetsChange {
+	return OptAssetsChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAssetsChange is optional AssetsChange.
+type OptAssetsChange struct {
+	Value AssetsChange
+	Set   bool
+}
+
+// IsSet returns true if OptAssetsChange was set.
+func (o OptAssetsChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAssetsChange) Reset() {
+	var v AssetsChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAssetsChange) SetTo(v AssetsChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAssetsChange) Get() (v AssetsChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAssetsChange) Or(d AssetsChange) AssetsChange {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptBool returns new OptBool with value set to v.
 func NewOptBool(v bool) OptBool {
 	return OptBool{
@@ -4761,6 +6881,190 @@ func (o OptBool) Get() (v bool, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptBool) Or(d bool) bool {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptContributionEntity returns new OptContributionEntity with value set to v.
+func NewOptContributionEntity(v ContributionEntity) OptContributionEntity {
+	return OptContributionEntity{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptContributionEntity is optional ContributionEntity.
+type OptContributionEntity struct {
+	Value ContributionEntity
+	Set   bool
+}
+
+// IsSet returns true if OptContributionEntity was set.
+func (o OptContributionEntity) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptContributionEntity) Reset() {
+	var v ContributionEntity
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptContributionEntity) SetTo(v ContributionEntity) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptContributionEntity) Get() (v ContributionEntity, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptContributionEntity) Or(d ContributionEntity) ContributionEntity {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptContributionOperation returns new OptContributionOperation with value set to v.
+func NewOptContributionOperation(v ContributionOperation) OptContributionOperation {
+	return OptContributionOperation{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptContributionOperation is optional ContributionOperation.
+type OptContributionOperation struct {
+	Value ContributionOperation
+	Set   bool
+}
+
+// IsSet returns true if OptContributionOperation was set.
+func (o OptContributionOperation) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptContributionOperation) Reset() {
+	var v ContributionOperation
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptContributionOperation) SetTo(v ContributionOperation) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptContributionOperation) Get() (v ContributionOperation, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptContributionOperation) Or(d ContributionOperation) ContributionOperation {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptContributionOriginal returns new OptContributionOriginal with value set to v.
+func NewOptContributionOriginal(v ContributionOriginal) OptContributionOriginal {
+	return OptContributionOriginal{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptContributionOriginal is optional ContributionOriginal.
+type OptContributionOriginal struct {
+	Value ContributionOriginal
+	Set   bool
+}
+
+// IsSet returns true if OptContributionOriginal was set.
+func (o OptContributionOriginal) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptContributionOriginal) Reset() {
+	var v ContributionOriginal
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptContributionOriginal) SetTo(v ContributionOriginal) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptContributionOriginal) Get() (v ContributionOriginal, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptContributionOriginal) Or(d ContributionOriginal) ContributionOriginal {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptContributionStatus returns new OptContributionStatus with value set to v.
+func NewOptContributionStatus(v ContributionStatus) OptContributionStatus {
+	return OptContributionStatus{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptContributionStatus is optional ContributionStatus.
+type OptContributionStatus struct {
+	Value ContributionStatus
+	Set   bool
+}
+
+// IsSet returns true if OptContributionStatus was set.
+func (o OptContributionStatus) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptContributionStatus) Reset() {
+	var v ContributionStatus
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptContributionStatus) SetTo(v ContributionStatus) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptContributionStatus) Get() (v ContributionStatus, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptContributionStatus) Or(d ContributionStatus) ContributionStatus {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -5799,6 +8103,74 @@ func (o OptNilString) Or(d string) string {
 	return d
 }
 
+// NewOptNilURI returns new OptNilURI with value set to v.
+func NewOptNilURI(v url.URL) OptNilURI {
+	return OptNilURI{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptNilURI is optional nullable url.URL.
+type OptNilURI struct {
+	Value url.URL
+	Set   bool
+	Null  bool
+}
+
+// IsSet returns true if OptNilURI was set.
+func (o OptNilURI) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptNilURI) Reset() {
+	var v url.URL
+	o.Value = v
+	o.Set = false
+	o.Null = false
+}
+
+// SetTo sets value to v.
+func (o *OptNilURI) SetTo(v url.URL) {
+	o.Set = true
+	o.Null = false
+	o.Value = v
+}
+
+// IsNull returns true if value is Null.
+func (o OptNilURI) IsNull() bool { return o.Null }
+
+// SetToNull sets value to null.
+func (o *OptNilURI) SetToNull() {
+	o.Set = true
+	o.Null = true
+	var v url.URL
+	o.Value = v
+}
+
+// IsEmpty returns true if the field was omitted from the payload (not Set and not Null).
+func (o OptNilURI) IsEmpty() bool {
+	return !o.Set && !o.Null
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptNilURI) Get() (v url.URL, ok bool) {
+	if o.Null {
+		return v, false
+	}
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptNilURI) Or(d url.URL) url.URL {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptNilUUID returns new OptNilUUID with value set to v.
 func NewOptNilUUID(v uuid.UUID) OptNilUUID {
 	return OptNilUUID{
@@ -6065,6 +8437,52 @@ func (o OptNilUint8) Get() (v uint8, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptNilUint8) Or(d uint8) uint8 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptPlatformLinksChange returns new OptPlatformLinksChange with value set to v.
+func NewOptPlatformLinksChange(v PlatformLinksChange) OptPlatformLinksChange {
+	return OptPlatformLinksChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptPlatformLinksChange is optional PlatformLinksChange.
+type OptPlatformLinksChange struct {
+	Value PlatformLinksChange
+	Set   bool
+}
+
+// IsSet returns true if OptPlatformLinksChange was set.
+func (o OptPlatformLinksChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptPlatformLinksChange) Reset() {
+	var v PlatformLinksChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptPlatformLinksChange) SetTo(v PlatformLinksChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptPlatformLinksChange) Get() (v PlatformLinksChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptPlatformLinksChange) Or(d PlatformLinksChange) PlatformLinksChange {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -6393,6 +8811,98 @@ func (o OptSubsonicStreamMaxBitRate) Or(d SubsonicStreamMaxBitRate) SubsonicStre
 	return d
 }
 
+// NewOptTrackArtistsChange returns new OptTrackArtistsChange with value set to v.
+func NewOptTrackArtistsChange(v TrackArtistsChange) OptTrackArtistsChange {
+	return OptTrackArtistsChange{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptTrackArtistsChange is optional TrackArtistsChange.
+type OptTrackArtistsChange struct {
+	Value TrackArtistsChange
+	Set   bool
+}
+
+// IsSet returns true if OptTrackArtistsChange was set.
+func (o OptTrackArtistsChange) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptTrackArtistsChange) Reset() {
+	var v TrackArtistsChange
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptTrackArtistsChange) SetTo(v TrackArtistsChange) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptTrackArtistsChange) Get() (v TrackArtistsChange, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptTrackArtistsChange) Or(d TrackArtistsChange) TrackArtistsChange {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptTrackChanges returns new OptTrackChanges with value set to v.
+func NewOptTrackChanges(v TrackChanges) OptTrackChanges {
+	return OptTrackChanges{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptTrackChanges is optional TrackChanges.
+type OptTrackChanges struct {
+	Value TrackChanges
+	Set   bool
+}
+
+// IsSet returns true if OptTrackChanges was set.
+func (o OptTrackChanges) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptTrackChanges) Reset() {
+	var v TrackChanges
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptTrackChanges) SetTo(v TrackChanges) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptTrackChanges) Get() (v TrackChanges, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptTrackChanges) Or(d TrackChanges) TrackChanges {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptUUID returns new OptUUID with value set to v.
 func NewOptUUID(v uuid.UUID) OptUUID {
 	return OptUUID{
@@ -6669,6 +9179,55 @@ func (o OptVisibility) Or(d Visibility) Visibility {
 	return d
 }
 
+// Absent fields are unchanged, null clears the link.
+// Ref: #/components/schemas/PlatformLinksChange
+type PlatformLinksChange struct {
+	SpotifyURL      OptNilURI `json:"spotify_url"`
+	AppleMusicURL   OptNilURI `json:"apple_music_url"`
+	TidalURL        OptNilURI `json:"tidal_url"`
+	YoutubeMusicURL OptNilURI `json:"youtube_music_url"`
+}
+
+// GetSpotifyURL returns the value of SpotifyURL.
+func (s *PlatformLinksChange) GetSpotifyURL() OptNilURI {
+	return s.SpotifyURL
+}
+
+// GetAppleMusicURL returns the value of AppleMusicURL.
+func (s *PlatformLinksChange) GetAppleMusicURL() OptNilURI {
+	return s.AppleMusicURL
+}
+
+// GetTidalURL returns the value of TidalURL.
+func (s *PlatformLinksChange) GetTidalURL() OptNilURI {
+	return s.TidalURL
+}
+
+// GetYoutubeMusicURL returns the value of YoutubeMusicURL.
+func (s *PlatformLinksChange) GetYoutubeMusicURL() OptNilURI {
+	return s.YoutubeMusicURL
+}
+
+// SetSpotifyURL sets the value of SpotifyURL.
+func (s *PlatformLinksChange) SetSpotifyURL(val OptNilURI) {
+	s.SpotifyURL = val
+}
+
+// SetAppleMusicURL sets the value of AppleMusicURL.
+func (s *PlatformLinksChange) SetAppleMusicURL(val OptNilURI) {
+	s.AppleMusicURL = val
+}
+
+// SetTidalURL sets the value of TidalURL.
+func (s *PlatformLinksChange) SetTidalURL(val OptNilURI) {
+	s.TidalURL = val
+}
+
+// SetYoutubeMusicURL sets the value of YoutubeMusicURL.
+func (s *PlatformLinksChange) SetYoutubeMusicURL(val OptNilURI) {
+	s.YoutubeMusicURL = val
+}
+
 // Ref: #/components/schemas/Playlist
 type Playlist struct {
 	PlaylistID  uuid.UUID      `json:"playlist_id"`
@@ -6931,6 +9490,337 @@ func (s *PlaylistTrack) SetUpdatedAt(val OptNilDateTime) {
 
 func (*PlaylistTrack) editPlaylistTrackRes() {}
 
+type ProposeAlbumContributionBadRequest ErrorResponse
+
+func (*ProposeAlbumContributionBadRequest) proposeAlbumContributionRes() {}
+
+type ProposeAlbumContributionConflict ErrorResponse
+
+func (*ProposeAlbumContributionConflict) proposeAlbumContributionRes() {}
+
+type ProposeAlbumContributionInternalServerError ErrorResponse
+
+func (*ProposeAlbumContributionInternalServerError) proposeAlbumContributionRes() {}
+
+type ProposeAlbumContributionNotFound ErrorResponse
+
+func (*ProposeAlbumContributionNotFound) proposeAlbumContributionRes() {}
+
+// ProposeAlbumContributionReq represents sum type.
+type ProposeAlbumContributionReq struct {
+	// Type selects the active sum variant, switch on this field.
+	Type                ProposeAlbumContributionReqType
+	AlbumUpdateProposal AlbumUpdateProposal
+	AlbumDeleteProposal AlbumDeleteProposal
+}
+
+// ProposeAlbumContributionReqType is oneOf type of ProposeAlbumContributionReq.
+type ProposeAlbumContributionReqType string
+
+// Possible values for ProposeAlbumContributionReqType.
+const (
+	AlbumUpdateProposalProposeAlbumContributionReq ProposeAlbumContributionReqType = "album-update"
+	AlbumDeleteProposalProposeAlbumContributionReq ProposeAlbumContributionReqType = "album-delete"
+)
+
+// IsAlbumUpdateProposal reports whether ProposeAlbumContributionReq is AlbumUpdateProposal.
+func (s ProposeAlbumContributionReq) IsAlbumUpdateProposal() bool {
+	return s.Type == AlbumUpdateProposalProposeAlbumContributionReq
+}
+
+// IsAlbumDeleteProposal reports whether ProposeAlbumContributionReq is AlbumDeleteProposal.
+func (s ProposeAlbumContributionReq) IsAlbumDeleteProposal() bool {
+	return s.Type == AlbumDeleteProposalProposeAlbumContributionReq
+}
+
+// SetAlbumUpdateProposal sets ProposeAlbumContributionReq to AlbumUpdateProposal.
+func (s *ProposeAlbumContributionReq) SetAlbumUpdateProposal(v AlbumUpdateProposal) {
+	s.Type = AlbumUpdateProposalProposeAlbumContributionReq
+	s.AlbumUpdateProposal = v
+}
+
+// GetAlbumUpdateProposal returns AlbumUpdateProposal and true boolean if ProposeAlbumContributionReq is AlbumUpdateProposal.
+func (s ProposeAlbumContributionReq) GetAlbumUpdateProposal() (v AlbumUpdateProposal, ok bool) {
+	if !s.IsAlbumUpdateProposal() {
+		return v, false
+	}
+	return s.AlbumUpdateProposal, true
+}
+
+// NewAlbumUpdateProposalProposeAlbumContributionReq returns new ProposeAlbumContributionReq from AlbumUpdateProposal.
+func NewAlbumUpdateProposalProposeAlbumContributionReq(v AlbumUpdateProposal) ProposeAlbumContributionReq {
+	var s ProposeAlbumContributionReq
+	s.SetAlbumUpdateProposal(v)
+	return s
+}
+
+// SetAlbumDeleteProposal sets ProposeAlbumContributionReq to AlbumDeleteProposal.
+func (s *ProposeAlbumContributionReq) SetAlbumDeleteProposal(v AlbumDeleteProposal) {
+	s.Type = AlbumDeleteProposalProposeAlbumContributionReq
+	s.AlbumDeleteProposal = v
+}
+
+// GetAlbumDeleteProposal returns AlbumDeleteProposal and true boolean if ProposeAlbumContributionReq is AlbumDeleteProposal.
+func (s ProposeAlbumContributionReq) GetAlbumDeleteProposal() (v AlbumDeleteProposal, ok bool) {
+	if !s.IsAlbumDeleteProposal() {
+		return v, false
+	}
+	return s.AlbumDeleteProposal, true
+}
+
+// NewAlbumDeleteProposalProposeAlbumContributionReq returns new ProposeAlbumContributionReq from AlbumDeleteProposal.
+func NewAlbumDeleteProposalProposeAlbumContributionReq(v AlbumDeleteProposal) ProposeAlbumContributionReq {
+	var s ProposeAlbumContributionReq
+	s.SetAlbumDeleteProposal(v)
+	return s
+}
+
+type ProposeAlbumContributionUnauthorized ErrorResponse
+
+func (*ProposeAlbumContributionUnauthorized) proposeAlbumContributionRes() {}
+
+type ProposeAlbumCreateBadRequest ErrorResponse
+
+func (*ProposeAlbumCreateBadRequest) proposeAlbumCreateRes() {}
+
+type ProposeAlbumCreateConflict ErrorResponse
+
+func (*ProposeAlbumCreateConflict) proposeAlbumCreateRes() {}
+
+type ProposeAlbumCreateInternalServerError ErrorResponse
+
+func (*ProposeAlbumCreateInternalServerError) proposeAlbumCreateRes() {}
+
+type ProposeAlbumCreateNotFound ErrorResponse
+
+func (*ProposeAlbumCreateNotFound) proposeAlbumCreateRes() {}
+
+type ProposeAlbumCreateUnauthorized ErrorResponse
+
+func (*ProposeAlbumCreateUnauthorized) proposeAlbumCreateRes() {}
+
+type ProposeArtistContributionBadRequest ErrorResponse
+
+func (*ProposeArtistContributionBadRequest) proposeArtistContributionRes() {}
+
+type ProposeArtistContributionConflict ErrorResponse
+
+func (*ProposeArtistContributionConflict) proposeArtistContributionRes() {}
+
+type ProposeArtistContributionInternalServerError ErrorResponse
+
+func (*ProposeArtistContributionInternalServerError) proposeArtistContributionRes() {}
+
+type ProposeArtistContributionNotFound ErrorResponse
+
+func (*ProposeArtistContributionNotFound) proposeArtistContributionRes() {}
+
+// ProposeArtistContributionReq represents sum type.
+type ProposeArtistContributionReq struct {
+	// Type selects the active sum variant, switch on this field.
+	Type                 ProposeArtistContributionReqType
+	ArtistUpdateProposal ArtistUpdateProposal
+	ArtistMergeProposal  ArtistMergeProposal
+	ArtistDeleteProposal ArtistDeleteProposal
+}
+
+// ProposeArtistContributionReqType is oneOf type of ProposeArtistContributionReq.
+type ProposeArtistContributionReqType string
+
+// Possible values for ProposeArtistContributionReqType.
+const (
+	ArtistUpdateProposalProposeArtistContributionReq ProposeArtistContributionReqType = "artist-update"
+	ArtistMergeProposalProposeArtistContributionReq  ProposeArtistContributionReqType = "artist-merge"
+	ArtistDeleteProposalProposeArtistContributionReq ProposeArtistContributionReqType = "artist-delete"
+)
+
+// IsArtistUpdateProposal reports whether ProposeArtistContributionReq is ArtistUpdateProposal.
+func (s ProposeArtistContributionReq) IsArtistUpdateProposal() bool {
+	return s.Type == ArtistUpdateProposalProposeArtistContributionReq
+}
+
+// IsArtistMergeProposal reports whether ProposeArtistContributionReq is ArtistMergeProposal.
+func (s ProposeArtistContributionReq) IsArtistMergeProposal() bool {
+	return s.Type == ArtistMergeProposalProposeArtistContributionReq
+}
+
+// IsArtistDeleteProposal reports whether ProposeArtistContributionReq is ArtistDeleteProposal.
+func (s ProposeArtistContributionReq) IsArtistDeleteProposal() bool {
+	return s.Type == ArtistDeleteProposalProposeArtistContributionReq
+}
+
+// SetArtistUpdateProposal sets ProposeArtistContributionReq to ArtistUpdateProposal.
+func (s *ProposeArtistContributionReq) SetArtistUpdateProposal(v ArtistUpdateProposal) {
+	s.Type = ArtistUpdateProposalProposeArtistContributionReq
+	s.ArtistUpdateProposal = v
+}
+
+// GetArtistUpdateProposal returns ArtistUpdateProposal and true boolean if ProposeArtistContributionReq is ArtistUpdateProposal.
+func (s ProposeArtistContributionReq) GetArtistUpdateProposal() (v ArtistUpdateProposal, ok bool) {
+	if !s.IsArtistUpdateProposal() {
+		return v, false
+	}
+	return s.ArtistUpdateProposal, true
+}
+
+// NewArtistUpdateProposalProposeArtistContributionReq returns new ProposeArtistContributionReq from ArtistUpdateProposal.
+func NewArtistUpdateProposalProposeArtistContributionReq(v ArtistUpdateProposal) ProposeArtistContributionReq {
+	var s ProposeArtistContributionReq
+	s.SetArtistUpdateProposal(v)
+	return s
+}
+
+// SetArtistMergeProposal sets ProposeArtistContributionReq to ArtistMergeProposal.
+func (s *ProposeArtistContributionReq) SetArtistMergeProposal(v ArtistMergeProposal) {
+	s.Type = ArtistMergeProposalProposeArtistContributionReq
+	s.ArtistMergeProposal = v
+}
+
+// GetArtistMergeProposal returns ArtistMergeProposal and true boolean if ProposeArtistContributionReq is ArtistMergeProposal.
+func (s ProposeArtistContributionReq) GetArtistMergeProposal() (v ArtistMergeProposal, ok bool) {
+	if !s.IsArtistMergeProposal() {
+		return v, false
+	}
+	return s.ArtistMergeProposal, true
+}
+
+// NewArtistMergeProposalProposeArtistContributionReq returns new ProposeArtistContributionReq from ArtistMergeProposal.
+func NewArtistMergeProposalProposeArtistContributionReq(v ArtistMergeProposal) ProposeArtistContributionReq {
+	var s ProposeArtistContributionReq
+	s.SetArtistMergeProposal(v)
+	return s
+}
+
+// SetArtistDeleteProposal sets ProposeArtistContributionReq to ArtistDeleteProposal.
+func (s *ProposeArtistContributionReq) SetArtistDeleteProposal(v ArtistDeleteProposal) {
+	s.Type = ArtistDeleteProposalProposeArtistContributionReq
+	s.ArtistDeleteProposal = v
+}
+
+// GetArtistDeleteProposal returns ArtistDeleteProposal and true boolean if ProposeArtistContributionReq is ArtistDeleteProposal.
+func (s ProposeArtistContributionReq) GetArtistDeleteProposal() (v ArtistDeleteProposal, ok bool) {
+	if !s.IsArtistDeleteProposal() {
+		return v, false
+	}
+	return s.ArtistDeleteProposal, true
+}
+
+// NewArtistDeleteProposalProposeArtistContributionReq returns new ProposeArtistContributionReq from ArtistDeleteProposal.
+func NewArtistDeleteProposalProposeArtistContributionReq(v ArtistDeleteProposal) ProposeArtistContributionReq {
+	var s ProposeArtistContributionReq
+	s.SetArtistDeleteProposal(v)
+	return s
+}
+
+type ProposeArtistContributionUnauthorized ErrorResponse
+
+func (*ProposeArtistContributionUnauthorized) proposeArtistContributionRes() {}
+
+type ProposeArtistCreateBadRequest ErrorResponse
+
+func (*ProposeArtistCreateBadRequest) proposeArtistCreateRes() {}
+
+type ProposeArtistCreateConflict ErrorResponse
+
+func (*ProposeArtistCreateConflict) proposeArtistCreateRes() {}
+
+type ProposeArtistCreateInternalServerError ErrorResponse
+
+func (*ProposeArtistCreateInternalServerError) proposeArtistCreateRes() {}
+
+type ProposeArtistCreateUnauthorized ErrorResponse
+
+func (*ProposeArtistCreateUnauthorized) proposeArtistCreateRes() {}
+
+type ProposeTrackContributionBadRequest ErrorResponse
+
+func (*ProposeTrackContributionBadRequest) proposeTrackContributionRes() {}
+
+type ProposeTrackContributionConflict ErrorResponse
+
+func (*ProposeTrackContributionConflict) proposeTrackContributionRes() {}
+
+type ProposeTrackContributionInternalServerError ErrorResponse
+
+func (*ProposeTrackContributionInternalServerError) proposeTrackContributionRes() {}
+
+type ProposeTrackContributionNotFound ErrorResponse
+
+func (*ProposeTrackContributionNotFound) proposeTrackContributionRes() {}
+
+// ProposeTrackContributionReq represents sum type.
+type ProposeTrackContributionReq struct {
+	// Type selects the active sum variant, switch on this field.
+	Type                ProposeTrackContributionReqType
+	TrackUpdateProposal TrackUpdateProposal
+	TrackDeleteProposal TrackDeleteProposal
+}
+
+// ProposeTrackContributionReqType is oneOf type of ProposeTrackContributionReq.
+type ProposeTrackContributionReqType string
+
+// Possible values for ProposeTrackContributionReqType.
+const (
+	TrackUpdateProposalProposeTrackContributionReq ProposeTrackContributionReqType = "track-update"
+	TrackDeleteProposalProposeTrackContributionReq ProposeTrackContributionReqType = "track-delete"
+)
+
+// IsTrackUpdateProposal reports whether ProposeTrackContributionReq is TrackUpdateProposal.
+func (s ProposeTrackContributionReq) IsTrackUpdateProposal() bool {
+	return s.Type == TrackUpdateProposalProposeTrackContributionReq
+}
+
+// IsTrackDeleteProposal reports whether ProposeTrackContributionReq is TrackDeleteProposal.
+func (s ProposeTrackContributionReq) IsTrackDeleteProposal() bool {
+	return s.Type == TrackDeleteProposalProposeTrackContributionReq
+}
+
+// SetTrackUpdateProposal sets ProposeTrackContributionReq to TrackUpdateProposal.
+func (s *ProposeTrackContributionReq) SetTrackUpdateProposal(v TrackUpdateProposal) {
+	s.Type = TrackUpdateProposalProposeTrackContributionReq
+	s.TrackUpdateProposal = v
+}
+
+// GetTrackUpdateProposal returns TrackUpdateProposal and true boolean if ProposeTrackContributionReq is TrackUpdateProposal.
+func (s ProposeTrackContributionReq) GetTrackUpdateProposal() (v TrackUpdateProposal, ok bool) {
+	if !s.IsTrackUpdateProposal() {
+		return v, false
+	}
+	return s.TrackUpdateProposal, true
+}
+
+// NewTrackUpdateProposalProposeTrackContributionReq returns new ProposeTrackContributionReq from TrackUpdateProposal.
+func NewTrackUpdateProposalProposeTrackContributionReq(v TrackUpdateProposal) ProposeTrackContributionReq {
+	var s ProposeTrackContributionReq
+	s.SetTrackUpdateProposal(v)
+	return s
+}
+
+// SetTrackDeleteProposal sets ProposeTrackContributionReq to TrackDeleteProposal.
+func (s *ProposeTrackContributionReq) SetTrackDeleteProposal(v TrackDeleteProposal) {
+	s.Type = TrackDeleteProposalProposeTrackContributionReq
+	s.TrackDeleteProposal = v
+}
+
+// GetTrackDeleteProposal returns TrackDeleteProposal and true boolean if ProposeTrackContributionReq is TrackDeleteProposal.
+func (s ProposeTrackContributionReq) GetTrackDeleteProposal() (v TrackDeleteProposal, ok bool) {
+	if !s.IsTrackDeleteProposal() {
+		return v, false
+	}
+	return s.TrackDeleteProposal, true
+}
+
+// NewTrackDeleteProposalProposeTrackContributionReq returns new ProposeTrackContributionReq from TrackDeleteProposal.
+func NewTrackDeleteProposalProposeTrackContributionReq(v TrackDeleteProposal) ProposeTrackContributionReq {
+	var s ProposeTrackContributionReq
+	s.SetTrackDeleteProposal(v)
+	return s
+}
+
+type ProposeTrackContributionUnauthorized ErrorResponse
+
+func (*ProposeTrackContributionUnauthorized) proposeTrackContributionRes() {}
+
 type ReadMessageBadRequest ErrorResponse
 
 func (*ReadMessageBadRequest) readMessageRes() {}
@@ -7175,6 +10065,22 @@ func (s *RelationDetailsStatistics) SetListeningStreak(val uint16) {
 	s.ListeningStreak = val
 }
 
+type RemoveContributionVoteBadRequest ErrorResponse
+
+func (*RemoveContributionVoteBadRequest) removeContributionVoteRes() {}
+
+type RemoveContributionVoteInternalServerError ErrorResponse
+
+func (*RemoveContributionVoteInternalServerError) removeContributionVoteRes() {}
+
+type RemoveContributionVoteNotFound ErrorResponse
+
+func (*RemoveContributionVoteNotFound) removeContributionVoteRes() {}
+
+type RemoveContributionVoteUnauthorized ErrorResponse
+
+func (*RemoveContributionVoteUnauthorized) removeContributionVoteRes() {}
+
 type RemoveFriendBadRequest ErrorResponse
 
 func (*RemoveFriendBadRequest) removeFriendRes() {}
@@ -7217,6 +10123,41 @@ func (*RemoveFromLibraryInternalServerError) removeFromLibraryRes() {}
 type RemoveFromLibraryUnauthorized ErrorResponse
 
 func (*RemoveFromLibraryUnauthorized) removeFromLibraryRes() {}
+
+type ReviewContributionBadRequest ErrorResponse
+
+func (*ReviewContributionBadRequest) reviewContributionRes() {}
+
+type ReviewContributionForbidden ErrorResponse
+
+func (*ReviewContributionForbidden) reviewContributionRes() {}
+
+type ReviewContributionInternalServerError ErrorResponse
+
+func (*ReviewContributionInternalServerError) reviewContributionRes() {}
+
+type ReviewContributionNotFound ErrorResponse
+
+func (*ReviewContributionNotFound) reviewContributionRes() {}
+
+// Ref: #/components/schemas/ReviewContributionRequest
+type ReviewContributionRequest struct {
+	Status ContributionStatus `json:"status"`
+}
+
+// GetStatus returns the value of Status.
+func (s *ReviewContributionRequest) GetStatus() ContributionStatus {
+	return s.Status
+}
+
+// SetStatus sets the value of Status.
+func (s *ReviewContributionRequest) SetStatus(val ContributionStatus) {
+	s.Status = val
+}
+
+type ReviewContributionUnauthorized ErrorResponse
+
+func (*ReviewContributionUnauthorized) reviewContributionRes() {}
 
 // Ref: #/components/schemas/SearchIndex
 type SearchIndex struct {
@@ -9378,6 +12319,251 @@ func (s *TrackArtist) SetFeatured(val OptBool) {
 	s.Featured = val
 }
 
+// Ref: #/components/schemas/TrackArtistChange
+type TrackArtistChange struct {
+	ArtistID uuid.UUID `json:"artist_id"`
+	Featured OptBool   `json:"featured"`
+}
+
+// GetArtistID returns the value of ArtistID.
+func (s *TrackArtistChange) GetArtistID() uuid.UUID {
+	return s.ArtistID
+}
+
+// GetFeatured returns the value of Featured.
+func (s *TrackArtistChange) GetFeatured() OptBool {
+	return s.Featured
+}
+
+// SetArtistID sets the value of ArtistID.
+func (s *TrackArtistChange) SetArtistID(val uuid.UUID) {
+	s.ArtistID = val
+}
+
+// SetFeatured sets the value of Featured.
+func (s *TrackArtistChange) SetFeatured(val OptBool) {
+	s.Featured = val
+}
+
+// Track artists to add or remove. Absent fields are unchanged.
+// Ref: #/components/schemas/TrackArtistsChange
+type TrackArtistsChange struct {
+	Add    []TrackArtistChange `json:"add"`
+	Remove []uuid.UUID         `json:"remove"`
+}
+
+// GetAdd returns the value of Add.
+func (s *TrackArtistsChange) GetAdd() []TrackArtistChange {
+	return s.Add
+}
+
+// GetRemove returns the value of Remove.
+func (s *TrackArtistsChange) GetRemove() []uuid.UUID {
+	return s.Remove
+}
+
+// SetAdd sets the value of Add.
+func (s *TrackArtistsChange) SetAdd(val []TrackArtistChange) {
+	s.Add = val
+}
+
+// SetRemove sets the value of Remove.
+func (s *TrackArtistsChange) SetRemove(val []uuid.UUID) {
+	s.Remove = val
+}
+
+// Optional track fields. Absent fields are unchanged.
+// Ref: #/components/schemas/TrackChanges
+type TrackChanges struct {
+	Name    OptString    `json:"name"`
+	Seconds OptNilUint16 `json:"seconds"`
+	// Full lyrics text, null clears.
+	Lyrics  OptNilString           `json:"lyrics"`
+	Links   OptPlatformLinksChange `json:"links"`
+	Artists OptTrackArtistsChange  `json:"artists"`
+}
+
+// GetName returns the value of Name.
+func (s *TrackChanges) GetName() OptString {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *TrackChanges) GetSeconds() OptNilUint16 {
+	return s.Seconds
+}
+
+// GetLyrics returns the value of Lyrics.
+func (s *TrackChanges) GetLyrics() OptNilString {
+	return s.Lyrics
+}
+
+// GetLinks returns the value of Links.
+func (s *TrackChanges) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetArtists returns the value of Artists.
+func (s *TrackChanges) GetArtists() OptTrackArtistsChange {
+	return s.Artists
+}
+
+// SetName sets the value of Name.
+func (s *TrackChanges) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *TrackChanges) SetSeconds(val OptNilUint16) {
+	s.Seconds = val
+}
+
+// SetLyrics sets the value of Lyrics.
+func (s *TrackChanges) SetLyrics(val OptNilString) {
+	s.Lyrics = val
+}
+
+// SetLinks sets the value of Links.
+func (s *TrackChanges) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *TrackChanges) SetArtists(val OptTrackArtistsChange) {
+	s.Artists = val
+}
+
+// Ref: #/components/schemas/TrackCreate
+type TrackCreate struct {
+	Name        string       `json:"name"`
+	Seconds     OptNilUint16 `json:"seconds"`
+	DiscNumber  OptNilUint8  `json:"disc_number"`
+	TrackNumber OptNilUint8  `json:"track_number"`
+	// Full lyrics text.
+	Lyrics  OptNilString           `json:"lyrics"`
+	Links   OptPlatformLinksChange `json:"links"`
+	Artists OptTrackArtistsChange  `json:"artists"`
+}
+
+// GetName returns the value of Name.
+func (s *TrackCreate) GetName() string {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *TrackCreate) GetSeconds() OptNilUint16 {
+	return s.Seconds
+}
+
+// GetDiscNumber returns the value of DiscNumber.
+func (s *TrackCreate) GetDiscNumber() OptNilUint8 {
+	return s.DiscNumber
+}
+
+// GetTrackNumber returns the value of TrackNumber.
+func (s *TrackCreate) GetTrackNumber() OptNilUint8 {
+	return s.TrackNumber
+}
+
+// GetLyrics returns the value of Lyrics.
+func (s *TrackCreate) GetLyrics() OptNilString {
+	return s.Lyrics
+}
+
+// GetLinks returns the value of Links.
+func (s *TrackCreate) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetArtists returns the value of Artists.
+func (s *TrackCreate) GetArtists() OptTrackArtistsChange {
+	return s.Artists
+}
+
+// SetName sets the value of Name.
+func (s *TrackCreate) SetName(val string) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *TrackCreate) SetSeconds(val OptNilUint16) {
+	s.Seconds = val
+}
+
+// SetDiscNumber sets the value of DiscNumber.
+func (s *TrackCreate) SetDiscNumber(val OptNilUint8) {
+	s.DiscNumber = val
+}
+
+// SetTrackNumber sets the value of TrackNumber.
+func (s *TrackCreate) SetTrackNumber(val OptNilUint8) {
+	s.TrackNumber = val
+}
+
+// SetLyrics sets the value of Lyrics.
+func (s *TrackCreate) SetLyrics(val OptNilString) {
+	s.Lyrics = val
+}
+
+// SetLinks sets the value of Links.
+func (s *TrackCreate) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *TrackCreate) SetArtists(val OptTrackArtistsChange) {
+	s.Artists = val
+}
+
+// Ref: #/components/schemas/TrackDeleteProposal
+type TrackDeleteProposal struct {
+	Kind TrackDeleteProposalKind `json:"kind"`
+}
+
+// GetKind returns the value of Kind.
+func (s *TrackDeleteProposal) GetKind() TrackDeleteProposalKind {
+	return s.Kind
+}
+
+// SetKind sets the value of Kind.
+func (s *TrackDeleteProposal) SetKind(val TrackDeleteProposalKind) {
+	s.Kind = val
+}
+
+type TrackDeleteProposalKind string
+
+const (
+	TrackDeleteProposalKindTrackDelete TrackDeleteProposalKind = "track-delete"
+)
+
+// AllValues returns all TrackDeleteProposalKind values.
+func (TrackDeleteProposalKind) AllValues() []TrackDeleteProposalKind {
+	return []TrackDeleteProposalKind{
+		TrackDeleteProposalKindTrackDelete,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s TrackDeleteProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case TrackDeleteProposalKindTrackDelete:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *TrackDeleteProposalKind) UnmarshalText(data []byte) error {
+	switch TrackDeleteProposalKind(data) {
+	case TrackDeleteProposalKindTrackDelete:
+		*s = TrackDeleteProposalKindTrackDelete
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 // Ref: #/components/schemas/TrackDetails
 type TrackDetails struct {
 	Track        Track         `json:"track"`
@@ -9472,6 +12658,199 @@ func (s *TrackDetails) SetAlbumAssets(val []AlbumAsset) {
 
 func (*TrackDetails) getTrackDetailsRes() {}
 
+// Merged schema.
+// Ref: #/components/schemas/TrackOriginal
+type TrackOriginal struct {
+	TrackID         uuid.UUID           `json:"track_id"`
+	UserID          OptNilUUID          `json:"user_id"`
+	Name            string              `json:"name"`
+	Seconds         OptNilUint16        `json:"seconds"`
+	LyricsID        OptNilUUID          `json:"lyrics_id"`
+	AudioID         OptNilUUID          `json:"audio_id"`
+	MusicbrainzID   OptNilUUID          `json:"musicbrainz_id"`
+	SpotifyURL      OptNilString        `json:"spotify_url"`
+	AppleMusicURL   OptNilString        `json:"apple_music_url"`
+	TidalURL        OptNilString        `json:"tidal_url"`
+	YoutubeMusicURL OptNilString        `json:"youtube_music_url"`
+	CreatedAt       time.Time           `json:"created_at"`
+	UpdatedAt       OptNilDateTime      `json:"updated_at"`
+	Entity          TrackOriginalEntity `json:"entity"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackOriginal) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetUserID returns the value of UserID.
+func (s *TrackOriginal) GetUserID() OptNilUUID {
+	return s.UserID
+}
+
+// GetName returns the value of Name.
+func (s *TrackOriginal) GetName() string {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *TrackOriginal) GetSeconds() OptNilUint16 {
+	return s.Seconds
+}
+
+// GetLyricsID returns the value of LyricsID.
+func (s *TrackOriginal) GetLyricsID() OptNilUUID {
+	return s.LyricsID
+}
+
+// GetAudioID returns the value of AudioID.
+func (s *TrackOriginal) GetAudioID() OptNilUUID {
+	return s.AudioID
+}
+
+// GetMusicbrainzID returns the value of MusicbrainzID.
+func (s *TrackOriginal) GetMusicbrainzID() OptNilUUID {
+	return s.MusicbrainzID
+}
+
+// GetSpotifyURL returns the value of SpotifyURL.
+func (s *TrackOriginal) GetSpotifyURL() OptNilString {
+	return s.SpotifyURL
+}
+
+// GetAppleMusicURL returns the value of AppleMusicURL.
+func (s *TrackOriginal) GetAppleMusicURL() OptNilString {
+	return s.AppleMusicURL
+}
+
+// GetTidalURL returns the value of TidalURL.
+func (s *TrackOriginal) GetTidalURL() OptNilString {
+	return s.TidalURL
+}
+
+// GetYoutubeMusicURL returns the value of YoutubeMusicURL.
+func (s *TrackOriginal) GetYoutubeMusicURL() OptNilString {
+	return s.YoutubeMusicURL
+}
+
+// GetCreatedAt returns the value of CreatedAt.
+func (s *TrackOriginal) GetCreatedAt() time.Time {
+	return s.CreatedAt
+}
+
+// GetUpdatedAt returns the value of UpdatedAt.
+func (s *TrackOriginal) GetUpdatedAt() OptNilDateTime {
+	return s.UpdatedAt
+}
+
+// GetEntity returns the value of Entity.
+func (s *TrackOriginal) GetEntity() TrackOriginalEntity {
+	return s.Entity
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackOriginal) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetUserID sets the value of UserID.
+func (s *TrackOriginal) SetUserID(val OptNilUUID) {
+	s.UserID = val
+}
+
+// SetName sets the value of Name.
+func (s *TrackOriginal) SetName(val string) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *TrackOriginal) SetSeconds(val OptNilUint16) {
+	s.Seconds = val
+}
+
+// SetLyricsID sets the value of LyricsID.
+func (s *TrackOriginal) SetLyricsID(val OptNilUUID) {
+	s.LyricsID = val
+}
+
+// SetAudioID sets the value of AudioID.
+func (s *TrackOriginal) SetAudioID(val OptNilUUID) {
+	s.AudioID = val
+}
+
+// SetMusicbrainzID sets the value of MusicbrainzID.
+func (s *TrackOriginal) SetMusicbrainzID(val OptNilUUID) {
+	s.MusicbrainzID = val
+}
+
+// SetSpotifyURL sets the value of SpotifyURL.
+func (s *TrackOriginal) SetSpotifyURL(val OptNilString) {
+	s.SpotifyURL = val
+}
+
+// SetAppleMusicURL sets the value of AppleMusicURL.
+func (s *TrackOriginal) SetAppleMusicURL(val OptNilString) {
+	s.AppleMusicURL = val
+}
+
+// SetTidalURL sets the value of TidalURL.
+func (s *TrackOriginal) SetTidalURL(val OptNilString) {
+	s.TidalURL = val
+}
+
+// SetYoutubeMusicURL sets the value of YoutubeMusicURL.
+func (s *TrackOriginal) SetYoutubeMusicURL(val OptNilString) {
+	s.YoutubeMusicURL = val
+}
+
+// SetCreatedAt sets the value of CreatedAt.
+func (s *TrackOriginal) SetCreatedAt(val time.Time) {
+	s.CreatedAt = val
+}
+
+// SetUpdatedAt sets the value of UpdatedAt.
+func (s *TrackOriginal) SetUpdatedAt(val OptNilDateTime) {
+	s.UpdatedAt = val
+}
+
+// SetEntity sets the value of Entity.
+func (s *TrackOriginal) SetEntity(val TrackOriginalEntity) {
+	s.Entity = val
+}
+
+type TrackOriginalEntity string
+
+const (
+	TrackOriginalEntityTrack TrackOriginalEntity = "track"
+)
+
+// AllValues returns all TrackOriginalEntity values.
+func (TrackOriginalEntity) AllValues() []TrackOriginalEntity {
+	return []TrackOriginalEntity{
+		TrackOriginalEntityTrack,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s TrackOriginalEntity) MarshalText() ([]byte, error) {
+	switch s {
+	case TrackOriginalEntityTrack:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *TrackOriginalEntity) UnmarshalText(data []byte) error {
+	switch TrackOriginalEntity(data) {
+	case TrackOriginalEntityTrack:
+		*s = TrackOriginalEntityTrack
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
 // Ref: #/components/schemas/TrackPlayStats
 type TrackPlayStats struct {
 	Track        Track  `json:"track"`
@@ -9507,6 +12886,159 @@ func (s *TrackPlayStats) SetPlayCount(val uint64) {
 // SetPlayDuration sets the value of PlayDuration.
 func (s *TrackPlayStats) SetPlayDuration(val uint64) {
 	s.PlayDuration = val
+}
+
+// Ref: #/components/schemas/TrackUpdate
+type TrackUpdate struct {
+	TrackID     uuid.UUID    `json:"track_id"`
+	Name        OptString    `json:"name"`
+	Seconds     OptNilUint16 `json:"seconds"`
+	DiscNumber  OptNilUint8  `json:"disc_number"`
+	TrackNumber OptNilUint8  `json:"track_number"`
+	// Full lyrics text, null clears.
+	Lyrics  OptNilString           `json:"lyrics"`
+	Links   OptPlatformLinksChange `json:"links"`
+	Artists OptTrackArtistsChange  `json:"artists"`
+}
+
+// GetTrackID returns the value of TrackID.
+func (s *TrackUpdate) GetTrackID() uuid.UUID {
+	return s.TrackID
+}
+
+// GetName returns the value of Name.
+func (s *TrackUpdate) GetName() OptString {
+	return s.Name
+}
+
+// GetSeconds returns the value of Seconds.
+func (s *TrackUpdate) GetSeconds() OptNilUint16 {
+	return s.Seconds
+}
+
+// GetDiscNumber returns the value of DiscNumber.
+func (s *TrackUpdate) GetDiscNumber() OptNilUint8 {
+	return s.DiscNumber
+}
+
+// GetTrackNumber returns the value of TrackNumber.
+func (s *TrackUpdate) GetTrackNumber() OptNilUint8 {
+	return s.TrackNumber
+}
+
+// GetLyrics returns the value of Lyrics.
+func (s *TrackUpdate) GetLyrics() OptNilString {
+	return s.Lyrics
+}
+
+// GetLinks returns the value of Links.
+func (s *TrackUpdate) GetLinks() OptPlatformLinksChange {
+	return s.Links
+}
+
+// GetArtists returns the value of Artists.
+func (s *TrackUpdate) GetArtists() OptTrackArtistsChange {
+	return s.Artists
+}
+
+// SetTrackID sets the value of TrackID.
+func (s *TrackUpdate) SetTrackID(val uuid.UUID) {
+	s.TrackID = val
+}
+
+// SetName sets the value of Name.
+func (s *TrackUpdate) SetName(val OptString) {
+	s.Name = val
+}
+
+// SetSeconds sets the value of Seconds.
+func (s *TrackUpdate) SetSeconds(val OptNilUint16) {
+	s.Seconds = val
+}
+
+// SetDiscNumber sets the value of DiscNumber.
+func (s *TrackUpdate) SetDiscNumber(val OptNilUint8) {
+	s.DiscNumber = val
+}
+
+// SetTrackNumber sets the value of TrackNumber.
+func (s *TrackUpdate) SetTrackNumber(val OptNilUint8) {
+	s.TrackNumber = val
+}
+
+// SetLyrics sets the value of Lyrics.
+func (s *TrackUpdate) SetLyrics(val OptNilString) {
+	s.Lyrics = val
+}
+
+// SetLinks sets the value of Links.
+func (s *TrackUpdate) SetLinks(val OptPlatformLinksChange) {
+	s.Links = val
+}
+
+// SetArtists sets the value of Artists.
+func (s *TrackUpdate) SetArtists(val OptTrackArtistsChange) {
+	s.Artists = val
+}
+
+// Ref: #/components/schemas/TrackUpdateProposal
+type TrackUpdateProposal struct {
+	Kind    TrackUpdateProposalKind `json:"kind"`
+	Changes OptTrackChanges         `json:"changes"`
+}
+
+// GetKind returns the value of Kind.
+func (s *TrackUpdateProposal) GetKind() TrackUpdateProposalKind {
+	return s.Kind
+}
+
+// GetChanges returns the value of Changes.
+func (s *TrackUpdateProposal) GetChanges() OptTrackChanges {
+	return s.Changes
+}
+
+// SetKind sets the value of Kind.
+func (s *TrackUpdateProposal) SetKind(val TrackUpdateProposalKind) {
+	s.Kind = val
+}
+
+// SetChanges sets the value of Changes.
+func (s *TrackUpdateProposal) SetChanges(val OptTrackChanges) {
+	s.Changes = val
+}
+
+type TrackUpdateProposalKind string
+
+const (
+	TrackUpdateProposalKindTrackUpdate TrackUpdateProposalKind = "track-update"
+)
+
+// AllValues returns all TrackUpdateProposalKind values.
+func (TrackUpdateProposalKind) AllValues() []TrackUpdateProposalKind {
+	return []TrackUpdateProposalKind{
+		TrackUpdateProposalKindTrackUpdate,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s TrackUpdateProposalKind) MarshalText() ([]byte, error) {
+	switch s {
+	case TrackUpdateProposalKindTrackUpdate:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *TrackUpdateProposalKind) UnmarshalText(data []byte) error {
+	switch TrackUpdateProposalKind(data) {
+	case TrackUpdateProposalKindTrackUpdate:
+		*s = TrackUpdateProposalKindTrackUpdate
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
 }
 
 type UpdateGroupRolesBadRequest ErrorResponse
@@ -9869,3 +13401,53 @@ func (Visibility) AllValues() []Visibility {
 		Visibility3,
 	}
 }
+
+type VoteContributionBadRequest ErrorResponse
+
+func (*VoteContributionBadRequest) voteContributionRes() {}
+
+type VoteContributionForbidden ErrorResponse
+
+func (*VoteContributionForbidden) voteContributionRes() {}
+
+type VoteContributionInternalServerError ErrorResponse
+
+func (*VoteContributionInternalServerError) voteContributionRes() {}
+
+type VoteContributionNotFound ErrorResponse
+
+func (*VoteContributionNotFound) voteContributionRes() {}
+
+// Ref: #/components/schemas/VoteContributionRequest
+type VoteContributionRequest struct {
+	Vote VoteContributionRequestVote `json:"vote"`
+}
+
+// GetVote returns the value of Vote.
+func (s *VoteContributionRequest) GetVote() VoteContributionRequestVote {
+	return s.Vote
+}
+
+// SetVote sets the value of Vote.
+func (s *VoteContributionRequest) SetVote(val VoteContributionRequestVote) {
+	s.Vote = val
+}
+
+type VoteContributionRequestVote int8
+
+const (
+	VoteContributionRequestVoteMinus1 VoteContributionRequestVote = -1
+	VoteContributionRequestVote1      VoteContributionRequestVote = 1
+)
+
+// AllValues returns all VoteContributionRequestVote values.
+func (VoteContributionRequestVote) AllValues() []VoteContributionRequestVote {
+	return []VoteContributionRequestVote{
+		VoteContributionRequestVoteMinus1,
+		VoteContributionRequestVote1,
+	}
+}
+
+type VoteContributionUnauthorized ErrorResponse
+
+func (*VoteContributionUnauthorized) voteContributionRes() {}

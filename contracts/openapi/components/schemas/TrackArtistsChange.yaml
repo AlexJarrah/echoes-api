@@ -1,0 +1,17 @@
+TrackArtistsChange:
+  type: object
+  description: Track artists to add or remove. Absent fields are unchanged.
+  minProperties: 1
+  properties:
+    add:
+      type: array
+      uniqueItems: true
+      items:
+        $ref: "#/components/schemas/TrackArtistChange"
+    remove:
+      type: array
+      uniqueItems: true
+      items:
+        type: string
+        format: uuid
+        description: Artist to remove from the track.

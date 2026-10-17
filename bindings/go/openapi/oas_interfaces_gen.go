@@ -33,6 +33,10 @@ type CreatePlaylistRes interface {
 	createPlaylistRes()
 }
 
+type DeleteContributionRes interface {
+	deleteContributionRes()
+}
+
 type DeleteGroupRes interface {
 	deleteGroupRes()
 }
@@ -97,12 +101,20 @@ type GetAlbumAssetRes interface {
 	getAlbumAssetRes()
 }
 
+type GetAlbumContributionsRes interface {
+	getAlbumContributionsRes()
+}
+
 type GetAlbumRes interface {
 	getAlbumRes()
 }
 
 type GetArtistAssetRes interface {
 	getArtistAssetRes()
+}
+
+type GetArtistContributionsRes interface {
+	getArtistContributionsRes()
 }
 
 type GetArtistRes interface {
@@ -115,6 +127,18 @@ type GetCalendarListensRes interface {
 
 type GetChangesRes interface {
 	getChangesRes()
+}
+
+type GetContributionRes interface {
+	getContributionRes()
+}
+
+type GetContributionVotesRes interface {
+	getContributionVotesRes()
+}
+
+type GetContributionsRes interface {
+	getContributionsRes()
 }
 
 type GetFriendsRecentActivityRes interface {
@@ -201,6 +225,10 @@ type GetRelationsDetailsRes interface {
 	getRelationsDetailsRes()
 }
 
+type GetTrackContributionsRes interface {
+	getTrackContributionsRes()
+}
+
 type GetTrackDetailsRes interface {
 	getTrackDetailsRes()
 }
@@ -249,6 +277,26 @@ type JoinFreeBetaRes interface {
 	joinFreeBetaRes()
 }
 
+type ProposeAlbumContributionRes interface {
+	proposeAlbumContributionRes()
+}
+
+type ProposeAlbumCreateRes interface {
+	proposeAlbumCreateRes()
+}
+
+type ProposeArtistContributionRes interface {
+	proposeArtistContributionRes()
+}
+
+type ProposeArtistCreateRes interface {
+	proposeArtistCreateRes()
+}
+
+type ProposeTrackContributionRes interface {
+	proposeTrackContributionRes()
+}
+
 type ReadMessageRes interface {
 	readMessageRes()
 }
@@ -257,12 +305,20 @@ type RegisterRes interface {
 	registerRes()
 }
 
+type RemoveContributionVoteRes interface {
+	removeContributionVoteRes()
+}
+
 type RemoveFriendRes interface {
 	removeFriendRes()
 }
 
 type RemoveFromLibraryRes interface {
 	removeFromLibraryRes()
+}
+
+type ReviewContributionRes interface {
+	reviewContributionRes()
 }
 
 type SearchTracksRes interface {
@@ -323,4 +379,8 @@ type UploadTrackAudioRes interface {
 
 type ValidateTokenRes interface {
 	validateTokenRes()
+}
+
+type VoteContributionRes interface {
+	voteContributionRes()
 }

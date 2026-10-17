@@ -1,0 +1,85 @@
+/api/contributions/albums/{album_id}:
+  parameters:
+    - name: album_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  get:
+    summary: List contributions for an album
+    operationId: getAlbumContributions
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: "#/components/schemas/ContributionStatus"
+        description: Filter by status
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 50
+          maximum: 100
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 0
+    responses:
+      "200":
+        description: Contributions retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "404": { $ref: "#/components/responses/NotFound" }
+      "500": { $ref: "#/components/responses/InternalServerError" }
+
+  post:
+    summary: Propose a change to an album
+    description: Asset ids must have been uploaded via the assets endpoint beforehand.
+    operationId: proposeAlbumContribution
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/AlbumUpdateProposal"
+              - $ref: "#/components/schemas/AlbumDeleteProposal"
+            discriminator:
+              propertyName: kind
+              mapping:
+                album-update: "#/components/schemas/AlbumUpdateProposal"
+                album-delete: "#/components/schemas/AlbumDeleteProposal"
+    responses:
+      "201":
+        description: Contribution proposed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "404": { $ref: "#/components/responses/NotFound" }
+      "409": { $ref: "#/components/responses/Conflict" }
+      "500": { $ref: "#/components/responses/InternalServerError" }

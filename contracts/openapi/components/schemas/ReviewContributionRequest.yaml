@@ -1,0 +1,7 @@
+ReviewContributionRequest:
+  type: object
+  required:
+    - status
+  properties:
+    status:
+      $ref: "#/components/schemas/ContributionStatus"

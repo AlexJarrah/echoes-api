@@ -1,0 +1,11 @@
+ArtistUpdateProposal:
+  type: object
+  required:
+    - kind
+  additionalProperties: false
+  properties:
+    kind:
+      type: string
+      enum: [artist-update]
+    changes:
+      $ref: "#/components/schemas/ArtistChanges"

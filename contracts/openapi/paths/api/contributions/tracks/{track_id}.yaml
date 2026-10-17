@@ -1,0 +1,85 @@
+/api/contributions/tracks/{track_id}:
+  parameters:
+    - name: track_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  get:
+    summary: List contributions for a track
+    operationId: getTrackContributions
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: "#/components/schemas/ContributionStatus"
+        description: Filter by status
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 50
+          maximum: 100
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: uint32
+          default: 0
+    responses:
+      "200":
+        description: Contributions retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "404": { $ref: "#/components/responses/NotFound" }
+      "500": { $ref: "#/components/responses/InternalServerError" }
+
+  post:
+    summary: Propose a change to a track
+    description: New tracks are proposed through album contributions.
+    operationId: proposeTrackContribution
+    tags:
+      - Contributions
+    security:
+      - CookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/TrackUpdateProposal"
+              - $ref: "#/components/schemas/TrackDeleteProposal"
+            discriminator:
+              propertyName: kind
+              mapping:
+                track-update: "#/components/schemas/TrackUpdateProposal"
+                track-delete: "#/components/schemas/TrackDeleteProposal"
+    responses:
+      "201":
+        description: Contribution proposed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contribution"
+      "400": { $ref: "#/components/responses/BadRequest" }
+      "401": { $ref: "#/components/responses/Unauthorized" }
+      "404": { $ref: "#/components/responses/NotFound" }
+      "409": { $ref: "#/components/responses/Conflict" }
+      "500": { $ref: "#/components/responses/InternalServerError" }

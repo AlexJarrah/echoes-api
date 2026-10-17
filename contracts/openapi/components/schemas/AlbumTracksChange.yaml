@@ -1,0 +1,22 @@
+AlbumTracksChange:
+  type: object
+  description: Tracks to add, update or remove. Absent keys are unchanged.
+  minProperties: 1
+  properties:
+    add:
+      type: array
+      uniqueItems: true
+      items:
+        $ref: "#/components/schemas/TrackCreate"
+    update:
+      type: array
+      uniqueItems: true
+      items:
+        $ref: "#/components/schemas/TrackUpdate"
+    remove:
+      type: array
+      uniqueItems: true
+      items:
+        type: string
+        format: uuid
+        description: Track to remove from the album.

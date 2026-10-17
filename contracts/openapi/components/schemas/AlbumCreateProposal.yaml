@@ -1,0 +1,37 @@
+AlbumCreateProposal:
+  type: object
+  required:
+    - kind
+    - name
+  additionalProperties: false
+  properties:
+    kind:
+      type: string
+      enum: [album-create]
+    name:
+      type: string
+      minLength: 1
+      maxLength: 300
+    release_date:
+      type: string
+      format: date-time
+      nullable: true
+    base_album_id:
+      type: string
+      format: uuid
+      nullable: true
+    links:
+      $ref: "#/components/schemas/PlatformLinksChange"
+    assets:
+      $ref: "#/components/schemas/AssetsChange"
+    artists:
+      type: array
+      uniqueItems: true
+      items:
+        type: string
+        format: uuid
+    tracks:
+      type: array
+      uniqueItems: true
+      items:
+        $ref: "#/components/schemas/TrackCreate"

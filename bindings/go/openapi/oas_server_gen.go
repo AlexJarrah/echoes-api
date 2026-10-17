@@ -54,6 +54,12 @@ type Handler interface {
 	//
 	// POST /api/playlists
 	CreatePlaylist(ctx context.Context, req *CreatePlaylistRequest) (CreatePlaylistRes, error)
+	// DeleteContribution implements deleteContribution operation.
+	//
+	// Delete a pending contribution.
+	//
+	// DELETE /api/contributions/{contribution_id}
+	DeleteContribution(ctx context.Context, params DeleteContributionParams) (DeleteContributionRes, error)
 	// DeleteGroup implements deleteGroup operation.
 	//
 	// Delete a group if owned by the user.
@@ -152,6 +158,12 @@ type Handler interface {
 	//
 	// GET /api/assets/albums/{asset_id}
 	GetAlbumAsset(ctx context.Context, params GetAlbumAssetParams) (GetAlbumAssetRes, error)
+	// GetAlbumContributions implements getAlbumContributions operation.
+	//
+	// List contributions for an album.
+	//
+	// GET /api/contributions/albums/{album_id}
+	GetAlbumContributions(ctx context.Context, params GetAlbumContributionsParams) (GetAlbumContributionsRes, error)
 	// GetArtist implements getArtist operation.
 	//
 	// Get artist details.
@@ -162,6 +174,12 @@ type Handler interface {
 	//
 	// GET /api/assets/artists/{asset_id}
 	GetArtistAsset(ctx context.Context, params GetArtistAssetParams) (GetArtistAssetRes, error)
+	// GetArtistContributions implements getArtistContributions operation.
+	//
+	// Includes merge contributions where the artist is a merge source.
+	//
+	// GET /api/contributions/artists/{artist_id}
+	GetArtistContributions(ctx context.Context, params GetArtistContributionsParams) (GetArtistContributionsRes, error)
 	// GetAsyncAPI implements getAsyncAPI operation.
 	//
 	// Get AsyncAPI schema.
@@ -181,6 +199,24 @@ type Handler interface {
 	//
 	// GET /api/changes
 	GetChanges(ctx context.Context, params GetChangesParams) (GetChangesRes, error)
+	// GetContribution implements getContribution operation.
+	//
+	// Get a contribution.
+	//
+	// GET /api/contributions/{contribution_id}
+	GetContribution(ctx context.Context, params GetContributionParams) (GetContributionRes, error)
+	// GetContributionVotes implements getContributionVotes operation.
+	//
+	// Get all contribution votes.
+	//
+	// GET /api/contributions/{contribution_id}/votes
+	GetContributionVotes(ctx context.Context, params GetContributionVotesParams) (GetContributionVotesRes, error)
+	// GetContributions implements getContributions operation.
+	//
+	// List contributions.
+	//
+	// GET /api/contributions
+	GetContributions(ctx context.Context, params GetContributionsParams) (GetContributionsRes, error)
 	// GetFriendsRecentActivity implements getFriendsRecentActivity operation.
 	//
 	// Get recent friends activity.
@@ -322,6 +358,12 @@ type Handler interface {
 	//
 	// GET /api/tracks/{track_id}
 	GetTrack(ctx context.Context, params GetTrackParams) (GetTrackRes, error)
+	// GetTrackContributions implements getTrackContributions operation.
+	//
+	// List contributions for a track.
+	//
+	// GET /api/contributions/tracks/{track_id}
+	GetTrackContributions(ctx context.Context, params GetTrackContributionsParams) (GetTrackContributionsRes, error)
 	// GetTrackDetails implements getTrackDetails operation.
 	//
 	// Get track and related entity's information.
@@ -384,6 +426,37 @@ type Handler interface {
 	//
 	// POST /api/join-free-beta
 	JoinFreeBeta(ctx context.Context) (JoinFreeBetaRes, error)
+	// ProposeAlbumContribution implements proposeAlbumContribution operation.
+	//
+	// Asset ids must have been uploaded via the assets endpoint beforehand.
+	//
+	// POST /api/contributions/albums/{album_id}
+	ProposeAlbumContribution(ctx context.Context, req ProposeAlbumContributionReq, params ProposeAlbumContributionParams) (ProposeAlbumContributionRes, error)
+	// ProposeAlbumCreate implements proposeAlbumCreate operation.
+	//
+	// Propose a new album.
+	//
+	// POST /api/contributions/albums
+	ProposeAlbumCreate(ctx context.Context, req *AlbumCreateProposal) (ProposeAlbumCreateRes, error)
+	// ProposeArtistContribution implements proposeArtistContribution operation.
+	//
+	// The artist in the path is the target (for merge, the surviving artist). Asset ids must have been
+	// uploaded via the assets endpoint beforehand.
+	//
+	// POST /api/contributions/artists/{artist_id}
+	ProposeArtistContribution(ctx context.Context, req ProposeArtistContributionReq, params ProposeArtistContributionParams) (ProposeArtistContributionRes, error)
+	// ProposeArtistCreate implements proposeArtistCreate operation.
+	//
+	// Propose a new artist.
+	//
+	// POST /api/contributions/artists
+	ProposeArtistCreate(ctx context.Context, req *ArtistCreateProposal) (ProposeArtistCreateRes, error)
+	// ProposeTrackContribution implements proposeTrackContribution operation.
+	//
+	// New tracks are proposed through album contributions.
+	//
+	// POST /api/contributions/tracks/{track_id}
+	ProposeTrackContribution(ctx context.Context, req ProposeTrackContributionReq, params ProposeTrackContributionParams) (ProposeTrackContributionRes, error)
 	// ReadMessage implements readMessage operation.
 	//
 	// Read a message.
@@ -396,6 +469,12 @@ type Handler interface {
 	//
 	// POST /api/register
 	Register(ctx context.Context, req *RegisterRequest) (RegisterRes, error)
+	// RemoveContributionVote implements removeContributionVote operation.
+	//
+	// Remove vote from a contribution.
+	//
+	// DELETE /api/contributions/{contribution_id}/votes
+	RemoveContributionVote(ctx context.Context, params RemoveContributionVoteParams) (RemoveContributionVoteRes, error)
 	// RemoveFriend implements removeFriend operation.
 	//
 	// Remove a friend.
@@ -408,6 +487,12 @@ type Handler interface {
 	//
 	// POST /api/library/remove
 	RemoveFromLibrary(ctx context.Context, req *LibraryRemoveRequest) (RemoveFromLibraryRes, error)
+	// ReviewContribution implements reviewContribution operation.
+	//
+	// Review a contribution.
+	//
+	// PATCH /api/contributions/{contribution_id}/review
+	ReviewContribution(ctx context.Context, req *ReviewContributionRequest, params ReviewContributionParams) (ReviewContributionRes, error)
 	// SearchTracks implements searchTracks operation.
 	//
 	// Search tracks.
@@ -498,6 +583,12 @@ type Handler interface {
 	//
 	// GET /api/validate
 	ValidateToken(ctx context.Context) (ValidateTokenRes, error)
+	// VoteContribution implements voteContribution operation.
+	//
+	// Vote on a contribution.
+	//
+	// PUT /api/contributions/{contribution_id}/votes
+	VoteContribution(ctx context.Context, req *VoteContributionRequest, params VoteContributionParams) (VoteContributionRes, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

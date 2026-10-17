@@ -1,0 +1,9 @@
+AlbumDeleteProposal:
+  type: object
+  required:
+    - kind
+  additionalProperties: false
+  properties:
+    kind:
+      type: string
+      enum: [album-delete]

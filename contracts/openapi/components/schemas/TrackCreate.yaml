@@ -1,0 +1,30 @@
+TrackCreate:
+  type: object
+  required:
+    - name
+  properties:
+    name:
+      type: string
+      minLength: 1
+      maxLength: 300
+    seconds:
+      type: integer
+      format: uint16
+      nullable: true
+    disc_number:
+      type: integer
+      format: uint8
+      nullable: true
+    track_number:
+      type: integer
+      format: uint8
+      nullable: true
+    lyrics:
+      type: string
+      maxLength: 10000
+      nullable: true
+      description: Full lyrics text.
+    links:
+      $ref: "#/components/schemas/PlatformLinksChange"
+    artists:
+      $ref: "#/components/schemas/TrackArtistsChange"

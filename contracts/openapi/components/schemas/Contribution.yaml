@@ -1,0 +1,43 @@
+Contribution:
+  type: object
+  required:
+    - contribution_id
+    - entity
+    - operation
+    - status
+    - proposed
+    - created_at
+  properties:
+    contribution_id:
+      type: string
+      format: uuid
+    user_id:
+      type: string
+      format: uuid
+      nullable: true
+      description: Null if the author was deleted.
+    entity:
+      $ref: "#/components/schemas/ContributionEntity"
+      description: Entity type targeted by the contribution.
+    entity_id:
+      type: string
+      format: uuid
+      nullable: true
+      description: Null for create operations.
+    operation:
+      $ref: "#/components/schemas/ContributionOperation"
+    status:
+      $ref: "#/components/schemas/ContributionStatus"
+    proposed:
+      $ref: "#/components/schemas/ContributionProposal"
+    original:
+      $ref: "#/components/schemas/ContributionOriginal"
+      nullable: true
+      description: State of the entity at proposal time. Null for create operations.
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+      nullable: true

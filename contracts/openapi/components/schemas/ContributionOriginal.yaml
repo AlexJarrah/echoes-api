@@ -1,0 +1,11 @@
+ContributionOriginal:
+  oneOf:
+    - $ref: "#/components/schemas/ArtistOriginal"
+    - $ref: "#/components/schemas/AlbumOriginal"
+    - $ref: "#/components/schemas/TrackOriginal"
+  discriminator:
+    propertyName: entity
+    mapping:
+      artist: "#/components/schemas/ArtistOriginal"
+      album: "#/components/schemas/AlbumOriginal"
+      track: "#/components/schemas/TrackOriginal"

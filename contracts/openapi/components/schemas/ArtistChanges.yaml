@@ -1,0 +1,17 @@
+ArtistChanges:
+  type: object
+  description: Optional artist fields. Absent fields are unchanged.
+  minProperties: 1
+  properties:
+    name:
+      type: string
+      minLength: 1
+      maxLength: 200
+    bio:
+      type: string
+      maxLength: 5000
+      nullable: true
+    links:
+      $ref: "#/components/schemas/PlatformLinksChange"
+    assets:
+      $ref: "#/components/schemas/AssetsChange"

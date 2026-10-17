@@ -83,6 +83,15 @@ func (UnimplementedHandler) CreatePlaylist(ctx context.Context, req *CreatePlayl
 	return r, ht.ErrNotImplemented
 }
 
+// DeleteContribution implements deleteContribution operation.
+//
+// Delete a pending contribution.
+//
+// DELETE /api/contributions/{contribution_id}
+func (UnimplementedHandler) DeleteContribution(ctx context.Context, params DeleteContributionParams) (r DeleteContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // DeleteGroup implements deleteGroup operation.
 //
 // Delete a group if owned by the user.
@@ -232,6 +241,15 @@ func (UnimplementedHandler) GetAlbumAsset(ctx context.Context, params GetAlbumAs
 	return r, ht.ErrNotImplemented
 }
 
+// GetAlbumContributions implements getAlbumContributions operation.
+//
+// List contributions for an album.
+//
+// GET /api/contributions/albums/{album_id}
+func (UnimplementedHandler) GetAlbumContributions(ctx context.Context, params GetAlbumContributionsParams) (r GetAlbumContributionsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetArtist implements getArtist operation.
 //
 // Get artist details.
@@ -245,6 +263,15 @@ func (UnimplementedHandler) GetArtist(ctx context.Context, params GetArtistParam
 //
 // GET /api/assets/artists/{asset_id}
 func (UnimplementedHandler) GetArtistAsset(ctx context.Context, params GetArtistAssetParams) (r GetArtistAssetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetArtistContributions implements getArtistContributions operation.
+//
+// Includes merge contributions where the artist is a merge source.
+//
+// GET /api/contributions/artists/{artist_id}
+func (UnimplementedHandler) GetArtistContributions(ctx context.Context, params GetArtistContributionsParams) (r GetArtistContributionsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -273,6 +300,33 @@ func (UnimplementedHandler) GetCalendarListens(ctx context.Context, params GetCa
 //
 // GET /api/changes
 func (UnimplementedHandler) GetChanges(ctx context.Context, params GetChangesParams) (r GetChangesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetContribution implements getContribution operation.
+//
+// Get a contribution.
+//
+// GET /api/contributions/{contribution_id}
+func (UnimplementedHandler) GetContribution(ctx context.Context, params GetContributionParams) (r GetContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetContributionVotes implements getContributionVotes operation.
+//
+// Get all contribution votes.
+//
+// GET /api/contributions/{contribution_id}/votes
+func (UnimplementedHandler) GetContributionVotes(ctx context.Context, params GetContributionVotesParams) (r GetContributionVotesRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// GetContributions implements getContributions operation.
+//
+// List contributions.
+//
+// GET /api/contributions
+func (UnimplementedHandler) GetContributions(ctx context.Context, params GetContributionsParams) (r GetContributionsRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -486,6 +540,15 @@ func (UnimplementedHandler) GetTrack(ctx context.Context, params GetTrackParams)
 	return r, ht.ErrNotImplemented
 }
 
+// GetTrackContributions implements getTrackContributions operation.
+//
+// List contributions for a track.
+//
+// GET /api/contributions/tracks/{track_id}
+func (UnimplementedHandler) GetTrackContributions(ctx context.Context, params GetTrackContributionsParams) (r GetTrackContributionsRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // GetTrackDetails implements getTrackDetails operation.
 //
 // Get track and related entity's information.
@@ -581,6 +644,52 @@ func (UnimplementedHandler) JoinFreeBeta(ctx context.Context) (r JoinFreeBetaRes
 	return r, ht.ErrNotImplemented
 }
 
+// ProposeAlbumContribution implements proposeAlbumContribution operation.
+//
+// Asset ids must have been uploaded via the assets endpoint beforehand.
+//
+// POST /api/contributions/albums/{album_id}
+func (UnimplementedHandler) ProposeAlbumContribution(ctx context.Context, req ProposeAlbumContributionReq, params ProposeAlbumContributionParams) (r ProposeAlbumContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ProposeAlbumCreate implements proposeAlbumCreate operation.
+//
+// Propose a new album.
+//
+// POST /api/contributions/albums
+func (UnimplementedHandler) ProposeAlbumCreate(ctx context.Context, req *AlbumCreateProposal) (r ProposeAlbumCreateRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ProposeArtistContribution implements proposeArtistContribution operation.
+//
+// The artist in the path is the target (for merge, the surviving artist). Asset ids must have been
+// uploaded via the assets endpoint beforehand.
+//
+// POST /api/contributions/artists/{artist_id}
+func (UnimplementedHandler) ProposeArtistContribution(ctx context.Context, req ProposeArtistContributionReq, params ProposeArtistContributionParams) (r ProposeArtistContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ProposeArtistCreate implements proposeArtistCreate operation.
+//
+// Propose a new artist.
+//
+// POST /api/contributions/artists
+func (UnimplementedHandler) ProposeArtistCreate(ctx context.Context, req *ArtistCreateProposal) (r ProposeArtistCreateRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ProposeTrackContribution implements proposeTrackContribution operation.
+//
+// New tracks are proposed through album contributions.
+//
+// POST /api/contributions/tracks/{track_id}
+func (UnimplementedHandler) ProposeTrackContribution(ctx context.Context, req ProposeTrackContributionReq, params ProposeTrackContributionParams) (r ProposeTrackContributionRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // ReadMessage implements readMessage operation.
 //
 // Read a message.
@@ -599,6 +708,15 @@ func (UnimplementedHandler) Register(ctx context.Context, req *RegisterRequest) 
 	return r, ht.ErrNotImplemented
 }
 
+// RemoveContributionVote implements removeContributionVote operation.
+//
+// Remove vote from a contribution.
+//
+// DELETE /api/contributions/{contribution_id}/votes
+func (UnimplementedHandler) RemoveContributionVote(ctx context.Context, params RemoveContributionVoteParams) (r RemoveContributionVoteRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // RemoveFriend implements removeFriend operation.
 //
 // Remove a friend.
@@ -614,6 +732,15 @@ func (UnimplementedHandler) RemoveFriend(ctx context.Context, req *RemoveFriendR
 //
 // POST /api/library/remove
 func (UnimplementedHandler) RemoveFromLibrary(ctx context.Context, req *LibraryRemoveRequest) (r RemoveFromLibraryRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ReviewContribution implements reviewContribution operation.
+//
+// Review a contribution.
+//
+// PATCH /api/contributions/{contribution_id}/review
+func (UnimplementedHandler) ReviewContribution(ctx context.Context, req *ReviewContributionRequest, params ReviewContributionParams) (r ReviewContributionRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -749,5 +876,14 @@ func (UnimplementedHandler) UploadTrackAudio(ctx context.Context, req *UploadTra
 //
 // GET /api/validate
 func (UnimplementedHandler) ValidateToken(ctx context.Context) (r ValidateTokenRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// VoteContribution implements voteContribution operation.
+//
+// Vote on a contribution.
+//
+// PUT /api/contributions/{contribution_id}/votes
+func (UnimplementedHandler) VoteContribution(ctx context.Context, req *VoteContributionRequest, params VoteContributionParams) (r VoteContributionRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
